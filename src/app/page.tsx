@@ -144,11 +144,42 @@ export default function Home() {
         {/* 카드 그리드 */}
         {filteredData.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredData.map((item) => (
-              <article
-                key={item.id}
-                className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-100 hover:border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.06)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-              >
+            {filteredData.map((item) => {
+              const isEvent = item.category === "행사";
+              const schema = isEvent
+                ? {
+                    "@context": "https://schema.org",
+                    "@type": "Event",
+                    "name": item.title || item.name,
+                    "startDate": item.startDate,
+                    "endDate": item.endDate === "상시" ? undefined : item.endDate,
+                    "location": {
+                      "@type": "Place",
+                      "name": item.location,
+                      "address": item.location
+                    },
+                    "description": item.description || item.summary
+                  }
+                : {
+                    "@context": "https://schema.org",
+                    "@type": "GovernmentService",
+                    "name": item.title || item.name,
+                    "description": item.description || item.summary,
+                    "provider": {
+                      "@type": "GovernmentOrganization",
+                      "name": "용인시"
+                    }
+                  };
+
+              return (
+                <article
+                  key={item.id}
+                  className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-100 hover:border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.06)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+                  />
                 <div>
                   {/* 카드 헤더 일러스트 영역 (카테고리별 세련된 그라데이션) */}
                   <div
@@ -220,7 +251,8 @@ export default function Home() {
                   </Link>
                 </div>
               </article>
-            ))}
+            );
+          })}
           </div>
         ) : (
           /* 검색 결과 없음 */

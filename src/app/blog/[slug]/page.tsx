@@ -105,8 +105,57 @@ export default async function BlogPostPage({ params }: Props) {
     );
   }
 
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "datePublished": post.date,
+    "description": post.summary,
+    "author": {
+      "@type": "Organization",
+      "name": "용인시 생활 정보"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "용인시 생활 정보"
+    }
+  };
+
+  const detailedBreadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "홈",
+        "item": "https://real-infos.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "블로그",
+        "item": "https://real-infos.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": post.title,
+        "item": `https://real-infos.com/blog/${slug}`
+      }
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-[#fafbfc] text-[#1e293b] font-sans antialiased">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(detailedBreadcrumbSchema) }}
+      />
       {/* GNB (상단 바) */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
