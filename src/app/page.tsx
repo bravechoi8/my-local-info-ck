@@ -5,14 +5,16 @@ import Link from "next/link";
 import localData from "../../public/data/local-info.json";
 
 interface InfoItem {
-  id: string;
-  title: string;
+  id: string | number;
+  title?: string;
+  name?: string;
   category: "행사" | "혜택";
   startDate: string;
   endDate: string;
   location: string;
   target: string;
-  description: string;
+  description?: string;
+  summary?: string;
   link: string;
 }
 
@@ -28,12 +30,17 @@ export default function Home() {
 
   // 필터링 및 검색 처리
   const filteredData = data.filter((item) => {
+    const title = item.title || item.name || "";
+    const description = item.description || item.summary || "";
+    const location = item.location || "";
+    const target = item.target || "";
+
     const matchesCategory = selectedCategory === "전체" || item.category === selectedCategory;
     const matchesSearch =
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.target.toLowerCase().includes(searchQuery.toLowerCase());
+      title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      target.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -166,13 +173,13 @@ export default function Home() {
                     {/* 카드 타이틀 */}
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-1">
                       <Link href="/blog">
-                        {item.title}
+                        {item.title || item.name}
                       </Link>
                     </h3>
 
                     {/* 카드 설명 */}
                     <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-6 line-clamp-2 h-10">
-                      {item.description}
+                      {item.description || item.summary}
                     </p>
 
                     {/* 카드 상세 메타정보 */}
