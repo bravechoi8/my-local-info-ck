@@ -51,8 +51,8 @@ export default function Home() {
             </span>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
-            <a href="#" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">홈</a>
-            <a href="#" className="hover:text-slate-900 transition-colors">블로그</a>
+            <Link href="/" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">홈</Link>
+            <Link href="/blog" className="hover:text-slate-900 transition-colors">블로그</Link>
             <a href="#" className="hover:text-slate-900 transition-colors">서비스 소개</a>
           </div>
         </div>
@@ -165,7 +165,7 @@ export default function Home() {
                   <div className="p-6">
                     {/* 카드 타이틀 */}
                     <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-1">
-                      <Link href={`/info/${item.id}`}>
+                      <Link href="/blog">
                         {item.title}
                       </Link>
                     </h3>
@@ -203,7 +203,7 @@ export default function Home() {
                 {/* 링크 이동 영역 */}
                 <div className="px-6 pb-6 pt-2">
                   <Link
-                    href={`/info/${item.id}`}
+                    href="/blog"
                     className="flex items-center justify-between w-full py-2.5 px-4 text-xs sm:text-sm font-semibold rounded-xl text-slate-700 bg-slate-50 hover:bg-emerald-500 hover:text-white transition-all duration-200 border border-slate-100 group-hover:border-transparent"
                   >
                     <span>자세한 내용 알아보기</span>
