@@ -14,7 +14,7 @@ export default function BlogListPage() {
               우리동네 소식통
             </Link>
             <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 rounded-md">
-              성남시
+              용인시
             </span>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
@@ -35,7 +35,7 @@ export default function BlogListPage() {
             우리동네 블로그 소식
           </h1>
           <p className="text-sm sm:text-base text-slate-500 max-w-lg mx-auto leading-relaxed">
-            성남시의 알찬 정보와 유용한 생활 가이드, 동네 사람들의 살아가는 이야기를 나누는 공간입니다.
+            용인시의 알찬 정보와 유용한 생활 가이드, 동네 사람들의 살아가는 이야기를 나누는 공간입니다.
           </p>
         </div>
       </header>

@@ -166,7 +166,7 @@ export default async function BlogPostPage({ params }: Props) {
               우리동네 소식통
             </Link>
             <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 rounded-md">
-              성남시
+              용인시
             </span>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">

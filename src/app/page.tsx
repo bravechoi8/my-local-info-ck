@@ -163,7 +163,7 @@ export default function Home() {
               우리동네 소식통
             </span>
             <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 rounded-md">
-              성남시
+              용인시
             </span>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
@@ -179,13 +179,13 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            오늘의 성남 소식
+            오늘의 용인 소식
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950">
             더 스마트한 우리 동네 생활 정보
           </h1>
           <p className="text-sm sm:text-base text-slate-500 max-w-lg mx-auto leading-relaxed">
-            성남시의 최신 축제·행사 일정과 놓치기 쉬운 지원 혜택을 깔끔하게 정리해 드려요. 필요한 정보를 바로 검색해 보세요.
+            용인시의 최신 축제·행사 일정과 놓치기 쉬운 지원 혜택을 깔끔하게 정리해 드려요. 필요한 정보를 바로 검색해 보세요.
           </p>
         </div>
       </header>
