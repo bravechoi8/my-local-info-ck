@@ -3,6 +3,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import AdBanner from '@/components/AdBanner';
+import CoupangBanner from '@/components/CoupangBanner';
 
 import type { Metadata } from 'next';
 import fs from 'fs';
@@ -247,6 +248,7 @@ export default async function BlogPostPage({ params }: Props) {
             </p>
           </div>
           <AdBanner />
+          <CoupangBanner />
         </article>
       </main>
 
