@@ -3,8 +3,33 @@ import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+import type { Metadata } from 'next';
+
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: "글을 찾을 수 없습니다 | 용인시 생활 정보",
+    };
+  }
+
+  return {
+    title: `${post.title} | 용인시 생활 정보`,
+    description: post.summary,
+    openGraph: {
+      title: `${post.title} | 용인시 생활 정보`,
+      description: post.summary,
+      url: `https://real-infos.com/blog/${slug}`,
+      type: "article",
+      publishedTime: post.date,
+    },
+  };
 }
 
 export async function generateStaticParams() {
