@@ -47,10 +47,10 @@ async function main() {
 
   // 마지막 항목(가장 최신)
   const latestItem = dataList[dataList.length - 1];
-  const itemName = latestItem.name || '';
+  const itemName = latestItem.name || latestItem.title || '';
 
   if (!itemName) {
-    console.error('❌ 최신 항목에 name 필드가 없습니다.');
+    console.error('❌ 최신 항목에 name 또는 title 필드가 없습니다.');
     process.exit(1);
   }
 
