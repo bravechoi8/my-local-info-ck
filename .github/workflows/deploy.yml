@@ -58,7 +58,7 @@ jobs:
         run: npm run build
 
       - name: Cloudflare Pages 배포
-        run: npx wrangler pages deploy out --project-name=my-local-info
+        run: npx wrangler pages deploy out --project-name=my-local-info-ck
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
