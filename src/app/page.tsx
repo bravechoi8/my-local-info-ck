@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import localData from "../../public/data/local-info.json";
+import AdBanner from "@/components/AdBanner";
 
 interface InfoItem {
   id: string | number;
@@ -43,6 +44,114 @@ export default function Home() {
       target.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const events = filteredData.filter(item => item.category === "행사");
+  const benefits = filteredData.filter(item => item.category === "혜택");
+
+  const renderCard = (item: InfoItem) => {
+    const isEvent = item.category === "행사";
+    const schema = isEvent
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          "name": item.title || item.name,
+          "startDate": item.startDate,
+          "endDate": item.endDate === "상시" ? undefined : item.endDate,
+          "location": {
+            "@type": "Place",
+            "name": item.location,
+            "address": item.location
+          },
+          "description": item.description || item.summary
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "GovernmentService",
+          "name": item.title || item.name,
+          "description": item.description || item.summary,
+          "provider": {
+            "@type": "GovernmentOrganization",
+            "name": "용인시"
+          }
+        };
+
+    return (
+      <article
+        key={item.id}
+        className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-100 hover:border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.06)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+        <div>
+          <div
+            className={`h-24 w-full relative flex items-end p-4 bg-gradient-to-br ${
+              item.category === "행사"
+                ? "from-rose-50 to-amber-50/50 border-b border-rose-100/50"
+                : "from-emerald-50 to-cyan-50/50 border-b border-emerald-100/50"
+            }`}
+          >
+            <span
+              className={`px-2 py-0.5 text-[10px] font-bold rounded ${
+                item.category === "행사"
+                  ? "text-rose-700 bg-rose-100/80"
+                  : "text-emerald-700 bg-emerald-100/80"
+              }`}
+            >
+              {item.category === "행사" ? "축제 · 행사" : "지원금 · 혜택"}
+            </span>
+          </div>
+
+          <div className="p-6">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-1">
+              <Link href="/blog">
+                {item.title || item.name}
+              </Link>
+            </h3>
+
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-6 line-clamp-2 h-10">
+              {item.description || item.summary}
+            </p>
+
+            <div className="space-y-2.5 pt-4 border-t border-slate-50">
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                <span className="font-semibold text-slate-400 shrink-0">장소 · 접수</span>
+                <span className="truncate">{item.location}</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                <span className="font-semibold text-slate-400 shrink-0">신청 대상</span>
+                <span className="truncate">{item.target}</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                <span className="font-semibold text-slate-400 shrink-0">진행 기간</span>
+                <span>
+                  {item.category === "행사"
+                    ? `${formatDate(item.startDate)} ~ ${formatDate(item.endDate)}`
+                    : `상시 (${formatDate(item.startDate)} ~)`}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-6 pb-6 pt-2">
+          <Link
+            href="/blog"
+            className="flex items-center justify-between w-full py-2.5 px-4 text-xs sm:text-sm font-semibold rounded-xl text-slate-700 bg-slate-50 hover:bg-emerald-500 hover:text-white transition-all duration-200 border border-slate-100 group-hover:border-transparent"
+          >
+            <span>자세한 내용 알아보기</span>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </div>
+      </article>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[#fafbfc] text-[#1e293b] font-sans antialiased">
@@ -143,116 +252,39 @@ export default function Home() {
 
         {/* 카드 그리드 */}
         {filteredData.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredData.map((item) => {
-              const isEvent = item.category === "행사";
-              const schema = isEvent
-                ? {
-                    "@context": "https://schema.org",
-                    "@type": "Event",
-                    "name": item.title || item.name,
-                    "startDate": item.startDate,
-                    "endDate": item.endDate === "상시" ? undefined : item.endDate,
-                    "location": {
-                      "@type": "Place",
-                      "name": item.location,
-                      "address": item.location
-                    },
-                    "description": item.description || item.summary
-                  }
-                : {
-                    "@context": "https://schema.org",
-                    "@type": "GovernmentService",
-                    "name": item.title || item.name,
-                    "description": item.description || item.summary,
-                    "provider": {
-                      "@type": "GovernmentOrganization",
-                      "name": "용인시"
-                    }
-                  };
-
-              return (
-                <article
-                  key={item.id}
-                  className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-100 hover:border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.06)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-                >
-                  <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-                  />
-                <div>
-                  {/* 카드 헤더 일러스트 영역 (카테고리별 세련된 그라데이션) */}
-                  <div
-                    className={`h-24 w-full relative flex items-end p-4 bg-gradient-to-br ${
-                      item.category === "행사"
-                        ? "from-rose-50 to-amber-50/50 border-b border-rose-100/50"
-                        : "from-emerald-50 to-cyan-50/50 border-b border-emerald-100/50"
-                    }`}
-                  >
-                    <span
-                      className={`px-2 py-0.5 text-[10px] font-bold rounded ${
-                        item.category === "행사"
-                          ? "text-rose-700 bg-rose-100/80"
-                          : "text-emerald-700 bg-emerald-100/80"
-                      }`}
-                    >
-                      {item.category === "행사" ? "축제 · 행사" : "지원금 · 혜택"}
-                    </span>
-                  </div>
-
-                  <div className="p-6">
-                    {/* 카드 타이틀 */}
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-1">
-                      <Link href="/blog">
-                        {item.title || item.name}
-                      </Link>
-                    </h3>
-
-                    {/* 카드 설명 */}
-                    <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-6 line-clamp-2 h-10">
-                      {item.description || item.summary}
-                    </p>
-
-                    {/* 카드 상세 메타정보 */}
-                    <div className="space-y-2.5 pt-4 border-t border-slate-50">
-                      <div className="flex items-center gap-2 text-xs text-slate-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                        <span className="font-semibold text-slate-400 shrink-0">장소 · 접수</span>
-                        <span className="truncate">{item.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-slate-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                        <span className="font-semibold text-slate-400 shrink-0">신청 대상</span>
-                        <span className="truncate">{item.target}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-slate-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                        <span className="font-semibold text-slate-400 shrink-0">진행 기간</span>
-                        <span>
-                          {item.category === "행사"
-                            ? `${formatDate(item.startDate)} ~ ${formatDate(item.endDate)}`
-                            : `상시 (${formatDate(item.startDate)} ~)`}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+          <div className="space-y-12">
+            {/* 행사 섹션 */}
+            {(selectedCategory === "전체" || selectedCategory === "행사") && events.length > 0 && (
+              <div>
+                {selectedCategory === "전체" && (
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
+                    <span>🎉</span> 진행 중인 축제 · 행사
+                  </h2>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {events.map((item) => renderCard(item))}
                 </div>
+              </div>
+            )}
 
-                {/* 링크 이동 영역 */}
-                <div className="px-6 pb-6 pt-2">
-                  <Link
-                    href="/blog"
-                    className="flex items-center justify-between w-full py-2.5 px-4 text-xs sm:text-sm font-semibold rounded-xl text-slate-700 bg-slate-50 hover:bg-emerald-500 hover:text-white transition-all duration-200 border border-slate-100 group-hover:border-transparent"
-                  >
-                    <span>자세한 내용 알아보기</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
+            {/* 광고 배너 */}
+            {selectedCategory === "전체" && events.length > 0 && benefits.length > 0 && (
+              <AdBanner />
+            )}
+
+            {/* 혜택 섹션 */}
+            {(selectedCategory === "전체" || selectedCategory === "혜택") && benefits.length > 0 && (
+              <div>
+                {selectedCategory === "전체" && (
+                  <h2 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
+                    <span>💰</span> 놓치기 쉬운 지원금 · 혜택
+                  </h2>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {benefits.map((item) => renderCard(item))}
                 </div>
-              </article>
-            );
-          })}
+              </div>
+            )}
           </div>
         ) : (
           /* 검색 결과 없음 */

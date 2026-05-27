@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import AdBanner from '@/components/AdBanner';
 
 import type { Metadata } from 'next';
 import fs from 'fs';
@@ -245,6 +246,7 @@ export default async function BlogPostPage({ params }: Props) {
               이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.
             </p>
           </div>
+          <AdBanner />
         </article>
       </main>
 

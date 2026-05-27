@@ -71,6 +71,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
+        {process.env.NEXT_PUBLIC_ADSENSE_ID &&
+          process.env.NEXT_PUBLIC_ADSENSE_ID !== "" &&
+          process.env.NEXT_PUBLIC_ADSENSE_ID !== "나중에_입력" && (
+            <script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+              crossOrigin="anonymous"
+            />
+          )}
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
