@@ -41,6 +41,34 @@ function formatDate(dateVal: any): string {
   return '';
 }
 
+// 제목과 본문을 분석해 행사/혜택 카테고리를 판별하는 함수
+function resolveCategory(title: string, content: string, frontmatterCategory?: string): string {
+  const cat = frontmatterCategory || '';
+  if (cat === '행사' || cat === '혜택') {
+    return cat;
+  }
+  const text = (title + ' ' + content).toLowerCase();
+  if (
+    text.includes('지원금') ||
+    text.includes('혜택') ||
+    text.includes('보조금') ||
+    text.includes('수당') ||
+    text.includes('지원') ||
+    text.includes('학비')
+  ) {
+    return '혜택';
+  }
+  if (
+    text.includes('축제') ||
+    text.includes('행사') ||
+    text.includes('박람회') ||
+    text.includes('공연')
+  ) {
+    return '행사';
+  }
+  return '혜택'; // 기본값
+}
+
 // 모든 블로그 포스트를 가져와서 날짜순으로 정렬하는 함수
 export function getAllPosts(): PostData[] {
   // 폴더가 존재하지 않으면 빈 목록을 돌려줍니다.
@@ -67,7 +95,7 @@ export function getAllPosts(): PostData[] {
         title: data.title || '',
         date: formatDate(data.date),
         summary: data.summary || '',
-        category: data.category || '',
+        category: resolveCategory(data.title || '', content, data.category),
         tags: Array.isArray(data.tags) ? data.tags : [],
         content,
       };
@@ -96,7 +124,7 @@ export function getPostBySlug(slug: string): PostData | null {
       title: data.title || '',
       date: formatDate(data.date),
       summary: data.summary || '',
-      category: data.category || '',
+      category: resolveCategory(data.title || '', content, data.category),
       tags: Array.isArray(data.tags) ? data.tags : [],
       content,
     };
