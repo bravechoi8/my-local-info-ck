@@ -4,6 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import type { Metadata } from 'next';
+import fs from 'fs';
+import path from 'path';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -46,6 +48,25 @@ export async function generateStaticParams() {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
+
+  let sourceLink = null;
+  if (post) {
+    const dataFilePath = path.join(process.cwd(), 'public/data/local-info.json');
+    if (fs.existsSync(dataFilePath)) {
+      try {
+        const localData = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
+        const matchedItem = localData.find((item: any) => {
+          const itemName = item.name || item.title || '';
+          return itemName && (post.title.includes(itemName) || post.content.includes(itemName));
+        });
+        if (matchedItem && matchedItem.link && matchedItem.link !== '#') {
+          sourceLink = matchedItem.link;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
 
   if (!post) {
     return (
@@ -100,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
             <Link href="/" className="hover:text-slate-900 transition-colors">홈</Link>
             <Link href="/blog" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">블로그</Link>
-            <Link href="#" className="hover:text-slate-900 transition-colors">서비스 소개</Link>
+            <Link href="/about" className="hover:text-slate-900 transition-colors">소개</Link>
           </div>
         </div>
       </nav>
@@ -128,7 +149,7 @@ export default async function BlogPostPage({ params }: Props) {
                 {post.category}
               </span>
             )}
-            <span className="text-xs text-slate-400">{post.date}</span>
+            <span className="text-xs text-slate-400">최종 업데이트: {post.date}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 leading-tight">
             {post.title}
@@ -154,6 +175,26 @@ export default async function BlogPostPage({ params }: Props) {
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {post.content}
             </ReactMarkdown>
+          </div>
+
+          {/* 출처 명시 및 AI 생성 정보 안내 */}
+          <div className="mt-8 pt-6 border-t border-slate-100 space-y-4">
+            {sourceLink && (
+              <div className="text-xs sm:text-sm">
+                <span className="font-semibold text-slate-600">원문 출처: </span>
+                <a
+                  href={sourceLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-600 hover:text-emerald-700 underline font-medium break-all"
+                >
+                  {sourceLink}
+                </a>
+              </div>
+            )}
+            <p className="text-[11px] sm:text-xs text-slate-400 bg-slate-50 p-4 rounded-xl leading-relaxed border border-slate-100">
+              이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.
+            </p>
           </div>
         </article>
       </main>

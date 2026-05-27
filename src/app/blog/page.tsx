@@ -20,7 +20,7 @@ export default function BlogListPage() {
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
             <Link href="/" className="hover:text-slate-900 transition-colors">홈</Link>
             <Link href="/blog" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">블로그</Link>
-            <Link href="#" className="hover:text-slate-900 transition-colors">서비스 소개</Link>
+            <Link href="/about" className="hover:text-slate-900 transition-colors">소개</Link>
           </div>
         </div>
       </nav>

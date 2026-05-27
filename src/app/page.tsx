@@ -60,7 +60,7 @@ export default function Home() {
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
             <Link href="/" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">홈</Link>
             <Link href="/blog" className="hover:text-slate-900 transition-colors">블로그</Link>
-            <a href="#" className="hover:text-slate-900 transition-colors">서비스 소개</a>
+            <Link href="/about" className="hover:text-slate-900 transition-colors">소개</Link>
           </div>
         </div>
       </nav>
