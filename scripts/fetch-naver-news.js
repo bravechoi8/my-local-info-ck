@@ -38,7 +38,7 @@ async function main() {
 
     // [1단계] 키워드 중 랜덤 선택 및 검색
     const keywords = ['재테크', '핫이슈', '생활정보', '연예인이슈'];
-    const selectedKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+    const selectedKeyword = process.env.SELECTED_KEYWORD || keywords[Math.floor(Math.random() * keywords.length)];
     console.log(`선택된 키워드: ${selectedKeyword}`);
 
     const params = new URLSearchParams({
