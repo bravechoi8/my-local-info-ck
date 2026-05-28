@@ -159,21 +159,20 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(detailedBreadcrumbSchema) }}
       />
-      {/* GNB (상단 바) */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="text-xl font-black tracking-tight bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+      {/* GNB (상단 네비게이션) - 토스 스타일 극도 미니멀 */}
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#F2F4F6] px-6 py-5">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
               우리동네 소식통
-            </Link>
-            <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 rounded-md">
-              용인시
             </span>
-          </div>
-          <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
-            <Link href="/" className="hover:text-slate-900 transition-colors">홈</Link>
-            <Link href="/blog" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">블로그</Link>
-            <Link href="/about" className="hover:text-slate-900 transition-colors">소개</Link>
+          </Link>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
+            <Link href="/" className="hover:text-[#191F28] transition-colors">홈</Link>
+            <Link href="/blog" className="text-[#3182F6]">블로그</Link>
+            <Link href="/about" className="hover:text-[#191F28] transition-colors">소개</Link>
+            <Link href="/privacy" className="hover:text-[#191F28] transition-colors">개인정보처리방침 (Privacy)</Link>
+            <Link href="/terms" className="hover:text-[#191F28] transition-colors">이용약관 (Terms)</Link>
           </div>
         </div>
       </nav>
@@ -253,14 +252,20 @@ export default async function BlogPostPage({ params }: Props) {
         </article>
       </main>
 
-      {/* 하단 푸터 영역 */}
-      <footer className="mt-24 bg-white border-t border-slate-100 py-12 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          <div className="space-y-1.5 text-xs text-slate-400">
-            <p>공공데이터포털(data.go.kr)에 공개된 공식 데이터를 기반으로 작동하는 정보 채널입니다.</p>
+      {/* 하단 푸터 */}
+      <footer className="bg-[#F9FAFB] border-t border-[#F2F4F6] py-16 px-6 mt-24">
+        <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left text-xs sm:text-sm text-[#8B95A1] font-medium">
+          <div className="space-y-2">
+            <p>공식 데이터 및 주요 핫이슈 소식을 기반으로 작동하는 블로그 채널입니다.</p>
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1 text-xs text-[#8B95A1]">
+              <Link href="/privacy" className="hover:underline font-semibold">개인정보처리방침 (Privacy Policy)</Link>
+              <span className="text-[#E5E8EB]">|</span>
+              <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
+            </div>
+            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
           </div>
-          <div className="text-xs font-semibold text-slate-500">
-            © {new Date().getFullYear()} 우리동네 소식통. All rights reserved.
+          <div className="text-xs font-semibold text-[#4E5968]">
+            real-infos.com
           </div>
         </div>
       </footer>
