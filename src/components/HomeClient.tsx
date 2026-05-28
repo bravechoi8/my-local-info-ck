@@ -58,8 +58,8 @@ export default function HomeClient({ posts }: HomeClientProps) {
       summary: post.summary,
       category: post.category as "행사" | "혜택" | "핫이슈" | "재테크" | "생활정보" | "연예인이슈",
       date: post.date,
-      location: matchedItem?.location || "온라인 및 관할 행정복지센터",
-      target: matchedItem?.target || "용인시 주민 누구나",
+      location: matchedItem?.location || "온라인 및 전국 관할기관",
+      target: matchedItem?.target || "전국 주민 누구나",
       startDate: matchedItem?.startDate || post.date,
       endDate: matchedItem?.endDate || "상시",
       thumbnail: firstImg || getFallbackImage(post.category),
@@ -158,7 +158,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
           "description": post.summary,
           "provider": {
             "@type": "GovernmentOrganization",
-            "name": "용인시"
+            "name": "정부 및 지자체"
           }
         };
 
@@ -213,7 +213,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
-              우리동네 소식통
+              리얼인포
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
@@ -230,10 +230,10 @@ export default function HomeClient({ posts }: HomeClientProps) {
       <header className="bg-white pt-20 pb-16 px-6">
         <div className="max-w-5xl mx-auto text-left space-y-3">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
-            우리동네 소식통
+            생활 정보 & 혜택
           </h1>
           <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
-            용인시의 최신 공공 혜택 소식부터 오늘의 핫이슈 정보까지 편리하고 깔끔하게 모아 드립니다.
+            전국의 유용한 생활 정보, 정부 혜택, 행사 및 지원금 소식을 한눈에 보기 쉽게 모아 드립니다.
           </p>
         </div>
       </header>
@@ -311,7 +311,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
               <span className="text-[#E5E8EB]">|</span>
               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
             </div>
-            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968]">
             real-infos.com

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://real-infos.com/sitemap.xml
+#DaumWebMasterTool:c3ac86e8eebf97987da22322cff0ae1b4b1d1172df1cb4c3925be93143cf446b:t885LBChwYDLGyVG3mFytw==

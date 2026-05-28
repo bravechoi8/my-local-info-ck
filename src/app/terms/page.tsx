@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: "이용약관 | Terms of Service | 용인시 생활 정보",
-  description: "우리동네 소식통의 서비스 이용약관 안내 페이지입니다.",
+  title: "이용약관 | Terms of Service | 리얼인포",
+  description: "리얼인포의 서비스 이용약관 안내 페이지입니다.",
 };
 
 export default function TermsOfServicePage() {
@@ -13,7 +13,7 @@ export default function TermsOfServicePage() {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
-              우리동네 소식통
+              리얼인포
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
@@ -36,20 +36,20 @@ export default function TermsOfServicePage() {
             서비스 이용약관
           </h1>
           <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
-            우리동네 소식통에서 제공하는 다양한 생활 정보 및 블로그 정보 서비스의 이용 조건과 절차를 규정합니다.
+            리얼인포에서 제공하는 다양한 생활 정보 및 블로그 정보 서비스의 이용 조건과 절차를 규정합니다.
           </p>
         </header>
 
         {/* 상세 약관 내용 */}
         <section className="space-y-12 border-t border-[#F2F4F6] pt-12 text-sm sm:text-base text-[#4E5968] leading-relaxed">
-          {/* 1. 총칙 */}
+          {/* 1. 목적 및 약관의 효력 */}
           <div className="space-y-3">
             <h2 className="text-lg sm:text-xl font-bold text-[#191F28] flex items-center gap-2">
               <span className="w-1 h-5 bg-[#3182F6] rounded-full"></span>
               1. 목적 및 약관의 효력
             </h2>
             <p className="pl-3">
-              본 약관은 '우리동네 소식통'이 운영하는 웹사이트(이하 '사이트')가 제공하는 모든 정보 및 제반 서비스의 이용에 관한 권리와 의무를 규정함을 목적으로 합니다. 본 약관의 내용은 웹사이트 화면에 게시하거나 기타의 방법으로 이용자에게 고지함으로써 효력이 발생합니다.
+              본 약관은 '리얼인포'가 운영하는 웹사이트(이하 '사이트')가 제공하는 모든 정보 및 제반 서비스의 이용에 관한 권리와 의무를 규정함을 목적으로 합니다. 본 약관의 내용은 웹사이트 화면에 게시하거나 기타의 방법으로 이용자에게 고지함으로써 효력이 발생합니다.
             </p>
           </div>
 
@@ -60,7 +60,7 @@ export default function TermsOfServicePage() {
               2. 정보 제공 서비스 및 책임에 관한 한계
             </h2>
             <p className="pl-3">
-              우리동네 소식통은 정부 및 지자체, 공공데이터 포털, 그리고 일반 공개 뉴스의 신뢰성 높은 데이터를 기반으로 생활 정보를 안내합니다. 그러나 본 사이트의 정보 수집 및 편집에는 인공지능(AI) 자동화 가공 기술이 포함되어 있어, 수집된 내용 중 시차 또는 시스템 오류로 인해 부정확하거나 누락된 정보가 존재할 수 있습니다.
+              리얼인포는 정부 및 지자체, 공공데이터 포털, 그리고 일반 공개 뉴스의 신뢰성 높은 데이터를 기반으로 생활 정보를 안내합니다. 그러나 본 사이트의 정보 수집 및 편집에는 인공지능(AI) 자동화 가공 기술이 포함되어 있어, 수집된 내용 중 시차 또는 시스템 오류로 인해 부정확하거나 누락된 정보가 존재할 수 있습니다.
             </p>
             <p className="pl-3 font-semibold text-[#191F28]">
               따라서 이용자는 중요한 신청 기한, 자격 요건, 상세 제공 사항 등을 본 사이트의 내용에만 의존해서는 안 되며, 반드시 원본 출처 링크 혹은 관계 부처(시청, 구청 등)에 직접 최종 확인해야 합니다. 본 사이트의 정보만을 신뢰하여 행한 결정으로 인한 어떠한 손해에 대해서도 사이트 운영자는 책임을 지지 않습니다.
@@ -74,7 +74,7 @@ export default function TermsOfServicePage() {
               3. 이용자의 의무 및 저작권
             </h2>
             <p className="pl-3">
-              본 사이트가 게재하는 오리지널 가공 글 및 이미지 자산의 지식재산권은 우리동네 소식통에 귀속됩니다. 이용자는 사이트의 저작물에 대해 사전 서면 승인 없이 무단 복제, 배포, 전송 등의 상업적 행위를 해서는 안 됩니다.
+              본 사이트가 게재하는 오리지널 가공 글 및 이미지 자산의 지식재산권은 리얼인포에 귀속됩니다. 이용자는 사이트의 저작물에 대해 사전 서면 승인 없이 무단 복제, 배포, 전송 등의 상업적 행위를 해서는 안 됩니다.
             </p>
           </div>
 
@@ -116,7 +116,7 @@ export default function TermsOfServicePage() {
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left text-xs sm:text-sm text-[#8B95A1] font-medium">
           <div className="space-y-1">
             <p>공식 데이터 및 주요 핫이슈 소식을 기반으로 작동하는 블로그 채널입니다.</p>
-            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968]">
             real-infos.com

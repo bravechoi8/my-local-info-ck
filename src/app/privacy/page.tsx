@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: "개인정보처리방침 | Privacy Policy | 용인시 생활 정보",
-  description: "우리동네 소식통의 개인정보처리방침(Privacy Policy) 안내 페이지입니다.",
+  title: "개인정보처리방침 | Privacy Policy | 리얼인포",
+  description: "리얼인포의 개인정보처리방침(Privacy Policy) 안내 페이지입니다.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
-              우리동네 소식통
+              리얼인포
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
             개인정보처리방침 (Privacy Policy)
           </h1>
           <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
-            본 사이트(이하 '우리동네 소식통')는 정보통신망 이용촉진 및 정보보호 등에 관한 법률 등 관련 법령에 의거하여 이용자의 개인정보를 보호하고 관련 고충을 신속하게 처리하기 위해 다음과 같은 처리방침을 두고 있습니다.
+            본 사이트(이하 '리얼인포')는 정보통신망 이용촉진 및 정보보호 등에 관한 법률 등 관련 법령에 의거하여 이용자의 개인정보를 보호하고 관련 고충을 신속하게 처리하기 위해 다음과 같은 처리방침을 두고 있습니다.
           </p>
         </header>
 
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
               1. 개인정보의 수집 항목 및 수집 목적
             </h2>
             <p className="pl-3">
-              우리동네 소식통은 별도의 회원가입 없이 누구나 자유롭게 콘텐츠를 조회할 수 있습니다. 본 사이트는 이용자가 서비스를 이용하는 과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다.
+              리얼인포는 별도의 회원가입 없이 누구나 자유롭게 콘텐츠를 조회할 수 있습니다. 본 사이트는 이용자가 서비스를 이용하는 과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다.
             </p>
             <ul className="list-disc pl-8 space-y-1.5">
               <li>수집 항목: IP 주소, 쿠키(Cookie), 접속 로그, 방문 일시, 서비스 이용 기록</li>
@@ -84,7 +84,7 @@ export default function PrivacyPolicyPage() {
               3. 개인정보의 제3자 제공 및 처리 위탁
             </h2>
             <p className="pl-3">
-              우리동네 소식통은 이용자의 동의 없이 개인정보를 제3자에게 제공하거나 위탁하여 처리하지 않습니다. 법령의 규정에 의거하여 국가기관이나 수사기관의 요청이 있는 특별한 경우에 한해 관련 규정에 따라 제공될 수 있습니다.
+              리얼인포는 이용자의 동의 없이 개인정보를 제3자에게 제공하거나 위탁하여 처리하지 않습니다. 법령의 규정에 의거하여 국가기관이나 수사기관의 요청이 있는 특별한 경우에 한해 관련 규정에 따라 제공될 수 있습니다.
             </p>
           </div>
 
@@ -129,7 +129,7 @@ export default function PrivacyPolicyPage() {
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left text-xs sm:text-sm text-[#8B95A1] font-medium">
           <div className="space-y-1">
             <p>공식 데이터 및 주요 핫이슈 소식을 기반으로 작동하는 블로그 채널입니다.</p>
-            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968]">
             real-infos.com

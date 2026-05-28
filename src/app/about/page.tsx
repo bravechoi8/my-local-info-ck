@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: "서비스 소개 | 용인시 생활 정보",
-  description: "우리동네 소식통의 사이트 운영 목적, 데이터 출처, 콘텐츠 생성 방식을 소개합니다.",
+  title: "서비스 소개 | 리얼인포",
+  description: "리얼인포의 사이트 운영 목적, 데이터 출처, 콘텐츠 생성 방식을 소개합니다.",
 };
 
 export default function AboutPage() {
@@ -13,7 +13,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
-              우리동네 소식통
+              리얼인포
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
@@ -33,7 +33,7 @@ export default function AboutPage() {
             Service Intro
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
-            우리동네 소식통은 어떤 곳인가요?
+            리얼인포는 어떤 곳인가요?
           </h1>
           <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
             지역 주민 여러분이 꼭 알아야 할 축제, 혜택, 복지 지원금 정보를 더 편리하고 빠르게 알려드리는 친근한 동네 정보 가이드입니다.
@@ -50,7 +50,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-sm sm:text-base text-[#4E5968] leading-relaxed pl-3">
               정부와 지자체에서 수많은 생활 지원금과 축제, 행사 혜택을 제공하고 있지만, 바쁜 일상 속에서 나에게 딱 맞는 정보를 찾기란 쉽지 않습니다. 
-              <strong className="text-[#191F28] font-semibold"> 우리동네 소식통</strong>은 복잡하고 어려운 행정 정보를 주민 여러분의 눈높이에 맞게 쉽게 풀어서 전달하여, 지역 사회의 다양한 혜택을 단 하나도 놓치지 않도록 돕기 위해 운영됩니다.
+              <strong className="text-[#191F28] font-semibold"> 리얼인포</strong>는 복잡하고 어려운 행정 정보를 주민 여러분의 눈높이에 맞게 쉽게 풀어서 전달하여, 지역 사회의 다양한 혜택을 단 하나도 놓치지 않도록 돕기 위해 운영됩니다.
             </p>
           </div>
 
@@ -99,7 +99,7 @@ export default function AboutPage() {
               <span className="text-[#E5E8EB]">|</span>
               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
             </div>
-            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968]">
             real-infos.com

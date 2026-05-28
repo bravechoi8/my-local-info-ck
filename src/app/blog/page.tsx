@@ -49,7 +49,7 @@ export default function BlogListPage() {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
-              우리동네 소식통
+              리얼인포
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
@@ -145,7 +145,7 @@ export default function BlogListPage() {
               <span className="text-[#E5E8EB]">|</span>
               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
             </div>
-            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968]">
             real-infos.com

@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "용인시 생활 정보 | 행사·혜택·지원금 안내",
-  description: "용인시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
+  title: "리얼인포 | 생활 정보 · 혜택 · 지원금 총정리",
+  description: "전국의 유용한 생활 정보, 정부 혜택, 축제 행사 및 지원금 소식을 매일 업데이트합니다.",
   openGraph: {
-    title: "용인시 생활 정보 | 행사·혜택·지원금 안내",
-    description: "용인시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보를 매일 업데이트합니다.",
+    title: "리얼인포 | 생활 정보 · 혜택 · 지원금 총정리",
+    description: "전국의 유용한 생활 정보, 정부 혜택, 축제 행사 및 지원금 소식을 매일 업데이트합니다.",
     url: "https://real-infos.com",
-    siteName: "용인시 생활 정보",
+    siteName: "리얼인포",
     locale: "ko_KR",
     type: "website",
   },
@@ -33,9 +33,9 @@ export default function RootLayout({
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "용인시 생활 정보",
+    "name": "리얼인포",
     "url": "https://real-infos.com",
-    "description": "용인시 주민을 위한 지역 행사, 축제, 지원금, 혜택 정보"
+    "description": "전국의 유용한 생활 정보, 정부 혜택, 축제 행사 및 지원금 소식"
   };
 
   const breadcrumbSchema = {

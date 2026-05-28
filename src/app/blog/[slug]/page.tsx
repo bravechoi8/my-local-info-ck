@@ -19,16 +19,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "글을 찾을 수 없습니다 | 용인시 생활 정보",
+      title: "글을 찾을 수 없습니다 | 리얼인포",
     };
   }
 
   return {
-    title: `${post.title} | 용인시 생활 정보`,
+    title: `${post.title} | 리얼인포`,
     description: post.summary,
     keywords: post.tags,
     openGraph: {
-      title: `${post.title} | 용인시 생활 정보`,
+      title: `${post.title} | 리얼인포`,
       description: post.summary,
       url: `https://real-infos.com/blog/${slug}`,
       type: "article",
@@ -78,8 +78,8 @@ export default async function BlogPostPage({ params }: Props) {
         <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Link href="/" className="text-xl font-black tracking-tight bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-                우리동네 소식통
+              <Link href="/" className="text-xl font-black tracking-tight text-[#191F28] hover:text-[#3182F6] transition-all">
+                리얼인포
               </Link>
             </div>
             <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
@@ -116,11 +116,11 @@ export default async function BlogPostPage({ params }: Props) {
     "description": post.summary,
     "author": {
       "@type": "Organization",
-      "name": "용인시 생활 정보"
+      "name": "리얼인포"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "용인시 생활 정보"
+      "name": "리얼인포"
     }
   };
 
@@ -164,7 +164,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
-              우리동네 소식통
+              리얼인포
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
@@ -262,7 +262,7 @@ export default async function BlogPostPage({ params }: Props) {
               <span className="text-[#E5E8EB]">|</span>
               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
             </div>
-            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968]">
             real-infos.com
