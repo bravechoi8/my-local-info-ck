@@ -4,123 +4,144 @@ import { getAllPosts } from '@/lib/posts';
 export default function BlogListPage() {
   const posts = getAllPosts();
 
+  const getCategoryConfig = (category: string) => {
+    switch (category) {
+      case "행사":
+        return { label: "축제·행사", text: "text-rose-600" };
+      case "혜택":
+        return { label: "지원금·혜택", text: "text-emerald-600" };
+      case "핫이슈":
+        return { label: "핫이슈", text: "text-orange-600" };
+      case "재테크":
+        return { label: "재테크", text: "text-[#3182F6]" };
+      case "생활정보":
+        return { label: "생활정보", text: "text-purple-600" };
+      case "연예인이슈":
+        return { label: "연예인이슈", text: "text-pink-600" };
+      default:
+        return { label: category, text: "text-slate-600" };
+    }
+  };
+
+  const getFallbackImage = (cat: string) => {
+    switch (cat) {
+      case "행사":
+        return "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80";
+      case "혜택":
+        return "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=800&q=80";
+      case "핫이슈":
+        return "https://images.unsplash.com/photo-1495020689067-958852a6565d?auto=format&fit=crop&w=800&q=80";
+      case "재테크":
+        return "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80";
+      case "생활정보":
+        return "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80";
+      case "연예인이슈":
+        return "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80";
+      default:
+        return "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#fafbfc] text-[#1e293b] font-sans antialiased">
-      {/* GNB (상단 바) */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="text-xl font-black tracking-tight bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-white text-[#333D4B] antialiased">
+      {/* GNB (상단 네비게이션) - 토스 스타일 극도 미니멀 */}
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#F2F4F6] px-6 py-5">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
               우리동네 소식통
-            </Link>
-            <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-bold text-slate-400 bg-slate-50 border border-slate-100 rounded-md">
-              용인시
             </span>
-          </div>
-          <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
-            <Link href="/" className="hover:text-slate-900 transition-colors">홈</Link>
-            <Link href="/blog" className="text-slate-900 font-semibold border-b-2 border-emerald-500 pb-1">블로그</Link>
-            <Link href="/about" className="hover:text-slate-900 transition-colors">소개</Link>
+          </Link>
+          <div className="flex items-center gap-6 text-sm font-semibold text-[#4E5968]">
+            <Link href="/" className="hover:text-[#191F28] transition-colors">홈</Link>
+            <Link href="/blog" className="text-[#3182F6]">블로그</Link>
+            <Link href="/about" className="hover:text-[#191F28] transition-colors">소개</Link>
           </div>
         </div>
       </nav>
 
-      {/* 헤더 배너 */}
-      <header className="bg-white py-16 px-6 border-b border-slate-100">
-        <div className="max-w-4xl mx-auto text-center space-y-4">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full">
-            ✍️ 소식통 매거진
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-950">
+      {/* 헤더 섹션 - 여백이 넉넉하고 정돈된 타이틀 */}
+      <header className="bg-white pt-20 pb-16 px-6">
+        <div className="max-w-3xl mx-auto text-left space-y-3">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
             우리동네 블로그 소식
           </h1>
-          <p className="text-sm sm:text-base text-slate-500 max-w-lg mx-auto leading-relaxed">
-            용인시의 알찬 정보와 유용한 생활 가이드, 동네 사람들의 살아가는 이야기를 나누는 공간입니다.
+          <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
+            알찬 정부 혜택과 유용한 생활 정보, 우리 이웃들이 나누는 동네 이야기를 정리해 드립니다.
           </p>
         </div>
       </header>
 
       {/* 메인 콘텐츠 영역 */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8 text-xs sm:text-sm text-slate-400">
-          총 <span className="font-bold text-slate-700">{posts.length}</span>개의 글이 있습니다.
+      <main className="max-w-3xl mx-auto px-6 pb-24">
+        <div className="mb-8 text-xs sm:text-sm text-[#8B95A1] font-semibold">
+          총 <span className="text-[#3182F6]">{posts.length}</span>개의 이야기가 있습니다.
         </div>
 
         {posts.length > 0 ? (
-          <div className="space-y-8">
-            {posts.map((post) => (
-              <article
-                key={post.slug}
-                className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-100 hover:border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_12px_40px_rgba(16,185,129,0.04)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden p-6 sm:p-8"
-              >
-                <div>
-                  {/* 카테고리 & 작성일 */}
-                  <div className="flex items-center gap-3 mb-4">
-                    {post.category && (
-                      <span className="px-2.5 py-0.5 text-xs font-bold rounded-md text-emerald-700 bg-emerald-50">
-                        {post.category}
-                      </span>
-                    )}
-                    <span className="text-xs text-slate-400">{post.date}</span>
-                  </div>
+          <div className="border-t border-[#F2F4F6]">
+            {posts.map((post) => {
+              // 본문에서 첫 번째 마크다운 이미지 주소 추출
+              const imgMatch = post.content.match(/!\[.*?\]\((.*?)\)/);
+              const firstImg = imgMatch ? imgMatch[1] : null;
+              const thumbnail = firstImg || getFallbackImage(post.category);
+              const config = getCategoryConfig(post.category);
 
-                  {/* 글 제목 */}
-                  <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">
-                    <Link href={`/blog/${post.slug}`}>
+              return (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group flex items-start justify-between gap-6 py-8 border-b border-[#F2F4F6] transition-all"
+                >
+                  <div className="flex-1 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs font-semibold ${config.text}`}>
+                        {config.label}
+                      </span>
+                    </div>
+                    <h2 className="text-base sm:text-xl font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
                       {post.title}
-                    </Link>
-                  </h2>
-
-                  {/* 글 요약 (미리보기 텍스트로 지정된 summary 노출) */}
-                  <p className="text-sm text-slate-500 leading-relaxed mb-6">
-                    {post.summary || '요약 내용이 없습니다.'}
-                  </p>
-                </div>
-
-                {/* 하단 영역: 태그 & 보러가기 링크 */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-50">
-                  <div className="flex flex-wrap gap-1.5">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 text-xs text-slate-500 bg-slate-50 border border-slate-100 rounded-md"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-[#4E5968] leading-relaxed line-clamp-2">
+                      {post.summary || '요약 내용이 없습니다.'}
+                    </p>
+                    <div className="text-[11px] sm:text-xs text-[#8B95A1] pt-1 font-medium">
+                      {post.date.replace(/-/g, ".")}
+                    </div>
                   </div>
-
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
-                  >
-                    <span>글 읽기</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-              </article>
-            ))}
+                  
+                  {/* 우측 썸네일 이미지 */}
+                  <div className="w-20 h-20 sm:w-28 sm:h-28 overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative shrink-0">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                      src={thumbnail} 
+                      alt={post.title} 
+                      className="absolute inset-0 h-full w-full object-cover group-hover:scale-102 transition-transform duration-500"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         ) : (
-          /* 글 없음 표시 (기본 상태) */
-          <div className="text-center py-20 bg-white rounded-2xl border border-slate-100 shadow-sm">
+          /* 글 없음 표시 */
+          <div className="text-center py-24 bg-[#F9FAFB] rounded-2xl border border-[#F2F4F6]">
             <span className="text-4xl inline-block mb-4">📭</span>
-            <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2">아직 등록된 블로그 글이 없습니다</h3>
-            <p className="text-xs sm:text-sm text-slate-400">새로운 소식들이 곧 업데이트될 예정이니 기대해 주세요!</p>
+            <h3 className="text-base sm:text-lg font-bold text-[#191F28] mb-2">아직 등록된 이야기가 없습니다</h3>
+            <p className="text-xs sm:text-sm text-[#8B95A1]">새로운 유용한 소식들이 곧 업데이트될 예정이니 기대해 주세요!</p>
           </div>
         )}
       </main>
 
-      {/* 하단 푸터 영역 */}
-      <footer className="mt-24 bg-white border-t border-slate-100 py-12 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-          <div className="space-y-1.5 text-xs text-slate-400">
-            <p>공공데이터포털(data.go.kr)에 공개된 공식 데이터를 기반으로 작동하는 정보 채널입니다.</p>
+      {/* 하단 푸터 */}
+      <footer className="bg-[#F9FAFB] border-t border-[#F2F4F6] py-16 px-6">
+        <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left text-xs sm:text-sm text-[#8B95A1] font-medium">
+          <div className="space-y-1">
+            <p>공식 데이터 및 주요 핫이슈 소식을 기반으로 작동하는 블로그 채널입니다.</p>
+            <p>© {new Date().getFullYear()} 우리동네 소식통. All rights reserved.</p>
           </div>
-          <div className="text-xs font-semibold text-slate-500">
-            © {new Date().getFullYear()} 우리동네 소식통. All rights reserved.
+          <div className="text-xs font-semibold text-[#4E5968]">
+            real-infos.com
           </div>
         </div>
       </footer>
