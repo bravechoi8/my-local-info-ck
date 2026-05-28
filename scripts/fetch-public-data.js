@@ -41,17 +41,17 @@ async function main() {
       return;
     }
 
-    // 필터링: 성남 -> 경기 -> 전체
-    const containsSeongnam = items.filter(item => 
-      (item.서비스명 && item.서비스명.includes('성남')) ||
-      (item.서비스목적요약 && item.서비스목적요약.includes('성남')) ||
-      (item.지원대상 && item.지원대상.includes('성남')) ||
-      (item.소관기관명 && item.소관기관명.includes('성남'))
+    // 필터링: 용인 -> 경기 -> 전체
+    const containsYongin = items.filter(item => 
+      (item.서비스명 && item.서비스명.includes('용인')) ||
+      (item.서비스목적요약 && item.서비스목적요약.includes('용인')) ||
+      (item.지원대상 && item.지원대상.includes('용인')) ||
+      (item.소관기관명 && item.소관기관명.includes('용인'))
     );
 
     let candidates = [];
-    if (containsSeongnam.length > 0) {
-      candidates = containsSeongnam;
+    if (containsYongin.length > 0) {
+      candidates = containsYongin;
     } else {
       const containsGyeonggi = items.filter(item => 
         (item.서비스명 && item.서비스명.includes('경기')) ||
@@ -127,7 +127,6 @@ ${JSON.stringify(targetItem)}`;
     text = text.replace(/```json/g, '').replace(/```/g, '').trim();
     
     const parsedItem = JSON.parse(text);
-    // id를 수동으로 맞춰주거나 보정
     parsedItem.id = nextId;
     if (!parsedItem.startDate) {
       parsedItem.startDate = todayStr;
@@ -140,7 +139,6 @@ ${JSON.stringify(targetItem)}`;
 
   } catch (error) {
     console.error('에러 발생:', error.message);
-    // 에러 발생 시 기존 local-info.json 유지 (아무것도 하지 않음)
   }
 }
 
