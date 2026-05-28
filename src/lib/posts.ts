@@ -44,7 +44,8 @@ function formatDate(dateVal: any): string {
 // 제목과 본문을 분석해 행사/혜택 카테고리를 판별하는 함수
 function resolveCategory(title: string, content: string, frontmatterCategory?: string): string {
   const cat = frontmatterCategory || '';
-  if (cat === '행사' || cat === '혜택') {
+  const allowed = ['행사', '혜택', '핫이슈', '재테크', '생활정보', '연예인이슈'];
+  if (allowed.includes(cat)) {
     return cat;
   }
   const text = (title + ' ' + content).toLowerCase();

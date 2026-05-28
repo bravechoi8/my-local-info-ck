@@ -11,7 +11,7 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ posts }: HomeClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState<"전체" | "행사" | "혜택">("전체");
+  const [selectedCategory, setSelectedCategory] = useState<"전체" | "행사" | "혜택" | "핫이슈" | "재테크" | "생활정보" | "연예인이슈">("전체");
   const [searchQuery, setSearchQuery] = useState("");
 
   // 날짜 형식 예쁘게 변환 (YYYY-MM-DD -> YYYY.MM.DD)
@@ -30,7 +30,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
       slug: post.slug,
       title: post.title,
       summary: post.summary,
-      category: post.category as "행사" | "혜택",
+      category: post.category as "행사" | "혜택" | "핫이슈" | "재테크" | "생활정보" | "연예인이슈",
       date: post.date,
       location: matchedItem?.location || "온라인 및 관할 행정복지센터",
       target: matchedItem?.target || "용인시 주민 누구나",
@@ -52,6 +52,25 @@ export default function HomeClient({ posts }: HomeClientProps) {
 
   const events = filteredPosts.filter((post) => post.category === "행사");
   const benefits = filteredPosts.filter((post) => post.category === "혜택");
+
+  const getCategoryConfig = (category: string) => {
+    switch (category) {
+      case "행사":
+        return { label: "축제 · 행사", bg: "from-rose-50 to-amber-50/50 border-b border-rose-100/50", badge: "text-rose-700 bg-rose-100/80" };
+      case "혜택":
+        return { label: "지원금 · 혜택", bg: "from-emerald-50 to-cyan-50/50 border-b border-emerald-100/50", badge: "text-emerald-700 bg-emerald-100/80" };
+      case "핫이슈":
+        return { label: "🔥 핫이슈", bg: "from-orange-50 to-red-50/50 border-b border-orange-100/50", badge: "text-orange-700 bg-orange-100/80" };
+      case "재테크":
+        return { label: "📈 재테크", bg: "from-blue-50 to-indigo-50/50 border-b border-blue-100/50", badge: "text-blue-700 bg-blue-100/80" };
+      case "생활정보":
+        return { label: "💡 생활정보", bg: "from-purple-50 to-pink-50/50 border-b border-purple-100/50", badge: "text-purple-700 bg-purple-100/80" };
+      case "연예인이슈":
+        return { label: "⭐ 연예인이슈", bg: "from-fuchsia-50 to-yellow-50/50 border-b border-fuchsia-100/50", badge: "text-fuchsia-700 bg-fuchsia-100/80" };
+      default:
+        return { label: category, bg: "from-slate-50 to-zinc-50/50 border-b border-slate-100/50", badge: "text-slate-700 bg-slate-100/80" };
+    }
+  };
 
   const renderCard = (post: typeof mappedPosts[0]) => {
     const isEvent = post.category === "행사";
@@ -93,19 +112,15 @@ export default function HomeClient({ posts }: HomeClientProps) {
           {/* 카드 헤더 일러스트 영역 */}
           <div
             className={`h-24 w-full relative flex items-end p-4 bg-gradient-to-br ${
-              post.category === "행사"
-                ? "from-rose-50 to-amber-50/50 border-b border-rose-100/50"
-                : "from-emerald-50 to-cyan-50/50 border-b border-emerald-100/50"
+              getCategoryConfig(post.category).bg
             }`}
           >
             <span
               className={`px-2 py-0.5 text-[10px] font-bold rounded ${
-                post.category === "행사"
-                  ? "text-rose-700 bg-rose-100/80"
-                  : "text-emerald-700 bg-emerald-100/80"
+                getCategoryConfig(post.category).badge
               }`}
             >
-              {post.category === "행사" ? "축제 · 행사" : "지원금 · 혜택"}
+              {getCategoryConfig(post.category).label}
             </span>
           </div>
 
@@ -205,7 +220,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
         {/* 검색 및 필터 컨트롤 */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-6 border-b border-slate-100">
           {/* 카테고리 필터 버튼들 */}
-          <div className="flex items-center gap-2 p-1 bg-slate-100 rounded-xl w-fit">
+          <div className="flex flex-wrap items-center gap-2 p-1.5 bg-slate-100 rounded-2xl w-full sm:w-fit">
             <button
               onClick={() => setSelectedCategory("전체")}
               className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${
@@ -236,6 +251,46 @@ export default function HomeClient({ posts }: HomeClientProps) {
             >
               💰 지원금 · 혜택
             </button>
+            <button
+              onClick={() => setSelectedCategory("핫이슈")}
+              className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${
+                selectedCategory === "핫이슈"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              🔥 핫이슈
+            </button>
+            <button
+              onClick={() => setSelectedCategory("재테크")}
+              className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${
+                selectedCategory === "재테크"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              📈 재테크
+            </button>
+            <button
+              onClick={() => setSelectedCategory("생활정보")}
+              className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${
+                selectedCategory === "생활정보"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              💡 생활정보
+            </button>
+            <button
+              onClick={() => setSelectedCategory("연예인이슈")}
+              className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${
+                selectedCategory === "연예인이슈"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              ⭐ 연예인이슈
+            </button>
           </div>
 
           {/* 검색 바 */}
@@ -263,36 +318,13 @@ export default function HomeClient({ posts }: HomeClientProps) {
         {/* 카드 그리드 */}
         {filteredPosts.length > 0 ? (
           <div className="space-y-12">
-            {/* 행사 섹션 */}
-            {(selectedCategory === "전체" || selectedCategory === "행사") && events.length > 0 && (
-              <div>
-                {selectedCategory === "전체" && (
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
-                    <span>🎉</span> 진행 중인 축제 · 행사
-                  </h2>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {events.map((post) => renderCard(post))}
-                </div>
-              </div>
-            )}
-
-            {/* 광고 배너 */}
-            {selectedCategory === "전체" && events.length > 0 && benefits.length > 0 && (
-              <AdBanner />
-            )}
-
-            {/* 혜택 섹션 */}
-            {(selectedCategory === "전체" || selectedCategory === "혜택") && benefits.length > 0 && (
-              <div>
-                {selectedCategory === "전체" && (
-                  <h2 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
-                    <span>💰</span> 놓치기 쉬운 지원금 · 혜택
-                  </h2>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {benefits.map((post) => renderCard(post))}
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.slice(0, 3).map((post) => renderCard(post))}
+            </div>
+            {filteredPosts.length > 3 && <AdBanner />}
+            {filteredPosts.length > 3 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredPosts.slice(3).map((post) => renderCard(post))}
               </div>
             )}
           </div>

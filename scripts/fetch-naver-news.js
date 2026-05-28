@@ -118,7 +118,7 @@ async function main() {
 title: (친근하고 흥미로운 제목, 낚시성 배제)
 date: ${todayStr}
 summary: (한 줄 요약)
-category: 정보
+category: ${selectedKeyword}
 tags: [태그1, 태그2, 태그3]
 ---
 
