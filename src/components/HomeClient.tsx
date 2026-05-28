@@ -138,27 +138,29 @@ export default function HomeClient({ posts }: HomeClientProps) {
             </p>
 
             {/* 카드 상세 메타정보 */}
-            <div className="space-y-2.5 pt-4 border-t border-slate-50">
-              <div className="flex items-center gap-2 text-xs text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                <span className="font-semibold text-slate-400 shrink-0">장소 · 접수</span>
-                <span className="truncate">{post.location}</span>
+            {(post.category === "행사" || post.category === "혜택") && (
+              <div className="space-y-2.5 pt-4 border-t border-slate-50">
+                <div className="flex items-center gap-2 text-xs text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                  <span className="font-semibold text-slate-400 shrink-0">장소 · 접수</span>
+                  <span className="truncate">{post.location}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                  <span className="font-semibold text-slate-400 shrink-0">신청 대상</span>
+                  <span className="truncate">{post.target}</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-600">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
+                  <span className="font-semibold text-slate-400 shrink-0">진행 기간</span>
+                  <span>
+                    {post.category === "행사"
+                      ? `${formatDate(post.startDate)} ~ ${formatDate(post.endDate)}`
+                      : `상시 (${formatDate(post.startDate)} ~)`}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-xs text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                <span className="font-semibold text-slate-400 shrink-0">신청 대상</span>
-                <span className="truncate">{post.target}</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 shrink-0"></span>
-                <span className="font-semibold text-slate-400 shrink-0">진행 기간</span>
-                <span>
-                  {post.category === "행사"
-                    ? `${formatDate(post.startDate)} ~ ${formatDate(post.endDate)}`
-                    : `상시 (${formatDate(post.startDate)} ~)`}
-                </span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
