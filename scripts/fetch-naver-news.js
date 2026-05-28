@@ -36,15 +36,29 @@ async function main() {
       throw new Error('GEMINI_API_KEY 환경변수가 없습니다.');
     }
 
-    // [1단계] 키워드 중 랜덤 선택 및 검색
-    const keywords = ['재테크', '핫이슈', '생활정보', '연예인이슈'];
-    const selectedKeyword = process.env.SELECTED_KEYWORD || keywords[Math.floor(Math.random() * keywords.length)];
+    // [1단계] 키워드 중 랜덤 선택 및 검색 (한국 시간 KST 일요일 아침에는 로또 당첨번호 자동 활성화)
+    const nowUtc = new Date();
+    const kstOffset = 9 * 60 * 60 * 1000;
+    const kstDate = new Date(nowUtc.getTime() + kstOffset);
+    const dayOfWeek = kstDate.getUTCDay(); // 0: 일요일, 1: 월요일 ...
+
+    let selectedKeyword;
+    let isLottoSunday = false;
+
+    if (dayOfWeek === 0 && !process.env.SELECTED_KEYWORD) {
+      selectedKeyword = '로또 당첨번호';
+      isLottoSunday = true;
+      console.log('일요일 아침 KST 로또 당첨번호 검색 모드 자동 활성화');
+    } else {
+      const keywords = ['재테크', '핫이슈', '생활정보', '연예인이슈'];
+      selectedKeyword = process.env.SELECTED_KEYWORD || keywords[Math.floor(Math.random() * keywords.length)];
+    }
     console.log(`선택된 키워드: ${selectedKeyword}`);
 
     const params = new URLSearchParams({
       query: selectedKeyword,
       display: '10',
-      sort: 'sim' // 정확도순
+      sort: isLottoSunday ? 'date' : 'sim' // 일요일 로또는 최신순 검색
     });
 
     const response = await fetch(`${NAVER_ENDPOINT}?${params.toString()}`, {
@@ -104,6 +118,8 @@ async function main() {
 
     console.log(`대상 뉴스 선정: ${title}`);
 
+    const postCategory = selectedKeyword === '로또 당첨번호' ? '생활정보' : selectedKeyword;
+
     // [3단계] Gemini AI로 블로그 글 생성
     const todayStr = new Date().toISOString().split('T')[0];
     const prompt = `아래 뉴스를 분석해서 친근하고 흥미로운 블로그 정보 글을 작성해줘.
@@ -118,7 +134,7 @@ async function main() {
 title: (친근하고 흥미로운 제목, 낚시성 배제, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 date: ${todayStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-category: ${selectedKeyword}
+category: ${postCategory}
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 ---
 
@@ -136,6 +152,9 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 - 쇼핑/마트/소비: https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80
 - 축제/행사/문화: https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80
 )
+
+만약 키워드가 '로또 당첨번호'인 경우, 사람들의 큰 관심을 끌 수 있는 로또 당첨번호 안내 포스팅(예: '1120회 로또 1등 당첨번호 명당 어디? 실수령액까지 완벽 요약')으로 친근하고 호기심 있게 작성해줘. 1등 번호, 보너스 번호, 1등 명당(판매점) 정보들을 뉴스 내용에서 정밀하게 파싱해서 보기 쉽게 안내해줘.
+
 
 마지막 줄에 FILENAME: ${todayStr}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
 
