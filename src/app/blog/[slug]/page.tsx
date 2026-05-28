@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.title} | 용인시 생활 정보`,
     description: post.summary,
+    keywords: post.tags,
     openGraph: {
       title: `${post.title} | 용인시 생활 정보`,
       description: post.summary,
