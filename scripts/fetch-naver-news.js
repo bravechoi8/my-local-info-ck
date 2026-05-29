@@ -97,42 +97,10 @@ async function main() {
     const dayOfWeek = kstDate.getUTCDay(); // 0: 일요일, 1: 월요일 ...
     const dayOfMonth = kstDate.getUTCDate(); // 1~31: 날짜
 
-    const tasks = [];
-    const baseKeywords = ['재테크', '핫이슈', '생활정보', '연예인이슈'];
-
-    if (dayOfMonth === 1 && !process.env.SELECTED_KEYWORD) {
-      const currentYear = kstDate.getUTCFullYear();
-      const currentMonth = kstDate.getUTCMonth() + 1;
-      tasks.push({
-        keyword: `${currentYear}년 ${currentMonth}월 손없는날`,
-        isSonMonthFirst: true,
-        isLottoSunday: false
-      });
-      const shuffled = [...baseKeywords].sort(() => 0.5 - Math.random());
-      tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-      tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-    } else if (dayOfWeek === 0 && !process.env.SELECTED_KEYWORD) {
-      tasks.push({
-        keyword: '로또 당첨번호',
-        isSonMonthFirst: false,
-        isLottoSunday: true
-      });
-      const shuffled = [...baseKeywords].sort(() => 0.5 - Math.random());
-      tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-      tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-    } else {
-      const shuffled = [...baseKeywords].sort(() => 0.5 - Math.random());
-      // 만약 환경변수 SELECTED_KEYWORD가 있다면 우선적으로 포함
-      if (process.env.SELECTED_KEYWORD) {
-        tasks.push({ keyword: process.env.SELECTED_KEYWORD, isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-      } else {
-        tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[2], isSonMonthFirst: false, isLottoSunday: false });
-      }
-    }
+    const tasks = [
+      { keyword: '생활 꿀팁', isSonMonthFirst: false, isLottoSunday: false },
+      { keyword: '재테크 노하우', isSonMonthFirst: false, isLottoSunday: false }
+    ];
 
     console.log('오늘 수집할 뉴스 키워드 목록:', tasks.map(t => t.keyword).join(', '));
 
@@ -274,7 +242,7 @@ category: ${postCategory}
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 ---
 
-(본문: 800자 이상, 친근한 블로그 톤, 뉴스 내용 상세 설명, 관련 의견 및 생활 팁 3가지 포함, 출처 안내.
+(본문: 1500자 이상, 구글 애드센스 승인을 위한 전문적이고 상세한 정보성 생활 꿀팁 및 가이드 형식으로 자세하고 아주 친절하게 작성해줘. 뉴스 내용의 상세 설명과 실생활에 도움을 주는 구체적인 해결책이나 활용 팁 3가지 이상을 충실히 포함해줘. 출처도 함께 안내해줘.
 본문 흐름 중간중간에 관련된 이미지 마크다운을 2개(글이 짧을 때) 또는 3개(글이 길 때) 자동으로 어울리는 위치에 삽입해줘. 
 이미지는 임의의 링크를 생성하지 말고, 반드시 아래 제공된 고정된 주소 중 글 내용과 가장 어울리는 이미지를 골라서 사용해줘:
 ${imagesTextBlock}
