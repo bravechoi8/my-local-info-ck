@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { generateSummaryImage } from './image-generator.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -201,8 +202,28 @@ ${imagesTextBlock}
         let markdownContent = contentLines.join('\n').trim();
         markdownContent = markdownContent.replace(/^```markdown\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
 
+        // 메타데이터 파싱하여 요약 이미지 생성
+        const titleMatch = markdownContent.match(/title:\s*(.+)/);
+        const summaryMatch = markdownContent.match(/summary:\s*(.+)/);
+        const titleVal = titleMatch ? titleMatch[1].replace(/['"]/g, '').trim() : itemName;
+        const summaryVal = summaryMatch ? summaryMatch[1].replace(/['"]/g, '').trim() : '';
+
+        console.log(`[이미지 생성 실행] 타이틀: ${titleVal}, 요약: ${summaryVal}`);
+        const imgPath = await generateSummaryImage(titleVal, summaryVal, safeFilename);
+        if (imgPath) {
+          const frontmatterEndIndex = markdownContent.indexOf('\n---', 4);
+          if (frontmatterEndIndex !== -1) {
+            const insertPos = frontmatterEndIndex + 4;
+            markdownContent = markdownContent.substring(0, insertPos) +
+              `\n\n![요약 카드뉴스](${imgPath})` +
+              markdownContent.substring(insertPos);
+          } else {
+            markdownContent = `![요약 카드뉴스](${imgPath})\n\n` + markdownContent;
+          }
+        }
+
         fs.writeFileSync(outputPath, markdownContent, 'utf-8');
-        console.log(`글 생성 완료: ${outputFilename}`);
+        console.log(`글 생성 및 이미지 자동화 완료: ${outputFilename}`);
 
       } catch (err) {
         console.error(`글 생성 중 오류 발생 (${itemName}):`, err.message);

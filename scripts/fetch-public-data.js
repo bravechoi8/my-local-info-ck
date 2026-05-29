@@ -12,6 +12,29 @@ const PUBLIC_DATA_ENDPOINT = 'https://api.odcloud.kr/api/gov24/v3/serviceList';
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const LOCAL_INFO_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info.json');
 
+const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실', '도서관'];
+const BENEFIT_KEYWORDS = ['지원금', '지원', '수당', '연금', '혜택', '감면', '할인', '보조금', '비용', '자금', '대출', '금융', '융자', '바우처', '일자리', '취업', '장학', '장려금'];
+
+function classifyItem(item) {
+  const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '')).toLowerCase();
+  const hasEvent = EVENT_KEYWORDS.some(kw => text.includes(kw));
+  const hasBenefit = BENEFIT_KEYWORDS.some(kw => text.includes(kw));
+  if (hasEvent && !hasBenefit) return '행사';
+  if (hasBenefit && !hasEvent) return '혜택';
+  return hasEvent ? '행사' : '혜택';
+}
+
+function scoreItem(item) {
+  const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '') + ' ' + (item.소관기관명 || '')).toLowerCase();
+  let score = 0;
+  if (text.includes('용인')) {
+    score += 10;
+  } else if (text.includes('경기')) {
+    score += 5;
+  }
+  return score;
+}
+
 async function main() {
   try {
     if (!PUBLIC_DATA_API_KEY) {
@@ -60,51 +83,46 @@ async function main() {
       return;
     }
 
-    // 용인 데이터와 경기도 데이터 각각 선별
-    const yonginCandidates = newItems.filter(item => 
-      (item.서비스명 && item.서비스명.includes('용인')) ||
-      (item.서비스목적요약 && item.서비스목적요약.includes('용인')) ||
-      (item.지원대상 && item.지원대상.includes('용인')) ||
-      (item.소관기관명 && item.소관기관명.includes('용인'))
-    );
+    // 행사와 혜택 분류
+    const eventCandidates = newItems.filter(item => classifyItem(item) === '행사');
+    const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택');
 
-    const gyeonggiCandidates = newItems.filter(item => 
-      // 용인 데이터는 제외하고 순수 경기 지역 데이터만 필터링
-      !((item.서비스명 && item.서비스명.includes('용인')) ||
-        (item.서비스목적요약 && item.서비스목적요약.includes('용인')) ||
-        (item.지원대상 && item.지원대상.includes('용인')) ||
-        (item.소관기관명 && item.소관기관명.includes('용인'))) &&
-      ((item.서비스명 && item.서비스명.includes('경기')) ||
-       (item.서비스목적요약 && item.서비스목적요약.includes('경기')) ||
-       (item.지원대상 && item.지원대상.includes('경기')) ||
-       (item.소관기관명 && item.소관기관명.includes('경기')))
-    );
+    // 스코어링 후 정렬
+    eventCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
+    benefitCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
 
     const targetItems = [];
 
-    // 용인 하나 선택
-    if (yonginCandidates.length > 0) {
-      targetItems.push(yonginCandidates[0]);
+    // 행사 1개 선택
+    if (eventCandidates.length > 0) {
+      targetItems.push(eventCandidates[0]);
+      console.log(`선택된 행사: ${eventCandidates[0].서비스명} (지역점수: ${scoreItem(eventCandidates[0])})`);
     } else {
-      console.log('오늘 자 용인 관련 공공데이터가 없어 선별하지 못했습니다.');
+      console.log('오늘 자 행사 관련 미등록 공공데이터가 없습니다.');
     }
 
-    // 경기도 하나 선택
-    if (gyeonggiCandidates.length > 0) {
-      targetItems.push(gyeonggiCandidates[0]);
+    // 혜택 1개 선택
+    if (benefitCandidates.length > 0) {
+      targetItems.push(benefitCandidates[0]);
+      console.log(`선택된 혜택: ${benefitCandidates[0].서비스명} (지역점수: ${scoreItem(benefitCandidates[0])})`);
     } else {
-      console.log('오늘 자 경기도 관련 공공데이터가 없어 선별하지 못했습니다.');
+      console.log('오늘 자 혜택 관련 미등록 공공데이터가 없습니다.');
     }
 
-    // 만약 용인/경기 둘 다 한 건도 안 잡혔다면, 예비용으로 전체 미등록 데이터 중 최대 2개 선택
-    if (targetItems.length === 0) {
-      console.log('용인/경기 데이터가 모두 없어 다른 지역 데이터를 대체 수집합니다.');
-      targetItems.push(...newItems.slice(0, 2));
-    } else if (targetItems.length === 1) {
-      // 1개만 잡힌 경우 나머지 1개는 전체 미등록 데이터 중 다른 하나로 채워 2개를 맞춰줌
-      const fallback = newItems.find(item => !targetItems.includes(item));
+    // 만약 둘 중 한 쪽만 선별되어 총 2개가 채워지지 않았다면, 예비용으로 다른 쪽의 차순위 아이템을 채워줍니다.
+    if (targetItems.length === 1) {
+      const selected = targetItems[0];
+      const fallback = newItems.find(item => item.서비스명 !== selected.서비스명);
       if (fallback) {
         targetItems.push(fallback);
+        console.log(`대체 수집 대상 추가: ${fallback.서비스명}`);
+      }
+    } else if (targetItems.length === 0) {
+      // 둘 다 아예 없을 경우 전체 미등록 데이터 중 우선순위 높은 순으로 최대 2개 채워줌
+      const fallbackCandidates = [...newItems].sort((a, b) => scoreItem(b) - scoreItem(a));
+      targetItems.push(...fallbackCandidates.slice(0, 2));
+      if (targetItems.length > 0) {
+        console.log('비상 대체 데이터 수집:', targetItems.map(item => item.서비스명).join(', '));
       }
     }
 

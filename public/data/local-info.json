@@ -75,5 +75,27 @@
     "target": "○ 사회적 약자(연령, 장애, 빈곤, 교육정도 등)에 해당하는 해양사고관련자",
     "summary": "해양사고를 입은 사회적 약자에게 국선 심판변론인 선정 및 법률자문 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/119200000007"
+  },
+  {
+    "id": 5,
+    "name": "옵서버 승선경비 지원",
+    "category": "혜택",
+    "startDate": "2024-05-16",
+    "endDate": "상시",
+    "location": "한국수산자원공단",
+    "target": "국제옵서버를 승선시킨 원양선사",
+    "summary": "국제옵서버를 승선시킨 원양선사에 승선경비 및 활동 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/119200000008"
+  },
+  {
+    "id": 6,
+    "name": "합작수산물 관세 감면 추진",
+    "category": "혜택",
+    "startDate": "2023-10-26",
+    "endDate": "상시",
+    "location": "해양수산부",
+    "target": "기획재정부령에서 정한 방법 또는 요건에 적합하게 채포한 수산물을 국내로 수입하는 자",
+    "summary": "적법하게 채포한 수산물을 국내로 수입하는 자에게 관세감면",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/119200000010"
   }
 ]
