@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { generateSummaryImage } from './image-generator.js';
+import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,58 +11,52 @@ const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models
 const DATA_FILE_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info.json');
 const POSTS_DIR_PATH = path.join(__dirname, '..', 'src', 'content', 'posts');
 
-const MASTER_IMAGES = [
-  { name: '주거/건물', url: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80' },
-  { name: '금융/돈/재테크', url: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80' },
-  { name: '사무실/업무/비즈니스', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80' },
-  { name: '가족/인물/행복', url: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80' },
-  { name: 'IT/스마트폰/노트북', url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80' },
-  { name: '방송/연예/공연', url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80' },
-  { name: '공부/배움/미팅', url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80' },
-  { name: '한국/도시/도시배경', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80' },
-  { name: '쇼핑/마트/소비', url: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80' },
-  { name: '축제/행사/문화', url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80' },
-  { name: '어선/바다/해양', url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80' },
-  { name: '친환경/에너지/태양광', url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80' },
-  { name: '보안/개인정보/자물쇠', url: 'https://images.unsplash.com/photo-1633265486064-086b219351ec?auto=format&fit=crop&w=800&q=80' },
-  { name: '법률/공공지원/행정', url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80' }
-];
-
-function getUnusedImages(postsDirPath, masterImages) {
-  try {
-    if (!fs.existsSync(postsDirPath)) return masterImages;
-
-    const files = fs.readdirSync(postsDirPath)
-      .filter(file => file.endsWith('.md'))
-      .sort()
-      .reverse();
-
-    const usedUrls = new Set();
-    const checkCount = Math.min(files.length, 4);
-    for (let i = 0; i < checkCount; i++) {
-      const content = fs.readFileSync(path.join(postsDirPath, files[i]), 'utf-8');
-      const matches = content.match(/https:\/\/images\.unsplash\.com\/photo-[a-zA-Z0-9\-?=&_]+/g);
-      if (matches) {
-        matches.forEach(url => {
-          const baseId = url.split('?')[0];
-          usedUrls.add(baseId);
-        });
-      }
-    }
-
-    const unused = masterImages.filter(img => {
-      const imgBaseId = img.url.split('?')[0];
-      return !usedUrls.has(imgBaseId);
-    });
-
-    if (unused.length >= 6) {
-      return unused;
-    }
-    return masterImages;
-  } catch (err) {
-    console.error('이미지 필터링 중 오류:', err.message);
-    return masterImages;
+/**
+ * 본문 내의 [IMAGE_PROMPT: ...] 형식의 플레이스홀더를 찾아 실시간으로 이미지를 생성하고 치환합니다.
+ * @param {string} markdownContent 마크다운 본문
+ * @param {string} safeFilename 안전한 파일명 접두사
+ * @returns {Promise<string>} 이미지가 치환된 마크다운 본문
+ */
+async function processBodyImages(markdownContent, safeFilename) {
+  const regex = /\[IMAGE_PROMPT:\s*(.+?)\]/g;
+  let matches = [];
+  let match;
+  while ((match = regex.exec(markdownContent)) !== null) {
+    matches.push({ fullMatch: match[0], promptText: match[1] });
   }
+
+  if (matches.length === 0) {
+    return markdownContent;
+  }
+
+  console.log(`[본문 이미지 생성] 총 ${matches.length}개의 이미지 생성 요청을 감지했습니다.`);
+  let updatedContent = markdownContent;
+
+  for (let i = 0; i < matches.length; i++) {
+    const { fullMatch, promptText } = matches[i];
+    // 프롬프트에 공통 스타일 데코레이터 추가 (블로그 일러스트 스타일)
+    const styleDecorator = "clean, modern flat design vector illustration for a blog post, minimalist, beautiful color palette, no text";
+    const finalPrompt = `${promptText}, ${styleDecorator}`;
+    const filename = `body-${safeFilename}-${i + 1}.jpg`;
+
+    console.log(`[본문 이미지 생성 ${i + 1}/${matches.length}] 프롬프트: "${finalPrompt}"`);
+    
+    // API 레이트 리밋 우회를 위해 두 번째 이미지 생성부터 2초 대기
+    if (i > 0) {
+      console.log(`[본문 이미지 생성] API 제한 방지를 위해 2초 대기 중...`);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+
+    const imgPath = await generateAndSaveImage(finalPrompt, filename, '4:3');
+    if (imgPath) {
+      updatedContent = updatedContent.replace(fullMatch, `![포스트 소개](${imgPath})`);
+    } else {
+      // 이미지 생성 실패 시 플레이스홀더 제거
+      updatedContent = updatedContent.replace(fullMatch, '');
+    }
+  }
+
+  return updatedContent;
 }
 
 async function main() {
@@ -122,9 +116,6 @@ async function main() {
       const itemName = item.name || item.title || '';
       console.log(`블로그 글 생성 중: ${itemName}`);
 
-      const availableImages = getUnusedImages(POSTS_DIR_PATH, MASTER_IMAGES);
-      const imagesTextBlock = availableImages.map(img => `- ${img.name}: ${img.url}`).join('\n');
-
       const prompt = `아래 공공서비스 정보를 바탕으로 블로그 글을 작성해줘.
 
 정보: ${JSON.stringify(item)}
@@ -139,11 +130,11 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 ---
 
 (본문: 글의 종류와 깊이에 맞춰 분량을 조율해줘. 단순 정보 전달이나 간단한 신청 안내글의 경우에는 **800자 이상**으로 핵심만 보기 쉽게 요약해 작성하고, 복잡한 지원금이나 장기 혜택 등 깊이 있는 해설과 팁이 필요한 가이드성 글의 경우에는 구글 애드센스 승인 요건에 최적화되도록 **1500자 이상의 매우 전문적이고 상세한 긴 글**로 작성해줘. 추천 이유 3가지 이상을 자세히 서술하고, 신청 방법도 상세히 가이드해줘.
-본문 흐름 중간중간에 관련된 이미지 마크다운을 글의 내용과 흐름에 맞춰 어울리는 위치에 최소 1개에서 최대 5개 사이로 삽입해줘. 모든 글마다 들어가는 이미지의 개수가 똑같으면 자동 생성된 사이트 느낌이 강해지므로, 글의 맥락상 필요한 개수만큼(1~5개 사이로 매번 다르고 자유롭게) 유동적으로 조율하여 삽입해줘.
-이미지는 임의의 링크를 생성하지 말고, 반드시 아래 제공된 고정된 주소 중 글 내용과 가장 어울리는 이미지를 골라서 사용해줘:
-${imagesTextBlock}
+본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 최소 1개에서 최대 5개 사이로 다음과 같은 형식의 플레이스홀더를 삽입해줘:
+[IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
 
-**중요**: 본문에 들어가는 이미지들은 반드시 글의 핵심 주제와 밀접하게 관련 있는 카테고리만 골라서 어울리게 넣어줘. (예: 어선이나 친환경 지원금 관련 글에는 '어선/바다/해양'이나 '친환경/에너지/태양광' 이미지를 사용하고, 법률/행정/지원금 관련 글에는 '법률/공공지원/행정'이나 '금융/돈/재테크' 이미지를 주로 사용하며, 뜬금없는 '가족/인물/행복'이나 '사무실/업무/비즈니스' 이미지를 기계적으로 남발하지 말 것)
+**주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘. 모든 글마다 들어가는 이미지의 개수가 똑같으면 자동 생성된 사이트 느낌이 강해지므로, 글의 맥락상 필요한 개수만큼(1~5개 사이로 매번 다르고 자유롭게) 유동적으로 조율하여 플레이스홀더를 삽입해줘.
+프롬프트 내용(English description)은 본문 해당 단락의 주제와 어울리는 구체적인 개념적 설명이어야 하고, 사람, 금융, 지원금 등 구체적 대상을 지정하되 텍스트가 들어가선 안 돼.
 )
 
 마지막 줄에 FILENAME: ${todayStr}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
@@ -220,7 +211,13 @@ ${imagesTextBlock}
           } else {
             markdownContent = `![포스트 소개](${imgPath})\n\n` + markdownContent;
           }
+          // 요약 이미지 생성 직후이므로 본문 이미지 생성을 위해 2초 대기
+          console.log(`[본문 이미지 생성 대기] 요약 이미지 생성 후 2초 대기 중...`);
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
+
+        // 본문 이미지 실시간 생성 및 치환
+        markdownContent = await processBodyImages(markdownContent, safeFilename);
 
         fs.writeFileSync(outputPath, markdownContent, 'utf-8');
         console.log(`글 생성 및 이미지 자동화 완료: ${outputFilename}`);

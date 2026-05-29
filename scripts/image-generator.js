@@ -120,3 +120,72 @@ Summary: ${summary}`;
     return null;
   }
 }
+
+/**
+ * 주어진 영어 프롬프트와 옵션을 기반으로 이미지를 생성하여 로컬에 저장합니다.
+ * @param {string} prompt 이미지 생성용 영어 프롬프트
+ * @param {string} filename 저장할 파일명 (예: 'body-lotto-1.jpg')
+ * @param {string} aspectRatio 화면비 (기본값 '4:3', 지원값: '1:1', '16:9', '4:3' 등)
+ * @returns {Promise<string|null>} 저장된 이미지의 상대 경로, 실패 시 null
+ */
+export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3') {
+  try {
+    if (!GEMINI_API_KEY) {
+      console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
+      return null;
+    }
+
+    const imagenUrl = `${IMAGEN_ENDPOINT}?key=${GEMINI_API_KEY}`;
+    const payload = {
+      instances: [
+        {
+          prompt: prompt
+        }
+      ],
+      parameters: {
+        sampleCount: 1,
+        outputMimeType: 'image/jpeg',
+        aspectRatio: aspectRatio
+      }
+    };
+
+    const imagenRes = await fetch(imagenUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!imagenRes.ok) {
+      const errMsg = await imagenRes.text();
+      console.error(`[이미지 생성] Imagen API 호출 실패: ${imagenRes.status} - ${errMsg}`);
+      return null;
+    }
+
+    const imagenData = await imagenRes.json();
+    const predictions = imagenData.predictions || [];
+    if (predictions.length === 0) {
+      console.error('[이미지 생성] 생성된 이미지가 응답에 없습니다.');
+      return null;
+    }
+
+    const base64Bytes = predictions[0].bytesBase64Encoded;
+    const imgBuffer = Buffer.from(base64Bytes, 'base64');
+
+    const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
+    if (!fs.existsSync(publicImagesDir)) {
+      fs.mkdirSync(publicImagesDir, { recursive: true });
+    }
+
+    const outputPath = path.join(publicImagesDir, filename);
+    fs.writeFileSync(outputPath, imgBuffer);
+    console.log(`[이미지 생성] 이미지 저장 완료: ${outputPath}`);
+
+    return `/images/${filename}`;
+  } catch (err) {
+    console.error('[이미지 생성] 오류 발생:', err.message);
+    return null;
+  }
+}
+
