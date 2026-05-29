@@ -26,33 +26,50 @@ async function main() {
       throw new Error('데이터 리스트가 비어 있습니다.');
     }
 
-    const latestItem = dataList[dataList.length - 1];
-    const itemName = latestItem.name || latestItem.title || '';
-
-    if (!itemName) {
-      throw new Error('최신 항목에 name 또는 title이 없습니다.');
-    }
-
     if (!fs.existsSync(POSTS_DIR_PATH)) {
       fs.mkdirSync(POSTS_DIR_PATH, { recursive: true });
     }
 
-    // 기존 posts 파일들과 비교
+    // 기존 posts 파일들의 내용 전부 읽어두기
     const existingFiles = fs.readdirSync(POSTS_DIR_PATH).filter(file => file.endsWith('.md'));
-    for (const file of existingFiles) {
-      const content = fs.readFileSync(path.join(POSTS_DIR_PATH, file), 'utf-8');
-      if (content.includes(itemName)) {
-        console.log('이미 작성된 글입니다');
-        return;
+    const existingContents = existingFiles.map(file => fs.readFileSync(path.join(POSTS_DIR_PATH, file), 'utf-8'));
+
+    // 아직 포스팅되지 않은 아이템들 선별
+    const itemsToPost = [];
+    for (const item of dataList) {
+      const itemName = item.name || item.title || '';
+      if (!itemName) continue;
+
+      let isPosted = false;
+      for (const content of existingContents) {
+        if (content.includes(itemName)) {
+          isPosted = true;
+          break;
+        }
+      }
+
+      if (!isPosted) {
+        itemsToPost.push(item);
       }
     }
 
-    // [2단계] Gemini AI로 블로그 글 생성
+    if (itemsToPost.length === 0) {
+      console.log('이미 모든 데이터가 포스팅되었습니다.');
+      return;
+    }
+
+    console.log(`총 ${itemsToPost.length}개의 새로운 공공데이터 포스트 생성을 시작합니다.`);
+
+    // [2단계] Gemini AI로 블로그 글 생성 루프
     const todayStr = new Date().toISOString().split('T')[0];
 
-    const prompt = `아래 공공서비스 정보를 바탕으로 블로그 글을 작성해줘.
+    for (const item of itemsToPost) {
+      const itemName = item.name || item.title || '';
+      console.log(`블로그 글 생성 중: ${itemName}`);
 
-정보: ${JSON.stringify(latestItem)}
+      const prompt = `아래 공공서비스 정보를 바탕으로 블로그 글을 작성해줘.
+
+정보: ${JSON.stringify(item)}
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
@@ -80,63 +97,67 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 
 마지막 줄에 FILENAME: ${todayStr}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
 
-    const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }]
-      })
-    });
+      try {
+        const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: prompt
+              }]
+            }]
+          })
+        });
 
-    if (!response.ok) {
-      throw new Error(`Gemini API 호출 실패: ${response.status}`);
-    }
+        if (!response.ok) {
+          console.error(`Gemini API 호출 실패 (${itemName}): ${response.status}`);
+          continue;
+        }
 
-    const result = await response.json();
-    let text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const result = await response.json();
+        let text = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-    // [3단계] 파일 저장
-    const lines = text.trim().split('\n');
-    let filenameLine = '';
-    let contentLines = [];
+        // [3단계] 파일 저장
+        const lines = text.trim().split('\n');
+        let filenameLine = '';
+        let contentLines = [];
 
-    for (let i = lines.length - 1; i >= 0; i--) {
-      if (lines[i].trim().startsWith('FILENAME:')) {
-        filenameLine = lines[i].trim();
-        contentLines = lines.slice(0, i);
-        break;
+        for (let i = lines.length - 1; i >= 0; i--) {
+          if (lines[i].trim().startsWith('FILENAME:')) {
+            filenameLine = lines[i].trim();
+            contentLines = lines.slice(0, i);
+            break;
+          }
+        }
+
+        if (!filenameLine) {
+          filenameLine = `FILENAME: ${todayStr}-post`;
+          contentLines = lines;
+        }
+
+        const filenameKey = filenameLine.replace('FILENAME:', '').trim();
+        const safeFilename = filenameKey.replace(/[^a-zA-Z0-9\-_]/g, '').replace(/^-+|-+$/g, '');
+        const outputFilename = `${safeFilename}.md`;
+        const outputPath = path.join(POSTS_DIR_PATH, outputFilename);
+
+        if (fs.existsSync(outputPath)) {
+          console.log(`이미 파일이 존재합니다: ${outputFilename}`);
+          continue;
+        }
+
+        let markdownContent = contentLines.join('\n').trim();
+        markdownContent = markdownContent.replace(/^```markdown\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
+
+        fs.writeFileSync(outputPath, markdownContent, 'utf-8');
+        console.log(`글 생성 완료: ${outputFilename}`);
+
+      } catch (err) {
+        console.error(`글 생성 중 오류 발생 (${itemName}):`, err.message);
       }
     }
-
-    if (!filenameLine) {
-      filenameLine = `FILENAME: ${todayStr}-post`;
-      contentLines = lines;
-    }
-
-    const filenameKey = filenameLine.replace('FILENAME:', '').trim();
-    // 안전한 영문/숫자 파일명 처리
-    const safeFilename = filenameKey.replace(/[^a-zA-Z0-9\-_]/g, '').replace(/^-+|-+$/g, '');
-    const outputFilename = `${safeFilename}.md`;
-    const outputPath = path.join(POSTS_DIR_PATH, outputFilename);
-
-    if (fs.existsSync(outputPath)) {
-      console.log('이미 작성된 글입니다');
-      return;
-    }
-
-    // 마크다운 내용 (frontmatter + 본문)
-    let markdownContent = contentLines.join('\n').trim();
-    // 마크다운 코드 블록(```markdown, ``` 등) 제거
-    markdownContent = markdownContent.replace(/^```markdown\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
-
-    fs.writeFileSync(outputPath, markdownContent, 'utf-8');
-    console.log(`글 생성 완료: ${outputFilename}`);
 
   } catch (error) {
     console.error('에러 발생:', error.message);
