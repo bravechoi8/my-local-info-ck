@@ -43,7 +43,7 @@ function getUnusedImages(postsDirPath, masterImages) {
       .reverse();
 
     const usedUrls = new Set();
-    const checkCount = Math.min(files.length, 12);
+    const checkCount = Math.min(files.length, 4);
     for (let i = 0; i < checkCount; i++) {
       const content = fileFs.readFileSync(filePath.join(postsDirPath, files[i]), 'utf-8');
       const matches = content.match(/https:\/\/images\.unsplash\.com\/photo-[a-zA-Z0-9\-?=&_]+/g);
@@ -356,10 +356,10 @@ ${imagesTextBlock}
         if (frontmatterEndIndex !== -1) {
           const insertPos = frontmatterEndIndex + 4;
           markdownContent = markdownContent.substring(0, insertPos) +
-            `\n\n![요약 카드뉴스](${imgPath})` +
+            `\n\n![포스트 소개](${imgPath})` +
             markdownContent.substring(insertPos);
         } else {
-          markdownContent = `![요약 카드뉴스](${imgPath})\n\n` + markdownContent;
+          markdownContent = `![포스트 소개](${imgPath})\n\n` + markdownContent;
         }
       }
 

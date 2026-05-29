@@ -108,7 +108,7 @@ Summary: ${summary}`;
     }
 
     const cleanFilenameKey = filenameKey.replace(/[^a-zA-Z0-9\-_]/g, '');
-    const filename = `summary-${cleanFilenameKey}.jpg`;
+    const filename = `card-${cleanFilenameKey}.jpg`;
     const outputPath = path.join(publicImagesDir, filename);
 
     fs.writeFileSync(outputPath, imgBuffer);
