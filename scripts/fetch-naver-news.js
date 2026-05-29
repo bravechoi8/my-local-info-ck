@@ -15,6 +15,60 @@ const NAVER_ENDPOINT = 'https://openapi.naver.com/v1/search/news.json';
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const POSTS_DIR_PATH = filePath.join(__dirname, '..', 'src', 'content', 'posts');
 
+const MASTER_IMAGES = [
+  { name: '주거/건물', url: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80' },
+  { name: '금융/돈/재테크', url: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80' },
+  { name: '사무실/업무/비즈니스', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80' },
+  { name: '가족/인물/행복', url: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80' },
+  { name: 'IT/스마트폰/노트북', url: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80' },
+  { name: '방송/연예/공연', url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80' },
+  { name: '공부/배움/미팅', url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80' },
+  { name: '한국/도시/도시배경', url: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80' },
+  { name: '쇼핑/마트/소비', url: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80' },
+  { name: '축제/행사/문화', url: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80' },
+  { name: '어선/바다/해양', url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80' },
+  { name: '친환경/에너지/태양광', url: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80' },
+  { name: '보안/개인정보/자물쇠', url: 'https://images.unsplash.com/photo-1633265486064-086b219351ec?auto=format&fit=crop&w=800&q=80' },
+  { name: '법률/공공지원/행정', url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80' }
+];
+
+function getUnusedImages(postsDirPath, masterImages) {
+  try {
+    if (!fileFs.existsSync(postsDirPath)) return masterImages;
+
+    const files = fileFs.readdirSync(postsDirPath)
+      .filter(file => file.endsWith('.md'))
+      .sort()
+      .reverse();
+
+    const usedUrls = new Set();
+    const checkCount = Math.min(files.length, 12);
+    for (let i = 0; i < checkCount; i++) {
+      const content = fileFs.readFileSync(filePath.join(postsDirPath, files[i]), 'utf-8');
+      const matches = content.match(/https:\/\/images\.unsplash\.com\/photo-[a-zA-Z0-9\-?=&_]+/g);
+      if (matches) {
+        matches.forEach(url => {
+          const baseId = url.split('?')[0];
+          usedUrls.add(baseId);
+        });
+      }
+    }
+
+    const unused = masterImages.filter(img => {
+      const imgBaseId = img.url.split('?')[0];
+      return !usedUrls.has(imgBaseId);
+    });
+
+    if (unused.length >= 6) {
+      return unused;
+    }
+    return masterImages;
+  } catch (err) {
+    console.error('이미지 필터링 중 오류:', err.message);
+    return masterImages;
+  }
+}
+
 // HTML 태그 제거 및 특수문자 변환 함수
 function cleanText(text) {
   if (!text) return '';
@@ -167,6 +221,8 @@ async function main() {
 
       // [3단계] Gemini AI로 블로그 글 생성
       const todayStr = new Date().toISOString().split('T')[0];
+      const availableImages = getUnusedImages(POSTS_DIR_PATH, MASTER_IMAGES);
+      const imagesTextBlock = availableImages.map(img => `- ${img.name}: ${img.url}`).join('\n');
       let prompt = '';
 
       if (isSonMonthFirst) {
@@ -195,15 +251,7 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 (본문: 1000자 이상, 친근하고 유용한 블로그 톤.
 본문 흐름 중간중간에 관련된 이미지 마크다운을 3개 자동으로 어울리는 위치에 삽입해줘. 
 이미지는 임의의 링크를 생성하지 말고, 반드시 아래 제공된 고정된 주소 중 글 내용과 가장 어울리는 이미지를 골라서 사용해줘:
-- 주거/건물: https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80
-- 금융/돈/재테크: https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80
-- 사무실/업무/비즈니스: https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80
-- 가족/인물/행복: https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80
-- 한국/도시/도시배경: https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80
-- 어선/바다/해양: https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80
-- 친환경/에너지/태양광: https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80
-- 보안/개인정보/자물쇠: https://images.unsplash.com/photo-1633265486064-086b219351ec?auto=format&fit=crop&w=800&q=80
-- 법률/공공지원/행정: https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80
+${imagesTextBlock}
 
 **중요**: 본문에 들어가는 이미지들은 반드시 글의 핵심 주제와 밀접하게 관련 있는 카테고리만 골라서 어울리게 넣어줘. (예: 이사/손없는날에는 '주거/건물'이나 '가족/인물/행복' 이미지를 사용하고, 뜬금없는 '사무실/업무/비즈니스' 이미지를 기계적으로 남발하지 말 것)
 )
@@ -229,20 +277,7 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 (본문: 800자 이상, 친근한 블로그 톤, 뉴스 내용 상세 설명, 관련 의견 및 생활 팁 3가지 포함, 출처 안내.
 본문 흐름 중간중간에 관련된 이미지 마크다운을 2개(글이 짧을 때) 또는 3개(글이 길 때) 자동으로 어울리는 위치에 삽입해줘. 
 이미지는 임의의 링크를 생성하지 말고, 반드시 아래 제공된 고정된 주소 중 글 내용과 가장 어울리는 이미지를 골라서 사용해줘:
-- 주거/건물: https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80
-- 금융/돈/재테크: https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80
-- 사무실/업무/비즈니스: https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80
-- 가족/인물/행복: https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80
-- IT/스마트폰/노트북: https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80
-- 방송/연예/공연: https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80
-- 공부/배움/미팅: https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80
-- 한국/도시/도시배경: https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80
-- 쇼핑/마트/소비: https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80
-- 축제/행사/문화: https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80
-- 어선/바다/해양: https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80
-- 친환경/에너지/태양광: https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80
-- 보안/개인정보/자물쇠: https://images.unsplash.com/photo-1633265486064-086b219351ec?auto=format&fit=crop&w=800&q=80
-- 법률/공공지원/행정: https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80
+${imagesTextBlock}
 
 **중요**: 본문에 들어가는 이미지들은 반드시 글의 핵심 주제와 밀접하게 관련 있는 카테고리만 골라서 어울리게 넣어줘. (예: 어선 관련 글에는 '어선/바다/해양'이나 '친환경/에너지/태양광' 이미지를 사용하고, 개인정보 보호 관련 글에는 '보안/개인정보/자물쇠'나 'IT/스마트폰' 이미지를 사용하며, 뜬금없는 '가족/인물/행복'이나 '사무실/업무/비즈니스' 이미지를 기계적으로 남발하지 말 것)
 )
