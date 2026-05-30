@@ -222,7 +222,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* 글 본문 (Markdown & Typography) */}
         <article className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.01)]">
           {/* @tailwindcss/typography의 prose 클래스를 활용해 마크다운 스타일을 예쁘게 정렬합니다. */}
-          <div className="prose prose-slate max-w-none text-sm sm:text-base leading-relaxed text-slate-800">
+          <div className="prose prose-slate max-w-none text-sm sm:text-base leading-relaxed text-slate-800 break-words">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {post.content}
             </ReactMarkdown>
