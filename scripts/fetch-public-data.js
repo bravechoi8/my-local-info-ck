@@ -14,6 +14,12 @@ const LOCAL_INFO_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info
 
 const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실', '도서관'];
 const BENEFIT_KEYWORDS = ['지원금', '지원', '수당', '연금', '혜택', '감면', '할인', '보조금', '비용', '자금', '대출', '금융', '융자', '바우처', '일자리', '취업', '장학', '장려금'];
+const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항'];
+
+function isBlocked(item) {
+  const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '')).toLowerCase();
+  return BLOCK_KEYWORDS.some(kw => text.includes(kw));
+}
 
 function classifyItem(item) {
   const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '')).toLowerCase();
@@ -75,8 +81,8 @@ async function main() {
     }
     const existingNames = new Set(existingData.map(item => item.name));
 
-    // 미등록 아이템들 필터링
-    const newItems = items.filter(item => item.서비스명 && !existingNames.has(item.서비스명));
+    // 미등록 및 차단 키워드가 없는 아이템들 필터링
+    const newItems = items.filter(item => item.서비스명 && !existingNames.has(item.서비스명) && !isBlocked(item));
 
     if (newItems.length === 0) {
       console.log('새로운 데이터가 없습니다');
