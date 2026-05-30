@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '17 22 * * *'  # 매일 UTC 22시 17분 = 한국시간 07시 17분
+    - cron: '17 2 * * *'  # 매일 UTC 02시 17분 = 한국시간 11시 17분 (외부 타이머 아침 7시 17분 충돌 방지용 예비 스케줄)
   workflow_dispatch:
 
 permissions:
