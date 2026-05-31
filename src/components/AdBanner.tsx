@@ -21,11 +21,11 @@ export default function AdBanner() {
   if (!isAdsenseActive) return null;
 
   return (
-    <div className="my-8 flex justify-center overflow-hidden w-full bg-slate-50/50 rounded-xl border border-slate-100 p-2 min-h-[100px] items-center">
+    <div className="my-6 flex justify-center overflow-hidden w-full items-center">
       {/* 구글 애드센스 디스플레이 광고 */}
       <ins
         className="adsbygoogle"
-        style={{ display: "block", width: "100%", minWidth: "250px" }}
+        style={{ display: "block", width: "100%" }}
         data-ad-client={adsenseId}
         data-ad-slot="auto"
         data-ad-format="auto"

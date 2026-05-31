@@ -251,7 +251,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
                   <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
                     <span className="text-2xl">💰</span> 놓치기 쉬운 지원금 · 혜택
                   </h2>
-                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                  <Link href="/blog?category=혜택" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {benefitSectionPosts.map((post) => (
@@ -284,7 +284,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
                   <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
                     <span className="text-2xl">🎈</span> 주말 여행 & 가볼 만한 축제
                   </h2>
-                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                  <Link href="/blog?category=행사" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {eventSectionPosts.map((post) => (
@@ -315,7 +315,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
                   <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
                     <span className="text-2xl">💡</span> 유용한 알뜰 생활정보
                   </h2>
-                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                  <Link href="/blog?category=생활정보" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {infoSectionPosts.map((post) => (
@@ -346,7 +346,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
                   <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
                     <span className="text-2xl">⭐</span> 연예인 이슈 & 소식
                   </h2>
-                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                  <Link href="/blog?category=연예인이슈" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {celebSectionPosts.map((post) => (
