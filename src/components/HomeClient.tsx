@@ -246,36 +246,37 @@ export default function HomeClient({ posts }: HomeClientProps) {
 
             {/* 2. 돈이 되는 지원금 & 혜택 존 */}
             {benefitSectionPosts.length > 0 && (
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
-                    <span className="text-2xl">💰</span> 놓치기 쉬운 지원금 · 혜택
-                  </h2>
-                  <Link href="/blog?category=혜택" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {benefitSectionPosts.map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group block space-y-4"
-                    >
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
-                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
-                      </div>
-                      <div className="space-y-1">
-                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
+              <div className="space-y-10">
+                <section className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
+                      <span className="text-2xl">💰</span> 놓치기 쉬운 지원금 · 혜택
+                    </h2>
+                    <Link href="/blog?category=혜택" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {benefitSectionPosts.map((post) => (
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group block space-y-4"
+                      >
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                          <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
+                        </div>
+                        <div className="space-y-1">
+                          <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                            {post.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+                <AdBanner />
+              </div>
             )}
-
-            <AdBanner />
 
             {/* 3. 주말 나들이 축제 & 행사 존 */}
             {eventSectionPosts.length > 0 && (
