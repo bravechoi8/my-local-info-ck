@@ -96,7 +96,10 @@ export default function HomeClient({ posts }: HomeClientProps) {
   // 4. 알뜰 생활정보 목록 (최신 3개)
   const infoSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "생활정보" && p.slug !== heroPost?.slug)).slice(0, 3);
 
-  // 5. 연예인 이슈 목록 (최신 3개)
+  // 5. 돈이 되는 재테크 목록 (최신 3개)
+  const financeSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "재테크" && p.slug !== heroPost?.slug)).slice(0, 3);
+
+  // 6. 연예인 이슈 목록 (최신 3개)
   const celebSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "연예인이슈" && p.slug !== heroPost?.slug)).slice(0, 3);
 
   const searchResults = getFilteredPosts(mappedPosts);
@@ -233,7 +236,10 @@ export default function HomeClient({ posts }: HomeClientProps) {
             {/* 1. 최상단 히어로 추천 영역 */}
             {heroPost && (
               <section className="space-y-6">
-                <h2 className="text-xs font-bold text-[#8B95A1] uppercase tracking-wider">TODAY&apos;S HOT ISSUE</h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xs font-bold text-[#8B95A1] uppercase tracking-wider">TODAY&apos;S HOT ISSUE</h2>
+                  <Link href="/blog?category=핫이슈" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                </div>
                 <Link
                   href={`/blog/${heroPost.slug}`}
                   className="group block overflow-hidden rounded-3xl border border-[#F2F4F6] hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition-all duration-300 bg-white"
@@ -343,6 +349,37 @@ export default function HomeClient({ posts }: HomeClientProps) {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {infoSectionPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group block space-y-4"
+                    >
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 5. 돈이 되는 재테크 존 */}
+            {financeSectionPosts.length > 0 && (
+              <section className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
+                    <span className="text-2xl">📈</span> 돈이 되는 재테크 정보
+                  </h2>
+                  <Link href="/blog?category=재테크" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {financeSectionPosts.map((post) => (
                     <Link
                       key={post.slug}
                       href={`/blog/${post.slug}`}
