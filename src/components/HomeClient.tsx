@@ -122,31 +122,54 @@ export default function HomeClient({ posts }: HomeClientProps) {
       </nav>
 
       {/* 헤더 섹션 - 여백이 넉넉하고 정돈된 타이틀 */}
-      <header className="bg-white pt-16 pb-12 px-6">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3">
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
-              오늘의 리얼인포
-            </h1>
-            <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
-              정부 지원금 혜택부터 생활 꿀팁, 화제의 핫이슈까지 섹션별로 골라보세요.
-            </p>
+      <header className="bg-white pt-16 pb-8 px-6">
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3">
+              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
+                오늘의 리얼인포
+              </h1>
+              <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
+                정부 지원금 혜택부터 생활 꿀팁, 화제의 핫이슈까지 섹션별로 골라보세요.
+              </p>
+            </div>
+
+            {/* 검색 바 */}
+            <div className="relative w-full md:max-w-xs shrink-0">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                <svg className="w-4 h-4 text-[#8B95A1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="궁금한 정보 검색..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 text-sm bg-[#F9FAFB] border border-[#F2F4F6] rounded-xl focus:outline-none focus:border-[#3182F6] focus:ring-1 focus:ring-[#3182F6] text-[#191F28] placeholder-[#8B95A1] transition-all"
+              />
+            </div>
           </div>
 
-          {/* 검색 바 */}
-          <div className="relative w-full md:max-w-xs shrink-0">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-              <svg className="w-4 h-4 text-[#8B95A1]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </span>
-            <input
-              type="text"
-              placeholder="궁금한 정보 검색..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-sm bg-[#F9FAFB] border border-[#F2F4F6] rounded-xl focus:outline-none focus:border-[#3182F6] focus:ring-1 focus:ring-[#3182F6] text-[#191F28] placeholder-[#8B95A1] transition-all"
-            />
+          {/* 카테고리 탭 UI */}
+          <div className="flex flex-wrap gap-2 pt-2 border-b border-[#F2F4F6] pb-6">
+            {[
+              { key: "", label: "전체", href: "/blog" },
+              { key: "혜택", label: "지원금·혜택", href: "/blog?category=혜택" },
+              { key: "행사", label: "축제·행사", href: "/blog?category=행사" },
+              { key: "생활정보", label: "생활정보", href: "/blog?category=생활정보" },
+              { key: "핫이슈", label: "핫이슈", href: "/blog?category=핫이슈" },
+              { key: "재테크", label: "재테크", href: "/blog?category=재테크" },
+              { key: "연예인이슈", label: "연예인이슈", href: "/blog?category=연예인이슈" },
+            ].map((cat) => (
+              <Link
+                key={cat.key}
+                href={cat.href}
+                className="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#F2F4F6] text-[#4E5968] hover:bg-[#E5E8EB] transition-all"
+              >
+                {cat.label}
+              </Link>
+            ))}
           </div>
         </div>
       </header>

@@ -20,3 +20,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* 광고 미노출(unfilled) 또는 비어있는 광고판 컨테이너 숨김 */
+div:has(> ins.adsbygoogle[data-ad-status="unfilled"]),
+div:has(> ins.adsbygoogle:empty) {
+  display: none !important;
+  height: 0px !important;
+  margin: 0px !important;
+  padding: 0px !important;
+}
