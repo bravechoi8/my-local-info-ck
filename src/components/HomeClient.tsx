@@ -11,9 +11,6 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ posts }: HomeClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState<
-    "전체" | "행사" | "혜택" | "핫이슈" | "재테크" | "생활정보" | "연예인이슈"
-  >("전체");
   const [searchQuery, setSearchQuery] = useState("");
 
   // 날짜 형식 예쁘게 변환 (YYYY-MM-DD -> YYYY.MM.DD)
@@ -21,13 +18,8 @@ export default function HomeClient({ posts }: HomeClientProps) {
     return dateStr.replace(/-/g, ".");
   };
 
-  // 블로그 글에 local-info.json의 상세 정보(장소, 대상 등) 매핑 및 썸네일 이미지 추출
+  // 블로그 글 썸네일 이미지 추출
   const mappedPosts = posts.map((post) => {
-    const matchedItem = localData.find((item: any) => {
-      const itemName = item.name || item.title || '';
-      return itemName && (post.title.includes(itemName) || post.content.includes(itemName));
-    });
-
     // 본문에서 첫 번째 마크다운 이미지 주소 추출
     const imgMatch = post.content.match(/!\[.*?\]\((.*?)\)/);
     const firstImg = imgMatch ? imgMatch[1] : null;
@@ -56,26 +48,21 @@ export default function HomeClient({ posts }: HomeClientProps) {
       slug: post.slug,
       title: post.title,
       summary: post.summary,
-      category: post.category as "행사" | "혜택" | "핫이슈" | "재테크" | "생활정보" | "연예인이슈",
+      category: post.category,
       date: post.date,
-      location: matchedItem?.location || "온라인 및 전국 관할기관",
-      target: matchedItem?.target || "전국 주민 누구나",
-      startDate: matchedItem?.startDate || post.date,
-      endDate: matchedItem?.endDate || "상시",
       thumbnail: firstImg || getFallbackImage(post.category),
     };
   });
 
-  // 필터링 및 검색 처리
-  const filteredPosts = mappedPosts.filter((post) => {
-    const matchesCategory = selectedCategory === "전체" || post.category === selectedCategory;
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.target.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // 검색 결과 필터링
+  const getFilteredPosts = (items: typeof mappedPosts) => {
+    if (!searchQuery) return items;
+    return items.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.summary.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   const getCategoryConfig = (category: string) => {
     switch (category) {
@@ -96,115 +83,23 @@ export default function HomeClient({ posts }: HomeClientProps) {
     }
   };
 
-  const renderHeroCard = (post: typeof mappedPosts[0]) => {
-    const config = getCategoryConfig(post.category);
-    return (
-      <Link
-        href={`/blog/${post.slug}`}
-        className="group block overflow-hidden rounded-2xl border border-[#F2F4F6] hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition-all duration-300 bg-white"
-      >
-        <div className="flex flex-col lg:flex-row items-stretch">
-          {/* Left Text content */}
-          <div className="flex-1 p-8 sm:p-12 flex flex-col justify-between">
-            <div className="space-y-4">
-              <span className={`inline-block px-2.5 py-0.5 text-xs font-semibold rounded ${config.bg} ${config.text}`}>
-                {config.label}
-              </span>
-              <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-tight line-clamp-2">
-                {post.title}
-              </h2>
-              <p className="text-sm text-[#4E5968] leading-relaxed line-clamp-3">
-                {post.summary}
-              </p>
-            </div>
-            <div className="mt-8 text-xs sm:text-sm text-[#8B95A1] font-medium">
-              {formatDate(post.date)}
-            </div>
-          </div>
-          {/* Right Large Image */}
-          <div className="lg:w-1/2 min-h-[220px] sm:min-h-[300px] relative overflow-hidden bg-slate-50">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src={post.thumbnail} 
-              alt={post.title} 
-              className="absolute inset-0 h-full w-full object-cover group-hover:scale-102 transition-transform duration-500"
-            />
-          </div>
-        </div>
-      </Link>
-    );
-  };
+  // 1. 오늘의 추천 핫이슈 (가장 최신 핫이슈 1개)
+  const hotIssuePosts = mappedPosts.filter((p) => p.category === "핫이슈");
+  const heroPost = hotIssuePosts.length > 0 ? hotIssuePosts[0] : mappedPosts[0];
 
-  const renderCard = (post: typeof mappedPosts[0]) => {
-    const config = getCategoryConfig(post.category);
-    const schema = post.category === "행사"
-      ? {
-          "@context": "https://schema.org",
-          "@type": "Event",
-          "name": post.title,
-          "startDate": post.startDate,
-          "endDate": post.endDate === "상시" ? undefined : post.endDate,
-          "location": {
-            "@type": "Place",
-            "name": post.location,
-            "address": post.location
-          },
-          "description": post.summary
-        }
-      : {
-          "@context": "https://schema.org",
-          "@type": "GovernmentService",
-          "name": post.title,
-          "description": post.summary,
-          "provider": {
-            "@type": "GovernmentOrganization",
-            "name": "정부 및 지자체"
-          }
-        };
+  // 2. 지원금 & 혜택 목록 (최신 3개)
+  const benefitSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "혜택" && p.slug !== heroPost?.slug)).slice(0, 3);
 
-    return (
-      <Link
-        key={post.slug}
-        href={`/blog/${post.slug}`}
-        className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden hover:-translate-y-1 transition-all duration-300"
-      >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-        <div className="space-y-4">
-          {/* 카드 썸네일 이미지 */}
-          <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={post.thumbnail}
-              alt={post.title}
-              className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500"
-            />
-          </div>
+  // 3. 축제 & 행사 목록 (최신 3개)
+  const eventSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "행사" && p.slug !== heroPost?.slug)).slice(0, 3);
 
-          <div className="space-y-2">
-            <span className={`inline-block text-xs font-semibold ${config.text}`}>
-              {config.label}
-            </span>
-            <h3 className="text-base sm:text-lg font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-              {post.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-[#4E5968] leading-relaxed line-clamp-2">
-              {post.summary}
-            </p>
-            <div className="text-[11px] sm:text-xs text-[#8B95A1] pt-1 font-medium">
-              {formatDate(post.date)}
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
-  };
+  // 4. 알뜰 생활정보 목록 (최신 3개)
+  const infoSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "생활정보" && p.slug !== heroPost?.slug)).slice(0, 3);
 
-  // Featured Post와 Grid 리스트 구분
-  const showHero = selectedCategory === "전체" && searchQuery === "" && filteredPosts.length > 0;
-  const gridPosts = showHero ? filteredPosts.slice(1) : filteredPosts;
+  // 5. 연예인 이슈 목록 (최신 3개)
+  const celebSectionPosts = getFilteredPosts(mappedPosts.filter((p) => p.category === "연예인이슈" && p.slug !== heroPost?.slug)).slice(0, 3);
+
+  const searchResults = getFilteredPosts(mappedPosts);
 
   return (
     <div className="min-h-screen bg-white text-[#333D4B] antialiased">
@@ -227,38 +122,15 @@ export default function HomeClient({ posts }: HomeClientProps) {
       </nav>
 
       {/* 헤더 섹션 - 여백이 넉넉하고 정돈된 타이틀 */}
-      <header className="bg-white pt-20 pb-16 px-6">
-        <div className="max-w-5xl mx-auto text-left space-y-3">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
-            생활 정보 & 혜택
-          </h1>
-          <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
-            전국의 유용한 생활 정보, 정부 혜택, 행사 및 지원금 소식을 한눈에 보기 쉽게 모아 드립니다.
-          </p>
-        </div>
-      </header>
-
-      {/* 메인 콘텐츠 영역 */}
-      <main className="max-w-5xl mx-auto px-6 pb-24">
-        {/* 카테고리 필터 & 검색 바 */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 pb-6 border-b border-[#F2F4F6]">
-          {/* 카테고리 텍스트형 탭 메뉴 */}
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            {(
-              ["전체", "행사", "혜택", "핫이슈", "재테크", "생활정보", "연예인이슈"] as const
-            ).map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 text-sm font-semibold rounded-full transition-all ${
-                  selectedCategory === cat
-                    ? "bg-[#3182F6]/10 text-[#3182F6]"
-                    : "text-[#4E5968] hover:text-[#191F28]"
-                }`}
-              >
-                {cat === "전체" ? "전체" : getCategoryConfig(cat).label}
-              </button>
-            ))}
+      <header className="bg-white pt-16 pb-12 px-6">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
+              오늘의 리얼인포
+            </h1>
+            <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
+              정부 지원금 혜택부터 생활 꿀팁, 화제의 핫이슈까지 섹션별로 골라보세요.
+            </p>
           </div>
 
           {/* 검색 바 */}
@@ -270,33 +142,233 @@ export default function HomeClient({ posts }: HomeClientProps) {
             </span>
             <input
               type="text"
-              placeholder="정보 검색..."
+              placeholder="궁금한 정보 검색..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 text-sm bg-[#F9FAFB] border border-[#F2F4F6] rounded-xl focus:outline-none focus:border-[#3182F6] focus:ring-1 focus:ring-[#3182F6] text-[#191F28] placeholder-[#8B95A1] transition-all"
             />
           </div>
         </div>
+      </header>
 
-        {/* 히어로 추천글 (전체보기일 때만 최신 1순위 노출) */}
-        {showHero && renderHeroCard(filteredPosts[0])}
-
-        {/* 카드 그리드 리스트 */}
-        {filteredPosts.length > 0 ? (
-          <div className="space-y-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-              {gridPosts.map((post) => renderCard(post))}
+      {/* 메인 콘텐츠 영역 */}
+      <main className="max-w-5xl mx-auto px-6 pb-24">
+        {searchQuery ? (
+          /* 검색 모드 활성화 시 검색 결과만 리스트업 */
+          <div className="space-y-8">
+            <div className="text-sm text-[#4E5968] font-semibold">
+              &apos;{searchQuery}&apos; 검색 결과 총 <span className="text-[#3182F6]">{searchResults.length}</span>건
             </div>
-
-            {/* 광고 배너 */}
-            <AdBanner />
+            {searchResults.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                {searchResults.map((post) => {
+                  const config = getCategoryConfig(post.category);
+                  return (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group flex flex-col justify-between bg-white rounded-2xl overflow-hidden hover:-translate-y-1 transition-all duration-300"
+                    >
+                      <div className="space-y-4">
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                          <img
+                            src={post.thumbnail}
+                            alt={post.title}
+                            className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <span className={`inline-block text-xs font-semibold ${config.text}`}>
+                            {config.label}
+                          </span>
+                          <h3 className="text-base sm:text-lg font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                            {post.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-[#4E5968] leading-relaxed line-clamp-2">
+                            {post.summary}
+                          </p>
+                          <div className="text-[11px] sm:text-xs text-[#8B95A1] pt-1 font-medium">
+                            {formatDate(post.date)}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-24 bg-[#F9FAFB] rounded-2xl border border-[#F2F4F6]">
+                <span className="text-4xl inline-block mb-4">🔍</span>
+                <h3 className="text-base sm:text-lg font-bold text-[#191F28] mb-2">검색 결과가 없습니다</h3>
+                <p className="text-xs sm:text-sm text-[#8B95A1]">다른 키워드로 검색해 보세요.</p>
+              </div>
+            )}
           </div>
         ) : (
-          /* 검색 결과 없음 */
-          <div className="text-center py-24 bg-[#F9FAFB] rounded-2xl border border-[#F2F4F6]">
-            <span className="text-4xl inline-block mb-4">🔍</span>
-            <h3 className="text-base sm:text-lg font-bold text-[#191F28] mb-2">검색 결과가 없습니다</h3>
-            <p className="text-xs sm:text-sm text-[#8B95A1]">다른 키워드로 검색해보시거나 필터를 변경해보세요.</p>
+          /* 포털형 첫 페이지 레이아웃 (정상 모드) */
+          <div className="space-y-20">
+            {/* 1. 최상단 히어로 추천 영역 */}
+            {heroPost && (
+              <section className="space-y-6">
+                <h2 className="text-xs font-bold text-[#8B95A1] uppercase tracking-wider">TODAY&apos;S HOT ISSUE</h2>
+                <Link
+                  href={`/blog/${heroPost.slug}`}
+                  className="group block overflow-hidden rounded-3xl border border-[#F2F4F6] hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] transition-all duration-300 bg-white"
+                >
+                  <div className="flex flex-col lg:flex-row items-stretch">
+                    <div className="flex-1 p-8 sm:p-12 flex flex-col justify-between">
+                      <div className="space-y-4">
+                        <span className={`inline-block px-2.5 py-0.5 text-xs font-semibold rounded ${getCategoryConfig(heroPost.category).bg} ${getCategoryConfig(heroPost.category).text}`}>
+                          {getCategoryConfig(heroPost.category).label}
+                        </span>
+                        <h2 className="text-xl sm:text-3xl font-extrabold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-tight line-clamp-2">
+                          {heroPost.title}
+                        </h2>
+                        <p className="text-sm sm:text-base text-[#4E5968] leading-relaxed line-clamp-3">
+                          {heroPost.summary}
+                        </p>
+                      </div>
+                      <div className="mt-8 text-xs sm:text-sm text-[#8B95A1] font-medium">
+                        {formatDate(heroPost.date)}
+                      </div>
+                    </div>
+                    <div className="lg:w-1/2 min-h-[220px] sm:min-h-[320px] relative overflow-hidden bg-slate-50">
+                      <img 
+                        src={heroPost.thumbnail} 
+                        alt={heroPost.title} 
+                        className="absolute inset-0 h-full w-full object-cover group-hover:scale-102 transition-transform duration-500"
+                      />
+                    </div>
+                  </div>
+                </Link>
+              </section>
+            )}
+
+            {/* 2. 돈이 되는 지원금 & 혜택 존 */}
+            {benefitSectionPosts.length > 0 && (
+              <section className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
+                    <span className="text-2xl">💰</span> 놓치기 쉬운 지원금 · 혜택
+                  </h2>
+                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {benefitSectionPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group block space-y-4"
+                    >
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <AdBanner />
+
+            {/* 3. 주말 나들이 축제 & 행사 존 */}
+            {eventSectionPosts.length > 0 && (
+              <section className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
+                    <span className="text-2xl">🎈</span> 주말 여행 & 가볼 만한 축제
+                  </h2>
+                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {eventSectionPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group block space-y-4"
+                    >
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 4. 알뜰 생활정보 존 */}
+            {infoSectionPosts.length > 0 && (
+              <section className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
+                    <span className="text-2xl">💡</span> 유용한 알뜰 생활정보
+                  </h2>
+                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {infoSectionPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group block space-y-4"
+                    >
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 5. 연예인 핫이슈 & 뉴스 존 */}
+            {celebSectionPosts.length > 0 && (
+              <section className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] flex items-center gap-2">
+                    <span className="text-2xl">⭐</span> 연예인 이슈 & 소식
+                  </h2>
+                  <Link href="/blog" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {celebSectionPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group block space-y-4"
+                    >
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 border border-[#F2F4F6] relative">
+                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-103 transition-transform duration-500" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         )}
       </main>
