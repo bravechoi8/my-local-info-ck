@@ -100,7 +100,7 @@ async function main() {
     const dayOfMonth = kstDate.getUTCDate(); // 1~31: 날짜
 
     const tasks = [];
-    const baseKeywords = ['재테크', '핫이슈', '생활정보', '연예인이슈'];
+    const baseKeywords = ['재테크', '핫이슈', '생활정보', '연예인이슈', '코스피 주식', '부동산 전망', '일자리 채용', '물가 세금'];
 
     if (dayOfMonth === 1 && !process.env.SELECTED_KEYWORD) {
       const currentYear = kstDate.getUTCFullYear();

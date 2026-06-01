@@ -31,13 +31,52 @@ function classifyItem(item) {
 }
 
 function scoreItem(item) {
-  const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '') + ' ' + (item.소관기관명 || '')).toLowerCase();
+  const name = item.서비스명 || '';
+  const desc = item.서비스목적요약 || '';
+  const target = item.지원대상 || '';
+  const agency = item.소관기관명 || '';
+  
+  const text = (name + ' ' + desc + ' ' + target + ' ' + agency).toLowerCase();
   let score = 0;
+
+  // 1. 선호 지역 가산점 (용인, 서울, 경기)
   if (text.includes('용인')) {
+    score += 20;
+  }
+  if (text.includes('서울')) {
+    score += 15;
+  }
+  if (text.includes('경기')) {
+    score += 15;
+  }
+
+  // 2. 전국 단위 및 중앙정부 부처 정책 가산점
+  const isNationalAgency = /부$|처$|청$|공단$|공사$|정부|대한민국|국가|국민/.test(agency);
+  if (isNationalAgency) {
     score += 10;
-  } else if (text.includes('경기')) {
+  }
+
+  // 3. 인기 주제 키워드 가산점
+  const popularKeywords = ['청년', '소상공인', '주택', '대출', '근로', '환급', '세금', '육아', '아동', '일자리', '취업', '창업', '장려금', '지원금', '보조금'];
+  const hasPopularKeyword = popularKeywords.some(kw => text.includes(kw));
+  if (hasPopularKeyword) {
     score += 5;
   }
+
+  // 4. 제외 지역 패널티 (용인, 서울, 경기가 아니면서 다른 지역이나 타 지자체 관할인 경우 크게 감점)
+  const otherRegions = ['부산', '대구', '인천', '광주', '대전', '울산', '세종', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
+  const hasOtherRegion = otherRegions.some(reg => text.includes(reg));
+  
+  const isTargetArea = text.includes('용인') || text.includes('서울') || text.includes('경기') || isNationalAgency;
+  
+  if (hasOtherRegion && !isTargetArea) {
+    score -= 30; // 타 지역 정책은 후순위로 제외
+  }
+
+  if ((agency.endsWith('시') || agency.endsWith('군') || agency.endsWith('구')) && !isTargetArea) {
+    score -= 30; // 타 지방 기초단체 정책 제외
+  }
+
   return score;
 }
 
