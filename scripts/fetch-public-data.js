@@ -50,10 +50,31 @@ async function main() {
       throw new Error('GEMINI_API_KEY 환경변수가 없습니다.');
     }
 
-    // [1단계] 공공데이터포털 API에서 데이터 가져오기
-    const params = new URLSearchParams({
+    // [1단계] 공공데이터포털 API에서 전체 데이터 수 파악 후 무작위 페이지 데이터 가져오기
+    const initialParams = new URLSearchParams({
       page: '1',
-      perPage: '20',
+      perPage: '1',
+      returnType: 'JSON',
+      serviceKey: PUBLIC_DATA_API_KEY
+    });
+    const initialRes = await fetch(`${PUBLIC_DATA_ENDPOINT}?${initialParams.toString()}`);
+    if (!initialRes.ok) {
+      throw new Error(`공공데이터 API 초기 호출 실패: ${initialRes.status}`);
+    }
+    const initialResult = await initialRes.json();
+    const totalCount = initialResult.totalCount || 10000;
+    
+    // 전체 페이지 수 계산 및 무작위 페이지 선택
+    const perPage = 20;
+    const totalPages = Math.ceil(totalCount / perPage);
+    const randomPage = Math.floor(Math.random() * totalPages) + 1;
+    
+    console.log(`전체 공공서비스 개수: ${totalCount}개 (총 ${totalPages}페이지)`);
+    console.log(`무작위 선정 페이지: ${randomPage}페이지`);
+
+    const params = new URLSearchParams({
+      page: String(randomPage),
+      perPage: String(perPage),
       returnType: 'JSON',
       serviceKey: PUBLIC_DATA_API_KEY
     });

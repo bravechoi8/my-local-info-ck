@@ -16,6 +16,13 @@ const NAVER_ENDPOINT = 'https://openapi.naver.com/v1/search/news.json';
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const POSTS_DIR_PATH = filePath.join(__dirname, '..', 'src', 'content', 'posts');
 
+const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항'];
+
+function isBlocked(item) {
+  const text = ((item.title || '') + ' ' + (item.description || '')).toLowerCase();
+  return BLOCK_KEYWORDS.some(kw => text.includes(kw));
+}
+
 /**
  * 본문 내의 [IMAGE_PROMPT: ...] 형식의 플레이스홀더를 찾아 실시간으로 이미지를 생성하고 치환합니다.
  * @param {string} markdownContent 마크다운 본문
@@ -170,7 +177,7 @@ async function main() {
         }
 
         const result = await response.json();
-        items = result.items || [];
+        items = (result.items || []).filter(item => !isBlocked(item));
       }
 
       if (items.length === 0) {
