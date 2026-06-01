@@ -1,45 +1,113 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ECEFF1" />
-      <stop offset="100%" stop-color="#CFD8DC" />
+    <!-- Background Gradient -->
+    <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
     </linearGradient>
+    <!-- Card Shadow -->
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#90A4AE" flood-opacity="0.3" />
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#020617" flood-opacity="0.5" />
     </filter>
+    <!-- Text Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
   </defs>
-  <rect width="1200" height="675" fill="url(#bg)" />
-  <rect x="50" y="50" width="1100" height="575" rx="24" fill="#FFFFFF" filter="url(#shadow)" />
-  
-  <g transform="translate(100, 110)">
-    <rect x="0" y="-30" width="100" height="36" rx="18" fill="#FFCDD2" />
-    <text x="50" y="-6" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="16" font-weight="700" fill="#C62828" text-anchor="middle">국제 이슈</text>
-    <text x="0" y="50" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="40" font-weight="800" fill="#263238">트럼프 호르무즈 역봉쇄 해제 선언</text>
-    <text x="0" y="85" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">중동 정세의 급변과 실생활 대처법</text>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#mainBg)" />
+
+  <!-- LEFT SIDE: Graphic Illustration (그림 이미지) -->
+  <g transform="translate(300, 360)">
+    <!-- Glowing background aura -->
+    <circle cx="0" cy="0" r="220" fill="#38BDF8" opacity="0.1" />
+    
+    <!-- Stylized Globe -->
+    <circle cx="0" cy="0" r="160" fill="#1E293B" stroke="#475569" stroke-width="4" />
+    <path d="M -160,0 A 160,80 0 0,0 160,0" fill="none" stroke="#334155" stroke-width="2" />
+    <path d="M -160,0 A 160,140 0 0,0 160,0" fill="none" stroke="#334155" stroke-width="2" />
+    <path d="M 0,-160 A 80,160 0 0,0 0,160" fill="none" stroke="#334155" stroke-width="2" />
+    
+    <!-- Stylized Strait (호르무즈 해협 상징붉은 빛 해로) -->
+    <path d="M -180,-20 Q -50,60 50,0 Q 150,-40 180,-10" fill="none" stroke="#F43F5E" stroke-width="12" stroke-linecap="round" opacity="0.8" />
+    <path d="M -180,-20 Q -50,60 50,0 Q 150,-40 180,-10" fill="none" stroke="#FB7185" stroke-width="6" stroke-linecap="round" />
+    
+    <!-- Oil Tanker (유조선 그림) -->
+    <g transform="translate(-20, 20) rotate(15)">
+      <rect x="-60" y="-15" width="120" height="30" rx="6" fill="#0284C7" stroke="#0369A1" stroke-width="2" />
+      <rect x="-50" y="-30" width="40" height="15" fill="#38BDF8" />
+      <rect x="20" y="-25" width="15" height="10" fill="#0369A1" />
+      <!-- Oil Droplet on Ship -->
+      <circle cx="20" cy="0" r="8" fill="#F59E0B" />
+    </g>
+
+    <!-- USA and IRAN Conflict Markers -->
+    <g transform="translate(-100, -80)">
+      <circle cx="0" cy="0" r="25" fill="#0284C7" stroke="#FFFFFF" stroke-width="2" />
+      <text x="0" y="5" font-family="'Inter', sans-serif" font-weight="900" fill="#FFFFFF" font-size="12" text-anchor="middle">USA</text>
+    </g>
+    <g transform="translate(100, -60)">
+      <circle cx="0" cy="0" r="25" fill="#10B981" stroke="#FFFFFF" stroke-width="2" />
+      <text x="0" y="5" font-family="'Inter', sans-serif" font-weight="900" fill="#FFFFFF" font-size="12" text-anchor="middle">IRAN</text>
+    </g>
+    
+    <!-- Giant Oil Barrel (유조통 일러스트) -->
+    <g transform="translate(-100, 110)">
+      <rect x="-25" y="-35" width="50" height="70" rx="6" fill="#F59E0B" />
+      <ellipse cx="0" cy="-35" rx="25" ry="8" fill="#D97706" />
+      <ellipse cx="0" cy="35" rx="25" ry="8" fill="#F59E0B" />
+      <line x1="-25" y1="0" x2="25" y2="0" stroke="#FFFFFF" stroke-width="2" />
+      <text x="0" y="4" font-family="'Inter', sans-serif" font-size="10" font-weight="900" fill="#FFFFFF" text-anchor="middle">OIL</text>
+    </g>
   </g>
 
-  <!-- Infographic Table -->
-  <g transform="translate(100, 240)">
-    <!-- Column Background -->
-    <rect x="0" y="0" width="1000" height="320" rx="16" fill="#F9FBFB" stroke="#B0BEC5" stroke-width="1.5" />
-    <!-- Header -->
-    <rect x="0" y="0" width="1000" height="60" rx="16" fill="#37474F" />
-    <rect x="0" y="45" width="1000" height="15" fill="#37474F" />
-    <text x="500" y="38" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">호르무즈 해협 역봉쇄 이슈 핵심 요약</text>
+  <!-- RIGHT SIDE: Text Summary Card (핵심내용 요약) -->
+  <g transform="translate(580, 50)" filter="url(#shadow)">
+    <!-- Summary Card Box -->
+    <rect width="570" height="575" rx="24" fill="url(#cardGrad)" />
     
-    <!-- Table Rows -->
-    <!-- Row 1 -->
-    <text x="50" y="115" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="800" fill="#37474F">1. 호르무즈 해협의 중요성</text>
-    <text x="450" y="115" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">전 세계 해상 석유 수송량의 약 20%가 경유하는 에너지 동맥</text>
-    <line x1="30" y1="145" x2="970" y2="145" stroke="#ECEFF1" stroke-width="2" />
+    <!-- Category Badge -->
+    <rect x="40" y="40" width="100" height="32" rx="16" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1" />
+    <text x="90" y="61" font-family="'Noto Sans KR', sans-serif" font-size="14" font-weight="700" fill="#475569" text-anchor="middle">국제 정세</text>
+    
+    <!-- Title -->
+    <text x="40" y="115" font-family="'Noto Sans KR', sans-serif" font-size="28" font-weight="900" fill="#0F172A">호르무즈 역봉쇄 해제 요약</text>
+    <text x="40" y="145" font-family="'Noto Sans KR', sans-serif" font-size="15" fill="#64748B">트럼프 선언에 따른 핵심 쟁점과 영향</text>
+    
+    <line x1="40" y1="175" x2="530" y2="175" stroke="#E2E8F0" stroke-width="1.5" />
 
-    <!-- Row 2 -->
-    <text x="50" y="195" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="800" fill="#37474F">2. 트럼프의 핵심 선언</text>
-    <text x="450" y="195" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#C62828" font-weight="700">이란 봉쇄에 대응해 왔던 미국의 해상 '역봉쇄' 조치 해제</text>
-    <line x1="30" y1="225" x2="970" y2="225" stroke="#ECEFF1" stroke-width="2" />
+    <!-- Point 1 -->
+    <g transform="translate(40, 205)">
+      <circle cx="20" cy="20" r="20" fill="#FFE4E6" />
+      <text x="20" y="26" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="900" fill="#E11D48" text-anchor="middle">1</text>
+      <text x="60" y="16" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="800" fill="#1E293B">호르무즈 해협의 중요성</text>
+      <text x="60" y="38" font-family="'Noto Sans KR', sans-serif" font-size="14" fill="#475569">전 세계 해상 원유 수송량의 20%가 통과하는 길목</text>
+    </g>
 
-    <!-- Row 3 -->
-    <text x="50" y="275" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="800" fill="#37474F">3. 우리 삶에 미치는 영향</text>
-    <text x="450" y="275" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">중동 긴장 완화에 따른 국제 유가 안정화 ➡️ 휘발유 등 국내 물가 영향</text>
+    <!-- Point 2 -->
+    <g transform="translate(40, 310)">
+      <circle cx="20" cy="20" r="20" fill="#FFE4E6" />
+      <text x="20" y="26" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="900" fill="#E11D48" text-anchor="middle">2</text>
+      <text x="60" y="16" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="800" fill="#1E293B">트럼프의 해상 역봉쇄 해제</text>
+      <text x="60" y="38" font-family="'Noto Sans KR', sans-serif" font-size="14" fill="#C1121F" font-weight="700">미국의 이란 해상 압박 조치를 전격 해제 선언</text>
+    </g>
+
+    <!-- Point 3 -->
+    <g transform="translate(40, 415)">
+      <circle cx="20" cy="20" r="20" fill="#E0F2FE" />
+      <text x="20" y="26" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="900" fill="#0284C7" text-anchor="middle">3</text>
+      <text x="60" y="16" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="800" fill="#1E293B">국내 실생활 영향</text>
+      <text x="60" y="38" font-family="'Noto Sans KR', sans-serif" font-size="14" fill="#475569">중동 긴장 완화 ➡️ 국제 유가 및 국내 기름값 안정화</text>
+    </g>
+
+    <!-- Point 4 -->
+    <g transform="translate(40, 520)">
+      <circle cx="20" cy="20" r="20" fill="#E0F2FE" />
+      <text x="20" y="26" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="900" fill="#0284C7" text-anchor="middle">4</text>
+      <text x="60" y="16" font-family="'Noto Sans KR', sans-serif" font-size="18" font-weight="800" fill="#1E293B">현명한 소비자 대처법</text>
+      <text x="60" y="38" font-family="'Noto Sans KR', sans-serif" font-size="14" fill="#475569">유가 동향 주시, 국제 뉴스 교차 검증하는 습관 필요</text>
+    </g>
   </g>
 </svg>
