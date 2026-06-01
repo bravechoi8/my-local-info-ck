@@ -100,7 +100,21 @@ async function main() {
     const dayOfMonth = kstDate.getUTCDate(); // 1~31: 날짜
 
     const tasks = [];
-    const baseKeywords = ['재테크', '핫이슈', '생활정보', '연예인이슈', '코스피 주식', '부동산 전망', '일자리 채용', '물가 세금'];
+    // 카테고리별 정밀 키워드 풀 (Pool)
+    const categoryKeywords = {
+      finance: ['재테크 꿀팁', '코스피 전망', '부동산 청약', '기준 금리', '세금 환급', '지원금 신청', '연금 저축', '연말정산 꿀팁'],
+      life: ['환절기 건강관리', '가전제품 추천', '전국 축제 일정', '생활 꿀팁', '해외여행 추천', '정부 지원 혜택', '실시간 트렌드', '이슈 분석'],
+      entertainment: ['화제 드라마', '인기 예능 방송', '영화 개봉작', '빌보드 차트', '넷플릭스 추천', '연예가 소식']
+    };
+
+    const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    
+    // 매번 다른 조합으로 3개의 키워드 추출
+    const baseKeywords = [
+      getRandomItem(categoryKeywords.finance),
+      getRandomItem(categoryKeywords.life),
+      getRandomItem(categoryKeywords.entertainment)
+    ];
 
     if (dayOfMonth === 1 && !process.env.SELECTED_KEYWORD) {
       const currentYear = kstDate.getUTCFullYear();
