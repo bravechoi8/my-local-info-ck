@@ -4,39 +4,42 @@
       <stop offset="0%" stop-color="#ECEFF1" />
       <stop offset="100%" stop-color="#CFD8DC" />
     </linearGradient>
-    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="110%">
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
       <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#90A4AE" flood-opacity="0.3" />
     </filter>
   </defs>
   <rect width="1200" height="675" fill="url(#bg)" />
-  <rect x="50" y="50" width="1100" height="575" rx="24" fill="#FFFFFF" filter="url(#cardShadow)" />
+  <rect x="50" y="50" width="1100" height="575" rx="24" fill="#FFFFFF" filter="url(#shadow)" />
+  
   <g transform="translate(100, 110)">
     <rect x="0" y="-30" width="100" height="36" rx="18" fill="#FFCDD2" />
-    <text x="50" y="-6" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="16" font-weight="700" fill="#C62828" text-anchor="middle">국제 정세</text>
-    <text x="0" y="50" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="42" font-weight="800" fill="#263238">트럼프 호르무즈 역봉쇄 해제 선언</text>
-    <text x="0" y="85" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">중동 긴장 완화와 국제 유가에 미칠 영향 및 실생활 대처 팁</text>
+    <text x="50" y="-6" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="16" font-weight="700" fill="#C62828" text-anchor="middle">국제 이슈</text>
+    <text x="0" y="50" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="40" font-weight="800" fill="#263238">트럼프 호르무즈 역봉쇄 해제 선언</text>
+    <text x="0" y="85" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">중동 정세의 급변과 실생활 대처법</text>
   </g>
-  <!-- Stylized Strait/Oil barrel graphic -->
-  <g transform="translate(600, 360)">
-    <!-- Sea lane lines -->
-    <path d="M -400,0 C -200,-50 0,50 200,-20 C 300,-50 400,-10 500,-20" fill="none" stroke="#B0BEC5" stroke-width="8" stroke-dasharray="10 10" />
-    <path d="M -400,-100 C -200,-150 0,-50 200,-120 C 300,-150 400,-110 500,-120" fill="none" stroke="#37474F" stroke-width="12" />
-    <path d="M -400,100 C -200,50 0,150 200,80 C 300,50 400,90 500,80" fill="none" stroke="#37474F" stroke-width="12" />
-    <!-- Oil ship -->
-    <rect x="-80" y="-30" width="160" height="40" rx="10" fill="#546E7A" />
-    <rect x="-40" y="-50" width="80" height="20" fill="#37474F" />
-    <!-- Oil Barrel Icon -->
-    <g transform="translate(250, -20)">
-      <rect x="-40" y="-60" width="80" height="100" rx="10" fill="#263238" />
-      <ellipse cx="0" cy="-60" rx="40" ry="15" fill="#37474F" />
-      <ellipse cx="0" cy="40" rx="40" ry="15" fill="#263238" />
-      <line x1="-40" y1="-10" x2="40" y2="-10" stroke="#FFFFFF" stroke-width="4" />
-      <text x="0" y="3" font-family="'Inter', sans-serif" font-size="14" font-weight="800" fill="#FFFFFF" text-anchor="middle">OIL</text>
-    </g>
-    <!-- USA & Iran abstract markers -->
-    <circle cx="-250" cy="-100" r="30" fill="#0D47A1" />
-    <text x="-250" y="-95" font-family="'Inter', sans-serif" font-weight="900" fill="#FFFFFF" font-size="16" text-anchor="middle">USA</text>
-    <circle cx="-150" cy="80" r="30" fill="#1B5E20" />
-    <text x="-150" y="85" font-family="'Inter', sans-serif" font-weight="900" fill="#FFFFFF" font-size="16" text-anchor="middle">IRAN</text>
+
+  <!-- Infographic Table -->
+  <g transform="translate(100, 240)">
+    <!-- Column Background -->
+    <rect x="0" y="0" width="1000" height="320" rx="16" fill="#F9FBFB" stroke="#B0BEC5" stroke-width="1.5" />
+    <!-- Header -->
+    <rect x="0" y="0" width="1000" height="60" rx="16" fill="#37474F" />
+    <rect x="0" y="45" width="1000" height="15" fill="#37474F" />
+    <text x="500" y="38" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">호르무즈 해협 역봉쇄 이슈 핵심 요약</text>
+    
+    <!-- Table Rows -->
+    <!-- Row 1 -->
+    <text x="50" y="115" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="800" fill="#37474F">1. 호르무즈 해협의 중요성</text>
+    <text x="450" y="115" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">전 세계 해상 석유 수송량의 약 20%가 경유하는 에너지 동맥</text>
+    <line x1="30" y1="145" x2="970" y2="145" stroke="#ECEFF1" stroke-width="2" />
+
+    <!-- Row 2 -->
+    <text x="50" y="195" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="800" fill="#37474F">2. 트럼프의 핵심 선언</text>
+    <text x="450" y="195" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#C62828" font-weight="700">이란 봉쇄에 대응해 왔던 미국의 해상 '역봉쇄' 조치 해제</text>
+    <line x1="30" y1="225" x2="970" y2="225" stroke="#ECEFF1" stroke-width="2" />
+
+    <!-- Row 3 -->
+    <text x="50" y="275" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="800" fill="#37474F">3. 우리 삶에 미치는 영향</text>
+    <text x="450" y="275" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#546E7A">중동 긴장 완화에 따른 국제 유가 안정화 ➡️ 휘발유 등 국내 물가 영향</text>
   </g>
 </svg>
