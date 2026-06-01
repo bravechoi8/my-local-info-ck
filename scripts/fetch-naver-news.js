@@ -160,7 +160,7 @@ async function main() {
       } else {
         const params = new URLSearchParams({
           query: selectedKeyword,
-          display: '10',
+          display: '30',
           sort: isLottoSunday ? 'date' : 'sim'
         });
 
@@ -215,6 +215,8 @@ async function main() {
       const title = cleanText(targetItem.title);
       const description = cleanText(targetItem.description);
       const link = targetItem.link;
+      const escapedTitle = title.replace(/"/g, '\\"');
+      const escapedLink = link.replace(/"/g, '\\"');
 
       console.log(`대상 뉴스 선정: ${title}`);
 
@@ -222,7 +224,7 @@ async function main() {
       const postCategory = isLottoOrSon ? '생활정보' : selectedKeyword;
 
       // [3단계] Gemini AI로 블로그 글 생성
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = kstDate.toISOString().split('T')[0];
       let prompt = '';
 
       if (isSonMonthFirst) {
@@ -246,10 +248,12 @@ date: ${todayStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 category: ${postCategory}
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
+naver_title: "${escapedTitle}"
+naver_link: "${escapedLink}"
 ---
 
-(본문: 1000자 이상, 친근하고 유용한 블로그 톤.
-본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 3개의 다음과 같은 형식의 플레이스홀더를 삽입해줘:
+(본문: 글의 분량은 억지로 늘리지 말고 내용에 맞게 탄력적으로 조율해줘. 단순 정보 전달이나 가벼운 안내글의 경우에는 글자수에 구애받지 않고 핵심 메시지만 짧고 간결하게 전달하도록 핵심 내용 위주로 짧게 작성하고, 깊은 해설이 필요한 주제일 때만 1000자 내외로 상세하게 작성해줘.
+본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 최소 2개에서 최대 4개 사이(매번 2~4개 사이로 랜덤하게 다르게)의 다음과 같은 형식의 플레이스홀더를 삽입해줘:
 [IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
 
 **주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘.
@@ -272,13 +276,16 @@ date: ${todayStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 category: ${postCategory}
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
+naver_title: "${escapedTitle}"
+naver_link: "${escapedLink}"
 ---
 
-(본문: 글의 종류와 깊이에 맞춰 분량을 조율해줘. 단순 정보 전달이나 가벼운 연예/이슈 뉴스 전달의 경우에는 **800자 이상**으로 핵심만 재미있고 깔끔하게 작성하고, 재테크 노하우, 복잡한 경제 정보, 가이드성 글(로또 명당, 손없는날 분석 등) 등 깊이 있는 해설과 팁이 필요한 글의 경우에는 구글 애드센스 승인 요건에 최적화되도록 **1500자 이상의 매우 전문적이고 상세한 긴 글**로 작성해줘. 뉴스 내용의 상세 설명과 실생활에 도움을 주는 구체적인 해결책이나 활용 팁 3가지 이상을 풍부하고 실속 있게 포함해줘. 출처도 함께 안내해줘.
-본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 최소 1개에서 최대 5개 사이로 다음과 같은 형식의 플레이스홀더를 삽입해줘:
+(본문: 글의 분량은 억지로 늘리지 말고 내용에 맞게 탄력적으로 조율해줘. 단순 정보 전달이나 가벼운 연예/이슈 뉴스의 경우에는 글자수에 구애받지 않고 핵심 메시지만 짧고 간결하게 전달하도록 핵심 내용 위주로 짧게 작성하고, 복잡한 재테크 요령이나 법률 정보 등 깊은 해설이 필요한 주제일 때만 1000자 내외의 설명과 팁을 작성해줘. 뉴스 내용에 어울리는 실질적인 도움이나 팁도 간결히 녹여내고, 글의 맨 마지막 줄에는 반드시 원본 뉴스 링크 주소인 ${link}를 그대로 사용해 출처 표시(예: **출처:** [뉴스 원본 기사 보러가기](${link}))를 한 줄 기재하고, 이를 절대로 누락하지 말아줘.
+사람들이 흥미를 느낄 수 있도록 지루한 부분을 빼고 매력적인 이슈 중심의 글이 되도록 해줘.
+본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 최소 2개에서 최대 4개 사이(매번 2개, 3개, 4개 중 랜덤하게 다르게)로 다음과 같은 형식의 플레이스홀더를 삽입해줘:
 [IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
 
-**주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘. 모든 글마다 들어가는 이미지의 개수가 똑같으면 자동 생성된 사이트 느낌이 강해지므로, 글의 맥락상 필요한 개수만큼(1~5개 사이로 매번 다르고 자유롭게) 유동적으로 조율하여 플레이스홀더를 삽입해줘.
+**주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘. 모든 글마다 들어가는 이미지의 개수가 똑같으면 자동 생성된 사이트 느낌이 강해지므로, 글의 맥락상 필요한 개수만큼(2~4개 사이로 매번 다르고 자유롭게) 유동적으로 조율하여 플레이스홀더를 삽입해줘.
 프롬프트 내용(English description)은 본문 해당 단락의 주제와 어울리는 구체적인 개념적 설명이어야 하고, 사람, 금융, 해당 뉴스 등 구체적 대상을 지정하되 텍스트가 들어가선 안 돼.
 )
 

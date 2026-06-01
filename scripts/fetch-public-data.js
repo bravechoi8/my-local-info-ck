@@ -163,7 +163,8 @@ async function main() {
       ? Math.max(...existingData.map(item => typeof item.id === 'number' ? item.id : 0)) + 1 
       : 1;
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const kstOffset = 9 * 60 * 60 * 1000;
+    const todayStr = new Date(new Date().getTime() + kstOffset).toISOString().split('T')[0];
     const addedItems = [];
 
     for (const targetItem of targetItems) {
