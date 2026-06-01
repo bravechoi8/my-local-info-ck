@@ -23,11 +23,31 @@ export async function generateSummaryImage(title, summary, filenameKey) {
       return null;
     }
 
-    // 1단계: Gemini를 사용하여 이미지 생성용 정밀 영어 프롬프트 빌드
-    const promptBuilderText = `Based on the Korean blog post title and summary below, generate a highly detailed, professional English prompt for Google's Imagen text-to-image model.
-The goal is to create a clean, modern, minimalist comparison infographic card, flat design vector illustration, or conceptual 3D render suitable for a blog post summary.
-The generated prompt must focus on visually conveying the core theme and key items of the post (e.g. if the post is about public transit pass, show transit cards, buses, or trains; if it is about tax refund, show tax documents, financial envelopes, or money growth).
-The image should contain NO TEXT, use a beautiful pastel or curated warm color palette, and visually represent the topic. Do not output anything other than the prompt.
+    // 1단계: Gemini를 사용하여 이미지 생성용 정밀 영어 프롬프트 및 3단 요약 데이터 빌드
+    const promptBuilderText = `Based on the Korean blog post title and summary below, analyze the key details and generate a JSON object with the following fields:
+{
+  "imagenPrompt": "A highly detailed, professional English prompt for Google's Imagen text-to-image model. The prompt must focus on visually conveying the core theme of the post (e.g., if the post is about interest rates, show banking documents, growth charts, or coins). Crucially, the image must contain NO TEXT, use a beautiful warm/pastel color palette, and be suitable as a background card.",
+  "subTitle": "A catchy, interesting Korean subtitle for the blog post (maximum 20 characters, NO quotes)",
+  "points": [
+    {
+      "title": "A short keyword summarizing Point 1 (maximum 10 characters in Korean)",
+      "desc1": "A clear description of Point 1, line 1 (maximum 18 characters in Korean)",
+      "desc2": "A clear description of Point 1, line 2 (maximum 18 characters in Korean, optional, empty if not needed)"
+    },
+    {
+      "title": "A short keyword summarizing Point 2 (maximum 10 characters in Korean)",
+      "desc1": "A clear description of Point 2, line 1 (maximum 18 characters in Korean)",
+      "desc2": "A clear description of Point 2, line 2 (maximum 18 characters in Korean, optional, empty if not needed)"
+    },
+    {
+      "title": "A short keyword summarizing Point 3 (maximum 10 characters in Korean)",
+      "desc1": "A clear description of Point 3, line 1 (maximum 18 characters in Korean)",
+      "desc2": "A clear description of Point 3, line 2 (maximum 18 characters in Korean, optional, empty if not needed)"
+    }
+  ]
+}
+
+Ensure you ONLY output the valid JSON block and nothing else. Do not wrap in markdown code blocks.
 
 Title: ${title}
 Summary: ${summary}`;
@@ -48,19 +68,35 @@ Summary: ${summary}`;
     });
 
     if (!geminiRes.ok) {
-      console.error(`[이미지 생성] Gemini 프롬프트 생성 실패: ${geminiRes.status}`);
+      console.error(`[이미지 생성] Gemini 데이터 생성 실패: ${geminiRes.status}`);
       return null;
     }
 
     const geminiData = await geminiRes.json();
-    let imagePrompt = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    imagePrompt = imagePrompt.trim();
+    let responseText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    responseText = responseText.trim();
 
-    if (!imagePrompt) {
-      console.error('[이미지 생성] 프롬프트 텍스트를 생성하지 못했습니다.');
-      return null;
+    // 마크다운 코드블록 제거
+    responseText = responseText.replace(/^```json\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
+
+    let infoData;
+    try {
+      infoData = JSON.parse(responseText);
+    } catch (parseErr) {
+      console.error('[이미지 생성] JSON 파싱 에러. 응답 텍스트:', responseText);
+      // 예비용 Fallback 데이터 생성
+      infoData = {
+        imagenPrompt: `${title}, flat design illustration`,
+        subTitle: summary.substring(0, 20),
+        points: [
+          { title: "핵심 요약 1", desc1: "상세 내용을 블로그", desc2: "본문에서 확인해보세요" },
+          { title: "핵심 요약 2", desc1: "유용한 정보와 꿀팁이", desc2: "가득 담겨 있습니다" },
+          { title: "핵심 요약 3", desc1: "지금 바로 아래의", desc2: "글을 끝까지 읽어보세요" }
+        ]
+      };
     }
 
+    const imagePrompt = infoData.imagenPrompt || `${title}, flat design illustration`;
     console.log(`[이미지 생성] 영어 프롬프트 빌드 완료: "${imagePrompt}"`);
 
     // 2단계: Imagen API 호출하여 이미지 생성
@@ -99,7 +135,7 @@ Summary: ${summary}`;
       return null;
     }
 
-    // 3단계: 이미지 디코딩 후 저장
+    // 3단계: 배경용 이미지(JPG) 저장
     const base64Bytes = predictions[0].bytesBase64Encoded;
     const imgBuffer = Buffer.from(base64Bytes, 'base64');
 
@@ -109,13 +145,27 @@ Summary: ${summary}`;
     }
 
     const cleanFilenameKey = filenameKey.replace(/[^a-zA-Z0-9\-_]/g, '');
-    const filename = `card-${cleanFilenameKey}.jpg`;
-    const outputPath = path.join(publicImagesDir, filename);
+    const bgFilename = `card-bg-${cleanFilenameKey}.jpg`;
+    const bgOutputPath = path.join(publicImagesDir, bgFilename);
 
-    fs.writeFileSync(outputPath, imgBuffer);
-    console.log(`[이미지 생성] 요약 이미지 저장 완료: ${outputPath}`);
+    fs.writeFileSync(bgOutputPath, imgBuffer);
+    console.log(`[이미지 생성] 배경 일러스트 저장 완료: ${bgOutputPath}`);
 
-    return `/images/${filename}`;
+    // 4단계: SVG 인포그래픽 카드 합성 및 저장
+    const svgFilename = `card-${cleanFilenameKey}.svg`;
+    const svgOutputPath = path.join(publicImagesDir, svgFilename);
+
+    const svgContent = buildSvgTemplate(
+      title, 
+      infoData.subTitle || '', 
+      `/images/${bgFilename}`, 
+      infoData.points || []
+    );
+
+    fs.writeFileSync(svgOutputPath, svgContent, 'utf-8');
+    console.log(`[이미지 생성] 하이브리드 SVG 카드 저장 완료: ${svgOutputPath}`);
+
+    return `/images/${svgFilename}`;
   } catch (err) {
     console.error('[이미지 생성] 오류 발생:', err.message);
     return null;
@@ -188,5 +238,123 @@ export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3'
     console.error('[이미지 생성] 오류 발생:', err.message);
     return null;
   }
+}
+
+/**
+ * 고화질 요약 인포그래픽 SVG 카드를 조립합니다.
+ * @param {string} title 대제목
+ * @param {string} subTitle 부제목
+ * @param {string} bgImgPath AI가 생성한 이미지의 상대 경로 (예: '/images/card-bg-xxx.jpg')
+ * @param {Array} points 3단 요약 카드 데이터 배열
+ * @returns {string} 완성된 SVG 코드 문자열
+ */
+function buildSvgTemplate(title, subTitle, bgImgPath, points) {
+  // 따옴표 이스케이프 및 XML 안전 문자 변환
+  const escapeXml = (str) => {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+  };
+
+  const safeTitle = escapeXml(title);
+  const safeSubTitle = escapeXml(subTitle);
+
+  // 3개 카드 그리기
+  let cardsMarkup = '';
+  for (let i = 0; i < 3; i++) {
+    const pt = points[i] || { title: `핵심 요약 ${i + 1}`, desc1: '상세 내용을 본문에서', desc2: '확인해보세요' };
+    const safePtTitle = escapeXml(pt.title);
+    const safePtDesc1 = escapeXml(pt.desc1);
+    const safePtDesc2 = escapeXml(pt.desc2);
+
+    const xPos = 50 + (i * 380); // 50, 430, 810 으로 정밀 배치
+    const numberBgColor = i === 0 ? '#F59E0B' : (i === 1 ? '#10B981' : '#38BDF8'); // 황색, 녹색, 청색으로 포인트 색상 차별화
+
+    cardsMarkup += `
+    <!-- Card ${i + 1} -->
+    <g transform="translate(${xPos}, 530)">
+      <!-- Card Box -->
+      <rect width="340" height="220" rx="16" fill="#1E293B" stroke="#334155" stroke-width="1.5" />
+      
+      <!-- Top Line Indicator -->
+      <path d="M 16 0 L 324 0" stroke="${numberBgColor}" stroke-width="4" stroke-linecap="round" />
+      
+      <!-- Number Circle -->
+      <circle cx="45" cy="45" r="16" fill="${numberBgColor}" />
+      <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">${i + 1}</text>
+      
+      <!-- Card Title -->
+      <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#FFFFFF">${safePtTitle}</text>
+      
+      <!-- Divider -->
+      <line x1="25" y1="85" x2="315" y2="85" stroke="#334155" stroke-width="1" />
+      
+      <!-- Card Descriptions -->
+      <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#94A3B8" font-weight="500">${safePtDesc1}</text>
+      <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#94A3B8" font-weight="500">${safePtDesc2}</text>
+    </g>
+    `;
+  }
+
+  // 오늘 날짜 얻기 (KST 기준)
+  const kstOffset = 9 * 60 * 60 * 1000;
+  const todayStr = new Date(new Date().getTime() + kstOffset).toISOString().split('T')[0];
+
+  return `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0F19" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#mainBg)" />
+
+  <!-- HEADER AREA -->
+  <g transform="translate(50, 45)">
+    <!-- Site Badge -->
+    <rect width="105" height="26" rx="13" fill="#1E293B" stroke="#475569" stroke-width="1" />
+    <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#38BDF8" text-anchor="middle">REAL INFO</text>
+    
+    <!-- Publish Date -->
+    <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#64748B">${todayStr}</text>
+  </g>
+
+  <!-- Main Title -->
+  <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF">${safeTitle}</text>
+  
+  <!-- Subtitle -->
+  <text x="50" y="142" font-family="'Pretendard', sans-serif" font-size="16" fill="#94A3B8" font-weight="500">${safeSubTitle}</text>
+
+  <!-- CENTRAL GRAPHIC (AI Image Frame) -->
+  <g>
+    <!-- Rounded Clip Path for AI Image -->
+    <clipPath id="imageClip">
+      <rect x="50" y="170" width="1100" height="325" rx="16" />
+    </clipPath>
+    
+    <!-- Image Card Frame background -->
+    <rect x="50" y="170" width="1100" height="325" rx="16" fill="#1F2937" stroke="#374151" stroke-width="1.5" />
+    
+    <!-- AI Generated Background Image -->
+    <image href="${bgImgPath}" x="50" y="170" width="1100" height="325" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
+    
+    <!-- Glassmorphism Overlay -->
+    <rect x="50" y="170" width="1100" height="325" rx="16" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1" />
+  </g>
+
+  <!-- BOTTOM THREE CARDS -->
+  <g>
+    ${cardsMarkup}
+  </g>
+</svg>
+`;
 }
 

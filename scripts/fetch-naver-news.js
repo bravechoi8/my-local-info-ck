@@ -83,6 +83,83 @@ function cleanText(text) {
     .replace(/&amp;/g, "&");
 }
 
+/**
+ * 네이버 뉴스 검색 API에서 최근 뉴스들을 수집한 뒤,
+ * Gemini AI를 사용해 오늘 가장 핫한 이슈 키워드 3개를 자동으로 추출합니다.
+ */
+async function fetchTrendingKeywords() {
+  console.log('[실시간 트렌드 분석] 최신 뉴스 데이터 수집 중...');
+  try {
+    const params = new URLSearchParams({
+      query: '속보', // 종합 뉴스 수집을 위한 키워드
+      display: '50',
+      sort: 'date'
+    });
+
+    const response = await fetch(`${NAVER_ENDPOINT}?${params.toString()}`, {
+      headers: {
+        'X-Naver-Client-Id': NAVER_CLIENT_ID,
+        'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`네이버 API 호출 실패 (트렌드 수집): ${response.status}`);
+      return [];
+    }
+
+    const result = await response.json();
+    const newsItems = result.items || [];
+    if (newsItems.length === 0) {
+      return [];
+    }
+
+    // 뉴스 제목들만 모으기
+    const titles = newsItems.map(item => cleanText(item.title)).join('\n');
+
+    console.log('[실시간 트렌드 분석] Gemini AI를 통해 핫 키워드 추출 중...');
+    const prompt = `오늘 생산된 아래 뉴스 헤드라인 목록을 보고, 오늘 한국 대중들 사이에서 가장 관심이 뜨겁고 생활 밀착형 정보성 블로그 글로 쓰기 적합한 핵심 키워드 3개를 선정해줘.
+예를 들어 '스타벅스 환불', '지방선거 사전투표소', '근로장려금 신청'처럼 2~3단어로 구성되고 검색창에 입력하기 좋은 명확한 단어로 해줘.
+반드시 아래 JSON 배열 형식으로만 응답해줘. 다른 텍스트는 일체 포함하지 마:
+["키워드1", "키워드2", "키워드3"]
+
+뉴스 헤드라인 목록:
+${titles}`;
+
+    const geminiResponse = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+      })
+    });
+
+    if (!geminiResponse.ok) {
+      console.error(`Gemini API 호출 실패 (트렌드 분석): ${geminiResponse.status}`);
+      return [];
+    }
+
+    const geminiResult = await geminiResponse.json();
+    let text = geminiResult.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    text = text.trim().replace(/^```json\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
+
+    const keywords = JSON.parse(text);
+    if (Array.isArray(keywords) && keywords.length > 0) {
+      console.log(`[실시간 트렌드 분석 완료] 오늘 선정된 핫 키워드: ${keywords.join(', ')}`);
+      return keywords;
+    }
+  } catch (err) {
+    console.error('[실시간 트렌드 분석 오류]:', err.message);
+  }
+  return [];
+}
+
 async function main() {
   try {
     if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) {
@@ -92,7 +169,7 @@ async function main() {
       throw new Error('GEMINI_API_KEY 환경변수가 없습니다.');
     }
 
-    // [1단계] 키워드 목록 작성 (로또/손없는날 등 특수 날짜 감안하여 서로 다른 3개 선정)
+    // [1단계] 키워드 목록 작성 (실시간 트렌드 또는 로또/손없는날 등 특수 날짜 감안하여 선정)
     const nowUtc = new Date();
     const kstOffset = 9 * 60 * 60 * 1000;
     const kstDate = new Date(nowUtc.getTime() + kstOffset);
@@ -100,22 +177,22 @@ async function main() {
     const dayOfMonth = kstDate.getUTCDate(); // 1~31: 날짜
 
     const tasks = [];
-    // 카테고리별 정밀 키워드 풀 (Pool)
-    const categoryKeywords = {
-      finance: ['재테크 꿀팁', '코스피 전망', '부동산 청약', '기준 금리', '세금 환급', '지원금 신청', '연금 저축', '연말정산 꿀팁'],
-      life: ['환절기 건강관리', '가전제품 추천', '전국 축제 일정', '생활 꿀팁', '해외여행 추천', '정부 지원 혜택', '실시간 트렌드', '이슈 분석'],
-      entertainment: ['화제 드라마', '인기 예능 방송', '영화 개봉작', '빌보드 차트', '넷플릭스 추천', '연예가 소식']
-    };
 
-    const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    
-    // 매번 다른 조합으로 3개의 키워드 추출
-    const baseKeywords = [
-      getRandomItem(categoryKeywords.finance),
-      getRandomItem(categoryKeywords.life),
-      getRandomItem(categoryKeywords.entertainment)
-    ];
+    // 만약 환경변수 SELECTED_KEYWORD가 있다면 우선적으로 포함
+    if (process.env.SELECTED_KEYWORD) {
+      tasks.push({ keyword: process.env.SELECTED_KEYWORD, isSonMonthFirst: false, isLottoSunday: false });
+    }
 
+    // 일요일에는 로또 당첨번호 추가
+    if (dayOfWeek === 0 && !process.env.SELECTED_KEYWORD) {
+      tasks.push({
+        keyword: '로또 당첨번호',
+        isSonMonthFirst: false,
+        isLottoSunday: true
+      });
+    }
+
+    // 매월 1일에는 손없는날 추가
     if (dayOfMonth === 1 && !process.env.SELECTED_KEYWORD) {
       const currentYear = kstDate.getUTCFullYear();
       const currentMonth = kstDate.getUTCMonth() + 1;
@@ -124,29 +201,35 @@ async function main() {
         isSonMonthFirst: true,
         isLottoSunday: false
       });
-      const shuffled = [...baseKeywords].sort(() => 0.5 - Math.random());
-      tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-      tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-    } else if (dayOfWeek === 0 && !process.env.SELECTED_KEYWORD) {
-      tasks.push({
-        keyword: '로또 당첨번호',
-        isSonMonthFirst: false,
-        isLottoSunday: true
-      });
-      const shuffled = [...baseKeywords].sort(() => 0.5 - Math.random());
-      tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-      tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-    } else {
-      const shuffled = [...baseKeywords].sort(() => 0.5 - Math.random());
-      // 만약 환경변수 SELECTED_KEYWORD가 있다면 우선적으로 포함
-      if (process.env.SELECTED_KEYWORD) {
-        tasks.push({ keyword: process.env.SELECTED_KEYWORD, isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-      } else {
-        tasks.push({ keyword: shuffled[0], isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[1], isSonMonthFirst: false, isLottoSunday: false });
-        tasks.push({ keyword: shuffled[2], isSonMonthFirst: false, isLottoSunday: false });
+    }
+
+    // 실시간 트렌드 키워드 수집 (총 3개에서 특수 키워드를 제외한 나머지만큼 채우기)
+    const neededKeywordsCount = 3 - tasks.length;
+    if (neededKeywordsCount > 0) {
+      const trendingKeywords = await fetchTrendingKeywords();
+      for (let i = 0; i < Math.min(neededKeywordsCount, trendingKeywords.length); i++) {
+        tasks.push({ keyword: trendingKeywords[i], isSonMonthFirst: false, isLottoSunday: false });
+      }
+    }
+
+    // 백업 키워드 풀 (트렌드 수집 실패 시 활용)
+    if (tasks.length < 3) {
+      const categoryKeywords = {
+        finance: ['재테크 꿀팁', '부동산 청약', '세금 환급', '지원금 신청'],
+        life: ['생활 꿀팁', '실시간 트렌드', '이슈 분석', '정부 지원 혜택'],
+        entertainment: ['화제 드라마', '인기 예능 방송', '넷플릭스 추천']
+      };
+      const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+      const backupKeywords = [
+        getRandomItem(categoryKeywords.finance),
+        getRandomItem(categoryKeywords.life),
+        getRandomItem(categoryKeywords.entertainment)
+      ];
+      for (const kw of backupKeywords) {
+        if (tasks.length >= 3) break;
+        if (!tasks.some(t => t.keyword === kw)) {
+          tasks.push({ keyword: kw, isSonMonthFirst: false, isLottoSunday: false });
+        }
       }
     }
 

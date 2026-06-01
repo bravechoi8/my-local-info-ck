@@ -223,7 +223,98 @@ export default async function BlogPostPage({ params }: Props) {
         <article className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.01)]">
           {/* @tailwindcss/typography의 prose 클래스를 활용해 마크다운 스타일을 예쁘게 정렬합니다. */}
           <div className="prose prose-slate max-w-none text-sm sm:text-base leading-relaxed text-slate-800 break-words">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code(props) {
+                  const { children, className, ...rest } = props;
+                  const match = /language-lotto/.test(className || '');
+                  
+                  if (match) {
+                    const text = String(children).trim();
+                    const lines = text.split('\n');
+                    let round = '';
+                    let nums: string[] = [];
+                    let bonus = '';
+
+                    lines.forEach(line => {
+                      const cleanLine = line.trim();
+                      if (cleanLine.startsWith('회차:')) {
+                        round = cleanLine.replace('회차:', '').trim();
+                      } else if (cleanLine.startsWith('번호:')) {
+                        nums = cleanLine.replace('번호:', '').split(',').map(n => n.trim()).filter(Boolean);
+                      } else if (cleanLine.startsWith('보너스:')) {
+                        bonus = cleanLine.replace('보너스:', '').trim();
+                      }
+                    });
+
+                    // 만약 특정 규격이 아닐 경우 예외 처리
+                    if (nums.length === 0) {
+                      const parts = text.split('+');
+                      nums = parts[0] ? parts[0].split(',').map(n => n.trim()).filter(Boolean) : [];
+                      bonus = parts[1] ? parts[1].trim() : '';
+                    }
+
+                    const getBallColor = (numStr: string) => {
+                      const num = parseInt(numStr, 10);
+                      if (isNaN(num)) return 'bg-slate-400 text-white';
+                      if (num >= 1 && num <= 10) return 'bg-[#f2a93b] text-white shadow-[0_4px_10px_rgba(242,169,59,0.3)]';
+                      if (num >= 11 && num <= 20) return 'bg-[#3b82f6] text-white shadow-[0_4px_10px_rgba(59,130,246,0.3)]';
+                      if (num >= 21 && num <= 30) return 'bg-[#ef4444] text-white shadow-[0_4px_10px_rgba(239,68,68,0.3)]';
+                      if (num >= 31 && num <= 40) return 'bg-[#6b7280] text-white shadow-[0_4px_10px_rgba(107,114,128,0.3)]';
+                      if (num >= 41 && num <= 45) return 'bg-[#10b981] text-white shadow-[0_4px_10px_rgba(16,185,129,0.3)]';
+                      return 'bg-slate-400 text-white';
+                    };
+
+                    return (
+                      <div className="not-prose my-8 p-6 sm:p-8 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center gap-6 shadow-sm">
+                        {round && (
+                          <div className="text-xs sm:text-sm font-bold text-slate-500 tracking-wider bg-slate-100 px-3 py-1 rounded-full">
+                            제 {round} 당첨번호
+                          </div>
+                        )}
+                        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+                            {nums.map((num, idx) => (
+                              <span
+                                key={idx}
+                                className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-base sm:text-lg font-black border border-white/10 ${getBallColor(num)}`}
+                              >
+                                {num}
+                              </span>
+                            ))}
+                          </div>
+                          
+                          {bonus && (
+                            <>
+                              <span className="text-slate-400 font-bold text-lg sm:text-xl px-1">＋</span>
+                              <div className="flex flex-col items-center gap-1">
+                                <span
+                                  className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-base sm:text-lg font-black border border-white/10 ${getBallColor(bonus)}`}
+                                >
+                                  {bonus}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        {bonus && (
+                          <div className="text-[11px] sm:text-xs text-slate-400 font-medium">
+                            보너스 번호: {bonus}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                  
+                  return (
+                    <code className={className} {...rest}>
+                      {children}
+                    </code>
+                  );
+                }
+              }}
+            >
               {post.content}
             </ReactMarkdown>
           </div>
