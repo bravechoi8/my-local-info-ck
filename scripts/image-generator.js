@@ -26,6 +26,7 @@ export async function generateSummaryImage(title, summary, filenameKey) {
     // 1단계: Gemini를 사용하여 이미지 생성용 정밀 영어 프롬프트 빌드
     const promptBuilderText = `Based on the Korean blog post title and summary below, generate a highly detailed, professional English prompt for Google's Imagen text-to-image model.
 The goal is to create a clean, modern, minimalist comparison infographic card, flat design vector illustration, or conceptual 3D render suitable for a blog post summary.
+The generated prompt must focus on visually conveying the core theme and key items of the post (e.g. if the post is about public transit pass, show transit cards, buses, or trains; if it is about tax refund, show tax documents, financial envelopes, or money growth).
 The image should contain NO TEXT, use a beautiful pastel or curated warm color palette, and visually represent the topic. Do not output anything other than the prompt.
 
 Title: ${title}
