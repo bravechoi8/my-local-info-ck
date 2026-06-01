@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF9C4" />
+      <stop offset="100%" stop-color="#FFF59D" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#FBC02D" flood-opacity="0.3" />
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)" />
+  <rect x="50" y="50" width="1100" height="575" rx="24" fill="#FFFFFF" filter="url(#shadow)" />
+  <g transform="translate(100, 110)">
+    <rect x="0" y="-30" width="100" height="36" rx="18" fill="#FFF59D" />
+    <text x="50" y="-6" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="16" font-weight="700" fill="#F57F17" text-anchor="middle">부동산 법률</text>
+    <text x="0" y="50" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="42" font-weight="800" fill="#3E2723">상가 임대차 계약 만료 폭탄 피하기</text>
+    <text x="0" y="85" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#5D4037">환산보증금 9억 초과 사장님들을 위한 10년 갱신권과 권리금 보호 가이드</text>
+  </g>
+  <!-- Stylized Shop & Shield -->
+  <g transform="translate(600, 360)">
+    <!-- Shop Icon -->
+    <rect x="-250" y="-80" width="180" height="150" rx="12" fill="#E0F2F1" stroke="#004D40" stroke-width="6" />
+    <polygon points="-270,-80 -70,-80 -90,-120 -250,-120" fill="#00B0FF" stroke="#004D40" stroke-width="6" />
+    <rect x="-180" y="-10" width="40" height="80" fill="#004D40" />
+    <!-- Shield Icon -->
+    <g transform="translate(100, 0)">
+      <path d="M -50,-80 L 50,-80 L 50,-20 C 50,40 0,90 0,90 C 0,90 -50,40 -50,-20 Z" fill="#FFF9C4" stroke="#F57F17" stroke-width="8" />
+      <text x="0" y="15" font-family="'Inter', sans-serif" font-size="48" font-weight="900" fill="#F57F17" text-anchor="middle">법</text>
+    </g>
+  </g>
+</svg>

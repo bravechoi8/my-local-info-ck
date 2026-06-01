@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECEFF1" />
+      <stop offset="100%" stop-color="#CFD8DC" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="16" fill="url(#bg)" />
+  <!-- Microphones & Speech Bubbles -->
+  <g transform="translate(180, 240)">
+    <rect x="-30" y="-80" width="60" height="120" rx="30" fill="#37474F" />
+    <rect x="-8" y="40" width="16" height="80" fill="#546E7A" />
+    <circle cx="0" cy="120" r="30" fill="#263238" />
+    <ellipse cx="0" cy="-80" rx="20" ry="15" fill="#B0BEC5" />
+  </g>
+  <g transform="translate(420, 150)">
+    <rect x="0" y="0" width="280" height="180" rx="20" fill="#FFFFFF" stroke="#78909C" stroke-width="4" />
+    <polygon points="30,180 50,220 70,180" fill="#FFFFFF" stroke="#78909C" stroke-width="4" />
+    <!-- Overwrite border on the triangle base -->
+    <polygon points="32,178 68,178 50,215" fill="#FFFFFF" />
+    
+    <text x="140" y="55" font-family="'Noto Sans KR', sans-serif" font-size="20" font-weight="900" fill="#37474F" text-anchor="middle">연예인 발언의 파급력</text>
+    <text x="30" y="100" font-family="'Noto Sans KR', sans-serif" font-size="15" fill="#546E7A">1. 대중 문화적 영향력</text>
+    <text x="30" y="130" font-family="'Noto Sans KR', sans-serif" font-size="15" fill="#546E7A">2. 팬덤 중심의 여론 형성</text>
+    <text x="30" y="160" font-family="'Noto Sans KR', sans-serif" font-size="15" fill="#546E7A">3. 사회적 양극화의 타겟</text>
+  </g>
+</svg>

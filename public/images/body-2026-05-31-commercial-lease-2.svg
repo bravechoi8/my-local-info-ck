@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0" />
+      <stop offset="100%" stop-color="#FFE0B2" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="16" fill="url(#bg)" />
+  <!-- Contract Icon -->
+  <g transform="translate(250, 225)">
+    <rect x="-80" y="-110" width="160" height="220" rx="8" fill="#FFFFFF" stroke="#E65100" stroke-width="4" />
+    <!-- Lines -->
+    <line x1="-50" y1="-70" x2="50" y2="-70" stroke="#FFE0B2" stroke-width="8" />
+    <line x1="-50" y1="-40" x2="50" y2="-40" stroke="#FFE0B2" stroke-width="8" />
+    <line x1="-50" y1="-10" x2="20" y2="-10" stroke="#FFE0B2" stroke-width="8" />
+    <!-- Stamp -->
+    <circle cx="40" cy="50" r="25" fill="none" stroke="#D84315" stroke-width="4" />
+    <text x="40" y="56" font-family="'Noto Sans KR', sans-serif" font-size="16" font-weight="900" fill="#D84315" text-anchor="middle">계약</text>
+  </g>
+  <!-- Text Label -->
+  <g transform="translate(450, 180)">
+    <text x="0" y="0" font-family="'Noto Sans KR', sans-serif" font-size="32" font-weight="900" fill="#E65100">임차인 권리보호 2대 핵심</text>
+    
+    <text x="0" y="50" font-family="'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#BF360C">1. 10년 계약갱신요구권</text>
+    <text x="24" y="80" font-family="'Noto Sans KR', sans-serif" font-size="16" fill="#5D4037">- 고액 환산보증금 상가도 동일 적용</text>
+    
+    <text x="0" y="120" font-family="'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#BF360C">2. 권리금 회수 기회 보호</text>
+    <text x="24" y="150" font-family="'Noto Sans KR', sans-serif" font-size="16" fill="#5D4037">- 임대인의 정당한 사유 없는 방해 금지</text>
+  </g>
+</svg>
