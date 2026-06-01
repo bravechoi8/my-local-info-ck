@@ -266,48 +266,148 @@ function buildSvgTemplate(title, subTitle, bgImgPath, points) {
   const safeTitle = escapeXml(title);
   const safeSubTitle = escapeXml(subTitle);
 
-  // 3개 카드 그리기
-  let cardsMarkup = '';
-  for (let i = 0; i < 3; i++) {
-    const pt = points[i] || { title: `핵심 요약 ${i + 1}`, desc1: '상세 내용을 본문에서', desc2: '확인해보세요' };
-    const safePtTitle = escapeXml(pt.title);
-    const safePtDesc1 = escapeXml(pt.desc1);
-    const safePtDesc2 = escapeXml(pt.desc2);
-
-    const xPos = 50 + (i * 380); // 50, 430, 810 으로 정밀 배치
-    const numberBgColor = i === 0 ? '#F59E0B' : (i === 1 ? '#10B981' : '#38BDF8'); // 황색, 녹색, 청색으로 포인트 색상 차별화
-
-    cardsMarkup += `
-    <!-- Card ${i + 1} -->
-    <g transform="translate(${xPos}, 530)">
-      <!-- Card Box -->
-      <rect width="340" height="220" rx="16" fill="#1E293B" stroke="#334155" stroke-width="1.5" />
-      
-      <!-- Top Line Indicator -->
-      <path d="M 16 0 L 324 0" stroke="${numberBgColor}" stroke-width="4" stroke-linecap="round" />
-      
-      <!-- Number Circle -->
-      <circle cx="45" cy="45" r="16" fill="${numberBgColor}" />
-      <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">${i + 1}</text>
-      
-      <!-- Card Title -->
-      <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#FFFFFF">${safePtTitle}</text>
-      
-      <!-- Divider -->
-      <line x1="25" y1="85" x2="315" y2="85" stroke="#334155" stroke-width="1" />
-      
-      <!-- Card Descriptions -->
-      <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#94A3B8" font-weight="500">${safePtDesc1}</text>
-      <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#94A3B8" font-weight="500">${safePtDesc2}</text>
-    </g>
-    `;
-  }
-
   // 오늘 날짜 얻기 (KST 기준)
   const kstOffset = 9 * 60 * 60 * 1000;
   const todayStr = new Date(new Date().getTime() + kstOffset).toISOString().split('T')[0];
 
-  return `
+  // 타이틀 글자들을 기반으로 3가지 디자인 스타일 중 하나를 결정 (결정론적 랜덤)
+  const styleChoice = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 3;
+
+  if (styleChoice === 1) {
+    // [스타일 1] 전면 일러스트형 (Visual Cover) - 전면 이미지 + 하단 타이틀 오버레이
+    return `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- 전체 둥근 모서리 클리핑 -->
+    <clipPath id="fullClip">
+      <rect width="1200" height="800" rx="24" />
+    </clipPath>
+    <!-- 글씨가 잘 보이도록 하는 하단 어두운 그라데이션 레이어 -->
+    <linearGradient id="textOverlayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="transparent" stop-opacity="0" />
+      <stop offset="45%" stop-color="#000000" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.85" />
+    </linearGradient>
+  </defs>
+
+  <!-- 전체 내용물 (모서리 둥글게 적용) -->
+  <g clip-path="url(#fullClip)">
+    <!-- AI가 생성한 고화질 배경 이미지 -->
+    <image href="${bgImgPath}" width="1200" height="800" preserveAspectRatio="xMidYMid slice" />
+    
+    <!-- 하단 그라데이션 오버레이 -->
+    <rect y="350" width="1200" height="450" fill="url(#textOverlayGrad)" />
+
+    <!-- 상단 리얼인포 뱃지 -->
+    <g transform="translate(60, 60)">
+      <rect width="105" height="26" rx="13" fill="#000000" fill-opacity="0.4" stroke="#FFFFFF" stroke-width="1" stroke-opacity="0.3" />
+      <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">REAL INFO</text>
+      <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#FFFFFF" fill-opacity="0.7">${todayStr}</text>
+    </g>
+
+    <!-- 하단 제목 및 설명문 -->
+    <g transform="translate(60, 620)">
+      <text font-family="'Pretendard', sans-serif" font-size="40" font-weight="900" fill="#FFFFFF" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.7))">${safeTitle}</text>
+      <text y="60" font-family="'Pretendard', sans-serif" font-size="19" fill="#E2E8F0" font-weight="600" filter="drop-shadow(0px 2px 5px rgba(0,0,0,0.7))">${safeSubTitle}</text>
+    </g>
+  </g>
+</svg>
+`;
+  } else if (styleChoice === 2) {
+    // [스타일 2] 반반 분할 레이아웃형 (Split Layout) - 왼쪽 그림 + 오른쪽 대형 타이포그래피
+    const splitTitle = (str) => {
+      const midpoint = Math.floor(str.length / 2);
+      const spaceIndex = str.indexOf(' ', midpoint);
+      if (spaceIndex === -1) {
+        const prevSpaceIndex = str.lastIndexOf(' ', midpoint);
+        if (prevSpaceIndex === -1) {
+          return [str, ''];
+        }
+        return [str.substring(0, prevSpaceIndex), str.substring(prevSpaceIndex + 1)];
+      }
+      return [str.substring(0, spaceIndex), str.substring(spaceIndex + 1)];
+    };
+    const [titleLine1, titleLine2] = splitTitle(safeTitle);
+
+    return `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <clipPath id="fullClip">
+      <rect width="1200" height="800" rx="24" />
+    </clipPath>
+    <clipPath id="leftClip">
+      <rect width="540" height="800" />
+    </clipPath>
+    <!-- 우측 배경용 그라데이션 -->
+    <linearGradient id="splitBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#fullClip)">
+    <!-- 왼쪽 절반: AI 이미지 -->
+    <g clip-path="url(#leftClip)">
+      <image href="${bgImgPath}" width="540" height="800" preserveAspectRatio="xMidYMid slice" />
+    </g>
+
+    <!-- 오른쪽 절반: 텍스트 영역 -->
+    <rect x="540" width="660" height="800" fill="url(#splitBg)" />
+    <line x1="540" y1="0" x2="540" y2="800" stroke="#334155" stroke-width="1.5" />
+
+    <!-- 우측 텍스트 콘텐츠 -->
+    <g transform="translate(600, 100)">
+      <!-- 뱃지 -->
+      <g transform="translate(0, 0)">
+        <rect width="105" height="26" rx="13" fill="#334155" stroke="#475569" stroke-width="1" />
+        <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#38BDF8" text-anchor="middle">REAL INFO</text>
+        <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#64748B">${todayStr}</text>
+      </g>
+
+      <!-- 제목 (2줄 자동 분할) -->
+      <text y="140" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF">${titleLine1}</text>
+      ${titleLine2 ? `<text y="205" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF">${titleLine2}</text>` : ''}
+
+      <!-- 구분선 -->
+      <line x1="0" y1="285" x2="500" y2="285" stroke="#334155" stroke-width="2" />
+
+      <!-- 설명문 -->
+      <text y="340" font-family="'Pretendard', sans-serif" font-size="18" fill="#94A3B8" font-weight="500">${safeSubTitle}</text>
+      
+      <!-- 하단 데코 문구 -->
+      <text y="600" font-family="'Pretendard', sans-serif" font-size="15" fill="#38BDF8" font-weight="700" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
+    </g>
+  </g>
+</svg>
+`;
+  } else {
+    // [스타일 0] 기존 3단 요약 카드 (Infographic Card)
+    let cardsMarkup = '';
+    for (let i = 0; i < 3; i++) {
+      const pt = points[i] || { title: `핵심 요약 ${i + 1}`, desc1: '상세 내용을 본문에서', desc2: '확인해보세요' };
+      const safePtTitle = escapeXml(pt.title);
+      const safePtDesc1 = escapeXml(pt.desc1);
+      const safePtDesc2 = escapeXml(pt.desc2);
+
+      const xPos = 50 + (i * 380);
+      const numberBgColor = i === 0 ? '#F59E0B' : (i === 1 ? '#10B981' : '#38BDF8');
+
+      cardsMarkup += `
+      <!-- Card ${i + 1} -->
+      <g transform="translate(${xPos}, 530)">
+        <rect width="340" height="220" rx="16" fill="#1E293B" stroke="#334155" stroke-width="1.5" />
+        <path d="M 16 0 L 324 0" stroke="${numberBgColor}" stroke-width="4" stroke-linecap="round" />
+        <circle cx="45" cy="45" r="16" fill="${numberBgColor}" />
+        <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">${i + 1}</text>
+        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#FFFFFF">${safePtTitle}</text>
+        <line x1="25" y1="85" x2="315" y2="85" stroke="#334155" stroke-width="1" />
+        <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#94A3B8" font-weight="500">${safePtDesc1}</text>
+        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#94A3B8" font-weight="500">${safePtDesc2}</text>
+      </g>
+      `;
+    }
+
+    return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
   <defs>
     <!-- Background Gradient -->
@@ -322,11 +422,8 @@ function buildSvgTemplate(title, subTitle, bgImgPath, points) {
 
   <!-- HEADER AREA -->
   <g transform="translate(50, 45)">
-    <!-- Site Badge -->
     <rect width="105" height="26" rx="13" fill="#1E293B" stroke="#475569" stroke-width="1" />
     <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#38BDF8" text-anchor="middle">REAL INFO</text>
-    
-    <!-- Publish Date -->
     <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#64748B">${todayStr}</text>
   </g>
 
@@ -338,18 +435,11 @@ function buildSvgTemplate(title, subTitle, bgImgPath, points) {
 
   <!-- CENTRAL GRAPHIC (AI Image Frame) -->
   <g>
-    <!-- Rounded Clip Path for AI Image -->
     <clipPath id="imageClip">
       <rect x="50" y="170" width="1100" height="325" rx="16" />
     </clipPath>
-    
-    <!-- Image Card Frame background -->
     <rect x="50" y="170" width="1100" height="325" rx="16" fill="#1F2937" stroke="#374151" stroke-width="1.5" />
-    
-    <!-- AI Generated Background Image -->
     <image href="${bgImgPath}" x="50" y="170" width="1100" height="325" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
-    
-    <!-- Glassmorphism Overlay -->
     <rect x="50" y="170" width="1100" height="325" rx="16" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1" />
   </g>
 
@@ -359,5 +449,6 @@ function buildSvgTemplate(title, subTitle, bgImgPath, points) {
   </g>
 </svg>
 `;
+  }
 }
 
