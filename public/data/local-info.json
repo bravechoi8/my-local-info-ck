@@ -75,5 +75,27 @@
     "target": "○ 관내 거주 65세 이상 의료급여 수급권자(제외자 : 건강한 자 및 타 건강검진 수검 가능 대상자)",
     "summary": "65세 이상 의료급여 수급권자에게 노인건강진단항목 수검비용 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/433000000135"
+  },
+  {
+    "id": 5,
+    "name": "청년근로자 사랑채움 사업",
+    "category": "혜택",
+    "startDate": "2024-05-15",
+    "endDate": "상시",
+    "location": "경상북도 의성군",
+    "target": "관내 중소·중견기업에 3개월 이상 근무중인 만 19세~39세 미혼 청년 임금이 2026년 기준 중위소득 150% 이하인 자",
+    "summary": "2년 만기 시 청년근로자 960만원+이자의 적립금 수령",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/515000000168"
+  },
+  {
+    "id": 6,
+    "name": "전문단지조성용종자구입지원",
+    "category": "혜택",
+    "startDate": "2025-01-01",
+    "endDate": "2025-12-31",
+    "location": "경상북도 의성군",
+    "target": "사료작물 재배를 위해 종자를 파종하고자 하는자",
+    "summary": "사료작물 및 목초 재배에 필요한 종자구입비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/515000000150"
   }
 ]
