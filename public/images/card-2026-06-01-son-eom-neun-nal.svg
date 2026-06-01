@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF6" />
+      <stop offset="100%" stop-color="#FDF3CD" />
+    </linearGradient>
+    <!-- Card Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#E2D4A8" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bgGrad)" />
+  
+  <!-- Content Card Wrapper -->
+  <rect x="50" y="50" width="1100" height="575" rx="24" fill="#FFFFFF" filter="url(#shadow)" />
+  
+  <!-- Header -->
+  <g transform="translate(100, 110)">
+    <!-- Icon/Badge -->
+    <rect x="0" y="-30" width="130" height="36" rx="18" fill="#FCE8A6" />
+    <text x="65" y="-6" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="16" font-weight="700" fill="#B08F26" text-anchor="middle">이사 · 개업 · 길일</text>
+    
+    <text x="0" y="50" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="42" font-weight="800" fill="#2C2C2C">2026년 6월 · 7월 손없는날 달력</text>
+    <text x="0" y="85" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#757575">귀신이나 악귀가 없는 좋은 날, 한눈에 확인하고 준비하세요.</text>
+  </g>
+
+  <!-- June Calendar Table -->
+  <g transform="translate(100, 240)">
+    <!-- Column Background -->
+    <rect x="0" y="0" width="460" height="320" rx="16" fill="#FFFDF6" stroke="#F9E8B3" stroke-width="1.5" />
+    <!-- Header -->
+    <rect x="0" y="0" width="460" height="60" rx="16" fill="#FCE8A6" />
+    <!-- Bottom cover to make header rounded only on top -->
+    <rect x="0" y="45" width="460" height="15" fill="#FCE8A6" />
+    <text x="230" y="38" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="24" font-weight="700" fill="#785A00" text-anchor="middle">6월 손없는날</text>
+    
+    <!-- Table Rows -->
+    <!-- Row 1 -->
+    <text x="40" y="110" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">6월 3일 (수)</text>
+    <text x="420" y="110" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#E65100" text-anchor="end" font-weight="700">음력 5월 9일 (평일)</text>
+    <line x1="30" y1="135" x2="430" y2="135" stroke="#F3E5F5" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Row 2 -->
+    <text x="40" y="175" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">6월 4일 (목)</text>
+    <text x="420" y="175" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#E65100" text-anchor="end" font-weight="700">음력 5월 10일 (평일)</text>
+    <line x1="30" y1="200" x2="430" y2="200" stroke="#F3E5F5" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Row 3 -->
+    <text x="40" y="240" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">6월 13일 (토) / 14일 (일)</text>
+    <text x="420" y="240" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#D32F2F" text-anchor="end" font-weight="700">★ 주말 황금길일</text>
+    <line x1="30" y1="265" x2="430" y2="265" stroke="#F3E5F5" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Row 4 -->
+    <text x="40" y="300" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">6월 23일 (화) / 24일 (수)</text>
+    <text x="420" y="300" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#757575" text-anchor="end">음력 5월 29일 · 30일</text>
+  </g>
+
+  <!-- July Calendar Table -->
+  <g transform="translate(640, 240)">
+    <!-- Column Background -->
+    <rect x="0" y="0" width="460" height="320" rx="16" fill="#FFFDF6" stroke="#F9E8B3" stroke-width="1.5" />
+    <!-- Header -->
+    <rect x="0" y="0" width="460" height="60" rx="16" fill="#FCE8A6" />
+    <!-- Bottom cover to make header rounded only on top -->
+    <rect x="0" y="45" width="460" height="15" fill="#FCE8A6" />
+    <text x="230" y="38" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="24" font-weight="700" fill="#785A00" text-anchor="middle">7월 손없는날</text>
+    
+    <!-- Table Rows -->
+    <!-- Row 1 -->
+    <text x="40" y="110" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">7월 3일 (금) / 4일 (토)</text>
+    <text x="420" y="110" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#D32F2F" text-anchor="end" font-weight="700">★ 주말 포함 길일</text>
+    <line x1="30" y1="135" x2="430" y2="135" stroke="#F3E5F5" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Row 2 -->
+    <text x="40" y="175" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">7월 13일 (월) / 14일 (화)</text>
+    <text x="420" y="175" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#757575" text-anchor="end">음력 6월 19일 · 20일</text>
+    <line x1="30" y1="200" x2="430" y2="200" stroke="#F3E5F5" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Row 3 -->
+    <text x="40" y="240" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="20" font-weight="700" fill="#424242">7월 23일 (목) / 24일 (금)</text>
+    <text x="420" y="240" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="18" fill="#E65100" text-anchor="end" font-weight="700">음력 6월 29일 · 30일</text>
+    <line x1="30" y1="265" x2="430" y2="265" stroke="#F3E5F5" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Note -->
+    <text x="230" y="300" font-family="'Inter', 'Noto Sans KR', sans-serif" font-size="15" fill="#8D6E63" text-anchor="middle" font-weight="700">※ 음력 끝자리가 9, 0인 날짜 기준 매칭 완료</text>
+  </g>
+</svg>
