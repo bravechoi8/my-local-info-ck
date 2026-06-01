@@ -27,19 +27,19 @@ jobs:
       - name: 패키지 설치
         run: npm ci
 
-      # 스케줄 또는 수동 실행 시에만 스크립트 실행
-      - name: 공공데이터 수집
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: node scripts/fetch-public-data.js
-        env:
-          PUBLIC_DATA_API_KEY: ${{ secrets.PUBLIC_DATA_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      # 스케줄 또는 수동 실행 시에만 스크립트 실행 (사용자 요청으로 지방 공공데이터 수집/생성 기능 비활성화)
+      # - name: 공공데이터 수집
+      #   if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+      #   run: node scripts/fetch-public-data.js
+      #   env:
+      #     PUBLIC_DATA_API_KEY: ${{ secrets.PUBLIC_DATA_API_KEY }}
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-      - name: 블로그 글 자동 생성
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: node scripts/generate-blog-post.js
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      # - name: 블로그 글 자동 생성
+      #   if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+      #   run: node scripts/generate-blog-post.js
+      #   env:
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: 네이버 뉴스 수집 및 블로그 글 자동 생성
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
