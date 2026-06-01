@@ -155,10 +155,13 @@ Summary: ${summary}`;
     const svgFilename = `card-${cleanFilenameKey}.svg`;
     const svgOutputPath = path.join(publicImagesDir, svgFilename);
 
+    const base64Image = imgBuffer.toString('base64');
+    const dataUri = `data:image/jpeg;base64,${base64Image}`;
+
     const svgContent = buildSvgTemplate(
       title, 
       infoData.subTitle || '', 
-      `/images/${bgFilename}`, 
+      dataUri, 
       infoData.points || []
     );
 
