@@ -149,9 +149,9 @@ async function main() {
       return;
     }
 
-    // 행사와 혜택 분류
-    const eventCandidates = newItems.filter(item => classifyItem(item) === '행사');
-    const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택');
+    // 행사와 혜택 분류 (지역/전국 단위 기준 점수 15점 이상인 유효한 혜택/행사 정보만 수집)
+    const eventCandidates = newItems.filter(item => classifyItem(item) === '행사' && scoreItem(item) >= 15);
+    const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택' && scoreItem(item) >= 15);
 
     // 스코어링 후 정렬
     eventCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
@@ -164,7 +164,7 @@ async function main() {
       targetItems.push(eventCandidates[0]);
       console.log(`선택된 행사: ${eventCandidates[0].서비스명} (지역점수: ${scoreItem(eventCandidates[0])})`);
     } else {
-      console.log('오늘 자 행사 관련 미등록 공공데이터가 없습니다.');
+      console.log('오늘 자 행사 관련 미등록 공공데이터가 없습니다 (혹은 대상 지역 정책이 아닙니다).');
     }
 
     // 혜택 1개 선택
@@ -172,20 +172,20 @@ async function main() {
       targetItems.push(benefitCandidates[0]);
       console.log(`선택된 혜택: ${benefitCandidates[0].서비스명} (지역점수: ${scoreItem(benefitCandidates[0])})`);
     } else {
-      console.log('오늘 자 혜택 관련 미등록 공공데이터가 없습니다.');
+      console.log('오늘 자 혜택 관련 미등록 공공데이터가 없습니다 (혹은 대상 지역 정책이 아닙니다).');
     }
 
-    // 만약 둘 중 한 쪽만 선별되어 총 2개가 채워지지 않았다면, 예비용으로 다른 쪽의 차순위 아이템을 채워줍니다.
+    // 만약 둘 중 한 쪽만 선별되어 총 2개가 채워지지 않았다면, 예비용으로 다른 쪽의 차순위 아이템 중 점수 조건(15점 이상)을 만족하는 대상을 채워줍니다.
     if (targetItems.length === 1) {
       const selected = targetItems[0];
-      const fallback = newItems.find(item => item.서비스명 !== selected.서비스명);
+      const fallback = newItems.find(item => item.서비스명 !== selected.서비스명 && scoreItem(item) >= 15);
       if (fallback) {
         targetItems.push(fallback);
         console.log(`대체 수집 대상 추가: ${fallback.서비스명}`);
       }
     } else if (targetItems.length === 0) {
-      // 둘 다 아예 없을 경우 전체 미등록 데이터 중 우선순위 높은 순으로 최대 2개 채워줌
-      const fallbackCandidates = [...newItems].sort((a, b) => scoreItem(b) - scoreItem(a));
+      // 둘 다 아예 없을 경우 전체 미등록 데이터 중 15점 이상인 우수 정책 우선으로 최대 2개 채워줌
+      const fallbackCandidates = newItems.filter(item => scoreItem(item) >= 15).sort((a, b) => scoreItem(b) - scoreItem(a));
       targetItems.push(...fallbackCandidates.slice(0, 2));
       if (targetItems.length > 0) {
         console.log('비상 대체 데이터 수집:', targetItems.map(item => item.서비스명).join(', '));
