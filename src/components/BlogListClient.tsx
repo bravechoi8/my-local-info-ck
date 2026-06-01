@@ -101,10 +101,10 @@ export default function BlogListClient({ initialPosts }: BlogListClientProps) {
       <header className="bg-white pt-20 pb-12 px-6">
         <div className="max-w-3xl mx-auto text-left space-y-3">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#191F28] leading-tight">
-            우리동네 블로그 소식
+            리얼인포 블로그 소식
           </h1>
           <p className="text-base sm:text-lg text-[#4E5968] leading-relaxed max-w-xl">
-            알찬 정부 혜택과 유용한 생활 정보, 우리 이웃들이 나누는 동네 이야기를 정리해 드립니다.
+            실생활에 유용한 정부 혜택부터 금융·재테크 정보, 그리고 실시간 핫이슈까지 한눈에 확인해 보세요.
           </p>
         </div>
       </header>
