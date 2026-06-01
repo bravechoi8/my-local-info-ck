@@ -39,9 +39,9 @@ function scoreItem(item) {
   const text = (name + ' ' + desc + ' ' + target + ' ' + agency).toLowerCase();
   let score = 0;
 
-  // 1. 선호 지역 가산점 (용인, 서울, 경기)
+  // 1. 선호 지역 가산점 (용인, 서울, 경기 똑같이 +15점)
   if (text.includes('용인')) {
-    score += 20;
+    score += 15;
   }
   if (text.includes('서울')) {
     score += 15;
@@ -50,14 +50,14 @@ function scoreItem(item) {
     score += 15;
   }
 
-  // 2. 전국 단위 및 중앙정부 부처 정책 가산점
+  // 2. 전국 단위 및 중앙정부 부처 정책 가산점 (똑같이 +15점)
   const isNationalAgency = /부$|처$|청$|공단$|공사$|정부|대한민국|국가|국민/.test(agency);
   if (isNationalAgency) {
-    score += 10;
+    score += 15;
   }
 
-  // 3. 인기 주제 키워드 가산점
-  const popularKeywords = ['청년', '소상공인', '주택', '대출', '근로', '환급', '세금', '육아', '아동', '일자리', '취업', '창업', '장려금', '지원금', '보조금'];
+  // 3. 인기 주제 키워드 가산점 (지원금 추가)
+  const popularKeywords = ['지원금', '청년', '소상공인', '주택', '대출', '근로', '환급', '세금', '육아', '아동', '일자리', '취업', '창업', '장려금', '보조금'];
   const hasPopularKeyword = popularKeywords.some(kw => text.includes(kw));
   if (hasPopularKeyword) {
     score += 5;
