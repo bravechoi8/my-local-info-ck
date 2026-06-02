@@ -2,7 +2,7 @@
 title: 이강인 선수 챔스 2연패 금메달 PSG 역사적 우승과 그의 특별한 여정
 date: 2026-06-02
 summary: 이강인 선수가 소속팀 PSG와 함께 챔피언스리그 2연패를 달성했지만, 아쉽게도 결승전엔 출전하지 못했습니다.
-category: 이강인 챔스
+category: 연예인이슈
 tags: [이강인, PSG, 챔피언스리그, 챔스 우승, 아스널, 축구 뉴스, 해외 축구, 이강인 트로피]
 naver_title: "이강인의 PSG, 아스널 꺾고 역사적 챔스 2연패 달성"
 naver_link: "https://m.sports.naver.com/wfootball/article/023/0003979384"

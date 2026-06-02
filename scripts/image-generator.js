@@ -26,7 +26,7 @@ export async function generateSummaryImage(title, summary, filenameKey) {
     // 1단계: Gemini를 사용하여 이미지 생성용 정밀 영어 프롬프트 및 3단 요약 데이터 빌드
     const promptBuilderText = `Based on the Korean blog post title and summary below, analyze the key details and generate a JSON object with the following fields:
 {
-  "imagenPrompt": "A highly detailed, professional English prompt for Google's Imagen text-to-image model. The prompt must focus on visually conveying the core theme of the post (e.g., if the post is about interest rates, show banking documents, growth charts, or coins). Crucially, the image must contain NO TEXT, use a beautiful warm/pastel color palette, and be suitable as a background card.",
+  "imagenPrompt": "A highly detailed, professional English prompt for Google's Imagen text-to-image model. The prompt must focus on visually conveying the core theme of the post (e.g., if the post is about interest rates, show banking documents, growth charts, or coins). Crucially, the image must contain NO TEXT, use a beautiful warm/pastel color palette, and be suitable as a background card. CRITICAL: To prevent safety policy blocks, do NOT include any specific celebrity/player names (like Lee Kang-in, Son Heung-min), specific trademarked team/brand names (like PSG, Apple), or specific politician names. Instead, use generic descriptions (e.g., 'a professional football player wearing a blue jersey', 'a gold championship trophy', 'a smartphone showing a chart').",
   "subTitle": "A catchy, interesting Korean subtitle for the blog post (maximum 20 characters, NO quotes)",
   "points": [
     {
