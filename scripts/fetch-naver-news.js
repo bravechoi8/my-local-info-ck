@@ -344,7 +344,7 @@ async function main() {
 title: (친근하고 흥미로운 제목, 예: ${year}년 ${month}월~${nextMonth}월 이사 가기 좋은 손없는날 달력 및 꿀팁 총정리, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 date: ${todayStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-category: ${postCategory}
+category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 naver_title: "${escapedTitle}"
 naver_link: "${escapedLink}"
@@ -372,7 +372,7 @@ naver_link: "${escapedLink}"
 title: (친근하고 흥미로운 제목, 낚시성 배제, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 date: ${todayStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-category: ${postCategory}
+category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 naver_title: "${escapedTitle}"
 naver_link: "${escapedLink}"
