@@ -29,3 +29,8 @@ div:has(> ins.adsbygoogle:empty) {
   margin: 0px !important;
   padding: 0px !important;
 }
+
+/* 마크다운 본문 내에서 엔터(줄바꿈)가 무시되지 않고 그대로 보이도록 설정 */
+.prose p {
+  white-space: pre-wrap;
+}
