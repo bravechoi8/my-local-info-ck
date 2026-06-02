@@ -11,6 +11,7 @@ export interface PostData {
   category: string;  // 카테고리
   tags: string[];    // 태그 목록
   content: string;   // 마크다운 본문
+  mtime: number;     // 파일 수정 시간 (정렬 보조용)
 }
 
 // 블로그 글 마크다운 파일들이 저장된 폴더 경로
@@ -87,6 +88,7 @@ export function getAllPosts(): PostData[] {
 
       const fullPath = path.join(postsDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const stat = fs.statSync(fullPath);
 
       // gray-matter 라이브러리로 글머리 정보(frontmatter)와 본문을 나눕니다.
       const { data, content } = matter(fileContents);
@@ -99,14 +101,15 @@ export function getAllPosts(): PostData[] {
         category: resolveCategory(data.title || '', content, data.category),
         tags: Array.isArray(data.tags) ? data.tags : [],
         content,
+        mtime: stat.mtime.getTime(),
       };
     });
 
-  // 날짜 기준으로 내림차순(최신순) 정렬합니다.
+  // 날짜 기준으로 내림차순(최신순) 정렬합니다. 날짜가 같으면 파일 수정 시간(mtime) 기준으로 최신순 정렬합니다.
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) return 1;
     if (a.date > b.date) return -1;
-    return 0;
+    return b.mtime - a.mtime;
   });
 }
 
@@ -118,6 +121,7 @@ export function getPostBySlug(slug: string): PostData | null {
       return null;
     }
     const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const stat = fs.statSync(fullPath);
     const { data, content } = matter(fileContents);
 
     return {
@@ -128,6 +132,7 @@ export function getPostBySlug(slug: string): PostData | null {
       category: resolveCategory(data.title || '', content, data.category),
       tags: Array.isArray(data.tags) ? data.tags : [],
       content,
+      mtime: stat.mtime.getTime(),
     };
   } catch (error) {
     return null;
