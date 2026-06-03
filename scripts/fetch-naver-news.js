@@ -90,26 +90,36 @@ function cleanText(text) {
 async function fetchTrendingKeywords() {
   console.log('[실시간 트렌드 분석] 최신 뉴스 데이터 수집 중...');
   try {
-    const params = new URLSearchParams({
-      query: '속보', // 종합 뉴스 수집을 위한 키워드
-      display: '50',
-      sort: 'date'
-    });
+    const seedQueries = [
+      { q: '속보', sort: 'date', count: 20 },
+      { q: '지원금', sort: 'sim', count: 20 },
+      { q: '재테크 꿀팁', sort: 'sim', count: 15 }
+    ];
+    const newsItems = [];
 
-    const response = await fetch(`${NAVER_ENDPOINT}?${params.toString()}`, {
-      headers: {
-        'X-Naver-Client-Id': NAVER_CLIENT_ID,
-        'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+    for (const seed of seedQueries) {
+      const params = new URLSearchParams({
+        query: seed.q,
+        display: String(seed.count),
+        sort: seed.sort
+      });
+
+      const response = await fetch(`${NAVER_ENDPOINT}?${params.toString()}`, {
+        headers: {
+          'X-Naver-Client-Id': NAVER_CLIENT_ID,
+          'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        const items = result.items || [];
+        newsItems.push(...items);
+      } else {
+        console.error(`네이버 API 호출 실패 (시드: ${seed.q}): ${response.status}`);
       }
-    });
-
-    if (!response.ok) {
-      console.error(`네이버 API 호출 실패 (트렌드 수집): ${response.status}`);
-      return [];
     }
 
-    const result = await response.json();
-    const newsItems = result.items || [];
     if (newsItems.length === 0) {
       return [];
     }
@@ -120,7 +130,7 @@ async function fetchTrendingKeywords() {
     console.log('[실시간 트렌드 분석] Gemini AI를 통해 핫 키워드 추출 중...');
     const prompt = `오늘 생산된 아래 뉴스 헤드라인 목록을 보고, 오늘 한국 대중들 사이에서 가장 관심이 뜨겁고 생활 밀착형 정보성 블로그 글로 쓰기 적합한 핵심 키워드 3개를 선정해줘.
 예를 들어 '스타벅스 환불', '지방선거 사전투표소', '근로장려금 신청'처럼 2~3단어로 구성되고 검색창에 입력하기 좋은 명확한 단어로 해줘.
-CRITICAL: 3개의 키워드는 반드시 서로 완전히 다른 별개의 주제(예: 하나가 날씨/기상이라면, 나머지는 스포츠, IT, 금융, 정치/사회 등 전혀 다른 분야)여야 합니다. 절대로 하나의 사건이나 주제에 대해 중복되거나 유사한 키워드(예: '태풍'과 '태풍 장미')를 동시에 중복해서 선정하지 마세요.
+CRITICAL: 3개의 키워드는 반드시 서로 다른 분야(예: 하나가 사회/정치 핫이슈라면, 다른 하나는 재테크/부동산/정부지원금/혜택, 나머지 하나는 날씨/생활꿀팁/생활정보 등)여야 합니다. 절대로 모든 키워드가 '핫이슈'나 사건/사고에 치우쳐서는 안 됩니다. 다양한 독자 유입을 위해 주제를 골고루 다양하게 선정해 주세요.
 반드시 아래 JSON 배열 형식으로만 응답해줘. 다른 텍스트는 일체 포함하지 마:
 ["키워드1", "키워드2", "키워드3"]
 
@@ -369,7 +379,7 @@ naver_link: "${escapedLink}"
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
-title: (친근하고 흥미로운 제목, 낚시성 배제, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
+title: (친근하고 흥미진진하여 사람들의 클릭을 부르는 매력적인 제목. 검색어 노출이 잘 되도록 중요한 키워드를 자연스럽게 포함하면서도 딱딱한 뉴스투를 벗어나 'OO하는 법', 'OO 총정리', '놓치면 손해보는 OO' 등 호기심이나 혜택을 강조한 친근한 말투로 지어줘. 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 date: ${todayStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
