@@ -91,7 +91,18 @@ async function main() {
 
       let isPosted = false;
       for (const content of existingContents) {
+        // 1. 프론트매터의 original_id 또는 original_name 매칭 확인 (가장 확실함)
+        if (content.includes(`original_id: ${item.id}`) || content.includes(`original_name: ${item.name}`)) {
+          isPosted = true;
+          break;
+        }
+        // 2. 서비스명 텍스트 포함 확인
         if (content.includes(itemName)) {
+          isPosted = true;
+          break;
+        }
+        // 3. 고유 링크 포함 확인 (메인 도메인이 아닌 고유 상세 페이지 번호가 포함된 경우)
+        if (item.link && item.link.includes('/dtlEx/') && content.includes(item.link)) {
           isPosted = true;
           break;
         }
@@ -194,6 +205,14 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 
         let markdownContent = contentLines.join('\n').trim();
         markdownContent = markdownContent.replace(/^```markdown\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
+
+        // 프론트매터에 고유 ID와 원래 이름을 기재하여 차후 중복 포스팅을 원천 차단
+        const frontEnd = markdownContent.indexOf('\n---', 4);
+        if (frontEnd !== -1) {
+          markdownContent = markdownContent.substring(0, frontEnd) +
+            `\noriginal_id: ${item.id}\noriginal_name: ${item.name}` +
+            markdownContent.substring(frontEnd);
+        }
 
         // 메타데이터 파싱하여 요약 이미지 생성
         const titleMatch = markdownContent.match(/title:\s*(.+)/);
