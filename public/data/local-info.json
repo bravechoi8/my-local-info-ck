@@ -119,5 +119,27 @@
     "target": "4대 이상의 직계존비속이 주민등록상 한 세대를 구성하고(1대가 만 70세 이상) 동일한 가정에서 실제 생활하는 가정",
     "summary": "4대 이상 가정에 효행장려금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/559000000134"
+  },
+  {
+    "id": 9,
+    "name": "종로문화체육센터 스포츠 문화 프로그램 할인",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "종로구시설관리공단",
+    "target": "장애인, 국민기초생활수급자, 국가유공자, 다둥이 가정, 만 65세 이상 어르신, 종로구민 등",
+    "summary": "사회적 취약계층 및 종로구민에게 체육시설 이용요금 감면 혜택 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024200005"
+  },
+  {
+    "id": 10,
+    "name": "주차장 이용요금 감면",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울특별시중구시설관리공단",
+    "target": "국가유공자, 장애인, 5.18 민주유공자, 다둥이 가족",
+    "summary": "사회적 취약계층에게 주차장 이용요금 감면(대상별 상이)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024300001"
   }
 ]
