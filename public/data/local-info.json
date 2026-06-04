@@ -97,49 +97,5 @@
     "target": "경기도 내 사업을 영위중인 소상공인(신용점수 595점 이상, 법인기업 및 공동대표 개인사업자 제외)",
     "summary": "소상공인의 사업 운영비 절감을 위해 연회비 무료, 무이자 할부, 3% 캐시백 혜택이 있는 전용 신용카드 발급을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000820"
-  },
-  {
-    "id": 7,
-    "name": "양주시 청년창업 경진대회",
-    "category": "행사",
-    "startDate": "2026-05-01",
-    "endDate": "상시",
-    "location": "경기도 양주시",
-    "target": "양주시에 거주하거나 사업장 소재지를 둔 만 19세 ~ 39세 이하 예비창업자 또는 3년 미만 초기창업자",
-    "summary": "양주시 청년 예비 및 초기 창업자를 대상으로 총 1,900만 원의 창업지원금과 맞춤형 컨설팅을 지원하는 경진대회입니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/559000000440"
-  },
-  {
-    "id": 8,
-    "name": "효행장려금 지원",
-    "category": "혜택",
-    "startDate": "2024-11-21",
-    "endDate": "상시",
-    "location": "경기도 양주시",
-    "target": "4대 이상의 직계존비속이 주민등록상 한 세대를 구성하고(1대가 만 70세 이상) 동일한 가정에서 실제 생활하는 가정",
-    "summary": "4대 이상 가정에 효행장려금 지급",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/559000000134"
-  },
-  {
-    "id": 9,
-    "name": "종로문화체육센터 스포츠 문화 프로그램 할인",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "종로구시설관리공단",
-    "target": "장애인, 국민기초생활수급자, 국가유공자, 다둥이 가정, 만 65세 이상 어르신, 종로구민 등",
-    "summary": "사회적 취약계층 및 종로구민에게 체육시설 이용요금 감면 혜택 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024200005"
-  },
-  {
-    "id": 10,
-    "name": "주차장 이용요금 감면",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "서울특별시중구시설관리공단",
-    "target": "국가유공자, 장애인, 5.18 민주유공자, 다둥이 가족",
-    "summary": "사회적 취약계층에게 주차장 이용요금 감면(대상별 상이)",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024300001"
   }
 ]
