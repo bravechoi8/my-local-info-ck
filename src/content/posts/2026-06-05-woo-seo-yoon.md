@@ -8,7 +8,7 @@ naver_title: "\"우지원 첫째 딸\" 우서윤, 미스코리아 지역 예선 
 naver_link: "https://m.seoul.co.kr/news/entertainment/2026/05/29/20260529500001"
 ---
 
-![포스트 소개](/images/woo-seo-yoon-profile.png)
+![포스트 소개](/images/woo-seo-yoon-profile.svg)
 
 안녕하세요! 오늘은 연예계와 스포츠계를 뜨겁게 달구고 있는 아주 핫하고 반가운 소식을 들고 왔습니다. 
 
