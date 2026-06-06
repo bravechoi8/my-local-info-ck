@@ -127,10 +127,41 @@ async function fetchTrendingKeywords() {
     // 뉴스 제목들만 모으기
     const titles = newsItems.map(item => cleanText(item.title)).join('\n');
 
+    // 최근 작성된 포스트 제목 목록을 가져와 중복 주제 선정 방지
+    const recentTitles = [];
+    if (fileFs.existsSync(POSTS_DIR_PATH)) {
+      const files = fileFs.readdirSync(POSTS_DIR_PATH)
+        .filter(file => file.endsWith('.md'))
+        .sort()
+        .slice(-15);
+      for (const file of files) {
+        try {
+          const content = fileFs.readFileSync(filePath.join(POSTS_DIR_PATH, file), 'utf-8');
+          const titleMatch = content.match(/title:\s*(.+)/);
+          if (titleMatch) {
+            recentTitles.push(titleMatch[1].replace(/['"]/g, '').trim());
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+    }
+
     console.log('[실시간 트렌드 분석] Gemini AI를 통해 핫 키워드 추출 중...');
     const prompt = `오늘 생산된 아래 뉴스 헤드라인 목록을 보고, 오늘 한국 대중들 사이에서 가장 관심이 뜨겁고 생활 밀착형 정보성 블로그 글로 쓰기 적합한 핵심 키워드 3개를 선정해줘.
 예를 들어 '스타벅스 환불', '지방선거 사전투표소', '근로장려금 신청'처럼 2~3단어로 구성되고 검색창에 입력하기 좋은 명확한 단어로 해줘.
-CRITICAL: 3개의 키워드는 반드시 서로 다른 분야(예: 하나가 사회/정치 핫이슈라면, 다른 하나는 재테크/부동산/정부지원금/혜택, 나머지 하나는 날씨/생활꿀팁/생활정보 등)여야 합니다. 절대로 모든 키워드가 '핫이슈'나 사건/사고에 치우쳐서는 안 됩니다. 다양한 독자 유입을 위해 주제를 골고루 다양하게 선정해 주세요.
+
+CRITICAL RULES:
+1. 지방/지역 관련 글 제외 (지방글 배제 규칙):
+   - 전국 단위의 정책/이슈이거나, 서울특별시(서울), 경기도(경기), 용인시 관련 이슈만 허용합니다.
+   - 그 외의 특정 지방 지자체(예: 괴산군, 양주시, 부산, 대구, 강원도, 충청도 등 서울/경기/용인이 아닌 타 지역)의 고유 혜택이나 지역 뉴스는 키워드로 절대 선정하지 마세요. (예: '괴산군 지원금' 절대 금지)
+2. 최근 작성된 글과의 중복 절대 금지:
+   - 최근에 이미 작성된 글들과 주제가 겹치지 않아야 합니다. (예: 최근에 '엄마 카드(엄카)' 세금 관련 글이나 증여세/상속세 관련 글이 이미 존재한다면, 비슷한 세금/카드 주제는 절대 피하세요.)
+   - 최근 작성된 글 제목 목록:
+     ${recentTitles.map(t => `- ${t}`).join('\n     ')}
+3. 분야 다양성:
+   - 3개의 키워드는 반드시 서로 다른 분야(예: 하나가 사회/정치 핫이슈라면, 다른 하나는 재테크/부동산/정부지원금/혜택, 나머지 하나는 날씨/생활꿀팁/생활정보 등)여야 합니다. 절대로 모든 키워드가 '핫이슈'나 사건/사고에 치우쳐서는 안 됩니다. 다양한 독자 유입을 위해 주제를 골고루 다양하게 선정해 주세요.
+
 반드시 아래 JSON 배열 형식으로만 응답해줘. 다른 텍스트는 일체 포함하지 마:
 ["키워드1", "키워드2", "키워드3"]
 
