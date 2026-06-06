@@ -25,6 +25,7 @@ function isBlocked(item) {
 
 /**
  * 본문 내의 [IMAGE_PROMPT: ...] 형식의 플레이스홀더를 찾아 실시간으로 이미지를 생성하고 치환합니다.
+ * (병렬 처리 및 개별 재시도 기능 탑재)
  * @param {string} markdownContent 마크다운 본문
  * @param {string} safeFilename 안전한 파일명 접두사
  * @returns {Promise<string>} 이미지가 치환된 마크다운 본문
@@ -42,28 +43,41 @@ async function processBodyImages(markdownContent, safeFilename) {
   }
 
   console.log(`[본문 이미지 생성] 총 ${matches.length}개의 이미지 생성 요청을 감지했습니다.`);
-  let updatedContent = markdownContent;
-
-  for (let i = 0; i < matches.length; i++) {
-    const { fullMatch, promptText } = matches[i];
-    // 프롬프트에 공통 스타일 데코레이터 추가 (블로그 일러스트 스타일)
+  
+  // 모든 이미지 생성을 병렬로 실행
+  const promises = matches.map(async (item, i) => {
+    const { fullMatch, promptText } = item;
     const styleDecorator = "clean, modern flat design vector illustration for a blog post, minimalist, beautiful color palette, no text";
     const finalPrompt = `${promptText}, ${styleDecorator}`;
     const filename = `body-${safeFilename}-${i + 1}.jpg`;
 
     console.log(`[본문 이미지 생성 ${i + 1}/${matches.length}] 프롬프트: "${finalPrompt}"`);
     
-    // API 레이트 리밋 우회를 위해 두 번째 이미지 생성부터 2초 대기
-    if (i > 0) {
-      console.log(`[본문 이미지 생성] API 제한 방지를 위해 2초 대기 중...`);
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    let imgPath = null;
+    let retries = 3;
+    while (retries > 0) {
+      try {
+        imgPath = await generateAndSaveImage(finalPrompt, filename, '4:3');
+        if (imgPath) break;
+      } catch (err) {
+        console.warn(`[본문 이미지 생성 실패, 재시도 남음: ${retries - 1}] ${err.message}`);
+      }
+      retries--;
+      if (retries > 0) {
+        console.log(`[본문 이미지 생성] ${3 - retries}차 실패로 인해 3초 후 재시도합니다...`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
     }
+    return { fullMatch, imgPath };
+  });
 
-    const imgPath = await generateAndSaveImage(finalPrompt, filename, '4:3');
+  const results = await Promise.all(promises);
+  let updatedContent = markdownContent;
+  for (const { fullMatch, imgPath } of results) {
     if (imgPath) {
       updatedContent = updatedContent.replace(fullMatch, `![포스트 소개](${imgPath})`);
     } else {
-      // 이미지 생성 실패 시 플레이스홀더 제거
+      // 이미지 생성 결국 실패 시 본문에서 플레이스홀더 제거
       updatedContent = updatedContent.replace(fullMatch, '');
     }
   }
@@ -149,7 +163,7 @@ async function fetchTrendingKeywords() {
 
     console.log('[실시간 트렌드 분석] Gemini AI를 통해 핫 키워드 추출 중...');
     const prompt = `오늘 생산된 아래 뉴스 헤드라인 목록을 보고, 오늘 한국 대중들 사이에서 가장 관심이 뜨겁고 생활 밀착형 정보성 블로그 글로 쓰기 적합한 핵심 키워드 3개를 선정해줘.
-예를 들어 '스타벅스 환불', '지방선거 사전투표소', '근로장려금 신청'처럼 2~3단어로 구성되고 검색창에 입력하기 좋은 명확한 단어로 해줘.
+예어 '스타벅스 환불', '지방선거 사전투표소', '근로장려금 신청'처럼 2~3단어로 구성되고 검색창에 입력하기 좋은 명확한 단어로 해줘.
 
 CRITICAL RULES:
 1. 지방/지역 관련 글 제외 (지방글 배제 규칙):
@@ -211,7 +225,7 @@ async function main() {
       throw new Error('GEMINI_API_KEY 환경변수가 없습니다.');
     }
 
-    // [1단계] 키워드 목록 작성 (실시간 트렌드 또는 로또/손없는날 등 특수 날짜 감안하여 선정)
+    // [1단계] 키워드 목록 작성
     const nowUtc = new Date();
     const kstOffset = 9 * 60 * 60 * 1000;
     const kstDate = new Date(nowUtc.getTime() + kstOffset);
@@ -391,12 +405,22 @@ naver_title: "${escapedTitle}"
 naver_link: "${escapedLink}"
 ---
 
-(본문: 글의 분량은 억지로 늘리지 말고 내용에 맞게 탄력적으로 조율해줘. 단순 정보 전달이나 가벼운 안내글의 경우에는 글자수에 구애받지 않고 핵심 메시지만 짧고 간결하게 전달하도록 핵심 내용 위주로 짧게 작성하고, 깊은 해설이 필요한 주제일 때만 1000자 내외로 상세하게 작성해줘.
-본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 최소 2개에서 최대 4개 사이(매번 2~4개 사이로 랜덤하게 다르게)의 다음과 같은 형식의 플레이스홀더를 삽입해줘:
-[IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
+[글쓰기 스타일 및 공감 가이드라인]
+1. 로봇이나 AI가 작성한 것처럼 느껴지는 딱딱하고 전형적인 말투(예: "~에 대해 알아보겠습니다", "~입니다", "이상으로 포스팅을 마치겠습니다" 등)는 절대로 쓰지 마세요.
+2. 진짜 동네 친한 이웃이나 아는 선배가 다정하게 수다를 떨며 유용한 정보를 알려주는 것처럼 친근하고 따뜻한 구어체 어조(~해보셨나요?, ~더라고요!, 정말 다행이에요, ~하면 참 좋겠죠? 등)를 사용해줘.
+3. 도입부(첫 문단)에서 독자들이 느낄 만한 일상 속 이사 준비의 번거로움, 설렘, 걱정 등의 감정에 깊게 **공감**해주면서 흥미를 유발해줘. (예: "이사 한 번 하려면 챙길 게 정말 많아서 머리가 지끈거리시죠?")
+4. 이사나 행사 준비 꿀팁을 설명할 때 "이건 은근히 놓치기 쉬우니 꼭 메모해두세요!" 같이 사람이 직접 조언해주는 듯한 생생한 화법을 써줘.
+5. 마지막 문단에서도 뻔한 요약 대신, 안전하고 기분 좋은 이삿날이 되길 기원하는 등 따뜻한 응원의 끝인사로 마무리해줘.
 
-**주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘.
-프롬프트 내용(English description)은 본문 해당 단락의 주제와 어울리는 구체적인 개념적 설명이어야 하고, 사람, 금융, 이사 등 구체적 대상을 지정하되 텍스트가 들어가선 안 돼.
+[본문 분량 및 구성]
+글의 분량은 억지로 늘리지 말고 내용에 맞게 탄력적으로 조율해줘. 단순 정보 전달이나 가벼운 안내글의 경우에는 글자수에 구애받지 않고 핵심 메시지만 짧고 간결하게 전달하도록 핵심 내용 위주로 짧게 작성하고, 깊은 해설이 필요한 주제일 때만 1000자 내외로 상세하게 작성해줘.
+
+[이미지 삽입 가이드라인]
+1. 본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 다음과 같은 형식의 플레이스홀더를 삽입해줘:
+[IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
+2. 글의 주제와 내용 분량에 따라 이미지의 개수를 **최소 1개에서 최대 4개 사이로 매번 유동적이고 랜덤하게** 조율해서 넣어줘. 글이 짧다면 본문에 1개만 들어가도 충분하고, 정보가 많고 긴 글이라면 흐름에 맞춰 2~4개까지 자유롭게 들어가도록 해줘. 이미지 개수가 모든 글마다 같으면 기계가 작성한 것처럼 보이므로 꼭 랜덤하고 다양하게 지정해줘.
+3. **주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘.
+4. 프롬프트 내용(English description)은 본문 해당 단락의 주제와 어울리는 구체적인 개념적 설명이어야 하고, 사람, 금융, 이사 등 구체적 대상을 지정하되 텍스트가 들어가선 안 돼.
 )
 
 마지막 줄에 FILENAME: ${todayStr}-son-eom-neun-nal 형식으로 파일명도 출력해줘.`;
@@ -419,15 +443,24 @@ naver_title: "${escapedTitle}"
 naver_link: "${escapedLink}"
 ---
 
-(본문: 글의 분량은 최소 700자에서 1000자 내외로 상세하게 작성해줘. 단순 정보 나열로 대충 짧게 끝내지 말고, 독자들에게 도움이 되는 배경지식, 유용한 팁, 혹은 대중들의 반응 등을 골고루 풀어써서 알차고 매력적인 글이 되도록 해줘.
+[글쓰기 스타일 및 공감 가이드라인]
+1. 로봇이나 AI가 작성한 것처럼 느껴지는 딱딱하고 전형적인 말투(예: "~에 대해 알아보겠습니다", "~입니다", "이상으로 포스팅을 마치겠습니다" 등)는 절대로 쓰지 마세요.
+2. 진짜 동네 친한 이웃이나 아는 선배가 다정하게 수다를 떨며 유용한 정보를 알려주는 것처럼 친근하고 따뜻한 구어체 어조 (~해보셨나요?, ~더라고요!, 정말 다행이에요, ~하면 참 좋겠죠? 등)를 사용해줘.
+3. 도입부(첫 문단)에서 독자들이 느낄 만한 일상 속 불편함, 고민, 감정(예: 주유비 걱정, 물가 부담, 세금 환급의 귀찮음, 핫한 이슈에 대한 호기심 등)에 깊게 **공감**해주면서 흥미를 유발해줘. (예: "오늘 아침 주유소 지나가면서 기름값 오르는 거 보고 한숨 쉬진 않으셨나요?")
+4. 정보를 설명할 때도 "저도 예전에 직접 신청해보니~", "이건 은근히 놓치기 쉬우니 꼭 메모해두세요!" 같이 사람이 직접 경험해보고 팁을 나누는 듯한 표현을 가미해줘.
+5. 마무리 부분도 뻔한 요약 대신, 독자들의 하루를 응원하거나 따뜻한 질문을 던져 소통하듯 자연스럽게 마무리해줘.
+
+[본문 분량 및 구성]
+글의 분량은 최소 700자에서 1000자 내외로 상세하게 작성해줘. 단순 정보 나열로 대충 짧게 끝내지 말고, 독자들에게 도움이 되는 배경지식, 유용한 팁, 혹은 대중들의 반응 등을 골고루 풀어써서 알차고 매력적인 글이 되도록 해줘.
 CRITICAL: 지원금, 혜택, 행사 관련 정보성 글인 경우, 독자들이 직접 신청할 수 있는 상세한 방법(신청 자격, 지급 금액, 신청 준비물, 신청 장소/방법 등)과 공식 신청/안내 홈페이지(혹은 관련 지자체/기관의 대표 사이트) 링크를 본문 중간 또는 하단에 명확한 인터넷 주소와 함께 '공식 신청 및 안내: [홈페이지명](URL)' 형태로 반드시 기재해줘.
 글의 맨 마지막 줄에는 반드시 원본 뉴스 링크 주소인 ${link}를 그대로 사용해 출처 표시(예: **출처:** [뉴스 원본 기사 보러가기](${link}))를 한 줄 기재하고, 이를 절대로 누락하지 말아줘.
 
-본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 반드시 2개에서 3개 사이로 다음과 같은 형식의 플레이스홀더를 삽입해줘:
+[이미지 삽입 가이드라인]
+1. 본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 다음과 같은 형식의 플레이스홀더를 삽입해줘:
 [IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
-
-**주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘.
-CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image generator, you must NOT include any specific celebrity names (like Lee Kang-in), player names, politician names, or specific trademarked team/brand names (like PSG, Apple) inside the English description of the IMAGE_PROMPT. Instead, use generic and descriptive terms (e.g., 'a professional soccer player in a blue jersey on a field', 'a gold cup trophy on a pedestal', 'a futuristic computer desk').
+2. 글의 주제와 내용 분량에 따라 이미지의 개수를 **최소 1개에서 최대 4개 사이로 매번 유동적이고 랜덤하게** 조율해서 넣어줘. 글이 짧다면 본문에 1개만 들어가도 충분하고, 정보가 많고 긴 글이라면 흐름에 맞춰 2~4개까지 자유롭게 들어가도록 해줘. 이미지 개수가 모든 글마다 같으면 기계가 작성한 것처럼 보이므로 꼭 랜덤하고 다양하게 지정해줘.
+3. **주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘.
+4. CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image generator, you must NOT include any specific celebrity names (like Lee Kang-in), player names, politician names, or specific trademarked team/brand names (like PSG, Apple) inside the English description of the IMAGE_PROMPT. Instead, use generic and descriptive terms (e.g., 'a professional soccer player in a blue jersey on a field', 'a gold cup trophy on a pedestal', 'a futuristic computer desk').
 )
 
 만약 키워드가 '로또 당첨번호'인 경우, 사람들의 큰 관심을 끌 수 있는 로또 당첨번호 안내 포스팅(예: '1120회 로또 1등 당첨번호 명당 어디? 실수령액까지 완벽 요약')으로 친근하고 호기심 있게 작성해줘. 1등 번호, 보너스 번호, 1등 명당(판매점) 정보들을 뉴스 내용에서 정밀하게 파싱해서 보기 쉽게 안내해줘.
@@ -452,7 +485,7 @@ CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image genera
       });
 
       if (!geminiResponse.ok) {
-        console.error(`Gemini API 호출 실패 (${selectedKeyword}): ${geminiResponse.status}`);
+        console.error(`Gemini API 호출 실패 (${selectedKeyword}): ${response.status}`);
         continue;
       }
 
@@ -497,7 +530,23 @@ CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image genera
       const summaryVal = summaryMatch ? summaryMatch[1].replace(/['"]/g, '').trim() : '';
 
       console.log(`[이미지 생성 실행] 타이틀: ${titleVal}, 요약: ${summaryVal}`);
-      const imgPath = await generateSummaryImage(titleVal, summaryVal, safeFilename);
+      
+      let imgPath = null;
+      let summaryRetries = 3;
+      while (summaryRetries > 0) {
+        try {
+          imgPath = await generateSummaryImage(titleVal, summaryVal, safeFilename);
+          if (imgPath) break;
+        } catch (err) {
+          console.warn(`[요약 이미지 생성 실패, 재시도 남음: ${summaryRetries - 1}] ${err.message}`);
+        }
+        summaryRetries--;
+        if (summaryRetries > 0) {
+          console.log(`[요약 이미지 생성] 3초 후 재시도합니다...`);
+          await new Promise(resolve => setTimeout(resolve, 3000));
+        }
+      }
+
       if (imgPath) {
         const frontmatterEndIndex = markdownContent.indexOf('\n---', 4);
         if (frontmatterEndIndex !== -1) {
@@ -508,9 +557,6 @@ CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image genera
         } else {
           markdownContent = `![포스트 소개](${imgPath})\n\n` + markdownContent;
         }
-        // 요약 이미지 생성 직후이므로 본문 이미지 생성을 위해 2초 대기
-        console.log(`[본문 이미지 생성 대기] 요약 이미지 생성 후 2초 대기 중...`);
-        await new Promise(resolve => setTimeout(resolve, 2000));
       }
 
       // 본문 이미지 실시간 생성 및 치환
