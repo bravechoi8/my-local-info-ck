@@ -431,12 +431,20 @@ naver_link: "${escapedLink}"
 
 마지막 줄에 FILENAME: ${todayStr}-son-eom-neun-nal 형식으로 파일명도 출력해줘.`;
       } else {
+        // 로또 글일 때 여러 뉴스의 텍스트를 모아서 풍부한 정보를 제공하도록 개선
+        let lottoContext = '';
+        if (selectedKeyword.includes('로또')) {
+          lottoContext = `\n\n[로또 최신 보도 참고 정보]\n` + 
+            items.slice(0, 8).map((it, idx) => `기사 ${idx + 1}: [제목] ${cleanText(it.title)} / [요약] ${cleanText(it.description)}`).join('\n') +
+            `\n(위 여러 기사 요약들에 적힌 1등 당첨번호, 보너스 번호, 당첨 게임 수, 자동/수동 수량, 그리고 전국 1등 당첨 판매점(명당) 상호명과 지역명(예: 서울 강남구, 경기 안양시 등)을 최대한 꼼꼼하게 추출하여 가독성 좋은 표(Table) 형태로 글 본문에 반드시 포함해줘. 기사마다 숫자가 조금씩 어긋나 있다면 가장 다수 기사에서 중복 검증된 숫자를 사용해줘.)`;
+        }
+
         prompt = `아래 뉴스를 분석해서 블로그 정보 글을 작성해줘.
     
 뉴스 정보:
 제목: ${title}
 요약: ${description}
-출처 링크: ${link}
+출처 링크: ${link}${lottoContext}
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
