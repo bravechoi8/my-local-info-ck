@@ -263,8 +263,14 @@ async function main() {
     const neededKeywordsCount = 3 - tasks.length;
     if (neededKeywordsCount > 0) {
       const trendingKeywords = await fetchTrendingKeywords();
-      for (let i = 0; i < Math.min(neededKeywordsCount, trendingKeywords.length); i++) {
-        tasks.push({ keyword: trendingKeywords[i], isSonMonthFirst: false, isLottoSunday: false });
+      for (const kw of trendingKeywords) {
+        if (tasks.length >= 3) break;
+        // 이미 tasks에 '로또' 관련 키워드가 있는 경우, 또 다른 '로또' 키워드가 트렌드에서 추가되는 것을 방지합니다.
+        if (kw.includes('로또') && tasks.some(t => t.keyword.includes('로또'))) {
+          console.log(`[중복 키워드 필터] '로또' 관련 작업이 이미 존재하므로 '${kw}' 키워드는 제외합니다.`);
+          continue;
+        }
+        tasks.push({ keyword: kw, isSonMonthFirst: false, isLottoSunday: false });
       }
     }
 
