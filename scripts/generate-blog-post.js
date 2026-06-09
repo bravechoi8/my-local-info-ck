@@ -136,7 +136,9 @@ async function main() {
 
     // [2단계] Gemini AI로 블로그 글 생성 루프
     const kstOffset = 9 * 60 * 60 * 1000;
-    const todayStr = new Date(new Date().getTime() + kstOffset).toISOString().split('T')[0];
+    const kstDate = new Date(new Date().getTime() + kstOffset);
+    const todayStr = kstDate.toISOString().split('T')[0];
+    const todayFullStr = kstDate.toISOString().slice(0, 19) + '+09:00';
 
     for (const item of itemsToPost) {
       const itemName = item.name || item.title || '';
@@ -149,7 +151,7 @@ async function main() {
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
 title: (검색어 노출이 잘 되도록 중요한 키워드를 자연스럽게 포함하면서도 딱딱한 안내문 형식의 어투를 벗어나 'OO하는 법', 'OO 총정리', '놓치면 손해보는 OO' 등 혜택을 강조한 제목으로 지어줘. 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-date: ${todayStr}
+date: ${todayFullStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 category: 정보
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]

@@ -93,6 +93,15 @@ export function getAllPosts(): PostData[] {
       // gray-matter 라이브러리로 글머리 정보(frontmatter)와 본문을 나눕니다.
       const { data, content } = matter(fileContents);
 
+      // 정렬을 위해 상세 타임스탬프 계산 (시간 정보가 없으면 하루 시작으로 계산)
+      let rawDateTime = 0;
+      if (data.date) {
+        const parsed = Date.parse(data.date);
+        if (!isNaN(parsed)) {
+          rawDateTime = parsed;
+        }
+      }
+
       return {
         slug,
         title: data.title || '',
@@ -102,15 +111,20 @@ export function getAllPosts(): PostData[] {
         tags: Array.isArray(data.tags) ? data.tags : [],
         content,
         mtime: stat.mtime.getTime(),
+        rawDateTime,
       };
     });
 
-  // 날짜 기준으로 내림차순(최신순) 정렬합니다. 날짜가 같으면 파일 수정 시간(mtime) 기준으로 최신순 정렬합니다.
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) return 1;
-    if (a.date > b.date) return -1;
-    return b.mtime - a.mtime;
-  });
+  // 상세 시간 기준으로 내림차순(최신순) 정렬합니다.
+  // 시간이 완전히 같을 경우 슬러그 알파벳 역순으로 정렬하여 빌드 시 항상 일관된 순서를 보장합니다.
+  return allPostsData
+    .sort((a, b) => {
+      if (b.rawDateTime !== a.rawDateTime) {
+        return b.rawDateTime - a.rawDateTime;
+      }
+      return b.slug.localeCompare(a.slug);
+    })
+    .map(({ rawDateTime, ...post }) => post);
 }
 
 // 특정 슬러그를 기반으로 개별 블로그 포스트 상세 데이터를 가져오는 함수

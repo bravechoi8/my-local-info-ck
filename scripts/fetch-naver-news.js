@@ -388,6 +388,7 @@ async function main() {
 
       // [3단계] Gemini AI로 블로그 글 생성
       const todayStr = kstDate.toISOString().split('T')[0];
+      const todayFullStr = kstDate.toISOString().slice(0, 19) + '+09:00';
       let prompt = '';
 
       if (isSonMonthFirst) {
@@ -407,7 +408,7 @@ async function main() {
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
 title: (친근하고 흥미로운 제목, 예: ${year}년 ${month}월~${nextMonth}월 이사 가기 좋은 손없는날 달력 및 꿀팁 총정리, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-date: ${todayStr}
+date: ${todayFullStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
@@ -453,7 +454,7 @@ naver_link: "${escapedLink}"
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
 title: (친근하고 흥미진진하여 사람들의 클릭을 부르는 매력적인 제목. 검색어 노출이 잘 되도록 중요한 키워드를 자연스럽게 포함하면서도 딱딱한 뉴스투를 벗어나 'OO하는 법', 'OO 총정리', '놓치면 손해보는 OO' 등 호기심이나 혜택을 강조한 친근한 말투로 지어줘. 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-date: ${todayStr}
+date: ${todayFullStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
