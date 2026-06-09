@@ -488,7 +488,7 @@ CRITICAL: 지원금, 혜택, 행사 관련 정보성 글인 경우, 독자들이
 4. CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image generator, you must NOT include any specific celebrity names (like Lee Kang-in), player names, politician names, or specific trademarked team/brand names (like PSG, Apple) inside the English description of the IMAGE_PROMPT. Instead, use generic and descriptive terms (e.g., 'a professional soccer player in a blue jersey on a field', 'a gold cup trophy on a pedestal', 'a futuristic computer desk').
 )
 
-만약 키워드가 '로또 당첨번호'인 경우, 사람들의 큰 관심을 끌 수 있는 로또 당첨번호 안내 포스팅(예: '1120회 로또 1등 당첨번호 명당 어디? 실수령액까지 완벽 요약')으로 친근하고 호기심 있게 작성해줘. 1등 번호, 보너스 번호, 1등 명당(판매점) 정보들을 뉴스 내용에서 정밀하게 파싱해서 보기 쉽게 안내해줘.
+만약 키워드가 '로또 당첨번호'인 경우, 사람들의 큰 관심을 끌 수 있는 로또 당첨번호 안내 포스팅(예: '1120회 로또 1등 당첨번호 명당 어디? 실수령액까지 완벽 요약')으로 친근하고 호기심 있게 작성해줘. 1등 번호, 보너스 번호뿐만 아니라, 특히 **전국의 1등 당첨 판매점(상호명과 구체적인 지역/주소 위치) 목록**을 제공된 뉴스 정보에서 최대한 모두 찾아서 깔끔한 표(Table)나 목록 형태로 하나도 빠짐없이 꼼꼼하게 정리해서 안내해줘야 해.
 
 만약 키워드에 '손없는날'이 포함되어 있는 경우, 이번 달과 다음 달의 이사/개업/결혼하기 좋은 '손없는날' 달력을 일목요연하게 안내하는 정보성 포스팅(예: '2026년 5월 6월 이사하기 좋은 손없는날 달력 및 꿀팁 정리')으로 친근하고 상세하게 작성해줘. 음력 9일, 10일, 19일, 20일, 29일, 30일에 해당하는 양력 날짜들을 정확하게 매칭하여 표(Table)나 깔끔한 리스트로 정리해 주고, 이사할 때 체크해야 할 필수 정보나 팁 3가지도 본문에 함께 담아줘.
 
