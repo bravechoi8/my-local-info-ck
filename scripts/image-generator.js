@@ -26,10 +26,7 @@ async function downloadImage(url, filename) {
   return `/images/${filename}`;
 }
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
 const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict';
 
@@ -41,6 +38,7 @@ const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models
  * @returns {Promise<string|null>} 저장된 이미지의 상대 경로 (예: '/images/summary-keyword.jpg'), 실패 시 null
  */
 export async function generateSummaryImage(title, summary, filenameKey) {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   try {
     if (!GEMINI_API_KEY) {
       console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
@@ -226,6 +224,7 @@ Summary: ${summary}`;
  * @returns {Promise<string|null>} 저장된 이미지의 상대 경로, 실패 시 null
  */
 export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3') {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   try {
     // 펙셀 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
     const pexelsSearchQuery = prompt.split(',')[0].trim();
