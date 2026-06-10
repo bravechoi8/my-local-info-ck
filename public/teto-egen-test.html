@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>테토-에겐 성격 유형 테스트 · teto-egen-test.me</title>
+<meta name="description" content="호르몬 기반 성격 유형 테스트. 12개 질문으로 알아보는 나의 진짜 성향 — 테토남, 에겐남, 테토녀, 에겐녀.">
+<meta name="theme-color" content="#fdfaf6">
+<meta property="og:title" content="테토-에겐 성격 유형 테스트">
+<meta property="og:description" content="나는 테토일까, 에겐일까? 12개 질문으로 알아보세요.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://teto-egen-test.me">
+<meta property="og:site_name" content="teto-egen-test.me">
+<meta name="twitter:card" content="summary">
+<style>
+  /* ===== 라이트 모드 (기본) ===== */
+  :root,
+  [data-theme="light"] {
+    --bg: #fdfaf6;
+    --card: #ffffff;
+    --ink: #2b2722;
+    --ink-muted: #7a7268;
+    --line: #ebe4d9;
+    --line-strong: #d4ccbe;
+    --teto: #d85a30;
+    --teto-soft: #faece7;
+    --teto-deep: #993c1d;
+    --teto-grad-a: #faece7;
+    --teto-grad-b: #f5c4b3;
+    --egen: #7f77dd;
+    --egen-soft: #eeedfe;
+    --egen-deep: #3c3489;
+    --egen-grad-a: #eeedfe;
+    --egen-grad-b: #cecbf6;
+    --accent: #1d1d1b;
+    --accent-text: #ffffff;
+    --hover-bg: #fbf8f3;
+    --shadow-sm: 0 2px 8px rgba(40, 30, 20, 0.04);
+    --shadow-md: 0 8px 24px rgba(40, 30, 20, 0.08);
+  }
+
+  /* ===== 다크 모드 ===== */
+  [data-theme="dark"] {
+    --bg: #1a1714;
+    --card: #25211d;
+    --ink: #f0ebe3;
+    --ink-muted: #9a9085;
+    --line: #3a342d;
+    --line-strong: #4a423a;
+    --teto: #f29978;
+    --teto-soft: #4a1f12;
+    --teto-deep: #f5c4b3;
+    --teto-grad-a: #4a1f12;
+    --teto-grad-b: #6b2d18;
+    --egen: #b5afef;
+    --egen-soft: #2a2456;
+    --egen-deep: #cecbf6;
+    --egen-grad-a: #2a2456;
+    --egen-grad-b: #3c3489;
+    --accent: #f0ebe3;
+    --accent-text: #1a1714;
+    --hover-bg: #2e2924;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px 80px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+  }
+
+  /* ===== 상단 컨트롤바 (브랜드 + 테마 + 언어) ===== */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--teto), var(--egen));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  .brand-domain {
+    color: var(--ink-muted);
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 2px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+  }
+
+  .icon-btn:hover {
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+
+  .icon-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ===== 공통 화면 컨테이너 ===== */
+  .screen {
+    background: var(--card);
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-md);
+    padding: 36px 28px;
+    animation: fadeIn 0.35s ease;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hidden { display: none !important; }
+
+  /* ===== 인트로 ===== */
+  .intro-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .intro-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+
+  .intro-title .gradient {
+    background: linear-gradient(90deg, var(--teto), var(--egen));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .intro-desc {
+    color: var(--ink-muted);
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  .intro-illust {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0 32px;
+  }
+
+  .orb {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: white;
+  }
+
+  .orb.teto { background: radial-gradient(circle at 30% 30%, #f29978, #d85a30); }
+  .orb.egen { background: radial-gradient(circle at 30% 30%, #b5afef, #7f77dd); }
+
+  .orb-vs {
+    font-size: 14px;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+
+  /* ===== 성별 선택 ===== */
+  .gender-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .gender-btn {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 16px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: inherit;
+    text-align: center;
+    color: var(--ink);
+  }
+
+  .gender-btn:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .gender-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .gender-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .gender-sub {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  /* ===== 진행 바 ===== */
+  .progress-wrap { margin-bottom: 28px; }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .progress-count {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teto), var(--egen));
+    border-radius: 999px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* ===== 질문 ===== */
+  .q-number {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .q-text {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    text-align: left;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .option:hover {
+    border-color: var(--ink);
+    background: var(--hover-bg);
+    transform: translateX(2px);
+  }
+
+  .option-marker {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-strong);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    transition: all 0.15s ease;
+  }
+
+  .option:hover .option-marker {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .nav-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 24px;
+  }
+
+  .back-btn {
+    background: transparent;
+    border: none;
+    color: var(--ink-muted);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 8px 0;
+    transition: color 0.15s;
+  }
+
+  .back-btn:hover { color: var(--ink); }
+  .back-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ===== 결과 ===== */
+  .result-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .result-tag.teto { color: var(--teto-deep); }
+  .result-tag.egen { color: var(--egen-deep); }
+
+  .result-title {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    letter-spacing: -0.03em;
+  }
+
+  .result-title.teto { color: var(--teto-deep); }
+  .result-title.egen { color: var(--egen-deep); }
+
+  .result-subtitle {
+    font-size: 15px;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+  }
+
+  .result-visual {
+    height: 140px;
+    border-radius: 14px;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-visual.teto {
+    background: linear-gradient(135deg, var(--teto-grad-a) 0%, var(--teto-grad-b) 100%);
+  }
+
+  .result-visual.egen {
+    background: linear-gradient(135deg, var(--egen-grad-a) 0%, var(--egen-grad-b) 100%);
+  }
+
+  .result-emoji { font-size: 64px; }
+
+  .result-section { margin-bottom: 22px; }
+
+  .result-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+
+  .result-desc {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .trait {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  .trait.teto { background: var(--teto-soft); color: var(--teto-deep); }
+  .trait.egen { background: var(--egen-soft); color: var(--egen-deep); }
+
+  .score-bar-wrap { margin-top: 8px; }
+
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .score-labels .left { color: var(--teto-deep); }
+  .score-labels .right { color: var(--egen-deep); }
+
+  .score-bar {
+    height: 10px;
+    background: var(--line);
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teto) 0%, var(--egen) 100%);
+    border-radius: 999px;
+  }
+
+  .score-marker {
+    position: absolute;
+    top: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 3px solid var(--ink);
+    transform: translateX(-50%);
+    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .compat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .compat-card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .compat-card-header {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .compat-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .compat-desc {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ===== 버튼 ===== */
+  .btn {
+    display: inline-block;
+    width: 100%;
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+  }
+
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  .btn-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  /* ===== 푸터 노트 ===== */
+  .note {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 18px;
+    line-height: 1.6;
+  }
+
+  /* ===== 푸터 ===== */
+  .footer {
+    margin-top: 32px;
+    padding: 20px 8px 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    color: var(--ink-muted);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .footer-brand {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  .footer-brand .footer-domain {
+    color: var(--ink-muted);
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .footer-links {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a, .footer-links span {
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 11px;
+  }
+
+  .footer-links a:hover { color: var(--ink); }
+
+  @media (max-width: 480px) {
+    .screen { padding: 28px 22px; }
+    .intro-title { font-size: 24px; }
+    .result-title { font-size: 32px; }
+    .q-text { font-size: 18px; }
+    .compat-row { grid-template-columns: 1fr; }
+    .brand-domain { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ====== 상단 컨트롤바: 브랜드 + 테마 + 언어 ====== -->
+  <div class="topbar">
+    <a href="/" class="brand" aria-label="teto-egen-test.me home">
+      <span class="brand-mark">T·E</span>
+      <span>teto-egen-test<span class="brand-domain">.me</span></span>
+    </a>
+    <div class="topbar-right">
+      <button id="langBtn" class="icon-btn" onclick="toggleLang()" aria-label="Toggle language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <button id="themeBtn" class="icon-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span id="themeIcon"></span>
+        <span id="themeLabel">Dark</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ====== 인트로 화면 ====== -->
+  <section id="screen-intro" class="screen">
+    <span class="intro-tag" data-i18n="intro.tag">Personality Test</span>
+    <h1 class="intro-title" data-i18n-html="intro.title"></h1>
+    <p class="intro-desc" data-i18n="intro.desc"></p>
+
+    <div class="intro-illust">
+      <div class="orb teto" data-i18n="intro.orbTeto">테토</div>
+      <span class="orb-vs">vs</span>
+      <div class="orb egen" data-i18n="intro.orbEgen">에겐</div>
+    </div>
+
+    <p style="font-size:14px; font-weight:600; margin-bottom:12px; color:var(--ink);" data-i18n="intro.selectGender"></p>
+    <div class="gender-row">
+      <button class="gender-btn" onclick="selectGender('male')">
+        <span class="gender-icon">👦</span>
+        <div class="gender-label" data-i18n="intro.male"></div>
+        <div class="gender-sub" data-i18n="intro.maleSub"></div>
+      </button>
+      <button class="gender-btn" onclick="selectGender('female')">
+        <span class="gender-icon">👧</span>
+        <div class="gender-label" data-i18n="intro.female"></div>
+        <div class="gender-sub" data-i18n="intro.femaleSub"></div>
+      </button>
+    </div>
+
+    <p class="note" data-i18n-html="intro.note"></p>
+  </section>
+
+  <!-- ====== 질문 화면 ====== -->
+  <section id="screen-quiz" class="screen hidden">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span data-i18n="quiz.title"></span>
+        <span><span id="qCurrent" class="progress-count">1</span> / <span id="qTotal">12</span></span>
+      </div>
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="q-number" id="qNumber">Q1.</div>
+    <h2 class="q-text" id="qText"></h2>
+    <div class="options" id="optionsBox"></div>
+
+    <div class="nav-row">
+      <button id="backBtn" class="back-btn" onclick="goBack()" data-i18n="quiz.back"></button>
+    </div>
+  </section>
+
+  <!-- ====== 결과 화면 ====== -->
+  <section id="screen-result" class="screen hidden">
+    <span id="resultTag" class="result-tag"></span>
+    <h1 id="resultTitle" class="result-title"></h1>
+    <p id="resultSubtitle" class="result-subtitle"></p>
+
+    <div id="resultVisual" class="result-visual">
+      <span id="resultEmoji" class="result-emoji">🔥</span>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-title" data-i18n="result.scoreTitle"></div>
+      <div class="score-bar-wrap">
+        <div class="score-labels">
+          <span class="left" data-i18n="result.tetoLabel"></span>
+          <span class="right" data-i18n="result.egenLabel"></span>
+        </div>
+        <div class="score-bar">
+          <div id="scoreFill" class="score-fill" style="width:50%;"></div>
+          <div id="scoreMarker" class="score-marker" style="left:50%;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--ink-muted); margin-top:6px;">
+          <span id="tetoPct">50%</span>
+          <span id="egenPct">50%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-title" data-i18n="result.summaryTitle"></div>
+      <p id="resultDesc" class="result-desc"></p>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-title" data-i18n="result.traitsTitle"></div>
+      <div id="resultTraits" class="traits"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-title" data-i18n="result.detailTitle"></div>
+      <p id="resultDetail" class="result-desc"></p>
+    </div>
+
+    <div class="result-section">
+      <div class="result-section-title" data-i18n="result.compatTitle"></div>
+      <div class="compat-row">
+        <div class="compat-card">
+          <div class="compat-card-header" data-i18n="result.compatLike"></div>
+          <div id="compatLikeName" class="compat-name"></div>
+          <div id="compatLikeDesc" class="compat-desc"></div>
+        </div>
+        <div class="compat-card">
+          <div class="compat-card-header" data-i18n="result.compatAvoid"></div>
+          <div id="compatAvoidName" class="compat-name"></div>
+          <div id="compatAvoidDesc" class="compat-desc"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="restart()" data-i18n="result.retry"></button>
+      <button class="btn btn-secondary" onclick="shareResult()" data-i18n="result.share"></button>
+    </div>
+
+    <p class="note" data-i18n-html="result.note"></p>
+  </section>
+
+  <!-- ====== 푸터 ====== -->
+  <footer class="footer">
+    <div class="footer-brand">teto-egen-test<span class="footer-domain">.me</span></div>
+    <div data-i18n="footer.tagline"></div>
+    <div class="footer-links">
+      <span data-i18n="footer.copyright"></span>
+      <span>·</span>
+      <span data-i18n="footer.disclaimer"></span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* =================================================================
+   테토-에겐 성격 유형 테스트
+   - 12개 질문, 3지선다 (T: 테토, E: 에겐, N: 중간)
+   - 답변 보기는 매 질문마다 셔플
+   - 다국어(KR/EN) + 다크/라이트 모드 지원
+   ================================================================= */
+
+const I18N = {
+  ko: {
+    pageTitle: "테토-에겐 성격 유형 테스트",
+    intro: {
+      tag: "Personality Test",
+      title: '나는 <span class="gradient">테토</span>일까,<br><span class="gradient">에겐</span>일까?',
+      desc: "호르몬 기반 성격 유형 테스트로 알아보는 나의 진짜 성향. 12개의 간단한 질문으로 결과를 확인해보세요.",
+      orbTeto: "테토",
+      orbEgen: "에겐",
+      selectGender: "먼저 성별을 선택해주세요",
+      male: "남자",
+      maleSub: "테토남 / 에겐남",
+      female: "여자",
+      femaleSub: "테토녀 / 에겐녀",
+      note: "※ 본 테스트는 인터넷 밈을 기반으로 한 재미용 콘텐츠이며,<br>과학적 근거를 가진 진단 도구가 아닙니다."
+    },
+    quiz: { title: "테토 - 에겐 테스트", back: "← 이전 질문" },
+    footer: {
+      tagline: "호르몬 기반 성격 유형 테스트",
+      copyright: "© 2026 teto-egen-test.me",
+      disclaimer: "재미를 위한 콘텐츠"
+    },
+    result: {
+      tagPrefix: "YOUR TYPE — ",
+      genderMale: "남성",
+      genderFemale: "여성",
+      scoreTitle: "나의 성향 점수",
+      tetoLabel: "테토 ●",
+      egenLabel: "● 에겐",
+      summaryTitle: "한 줄 요약",
+      traitsTitle: "대표 키워드",
+      detailTitle: "상세 설명",
+      compatTitle: "연애 먹이사슬",
+      compatLike: "💕 끌리는 상대",
+      compatAvoid: "⚡ 부담스러운 상대",
+      retry: "다시 테스트하기",
+      share: "결과 공유하기",
+      note: "※ 본 테스트 결과는 재미를 위한 참고용일 뿐,<br>실제 성격이나 호르몬 수치를 진단하지 않습니다.",
+      shareTextPrefix: "[테토-에겐 테스트 결과] 나는",
+      shareCopied: "결과가 클립보드에 복사되었습니다!"
+    },
+    questions: [
+      { q: "친구들과의 모임에서 나는?", options: [
+        { text: "분위기를 주도하고 중심이 되는 편", score: "T" },
+        { text: "조용히 분위기에 맞춰가는 편", score: "E" },
+        { text: "친한 사람과 있을 땐 활발, 낯선 자리에선 조용한 편", score: "N" }]},
+      { q: "갈등 상황이 생겼을 때 나는?", options: [
+        { text: "정면돌파, 할 말은 직접 한다", score: "T" },
+        { text: "최대한 부드럽게 우회해서 풀어간다", score: "E" },
+        { text: "상황 봐가며 정면돌파와 회피를 선택한다", score: "N" }]},
+      { q: "감정 표현 스타일은?", options: [
+        { text: "솔직하고 직접적이다. 좋으면 좋다, 싫으면 싫다", score: "T" },
+        { text: "섬세하게 돌려서, 상대 기분을 살피며 표현한다", score: "E" },
+        { text: "친한 사람에겐 솔직, 그 외엔 적당히 돌려 말한다", score: "N" }]},
+      { q: "처음 보는 사람들 사이에 있을 때 나는?", options: [
+        { text: "거리낌 없이 먼저 말을 거는 편", score: "T" },
+        { text: "어색해서 누가 말 걸어주길 기다리는 편", score: "E" },
+        { text: "분위기를 좀 보다가 자연스러워지면 말을 거는 편", score: "N" }]},
+      { q: "나의 패션 스타일은?", options: [
+        { text: "힙하고 자유분방하거나, 강하고 시원시원한 룩", score: "T" },
+        { text: "단정하고 부드럽거나, 톤다운된 정돈된 룩", score: "E" },
+        { text: "TPO에 따라 캐주얼·포멀을 자유롭게 오간다", score: "N" }]},
+      { q: "연애에서 내가 더 잘하는 역할은?", options: [
+        { text: "리드하기 — 데이트 코스, 분위기, 다 내가 짠다", score: "T" },
+        { text: "맞춰주기 — 상대 기분과 컨디션을 세심하게 살핀다", score: "E" },
+        { text: "리드와 맞춰주기를 균형 있게 번갈아 한다", score: "N" }]},
+      { q: "결정해야 할 일이 있을 때 나는?", options: [
+        { text: "빠르게 결단하고 밀고 나간다", score: "T" },
+        { text: "여러 번 고민하고 신중하게 결정한다", score: "E" },
+        { text: "사안의 무게에 따라 빠르게 또는 신중하게 결정한다", score: "N" }]},
+      { q: "내가 더 자주 듣는 말은?", options: [
+        { text: '"카리스마 있다", "시원시원하다", "멋있다"', score: "T" },
+        { text: '"착하다", "섬세하다", "감성 있다"', score: "E" },
+        { text: '"털털하다", "같이 있으면 편하다", "균형 잡혔다"', score: "N" }]},
+      { q: "스트레스를 풀 때 나는?", options: [
+        { text: "운동, 액티비티, 사람들과 시끌벅적하게", score: "T" },
+        { text: "혼자 음악 듣기, 카페, 책, 조용히 정리하는 시간", score: "E" },
+        { text: "그날 기분에 따라 활동적으로 또는 차분하게", score: "N" }]},
+      { q: "내가 끌리는 이성의 매력은?", options: [
+        { text: "당당하고 추진력 있고 카리스마 있는 사람", score: "T" },
+        { text: "부드럽고 섬세하며 감수성이 풍부한 사람", score: "E" },
+        { text: "강함과 부드러움을 둘 다 가진 균형 잡힌 사람", score: "N" }]},
+      { q: "팀 프로젝트나 조직에서 나는?", options: [
+        { text: "리더 또는 핵심 의사결정자 역할이 자연스럽다", score: "T" },
+        { text: "분위기를 살피고 조율하는 서포터 역할이 편하다", score: "E" },
+        { text: "필요에 따라 리더와 서포터를 모두 맡을 수 있다", score: "N" }]},
+      { q: "내 말투와 어조는?", options: [
+        { text: "직설적이고 단호한 편. 결론부터 말한다", score: "T" },
+        { text: "부드럽고 완곡한 편. 상대가 상처받지 않게 둘러말한다", score: "E" },
+        { text: "상대와 상황에 따라 직설과 완곡을 자유롭게 쓴다", score: "N" }]}
+    ],
+    results: {
+      teto_male: {
+        title: "테토남",
+        subtitle: "테스토스테론(남성호르몬) 성향이 강한 남성",
+        emoji: "🔥",
+        type: "teto",
+        summary: "강한 양기와 카리스마, 직선적인 추진력으로 무장한 상남자형.",
+        detail: "테토남은 자신감 있고 주도적이며, 문제가 생기면 피하지 않고 정면 돌파하는 스타일입니다. 무뚝뚝해 보일 수 있지만 속은 의리 있고 정이 많은 편이며, 연애에서는 확실히 리드하고 감정 표현도 솔직하고 직접적입니다. 모임이나 조직 안에서 존재감을 크게 드러내며, 자기 의견이 분명한 타입입니다.",
+        traits: ["카리스마", "주도적", "직선적", "추진력", "솔직함", "의리"],
+        likeName: "에겐녀", likeDesc: "자신에게 없는 부드러운 감수성에 매력을 느낌",
+        avoidName: "테토녀", avoidDesc: "비슷한 양기끼리는 종종 기싸움이 생기기도"
+      },
+      egen_male: {
+        title: "에겐남",
+        subtitle: "에스트로겐(여성호르몬) 성향이 강한 남성",
+        emoji: "🌿",
+        type: "egen",
+        summary: "섬세하고 부드러우며, 감수성과 공감 능력이 뛰어난 자상한 타입.",
+        detail: "에겐남은 감수성이 풍부하고 타인의 감정을 잘 읽어내며, 갈등을 만들기보다 부드럽게 풀어가려 합니다. 패션과 미적 감각이 좋고, 대화할 때 상대방의 기분을 살뜰히 챙기는 자상함이 매력 포인트입니다. 직설적이기보다는 우회적·완곡한 표현을 선호하며, 분위기를 읽고 맞춰주는 능력이 뛰어납니다.",
+        traits: ["섬세함", "공감 능력", "부드러움", "감수성", "배려심", "미적 감각"],
+        likeName: "테토녀", likeDesc: "자신에게 없는 추진력과 에너지에 매력을 느낌",
+        avoidName: "에겐녀", avoidDesc: "비슷한 감정선이 겹치면 피로감을 느낄 수 있음"
+      },
+      teto_female: {
+        title: "테토녀",
+        subtitle: "테스토스테론(남성호르몬) 성향이 강한 여성",
+        emoji: "⚡",
+        type: "teto",
+        summary: "당당하고 거침없는 에너지와 추진력으로 자기 길을 만들어가는 타입.",
+        detail: "테토녀는 자기 의사 표현이 분명하고 주체적이며, 어딜 가나 자신의 색깔이 뚜렷한 사람입니다. 감정을 솔직하게 드러내고 행동력이 뛰어나며, 의존하기보다 동등한 관계를 추구합니다. 패션도 힙하고 자유로운 스타일을 즐기며, 누군가에게 휘둘리기보다 자기 페이스대로 살아갑니다. 친구로도 든든하고, 연애에서도 적극적으로 표현합니다.",
+        traits: ["주체적", "당당함", "행동력", "쿨함", "독립적", "자기주관"],
+        likeName: "테토남", likeDesc: "더 강한 양기와 남성적 매력에 자연스레 끌림",
+        avoidName: "에겐남", avoidDesc: "주도성이 부족해 연애 코드가 어긋날 수 있음"
+      },
+      egen_female: {
+        title: "에겐녀",
+        subtitle: "에스트로겐(여성호르몬) 성향이 강한 여성",
+        emoji: "🌸",
+        type: "egen",
+        summary: "단아하고 부드러우며, 섬세한 감정선과 따뜻한 분위기를 가진 타입.",
+        detail: "에겐녀는 눈치가 빠르고 분위기를 잘 읽으며, 본인이 앞에 나서기보다 상황을 부드럽게 정리하는 역할을 자처합니다. 갈등을 피하려 하고, 직접적인 표현보다는 우회적인 방식으로 감정을 전달합니다. 톤다운된 컬러와 단정한 스타일을 선호하며, 전반적으로 단아하고 깔끔한 이미지를 추구합니다. 정서적 안정감과 따뜻함이 큰 매력 포인트입니다.",
+        traits: ["단아함", "섬세함", "공감 능력", "정서적", "부드러움", "차분함"],
+        likeName: "에겐남", likeDesc: "자신의 감수성과 정서를 잘 이해해주는 점에 끌림",
+        avoidName: "테토남", avoidDesc: "강한 양기와 직선적 태도가 부담스러울 수 있음"
+      }
+    }
+  },
+
+  en: {
+    pageTitle: "Teto–Egen Personality Test",
+    intro: {
+      tag: "Personality Test",
+      title: 'Am I a <span class="gradient">Teto</span><br>or an <span class="gradient">Egen</span>?',
+      desc: "A hormone-based personality test to discover your true tendencies. Just 12 simple questions to find out your type.",
+      orbTeto: "Teto",
+      orbEgen: "Egen",
+      selectGender: "First, select your gender",
+      male: "Male",
+      maleSub: "Teto-male / Egen-male",
+      female: "Female",
+      femaleSub: "Teto-female / Egen-female",
+      note: "* This test is based on an internet meme and is for entertainment only.<br>It is not a scientifically validated diagnostic tool."
+    },
+    quiz: { title: "Teto–Egen Test", back: "← Previous question" },
+    footer: {
+      tagline: "Hormone-based personality type test",
+      copyright: "© 2026 teto-egen-test.me",
+      disclaimer: "For entertainment only"
+    },
+    result: {
+      tagPrefix: "YOUR TYPE — ",
+      genderMale: "Male",
+      genderFemale: "Female",
+      scoreTitle: "Your Tendency Score",
+      tetoLabel: "Teto ●",
+      egenLabel: "● Egen",
+      summaryTitle: "In Short",
+      traitsTitle: "Key Traits",
+      detailTitle: "Detailed Description",
+      compatTitle: "Romance Food Chain",
+      compatLike: "💕 Attracted to",
+      compatAvoid: "⚡ Tense with",
+      retry: "Take Test Again",
+      share: "Share Result",
+      note: "* This result is for entertainment only and does not<br>diagnose your actual personality or hormone levels.",
+      shareTextPrefix: "[Teto–Egen Test Result] I am a",
+      shareCopied: "Result copied to clipboard!"
+    },
+    questions: [
+      { q: "At gatherings with friends, I am...", options: [
+        { text: "The one who leads the mood and is the center of attention", score: "T" },
+        { text: "The one who quietly goes along with the vibe", score: "E" },
+        { text: "Lively with close friends, quiet around strangers", score: "N" }]},
+      { q: "When conflict arises, I tend to...", options: [
+        { text: "Confront it head-on and say what needs to be said", score: "T" },
+        { text: "Smooth things over indirectly and gently", score: "E" },
+        { text: "Choose between confrontation and avoidance based on the situation", score: "N" }]},
+      { q: "My emotional expression style is...", options: [
+        { text: "Honest and direct — if I like it I say so, if I don't I say so", score: "T" },
+        { text: "Subtle and considerate, mindful of how the other person feels", score: "E" },
+        { text: "Direct with close friends, more diplomatic with others", score: "N" }]},
+      { q: "Around new people, I am...", options: [
+        { text: "Comfortable striking up conversation first", score: "T" },
+        { text: "A bit awkward, waiting for someone else to speak first", score: "E" },
+        { text: "Observing the room first, then talking once it feels natural", score: "N" }]},
+      { q: "My fashion style is...", options: [
+        { text: "Hip and free-spirited, or bold and striking", score: "T" },
+        { text: "Neat and soft, or muted and well-organized", score: "E" },
+        { text: "Flexible — casual or formal depending on the occasion", score: "N" }]},
+      { q: "In relationships, I'm better at...", options: [
+        { text: "Leading — planning dates, setting the mood, taking initiative", score: "T" },
+        { text: "Accommodating — carefully attending to my partner's mood and needs", score: "E" },
+        { text: "Balancing both leading and accommodating", score: "N" }]},
+      { q: "When I have to make a decision, I...", options: [
+        { text: "Decide quickly and push forward", score: "T" },
+        { text: "Think it over carefully many times before deciding", score: "E" },
+        { text: "Decide quickly or carefully depending on the stakes", score: "N" }]},
+      { q: "What I'm told most often is...", options: [
+        { text: '"Charismatic," "bold," "cool"', score: "T" },
+        { text: '"Kind," "thoughtful," "sensitive"', score: "E" },
+        { text: '"Easygoing," "comfortable to be around," "well-balanced"', score: "N" }]},
+      { q: "To relieve stress, I prefer...", options: [
+        { text: "Working out, activities, hanging out loudly with people", score: "T" },
+        { text: "Listening to music alone, cafés, books, quiet time to recharge", score: "E" },
+        { text: "Active or quiet depending on my mood that day", score: "N" }]},
+      { q: "I'm attracted to people who are...", options: [
+        { text: "Confident, driven, and charismatic", score: "T" },
+        { text: "Soft, sensitive, and emotionally rich", score: "E" },
+        { text: "Balanced — having both strength and softness", score: "N" }]},
+      { q: "In team projects or organizations, I'm...", options: [
+        { text: "Naturally a leader or key decision-maker", score: "T" },
+        { text: "Comfortable as a supporter who reads and adjusts the mood", score: "E" },
+        { text: "Able to take on either leader or supporter as needed", score: "N" }]},
+      { q: "My speech style is...", options: [
+        { text: "Direct and decisive — I say the conclusion first", score: "T" },
+        { text: "Soft and roundabout — I phrase things to avoid hurting feelings", score: "E" },
+        { text: "Direct or diplomatic depending on the person and situation", score: "N" }]}
+    ],
+    results: {
+      teto_male: {
+        title: "Teto-Male",
+        subtitle: "A man with strong testosterone-leaning tendencies",
+        emoji: "🔥",
+        type: "teto",
+        summary: "A classic alpha-style man, armed with bold energy, charisma, and direct drive.",
+        detail: "The Teto-Male is confident and proactive — when problems arise, he confronts them head-on rather than avoiding them. He may seem blunt on the outside, but is loyal and warm-hearted underneath. In relationships, he leads clearly and expresses emotions honestly and directly. He stands out in groups and organizations and always has a clear opinion of his own.",
+        traits: ["Charisma", "Proactive", "Direct", "Driven", "Honest", "Loyal"],
+        likeName: "Egen-Female", likeDesc: "Drawn to her soft sensitivity that he himself lacks",
+        avoidName: "Teto-Female", avoidDesc: "Similar bold energy can lead to occasional power struggles"
+      },
+      egen_male: {
+        title: "Egen-Male",
+        subtitle: "A man with strong estrogen-leaning tendencies",
+        emoji: "🌿",
+        type: "egen",
+        summary: "Gentle and refined, with rich sensitivity and exceptional empathy.",
+        detail: "The Egen-Male is emotionally rich and skilled at reading others' feelings, preferring to smooth over conflicts rather than create them. He has good fashion sense and aesthetic taste, and his charm lies in elegantly caring about how others feel during conversation. He prefers indirect, diplomatic expression over bluntness, and excels at reading the room and adjusting accordingly.",
+        traits: ["Sensitive", "Empathetic", "Gentle", "Emotionally rich", "Caring", "Aesthetic"],
+        likeName: "Teto-Female", likeDesc: "Drawn to her drive and energy that he himself lacks",
+        avoidName: "Egen-Female", avoidDesc: "Overlapping emotional sensitivity can lead to mutual fatigue"
+      },
+      teto_female: {
+        title: "Teto-Female",
+        subtitle: "A woman with strong testosterone-leaning tendencies",
+        emoji: "⚡",
+        type: "teto",
+        summary: "Bold and unstoppable, carving her own path with energy and drive.",
+        detail: "The Teto-Female knows what she wants and expresses it clearly — she's autonomous and has a distinct presence wherever she goes. She shows emotion honestly and is highly action-oriented, seeking equal partnerships rather than dependent ones. She enjoys hip, free-spirited fashion and lives at her own pace rather than being swayed by others. She's a reliable friend and an active, expressive partner in relationships.",
+        traits: ["Autonomous", "Confident", "Action-oriented", "Cool", "Independent", "Self-assured"],
+        likeName: "Teto-Male", likeDesc: "Naturally drawn to even stronger masculine energy and charm",
+        avoidName: "Egen-Male", avoidDesc: "Lack of initiative may not match her romantic style"
+      },
+      egen_female: {
+        title: "Egen-Female",
+        subtitle: "A woman with strong estrogen-leaning tendencies",
+        emoji: "🌸",
+        type: "egen",
+        summary: "Refined and gentle, with a delicate emotional depth and warm presence.",
+        detail: "The Egen-Female is perceptive and skilled at reading the room — rather than stepping forward herself, she takes on the role of gently smoothing situations. She tends to avoid conflict and conveys feelings indirectly rather than directly. She prefers muted colors and neat styling, projecting an overall image of grace and composure. Her emotional steadiness and warmth are her greatest charms.",
+        traits: ["Graceful", "Sensitive", "Empathetic", "Emotional", "Gentle", "Composed"],
+        likeName: "Egen-Male", likeDesc: "Drawn to those who understand her sensitivity and emotions",
+        avoidName: "Teto-Male", avoidDesc: "Strong masculine energy and directness can feel overwhelming"
+      }
+    }
+  }
+};
+
+/* ===== 상태 ===== */
+let state = {
+  gender: null,
+  index: 0,
+  answers: [],
+  lang: 'ko',
+  theme: 'light'
+};
+
+const $ = id => document.getElementById(id);
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function t() { return I18N[state.lang]; }
+
+const screens = ['screen-intro', 'screen-quiz', 'screen-result'];
+function show(id) {
+  screens.forEach(s => $(s).classList.add('hidden'));
+  $(id).classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ===== 테마 토글 ===== */
+function applyTheme(theme) {
+  state.theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  $('themeIcon').innerHTML = theme === 'dark'
+    ? '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>'
+    : '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  $('themeLabel').textContent = theme === 'dark'
+    ? (state.lang === 'ko' ? '라이트' : 'Light')
+    : (state.lang === 'ko' ? '다크' : 'Dark');
+}
+
+function toggleTheme() {
+  applyTheme(state.theme === 'light' ? 'dark' : 'light');
+}
+
+/* ===== 언어 토글 ===== */
+function applyLang(lang) {
+  state.lang = lang;
+  document.documentElement.setAttribute('lang', lang);
+  document.title = t().pageTitle;
+  $('langLabel').textContent = lang === 'ko' ? 'EN' : '한국어';
+
+  // data-i18n: textContent 치환
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = key.split('.').reduce((o, k) => o && o[k], t());
+    if (val !== undefined) el.textContent = val;
+  });
+  // data-i18n-html: innerHTML 치환 (br/span 등 허용)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    const val = key.split('.').reduce((o, k) => o && o[k], t());
+    if (val !== undefined) el.innerHTML = val;
+  });
+
+  // 테마 라벨도 언어 따라 갱신
+  applyTheme(state.theme);
+
+  // 진행 중인 화면이 퀴즈/결과면 다시 렌더링
+  if (!$('screen-quiz').classList.contains('hidden')) {
+    renderQuestion();
+  } else if (!$('screen-result').classList.contains('hidden')) {
+    renderResult();
+  }
+}
+
+function toggleLang() {
+  applyLang(state.lang === 'ko' ? 'en' : 'ko');
+}
+
+/* ===== 1. 성별 선택 ===== */
+function selectGender(g) {
+  state.gender = g;
+  state.index = 0;
+  state.answers = [];
+  show('screen-quiz');
+  renderQuestion();
+}
+
+/* ===== 2. 질문 렌더링 (옵션 셔플) ===== */
+function renderQuestion() {
+  const i = state.index;
+  const questions = t().questions;
+  const q = questions[i];
+
+  $('qCurrent').textContent = i + 1;
+  $('qTotal').textContent = questions.length;
+  $('progressFill').style.width = (i / questions.length * 100) + '%';
+  $('qNumber').textContent = `Q${i + 1}.`;
+  $('qText').textContent = q.q;
+
+  const shuffled = shuffle(q.options);
+  const box = $('optionsBox');
+  box.innerHTML = '';
+  shuffled.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    const marker = document.createElement('span');
+    marker.className = 'option-marker';
+    marker.textContent = String.fromCharCode(65 + idx);
+    const text = document.createElement('span');
+    text.textContent = opt.text;
+    btn.appendChild(marker);
+    btn.appendChild(text);
+    btn.onclick = () => answer(opt.score);
+    box.appendChild(btn);
+  });
+
+  $('backBtn').disabled = (i === 0);
+}
+
+/* ===== 3. 답변 처리 ===== */
+function answer(score) {
+  state.answers[state.index] = score;
+  const total = t().questions.length;
+  if (state.index < total - 1) {
+    state.index++;
+    renderQuestion();
+  } else {
+    $('progressFill').style.width = '100%';
+    setTimeout(() => { show('screen-result'); renderResult(); }, 350);
+  }
+}
+
+/* ===== 4. 이전 ===== */
+function goBack() {
+  if (state.index > 0) {
+    state.index--;
+    renderQuestion();
+  }
+}
+
+/* ===== 5. 결과 렌더링 (T:+1, E:+1, N:+0.5/+0.5) ===== */
+function renderResult() {
+  let tScore = 0, eScore = 0;
+  state.answers.forEach(a => {
+    if (a === 'T') tScore += 1;
+    else if (a === 'E') eScore += 1;
+    else if (a === 'N') { tScore += 0.5; eScore += 0.5; }
+  });
+  const total = tScore + eScore || 1;
+  const tPct = Math.round((tScore / total) * 100);
+  const ePct = 100 - tPct;
+  const isTeto = tScore >= eScore;
+
+  const key = (isTeto ? 'teto_' : 'egen_') + state.gender;
+  const r = t().results[key];
+  const genderLabel = state.gender === 'male' ? t().result.genderMale : t().result.genderFemale;
+
+  $('resultTag').textContent = t().result.tagPrefix + genderLabel;
+  $('resultTag').className = 'result-tag ' + r.type;
+  $('resultTitle').textContent = r.title;
+  $('resultTitle').className = 'result-title ' + r.type;
+  $('resultSubtitle').textContent = r.subtitle;
+  $('resultVisual').className = 'result-visual ' + r.type;
+  $('resultEmoji').textContent = r.emoji;
+  $('resultDesc').textContent = r.summary;
+  $('resultDetail').textContent = r.detail;
+
+  $('scoreMarker').style.left = ePct + '%';
+  $('tetoPct').textContent = (state.lang === 'ko' ? '테토 ' : 'Teto ') + tPct + '%';
+  $('egenPct').textContent = (state.lang === 'ko' ? '에겐 ' : 'Egen ') + ePct + '%';
+
+  const traits = $('resultTraits');
+  traits.innerHTML = '';
+  r.traits.forEach(tag => {
+    const span = document.createElement('span');
+    span.className = 'trait ' + r.type;
+    span.textContent = '#' + tag;
+    traits.appendChild(span);
+  });
+
+  $('compatLikeName').textContent = r.likeName;
+  $('compatLikeDesc').textContent = r.likeDesc;
+  $('compatAvoidName').textContent = r.avoidName;
+  $('compatAvoidDesc').textContent = r.avoidDesc;
+}
+
+/* ===== 6. 다시하기 / 공유 ===== */
+function restart() {
+  state.gender = null;
+  state.index = 0;
+  state.answers = [];
+  show('screen-intro');
+}
+
+function shareResult() {
+  const title = $('resultTitle').textContent;
+  const summary = $('resultDesc').textContent;
+  const text = `${t().result.shareTextPrefix} "${title}"!\n${summary}`;
+
+  if (navigator.share) {
+    navigator.share({ title: t().pageTitle, text }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert(t().result.shareCopied);
+    });
+  } else {
+    alert(text);
+  }
+}
+
+/* ===== 초기화 ===== */
+(function init() {
+  // OS의 다크모드 선호 감지
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  state.theme = prefersDark ? 'dark' : 'light';
+
+  // 브라우저 언어 감지 (한국어가 아니면 영어로)
+  const browserLang = (navigator.language || 'ko').toLowerCase();
+  applyLang(browserLang.startsWith('ko') ? 'ko' : 'en');
+  // applyLang 내부에서 applyTheme도 호출됨
+})();
+</script>
+</body>
+</html>

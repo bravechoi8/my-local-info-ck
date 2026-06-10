@@ -233,6 +233,27 @@ export default function HomeClient({ posts }: HomeClientProps) {
         ) : (
           /* 포털형 첫 페이지 레이아웃 (정상 모드) */
           <div className="space-y-20">
+            {/* 테토-에겐 성격 유형 테스트 배너 */}
+            <section className="max-w-2xl mx-auto w-full bg-gradient-to-r from-[#faece7] to-[#eeedfe] rounded-2xl p-3.5 sm:p-4 border border-[#ebe4d9] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="space-y-1 text-center sm:text-left">
+                <span className="inline-block px-2 py-0.5 text-[10px] font-semibold rounded bg-white text-[#d85a30] border border-[#f5c4b3]">
+                  호르몬 기반 성격 테스트
+                </span>
+                <h2 className="text-base sm:text-lg font-extrabold text-[#2b2722]">
+                  나는 테토(Teto)일까, 에겐(Egen)일까?
+                </h2>
+                <p className="text-[11px] text-[#7a7268]">
+                  12가지 질문으로 나의 진짜 호르몬 성향을 알아보세요!
+                </p>
+              </div>
+              <Link
+                href="/teto-egen-test"
+                className="px-3 py-1.5 bg-[#1d1d1b] text-white text-[11px] font-semibold rounded-lg hover:bg-black transition-all shadow-sm whitespace-nowrap"
+              >
+                테스트 시작하기 &rarr;
+              </Link>
+            </section>
+
             {/* 1. 최상단 히어로 추천 영역 */}
             {heroPost && (
               <section className="space-y-6">
