@@ -105,8 +105,9 @@ export default function RoulettePage() {
       const relativeAngle = (totalSpin % 360);
       
       // 바늘(12시 방향)이 가리키는 내부 조각 번호 계산
-      // 룰렛이 시계방향으로 돔에 따라 조각의 시작 선이 반시계로 흘러가므로 아래와 같이 역산합니다.
-      const targetAngle = (360 - relativeAngle + 270) % 360;
+      // 룰렛 원판이 -90도 회전(12시 방향이 0도 시작)된 채로 렌더링되므로,
+      // 12시 바늘이 가리키는 판 내부의 각도는 단순히 (360 - 회전각도)가 됩니다.
+      const targetAngle = (360 - relativeAngle) % 360;
       const winningIndex = Math.floor(targetAngle / anglePerParticipant) % numParticipants;
       
       setWinner(participants[winningIndex]);
@@ -270,18 +271,18 @@ export default function RoulettePage() {
             </h2>
             
             {/* 참가자 신규 추가 폼 */}
-            <form onSubmit={addParticipant} className="flex gap-2">
+            <form onSubmit={addParticipant} className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={newParticipant}
                 onChange={(e) => setNewParticipant(e.target.value)}
                 placeholder="새 이름 입력"
                 maxLength={8}
-                className="flex-grow px-4 py-2.5 rounded-xl border border-[#E5E8EB] focus:outline-none focus:border-[#3182F6] text-xs sm:text-sm bg-white"
+                className="w-full sm:flex-grow px-4 py-2.5 rounded-xl border border-[#E5E8EB] focus:outline-none focus:border-[#3182F6] text-xs sm:text-sm bg-white"
               />
               <button
                 type="submit"
-                className="px-4 py-2.5 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-bold rounded-xl whitespace-nowrap transition-colors"
+                className="w-full sm:w-auto px-4 py-2.5 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-bold rounded-xl whitespace-nowrap transition-colors"
               >
                 추가
               </button>
