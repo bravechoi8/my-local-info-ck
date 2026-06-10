@@ -233,26 +233,54 @@ export default function HomeClient({ posts }: HomeClientProps) {
         ) : (
           /* 포털형 첫 페이지 레이아웃 (정상 모드) */
           <div className="space-y-20">
-            {/* 테토-에겐 성격 유형 테스트 배너 */}
-            <section className="max-w-2xl mx-auto w-full bg-gradient-to-r from-[#faece7] to-[#eeedfe] rounded-2xl p-3.5 sm:p-4 border border-[#ebe4d9] flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="space-y-1 text-center sm:text-left">
-                <span className="inline-block px-2 py-0.5 text-[10px] font-semibold rounded bg-white text-[#d85a30] border border-[#f5c4b3]">
-                  호르몬 기반 성격 테스트
-                </span>
-                <h2 className="text-base sm:text-lg font-extrabold text-[#2b2722]">
-                  나는 테토(Teto)일까, 에겐(Egen)일까?
-                </h2>
-                <p className="text-[11px] text-[#7a7268]">
-                  12가지 질문으로 나의 진짜 호르몬 성향을 알아보세요!
-                </p>
-              </div>
-              <Link
-                href="/teto-egen-test"
-                className="px-3 py-1.5 bg-[#1d1d1b] text-white text-[11px] font-semibold rounded-lg hover:bg-black transition-all shadow-sm whitespace-nowrap"
-              >
-                테스트 시작하기 &rarr;
-              </Link>
-            </section>
+            {/* 테토-에겐 및 로또 배너 영역 */}
+            <div className="max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 테토-에겐 성격 유형 테스트 배너 */}
+              <section className="bg-gradient-to-r from-[#faece7] to-[#eeedfe] rounded-2xl p-3.5 sm:p-4 border border-[#ebe4d9] flex flex-col justify-between gap-3 h-full">
+                <div className="space-y-1">
+                  <span className="inline-block px-2 py-0.5 text-[10px] font-semibold rounded bg-white text-[#d85a30] border border-[#f5c4b3]">
+                    호르몬 기반 성격 테스트
+                  </span>
+                  <h2 className="text-base sm:text-lg font-extrabold text-[#2b2722] leading-tight">
+                    나는 테토(Teto)일까, 에겐(Egen)일까?
+                  </h2>
+                  <p className="text-[11px] text-[#7a7268]">
+                    12가지 질문으로 나의 진짜 호르몬 성향을 알아보세요!
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/teto-egen-test"
+                    className="px-3 py-1.5 bg-[#1d1d1b] text-white text-[11px] font-semibold rounded-lg hover:bg-black transition-all shadow-sm whitespace-nowrap"
+                  >
+                    테스트 시작하기 &rarr;
+                  </Link>
+                </div>
+              </section>
+
+              {/* AI 로또번호 자동 생성기 배너 */}
+              <section className="bg-gradient-to-r from-[#eef2f3] to-[#e8eef8] rounded-2xl p-3.5 sm:p-4 border border-[#d9e2eb] flex flex-col justify-between gap-3 h-full">
+                <div className="space-y-1">
+                  <span className="inline-block px-2 py-0.5 text-[10px] font-semibold rounded bg-white text-[#3182F6] border border-[#d2e2fa]">
+                    당첨 통계 기반 분석
+                  </span>
+                  <h2 className="text-base sm:text-lg font-extrabold text-[#191F28] leading-tight">
+                    AI 로또번호 자동 생성기
+                  </h2>
+                  <p className="text-[11px] text-[#4E5968]">
+                    역대 1등 당첨번호 통계 가중치를 활용해 번호를 예측합니다.
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/lotto"
+                    className="px-3 py-1.5 bg-[#3182F6] text-white text-[11px] font-semibold rounded-lg hover:bg-[#1b64da] transition-all shadow-sm whitespace-nowrap"
+                  >
+                    행운번호 받기 &rarr;
+                  </Link>
+                </div>
+              </section>
+            </div>
 
             {/* 1. 최상단 히어로 추천 영역 */}
             {heroPost && (
