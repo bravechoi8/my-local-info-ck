@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
+import { fetchWithRetry } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -182,7 +183,7 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 마지막 줄에 FILENAME: ${todayStr}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
 
       try {
-        const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+        const response = await fetchWithRetry(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -292,6 +293,7 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 
   } catch (error) {
     console.error('에러 발생:', error.message);
+    process.exit(1);
   }
 }
 

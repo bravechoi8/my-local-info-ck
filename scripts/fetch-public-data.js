@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { fetchWithRetry } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -144,7 +145,7 @@ async function main() {
       returnType: 'JSON',
       serviceKey: PUBLIC_DATA_API_KEY
     });
-    const initialRes = await fetch(`${PUBLIC_DATA_ENDPOINT}?${initialParams.toString()}`);
+    const initialRes = await fetchWithRetry(`${PUBLIC_DATA_ENDPOINT}?${initialParams.toString()}`);
     if (!initialRes.ok) {
       throw new Error(`공공데이터 API 초기 호출 실패: ${initialRes.status}`);
     }
@@ -166,7 +167,7 @@ async function main() {
       serviceKey: PUBLIC_DATA_API_KEY
     });
     const url = `${PUBLIC_DATA_ENDPOINT}?${params.toString()}`;
-    const response = await fetch(url);
+    const response = await fetchWithRetry(url);
     if (!response.ok) {
       throw new Error(`공공데이터 API 호출 실패: ${response.status}`);
     }
@@ -266,7 +267,7 @@ startDate가 없으면 오늘 날짜, endDate가 없으면 '상시'로 넣어.
 ${JSON.stringify(targetItem)}`;
 
       const geminiUrl = `${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`;
-      const geminiResponse = await fetch(geminiUrl, {
+      const geminiResponse = await fetchWithRetry(geminiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -314,6 +315,7 @@ ${JSON.stringify(targetItem)}`;
 
   } catch (error) {
     console.error('에러 발생:', error.message);
+    process.exit(1);
   }
 }
 

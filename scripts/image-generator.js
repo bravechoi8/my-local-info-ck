@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { fetchWithRetry } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,7 +54,7 @@ Title: ${title}
 Summary: ${summary}`;
 
     const geminiUrl = `${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`;
-    const geminiRes = await fetch(geminiUrl, {
+    const geminiRes = await fetchWithRetry(geminiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -114,7 +115,7 @@ Summary: ${summary}`;
       }
     };
 
-    const imagenRes = await fetch(imagenUrl, {
+    const imagenRes = await fetchWithRetry(imagenUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -203,7 +204,7 @@ export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3'
       }
     };
 
-    const imagenRes = await fetch(imagenUrl, {
+    const imagenRes = await fetchWithRetry(imagenUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

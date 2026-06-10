@@ -4,6 +4,7 @@ import fileFs from 'fs';
 import filePath from 'path';
 import { fileURLToPath } from 'url';
 import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
+import { fetchWithRetry } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = filePath.dirname(__filename);
@@ -121,7 +122,7 @@ async function fetchTrendingKeywords() {
         sort: seed.sort
       });
 
-      const response = await fetch(`${NAVER_ENDPOINT}?${params.toString()}`, {
+      const response = await fetchWithRetry(`${NAVER_ENDPOINT}?${params.toString()}`, {
         headers: {
           'X-Naver-Client-Id': NAVER_CLIENT_ID,
           'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
@@ -186,7 +187,7 @@ CRITICAL RULES:
 뉴스 헤드라인 목록:
 ${titles}`;
 
-    const geminiResponse = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+    const geminiResponse = await fetchWithRetry(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -327,7 +328,7 @@ async function main() {
           sort: isLottoSunday ? 'date' : 'sim'
         });
 
-        const response = await fetch(`${NAVER_ENDPOINT}?${params.toString()}`, {
+        const response = await fetchWithRetry(`${NAVER_ENDPOINT}?${params.toString()}`, {
           headers: {
             'X-Naver-Client-Id': NAVER_CLIENT_ID,
             'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
@@ -496,7 +497,7 @@ CRITICAL: 지원금, 혜택, 행사 관련 정보성 글인 경우, 독자들이
 마지막 줄에 FILENAME: ${todayStr}-keyword 형식으로 파일명도 출력해줘. 키워드는 영문으로.`;
       }
 
-      const geminiResponse = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
+      const geminiResponse = await fetchWithRetry(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -511,7 +512,7 @@ CRITICAL: 지원금, 혜택, 행사 관련 정보성 글인 경우, 독자들이
       });
 
       if (!geminiResponse.ok) {
-        console.error(`Gemini API 호출 실패 (${selectedKeyword}): ${response.status}`);
+        console.error(`Gemini API 호출 실패 (${selectedKeyword}): ${geminiResponse.status}`);
         continue;
       }
 
@@ -594,6 +595,7 @@ CRITICAL: 지원금, 혜택, 행사 관련 정보성 글인 경우, 독자들이
 
   } catch (error) {
     console.error('에러 발생:', error.message);
+    process.exit(1);
   }
 }
 
