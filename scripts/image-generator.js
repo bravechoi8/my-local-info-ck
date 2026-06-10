@@ -2,6 +2,29 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { fetchWithRetry } from './utils.js';
+import { getPexelsImage } from './pexels.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+/**
+ * 외부 이미지 URL을 다운로드하여 로컬 파일로 저장합니다.
+ */
+async function downloadImage(url, filename) {
+  const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
+  if (!fs.existsSync(publicImagesDir)) {
+    fs.mkdirSync(publicImagesDir, { recursive: true });
+  }
+  const outputPath = path.join(publicImagesDir, filename);
+
+  const response = await fetchWithRetry(url);
+  if (!response.ok) {
+    throw new Error(`이미지 다운로드 실패: ${response.status} ${response.statusText}`);
+  }
+  const arrayBuffer = await response.arrayBuffer();
+  fs.writeFileSync(outputPath, Buffer.from(arrayBuffer));
+  return `/images/${filename}`;
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +51,7 @@ export async function generateSummaryImage(title, summary, filenameKey) {
     const promptBuilderText = `Based on the Korean blog post title and summary below, analyze the key details and generate a JSON object with the following fields:
 {
   "imagenPrompt": "A highly detailed, professional English prompt for Google's Imagen text-to-image model. The prompt must focus on visually conveying the core theme of the post (e.g., if the post is about interest rates, show banking documents, growth charts, or coins). Crucially, the image must contain NO TEXT, use a beautiful warm/pastel color palette, and be suitable as a background card. CRITICAL: To prevent safety policy blocks, do NOT include any specific celebrity/player names (like Lee Kang-in, Son Heung-min), specific trademarked team/brand names (like PSG, Apple), or specific politician names. Instead, use generic descriptions (e.g., 'a professional football player wearing a blue jersey', 'a gold championship trophy', 'a smartphone showing a chart').",
+  "pexelsQuery": "A simple, generic English search keyword representing the main topic for stock photo search (e.g., 'soccer', 'saving', 'elderly', 'festival', 'apartment'). No styling words, just the topic.",
   "subTitle": "A catchy, interesting Korean subtitle for the blog post (maximum 20 characters, NO quotes)",
   "points": [
     {
@@ -98,65 +122,83 @@ Summary: ${summary}`;
     }
 
     const imagePrompt = infoData.imagenPrompt || `${title}, flat design illustration`;
+    const pexelsSearchQuery = infoData.pexelsQuery || title;
     console.log(`[이미지 생성] 영어 프롬프트 빌드 완료: "${imagePrompt}"`);
+    console.log(`[이미지 생성] Pexels 검색용 키워드: "${pexelsSearchQuery}"`);
 
-    // 2단계: Imagen API 호출하여 이미지 생성
-    const imagenUrl = `${IMAGEN_ENDPOINT}?key=${GEMINI_API_KEY}`;
-    const payload = {
-      instances: [
-        {
-          prompt: imagePrompt
-        }
-      ],
-      parameters: {
-        sampleCount: 1,
-        outputMimeType: 'image/jpeg',
-        aspectRatio: '16:9'
-      }
-    };
-
-    const imagenRes = await fetchWithRetry(imagenUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!imagenRes.ok) {
-      const errMsg = await imagenRes.text();
-      console.error(`[이미지 생성] Imagen API 호출 실패: ${imagenRes.status} - ${errMsg}`);
-      return null;
-    }
-
-    const imagenData = await imagenRes.json();
-    const predictions = imagenData.predictions || [];
-    if (predictions.length === 0) {
-      console.error('[이미지 생성] 생성된 이미지가 응답에 없습니다.');
-      return null;
-    }
-
-    // 3단계: 배경용 이미지(JPG) 저장
-    const base64Bytes = predictions[0].bytesBase64Encoded;
-    const imgBuffer = Buffer.from(base64Bytes, 'base64');
-
+    const cleanFilenameKey = filenameKey.replace(/[^a-zA-Z0-9\-_]/g, '');
+    const bgFilename = `card-bg-${cleanFilenameKey}.jpg`;
     const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
     if (!fs.existsSync(publicImagesDir)) {
       fs.mkdirSync(publicImagesDir, { recursive: true });
     }
-
-    const cleanFilenameKey = filenameKey.replace(/[^a-zA-Z0-9\-_]/g, '');
-    const bgFilename = `card-bg-${cleanFilenameKey}.jpg`;
     const bgOutputPath = path.join(publicImagesDir, bgFilename);
 
-    fs.writeFileSync(bgOutputPath, imgBuffer);
-    console.log(`[이미지 생성] 배경 일러스트 저장 완료: ${bgOutputPath}`);
+    let isPexelsUsed = false;
+
+    // 2단계: Pexels API에서 이미지 검색 먼저 시도
+    try {
+      console.log(`[Pexels 검색 시도] 요약 배경 검색 중...`);
+      const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
+      if (pexelsUrl) {
+        console.log(`[Pexels 이미지 발견] 요약 배경으로 Pexels 이미지를 다운로드합니다: ${pexelsUrl}`);
+        await downloadImage(pexelsUrl, bgFilename);
+        isPexelsUsed = true;
+      }
+    } catch (pexelsErr) {
+      console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
+    }
+
+    // 3단계: Pexels 이미지를 못 찾았을 경우에만 Google Imagen API로 직접 그리기 수행
+    if (!isPexelsUsed) {
+      console.log(`[AI 이미지 그리기 시작] 펙셀 이미지가 없으므로 Google Imagen으로 그립니다.`);
+      const imagenUrl = `${IMAGEN_ENDPOINT}?key=${GEMINI_API_KEY}`;
+      const payload = {
+        instances: [
+          {
+            prompt: imagePrompt
+          }
+        ],
+        parameters: {
+          sampleCount: 1,
+          outputMimeType: 'image/jpeg',
+          aspectRatio: '16:9'
+        }
+      };
+
+      const imagenRes = await fetchWithRetry(imagenUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!imagenRes.ok) {
+        const errMsg = await imagenRes.text();
+        console.error(`[이미지 생성] Imagen API 호출 실패: ${imagenRes.status} - ${errMsg}`);
+        return null;
+      }
+
+      const imagenData = await imagenRes.json();
+      const predictions = imagenData.predictions || [];
+      if (predictions.length === 0) {
+        console.error('[이미지 생성] 생성된 이미지가 응답에 없습니다.');
+        return null;
+      }
+
+      const base64Bytes = predictions[0].bytesBase64Encoded;
+      const imgBuffer = Buffer.from(base64Bytes, 'base64');
+      fs.writeFileSync(bgOutputPath, imgBuffer);
+      console.log(`[이미지 생성] 배경 일러스트 저장 완료: ${bgOutputPath}`);
+    }
 
     // 4단계: SVG 인포그래픽 카드 합성 및 저장
     const svgFilename = `card-${cleanFilenameKey}.svg`;
     const svgOutputPath = path.join(publicImagesDir, svgFilename);
 
-    const base64Image = imgBuffer.toString('base64');
+    const savedBgBytes = fs.readFileSync(bgOutputPath);
+    const base64Image = savedBgBytes.toString('base64');
     const dataUri = `data:image/jpeg;base64,${base64Image}`;
 
     const svgContent = buildSvgTemplate(
@@ -185,57 +227,78 @@ Summary: ${summary}`;
  */
 export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3') {
   try {
-    if (!GEMINI_API_KEY) {
-      console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
-      return null;
-    }
+    // 펙셀 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
+    const pexelsSearchQuery = prompt.split(',')[0].trim();
+    let isPexelsUsed = false;
 
-    const imagenUrl = `${IMAGEN_ENDPOINT}?key=${GEMINI_API_KEY}`;
-    const payload = {
-      instances: [
-        {
-          prompt: prompt
-        }
-      ],
-      parameters: {
-        sampleCount: 1,
-        outputMimeType: 'image/jpeg',
-        aspectRatio: aspectRatio
+    // 1단계: Pexels API에서 이미지 검색 시도
+    try {
+      console.log(`[Pexels 검색 시도] 본문 검색 키워드: "${pexelsSearchQuery}"`);
+      const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
+      if (pexelsUrl) {
+        console.log(`[Pexels 이미지 발견] 본문 이미지로 Pexels 이미지를 다운로드합니다: ${pexelsUrl}`);
+        await downloadImage(pexelsUrl, filename);
+        isPexelsUsed = true;
       }
-    };
-
-    const imagenRes = await fetchWithRetry(imagenUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!imagenRes.ok) {
-      const errMsg = await imagenRes.text();
-      console.error(`[이미지 생성] Imagen API 호출 실패: ${imagenRes.status} - ${errMsg}`);
-      return null;
+    } catch (pexelsErr) {
+      console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
     }
 
-    const imagenData = await imagenRes.json();
-    const predictions = imagenData.predictions || [];
-    if (predictions.length === 0) {
-      console.error('[이미지 생성] 생성된 이미지가 응답에 없습니다.');
-      return null;
+    // 2단계: Pexels에서 이미지를 찾지 못했을 경우에만 Imagen AI로 이미지 생성
+    if (!isPexelsUsed) {
+      if (!GEMINI_API_KEY) {
+        console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
+        return null;
+      }
+
+      console.log(`[AI 이미지 그리기 시작] 펙셀 이미지가 없으므로 Google Imagen으로 그립니다.`);
+      const imagenUrl = `${IMAGEN_ENDPOINT}?key=${GEMINI_API_KEY}`;
+      const payload = {
+        instances: [
+          {
+            prompt: prompt
+          }
+        ],
+        parameters: {
+          sampleCount: 1,
+          outputMimeType: 'image/jpeg',
+          aspectRatio: aspectRatio
+        }
+      };
+
+      const imagenRes = await fetchWithRetry(imagenUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!imagenRes.ok) {
+        const errMsg = await imagenRes.text();
+        console.error(`[이미지 생성] Imagen API 호출 실패: ${imagenRes.status} - ${errMsg}`);
+        return null;
+      }
+
+      const imagenData = await imagenRes.json();
+      const predictions = imagenData.predictions || [];
+      if (predictions.length === 0) {
+        console.error('[이미지 생성] 생성된 이미지가 응답에 없습니다.');
+        return null;
+      }
+
+      const base64Bytes = predictions[0].bytesBase64Encoded;
+      const imgBuffer = Buffer.from(base64Bytes, 'base64');
+
+      const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
+      if (!fs.existsSync(publicImagesDir)) {
+        fs.mkdirSync(publicImagesDir, { recursive: true });
+      }
+
+      const outputPath = path.join(publicImagesDir, filename);
+      fs.writeFileSync(outputPath, imgBuffer);
+      console.log(`[이미지 생성] 이미지 저장 완료: ${outputPath}`);
     }
-
-    const base64Bytes = predictions[0].bytesBase64Encoded;
-    const imgBuffer = Buffer.from(base64Bytes, 'base64');
-
-    const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
-    if (!fs.existsSync(publicImagesDir)) {
-      fs.mkdirSync(publicImagesDir, { recursive: true });
-    }
-
-    const outputPath = path.join(publicImagesDir, filename);
-    fs.writeFileSync(outputPath, imgBuffer);
-    console.log(`[이미지 생성] 이미지 저장 완료: ${outputPath}`);
 
     return `/images/${filename}`;
   } catch (err) {
