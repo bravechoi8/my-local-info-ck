@@ -233,8 +233,8 @@ export default function HomeClient({ posts }: HomeClientProps) {
         ) : (
           /* 포털형 첫 페이지 레이아웃 (정상 모드) */
           <div className="space-y-20">
-            {/* 테토-에겐 및 로또 배너 영역 */}
-            <div className="max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* 테토-에겐, 로또, 룰렛 배너 영역 */}
+            <div className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* 테토-에겐 성격 유형 테스트 배너 */}
               <section className="bg-gradient-to-r from-[#faece7] to-[#eeedfe] rounded-2xl p-3.5 sm:p-4 border border-[#ebe4d9] flex flex-col justify-between gap-3 h-full">
                 <div className="space-y-1">
@@ -277,6 +277,29 @@ export default function HomeClient({ posts }: HomeClientProps) {
                     className="px-3 py-1.5 bg-[#3182F6] text-white text-[11px] font-semibold rounded-lg hover:bg-[#1b64da] transition-all shadow-sm whitespace-nowrap"
                   >
                     행운번호 받기 &rarr;
+                  </Link>
+                </div>
+              </section>
+
+              {/* 술값 계산 복불복 룰렛 배너 */}
+              <section className="bg-gradient-to-r from-[#ffebeb] to-[#fff2f2] rounded-2xl p-3.5 sm:p-4 border border-[#ffd5d6] flex flex-col justify-between gap-3 h-full">
+                <div className="space-y-1">
+                  <span className="inline-block px-2 py-0.5 text-[10px] font-semibold rounded bg-white text-[#F04452] border border-[#ffd5d6]">
+                    모임·술자리 게임
+                  </span>
+                  <h2 className="text-base sm:text-lg font-extrabold text-[#191F28] leading-tight">
+                    술값 계산 복불복 룰렛
+                  </h2>
+                  <p className="text-[11px] text-[#4E5968]">
+                    오늘 술값이나 밥값을 계산할 사람을 룰렛으로 결정합니다!
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/roulette"
+                    className="px-3 py-1.5 bg-[#1d1d1b] text-white text-[11px] font-semibold rounded-lg hover:bg-black transition-all shadow-sm whitespace-nowrap"
+                  >
+                    룰렛 돌리기 &rarr;
                   </Link>
                 </div>
               </section>
