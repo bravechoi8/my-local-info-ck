@@ -99,9 +99,13 @@ export function getAllPosts(): PostData[] {
       // 정렬을 위해 상세 타임스탬프 계산 (시간 정보가 없으면 하루 시작으로 계산)
       let rawDateTime = 0;
       if (data.date) {
-        const parsed = Date.parse(data.date);
-        if (!isNaN(parsed)) {
-          rawDateTime = parsed;
+        if (data.date instanceof Date) {
+          rawDateTime = data.date.getTime();
+        } else {
+          const parsed = Date.parse(String(data.date));
+          if (!isNaN(parsed)) {
+            rawDateTime = parsed;
+          }
         }
       }
 
