@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { fetchWithRetry } from './utils.js';
 import { getPexelsImage } from './pexels.js';
+import { getPixabayImage } from './pixabay.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -226,25 +227,25 @@ Summary: ${summary}`;
 export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3') {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   try {
-    // 펙셀 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
-    const pexelsSearchQuery = prompt.split(',')[0].trim();
-    let isPexelsUsed = false;
+    // 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
+    const pixabaySearchQuery = prompt.split(',')[0].trim();
+    let isPixabayUsed = false;
 
-    // 1단계: Pexels API에서 이미지 검색 시도
+    // 1단계: Pixabay API에서 이미지 검색 시도
     try {
-      console.log(`[Pexels 검색 시도] 본문 검색 키워드: "${pexelsSearchQuery}"`);
-      const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
-      if (pexelsUrl) {
-        console.log(`[Pexels 이미지 발견] 본문 이미지로 Pexels 이미지를 다운로드합니다: ${pexelsUrl}`);
-        await downloadImage(pexelsUrl, filename);
-        isPexelsUsed = true;
+      console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}"`);
+      const pixabayUrl = await getPixabayImage(pixabaySearchQuery);
+      if (pixabayUrl) {
+        console.log(`[Pixabay 이미지 발견] 본문 이미지로 Pixabay 이미지를 다운로드합니다: ${pixabayUrl}`);
+        await downloadImage(pixabayUrl, filename);
+        isPixabayUsed = true;
       }
-    } catch (pexelsErr) {
-      console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
+    } catch (pixabayErr) {
+      console.warn(`[Pixabay 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pixabayErr.message);
     }
 
-    // 2단계: Pexels에서 이미지를 찾지 못했을 경우에만 Imagen AI로 이미지 생성
-    if (!isPexelsUsed) {
+    // 2단계: 픽사베이에서 이미지를 찾지 못했을 경우에만 Imagen AI로 이미지 생성
+    if (!isPixabayUsed) {
       if (!GEMINI_API_KEY) {
         console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
         return null;
