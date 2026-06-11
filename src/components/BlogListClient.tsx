@@ -89,7 +89,7 @@ export default function BlogListClient({ initialPosts }: BlogListClientProps) {
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
             <Link href="/" className="hover:text-[#191F28] transition-colors">홈</Link>
-            <Link href="/blog" className="text-[#3182F6]">블로그</Link>
+            <Link href="/blog/" className="text-[#3182F6]">블로그</Link>
             <Link href="/about" className="hover:text-[#191F28] transition-colors">소개</Link>
             <Link href="/privacy" className="hover:text-[#191F28] transition-colors">개인정보처리방침 (Privacy)</Link>
             <Link href="/terms" className="hover:text-[#191F28] transition-colors">이용약관 (Terms)</Link>
@@ -116,9 +116,13 @@ export default function BlogListClient({ initialPosts }: BlogListClientProps) {
           {categories.map((cat) => {
             const isActive = category === cat.key;
             return (
-              <Link
+              <a
                 key={cat.key}
-                href={cat.key ? `/blog?category=${encodeURIComponent(cat.key)}` : "/blog"}
+                href={cat.key ? `/blog/?category=${encodeURIComponent(cat.key)}` : "/blog/"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = cat.key ? `/blog/?category=${encodeURIComponent(cat.key)}` : "/blog/";
+                }}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
                   isActive
                     ? "bg-[#3182F6] text-white shadow-sm"
@@ -126,7 +130,7 @@ export default function BlogListClient({ initialPosts }: BlogListClientProps) {
                 }`}
               >
                 {cat.label}
-              </Link>
+              </a>
             );
           })}
         </div>

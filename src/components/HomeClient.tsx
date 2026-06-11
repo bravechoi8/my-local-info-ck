@@ -116,7 +116,7 @@ export default function HomeClient({ posts }: HomeClientProps) {
           </Link>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
             <Link href="/" className="text-[#3182F6]">홈</Link>
-            <Link href="/blog" className="hover:text-[#191F28] transition-colors">블로그</Link>
+            <Link href="/blog/" className="hover:text-[#191F28] transition-colors">블로그</Link>
             <Link href="/about" className="hover:text-[#191F28] transition-colors">소개</Link>
             <Link href="/privacy" className="hover:text-[#191F28] transition-colors">개인정보처리방침 (Privacy)</Link>
             <Link href="/terms" className="hover:text-[#191F28] transition-colors">이용약관 (Terms)</Link>
@@ -157,21 +157,25 @@ export default function HomeClient({ posts }: HomeClientProps) {
           {/* 카테고리 탭 UI */}
           <div className="flex flex-wrap gap-2 pt-2 border-b border-[#F2F4F6] pb-6">
             {[
-              { key: "", label: "전체", href: "/blog" },
-              { key: "혜택", label: "지원금·혜택", href: "/blog?category=혜택" },
-              { key: "행사", label: "축제·행사", href: "/blog?category=행사" },
-              { key: "생활정보", label: "생활정보", href: "/blog?category=생활정보" },
-              { key: "핫이슈", label: "핫이슈", href: "/blog?category=핫이슈" },
-              { key: "재테크", label: "재테크", href: "/blog?category=재테크" },
-              { key: "연예인이슈", label: "연예인이슈", href: "/blog?category=연예인이슈" },
+              { key: "", label: "전체", href: "/blog/" },
+              { key: "혜택", label: "지원금·혜택", href: "/blog/?category=혜택" },
+              { key: "행사", label: "축제·행사", href: "/blog/?category=행사" },
+              { key: "생활정보", label: "생활정보", href: "/blog/?category=생활정보" },
+              { key: "핫이슈", label: "핫이슈", href: "/blog/?category=핫이슈" },
+              { key: "재테크", label: "재테크", href: "/blog/?category=재테크" },
+              { key: "연예인이슈", label: "연예인이슈", href: "/blog/?category=연예인이슈" },
             ].map((cat) => (
-              <Link
+              <a
                 key={cat.key}
                 href={cat.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = cat.href;
+                }}
                 className="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#F2F4F6] text-[#4E5968] hover:bg-[#E5E8EB] transition-all"
               >
                 {cat.label}
-              </Link>
+              </a>
             ))}
           </div>
         </div>
