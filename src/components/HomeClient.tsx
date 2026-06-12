@@ -244,22 +244,22 @@ export default function HomeClient({ posts }: HomeClientProps) {
             {/* 테토-에겐, 로또, 룰렛 배너 영역 */}
             <div className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* 테토-에겐 성격 유형 테스트 배너 */}
-              <section className="group bg-gradient-to-br from-[#FFEAE4] to-[#F0EDFF] dark:from-[#2E1F1A] dark:to-[#1C1A3A] rounded-2xl p-5 border border-[#ebe4d9] dark:border-slate-800/80 flex flex-col justify-between gap-4 h-full hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(216,90,48,0.08)] dark:hover:shadow-[0_12px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
-                <div className="space-y-2">
-                  <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-md bg-white dark:bg-slate-800 text-[#d85a30] border border-[#f5c4b3] dark:border-[#d85a30]/30 transition-colors">
+              <section className="group bg-gradient-to-br from-[#FFEAE4] to-[#F0EDFF] dark:from-[#2E1F1A] dark:to-[#1C1A3A] rounded-2xl p-4 sm:p-4.5 border border-[#ebe4d9] dark:border-slate-800/80 border-b-[6px] border-b-[#d85a30]/50 dark:border-b-[#d85a30]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(216,90,48,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#d85a30] border border-[#f5c4b3] dark:border-[#d85a30]/30 transition-colors">
                     호르몬 기반 성격 테스트
                   </span>
-                  <h2 className="text-base sm:text-lg font-extrabold text-[#2b2722] dark:text-[#F3F4F6] leading-tight">
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#2b2722] dark:text-[#F3F4F6] leading-tight">
                     나는 테토(Teto)일까, 에겐(Egen)일까?
                   </h2>
-                  <p className="text-[11px] text-[#7a7268] dark:text-[#8B95A1]">
+                  <p className="text-[10.5px] text-[#7a7268] dark:text-[#8B95A1] leading-relaxed">
                     12가지 질문으로 나의 진짜 호르몬 성향을 알아보세요!
                   </p>
                 </div>
                 <div className="flex justify-end pt-1">
                   <Link
                     href="/teto-egen-test"
-                    className="px-3.5 py-2 bg-[#1d1d1b] dark:bg-[#3182F6] text-white text-[11px] font-bold rounded-xl group-hover:scale-[1.03] dark:group-hover:bg-[#1b64da] transition-all shadow-sm whitespace-nowrap"
+                    className="px-3 py-1.5 bg-[#1d1d1b] dark:bg-[#d85a30] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] dark:group-hover:bg-[#c24b25] transition-all shadow-sm whitespace-nowrap"
                   >
                     테스트 시작하기 &rarr;
                   </Link>
@@ -267,22 +267,22 @@ export default function HomeClient({ posts }: HomeClientProps) {
               </section>
 
               {/* AI 로또번호 자동 생성기 배너 */}
-              <section className="group bg-gradient-to-br from-[#EBF3FF] to-[#E8F0FB] dark:from-[#1E293B]/40 dark:to-[#0F172A]/40 rounded-2xl p-5 border border-[#d9e2eb] dark:border-slate-800/80 flex flex-col justify-between gap-4 h-full hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(49,130,246,0.08)] dark:hover:shadow-[0_12px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
-                <div className="space-y-2">
-                  <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-md bg-white dark:bg-slate-800 text-[#3182F6] border border-[#d2e2fa] dark:border-[#3182F6]/30 transition-colors">
+              <section className="group bg-gradient-to-br from-[#EBF3FF] to-[#E8F0FB] dark:from-[#1E293B]/40 dark:to-[#0F172A]/40 rounded-2xl p-4 sm:p-4.5 border border-[#d9e2eb] dark:border-slate-800/80 border-b-[6px] border-b-[#3182F6]/50 dark:border-b-[#3182F6]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(49,130,246,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#3182F6] border border-[#d2e2fa] dark:border-[#3182F6]/30 transition-colors">
                     당첨 통계 기반 분석
                   </span>
-                  <h2 className="text-base sm:text-lg font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
                     AI 로또번호 자동 생성기
                   </h2>
-                  <p className="text-[11px] text-[#4E5968] dark:text-[#8B95A1]">
+                  <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
                     역대 1등 당첨번호 통계 가중치를 활용해 번호를 예측합니다.
                   </p>
                 </div>
                 <div className="flex justify-end pt-1">
                   <Link
                     href="/lotto"
-                    className="px-3.5 py-2 bg-[#3182F6] text-white text-[11px] font-bold rounded-xl group-hover:scale-[1.03] hover:bg-[#1b64da] transition-all shadow-sm whitespace-nowrap"
+                    className="px-3 py-1.5 bg-[#3182F6] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#1b64da] transition-all shadow-sm whitespace-nowrap"
                   >
                     행운번호 받기 &rarr;
                   </Link>
@@ -290,22 +290,22 @@ export default function HomeClient({ posts }: HomeClientProps) {
               </section>
 
               {/* 술값 계산 복불복 룰렛 배너 */}
-              <section className="group bg-gradient-to-br from-[#FFF0F0] to-[#FFE4E4] dark:from-[#2D1B1E] dark:to-[#1A1112] rounded-2xl p-5 border border-[#ffd5d6] dark:border-slate-800/80 flex flex-col justify-between gap-4 h-full hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(240,68,82,0.08)] dark:hover:shadow-[0_12px_30px_rgba(0,0,0,0.5)] transition-all duration-300">
-                <div className="space-y-2">
-                  <span className="inline-block px-2.5 py-0.5 text-[10px] font-bold rounded-md bg-white dark:bg-slate-800 text-[#F04452] border border-[#ffd5d6] dark:border-[#F04452]/30 transition-colors">
+              <section className="group bg-gradient-to-br from-[#FFF0F0] to-[#FFE4E4] dark:from-[#2D1B1E] dark:to-[#1A1112] rounded-2xl p-4 sm:p-4.5 border border-[#ffd5d6] dark:border-slate-800/80 border-b-[6px] border-b-[#F04452]/50 dark:border-b-[#F04452]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(240,68,82,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#F04452] border border-[#ffd5d6] dark:border-[#F04452]/30 transition-colors">
                     모임·술자리 게임
                   </span>
-                  <h2 className="text-base sm:text-lg font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
                     술값 계산 복불복 룰렛
                   </h2>
-                  <p className="text-[11px] text-[#4E5968] dark:text-[#8B95A1]">
+                  <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
                     오늘 술값이나 밥값을 계산할 사람을 룰렛으로 결정합니다!
                   </p>
                 </div>
                 <div className="flex justify-end pt-1">
                   <Link
                     href="/roulette"
-                    className="px-3.5 py-2 bg-[#1d1d1b] dark:bg-slate-800 text-white text-[11px] font-bold rounded-xl group-hover:scale-[1.03] hover:bg-black dark:hover:bg-slate-700 transition-all shadow-sm whitespace-nowrap"
+                    className="px-3 py-1.5 bg-[#1d1d1b] dark:bg-slate-800 text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-black dark:hover:bg-slate-700 transition-all shadow-sm whitespace-nowrap"
                   >
                     룰렛 돌리기 &rarr;
                   </Link>
