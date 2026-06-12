@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import AdBanner from '@/components/AdBanner';
 import CoupangBanner from '@/components/CoupangBanner';
+import DarkModeToggle from '@/components/DarkModeToggle';
 
 import type { Metadata } from 'next';
 import fs from 'fs';
@@ -73,26 +74,29 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#fafbfc] text-[#1e293b] font-sans antialiased">
+      <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0B0F19] text-[#1e293b] dark:text-[#E5E8EB] font-sans antialiased transition-colors duration-300">
         {/* GNB */}
-        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
-          <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Link href="/" className="text-xl font-black tracking-tight text-[#191F28] hover:text-[#3182F6] transition-all">
+        <nav className="sticky top-0 z-50 bg-white/70 dark:bg-[#0B0F19]/70 backdrop-blur-md border-b border-[#F2F4F6] dark:border-slate-800/80 px-6 py-5 transition-colors">
+          <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] dark:text-[#F3F4F6] hover:text-[#3182F6] dark:hover:text-[#3182F6] transition-all">
                 리얼인포
-              </Link>
-            </div>
-            <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
-              <Link href="/" className="hover:text-slate-900 transition-colors">홈</Link>
-              <Link href="/blog" className="hover:text-slate-900 transition-colors">블로그</Link>
+              </span>
+            </Link>
+            <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968] dark:text-[#8B95A1]">
+                <Link href="/" className="hover:text-[#191F28] dark:hover:text-[#F3F4F6] transition-colors">홈</Link>
+                <Link href="/blog" className="hover:text-[#191F28] dark:hover:text-[#F3F4F6] transition-colors">블로그</Link>
+              </div>
+              <DarkModeToggle />
             </div>
           </div>
         </nav>
 
         <main className="max-w-xl mx-auto px-6 py-24 text-center space-y-6">
           <span className="text-6xl">🔍</span>
-          <h1 className="text-2xl font-bold text-slate-900">해당 글을 찾을 수 없습니다</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-[#F3F4F6]">해당 글을 찾을 수 없습니다</h1>
+          <p className="text-sm text-slate-500 dark:text-[#8B95A1]">
             주소가 잘못되었거나 삭제된 글일 수 있습니다. 목록으로 돌아가서 다른 글을 확인해 보세요.
           </p>
           <div className="pt-4">
@@ -150,7 +154,7 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafbfc] text-[#1e293b] font-sans antialiased">
+    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0B0F19] text-[#1e293b] dark:text-[#E5E8EB] font-sans antialiased transition-colors duration-300">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
@@ -159,20 +163,23 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(detailedBreadcrumbSchema) }}
       />
-      {/* GNB (상단 네비게이션) - 토스 스타일 극도 미니멀 */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#F2F4F6] px-6 py-5">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
+      {/* GNB (상단 네비게이션) - 토스 스타일 극도 미니멀 & 유리모피즘 */}
+      <nav className="sticky top-0 z-50 bg-white/70 dark:bg-[#0B0F19]/70 backdrop-blur-md border-b border-[#F2F4F6] dark:border-slate-800/80 px-6 py-5 transition-colors">
+        <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] hover:text-[#3182F6] transition-colors">
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-[#191F28] dark:text-[#F3F4F6] hover:text-[#3182F6] dark:hover:text-[#3182F6] transition-colors">
               리얼인포
             </span>
           </Link>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968]">
-            <Link href="/" className="hover:text-[#191F28] transition-colors">홈</Link>
-            <Link href="/blog" className="text-[#3182F6]">블로그</Link>
-            <Link href="/about" className="hover:text-[#191F28] transition-colors">소개</Link>
-            <Link href="/privacy" className="hover:text-[#191F28] transition-colors">개인정보처리방침 (Privacy)</Link>
-            <Link href="/terms" className="hover:text-[#191F28] transition-colors">이용약관 (Terms)</Link>
+          <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm font-semibold text-[#4E5968] dark:text-[#8B95A1]">
+              <Link href="/" className="hover:text-[#191F28] dark:hover:text-[#F3F4F6] transition-colors">홈</Link>
+              <Link href="/blog" className="text-[#3182F6]">블로그</Link>
+              <Link href="/about" className="hover:text-[#191F28] dark:hover:text-[#F3F4F6] transition-colors">소개</Link>
+              <Link href="/privacy" className="hover:text-[#191F28] dark:hover:text-[#F3F4F6] hidden md:inline transition-colors">개인정보처리방침</Link>
+              <Link href="/terms" className="hover:text-[#191F28] dark:hover:text-[#F3F4F6] hidden md:inline transition-colors">이용약관</Link>
+            </div>
+            <DarkModeToggle />
           </div>
         </div>
       </nav>
@@ -183,7 +190,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="mb-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#F3F4F6] transition-colors"
           >
             <svg className="w-4 h-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
@@ -193,16 +200,16 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
 
         {/* 글 헤더 */}
-        <header className="border-b border-slate-100 pb-8 mb-8 space-y-4">
+        <header className="border-b border-slate-100 dark:border-slate-800 pb-8 mb-8 space-y-4">
           <div className="flex items-center gap-3">
             {post.category && (
-              <span className="px-2.5 py-0.5 text-xs font-bold rounded-md text-emerald-700 bg-emerald-50">
+              <span className="px-2.5 py-0.5 text-xs font-bold rounded-md text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30">
                 {post.category}
               </span>
             )}
-            <span className="text-xs text-slate-400">최종 업데이트: {post.date}</span>
+            <span className="text-xs text-slate-400 dark:text-[#8B95A1]">최종 업데이트: {post.date}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-950 dark:text-[#F3F4F6] leading-tight">
             {post.title}
           </h1>
           {post.tags.length > 0 && (
@@ -210,7 +217,7 @@ export default async function BlogPostPage({ params }: Props) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-0.5 text-xs text-slate-500 bg-slate-50 border border-slate-100 rounded-md"
+                  className="px-2 py-0.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-md"
                 >
                   #{tag}
                 </span>
@@ -220,9 +227,9 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         {/* 글 본문 (Markdown & Typography) */}
-        <article className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.01)]">
+        <article className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.01)]">
           {/* @tailwindcss/typography의 prose 클래스를 활용해 마크다운 스타일을 예쁘게 정렬합니다. */}
-          <div className="prose prose-slate max-w-none text-sm sm:text-base leading-relaxed text-slate-800 break-words">
+          <div className="prose prose-slate dark:prose-invert max-w-none text-sm sm:text-base leading-relaxed text-slate-800 dark:text-[#E5E8EB] break-words">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -236,7 +243,7 @@ export default async function BlogPostPage({ params }: Props) {
                     let round = '';
                     let nums: string[] = [];
                     let bonus = '';
-
+ 
                     lines.forEach(line => {
                       const cleanLine = line.trim();
                       if (cleanLine.startsWith('회차:')) {
@@ -247,14 +254,14 @@ export default async function BlogPostPage({ params }: Props) {
                         bonus = cleanLine.replace('보너스:', '').trim();
                       }
                     });
-
+ 
                     // 만약 특정 규격이 아닐 경우 예외 처리
                     if (nums.length === 0) {
                       const parts = text.split('+');
                       nums = parts[0] ? parts[0].split(',').map(n => n.trim()).filter(Boolean) : [];
                       bonus = parts[1] ? parts[1].trim() : '';
                     }
-
+ 
                     const getBallColor = (numStr: string) => {
                       const num = parseInt(numStr, 10);
                       if (isNaN(num)) return 'bg-slate-400 text-white';
@@ -265,11 +272,11 @@ export default async function BlogPostPage({ params }: Props) {
                       if (num >= 41 && num <= 45) return 'bg-[#10b981] text-white shadow-[0_4px_10px_rgba(16,185,129,0.3)]';
                       return 'bg-slate-400 text-white';
                     };
-
+ 
                     return (
-                      <div className="not-prose my-8 p-6 sm:p-8 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col items-center justify-center gap-6 shadow-sm">
+                      <div className="not-prose my-8 p-6 sm:p-8 bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 rounded-2xl flex flex-col items-center justify-center gap-6 shadow-sm">
                         {round && (
-                          <div className="text-xs sm:text-sm font-bold text-slate-500 tracking-wider bg-slate-100 px-3 py-1 rounded-full">
+                          <div className="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-300 tracking-wider bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                             제 {round} 당첨번호
                           </div>
                         )}
@@ -318,23 +325,23 @@ export default async function BlogPostPage({ params }: Props) {
               {post.content}
             </ReactMarkdown>
           </div>
-
+ 
           {/* 출처 명시 및 AI 생성 정보 안내 */}
-          <div className="mt-8 pt-6 border-t border-slate-100 space-y-4">
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
             {sourceLink && (
               <div className="text-xs sm:text-sm">
-                <span className="font-semibold text-slate-600">원문 출처: </span>
+                <span className="font-semibold text-slate-600 dark:text-slate-300">원문 출처: </span>
                 <a
                   href={sourceLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-emerald-600 hover:text-emerald-700 underline font-medium break-all"
+                  className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 underline font-medium break-all"
                 >
                   {sourceLink}
                 </a>
               </div>
             )}
-            <p className="text-[11px] sm:text-xs text-slate-400 bg-slate-50 p-4 rounded-xl leading-relaxed border border-slate-100">
+            <p className="text-[11px] sm:text-xs text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/30 p-4 rounded-xl leading-relaxed border border-slate-100 dark:border-slate-800">
               이 글은 공공데이터포털(data.go.kr)의 정보를 바탕으로 AI가 작성하였습니다. 정확한 내용은 원문 링크를 통해 확인해주세요.
             </p>
           </div>
@@ -342,20 +349,20 @@ export default async function BlogPostPage({ params }: Props) {
           <CoupangBanner />
         </article>
       </main>
-
+ 
       {/* 하단 푸터 */}
-      <footer className="bg-[#F9FAFB] border-t border-[#F2F4F6] py-16 px-6 mt-24">
+      <footer className="bg-[#F9FAFB] dark:bg-[#080C14] border-t border-[#F2F4F6] dark:border-slate-800/80 py-16 px-6 mt-24">
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left text-xs sm:text-sm text-[#8B95A1] font-medium">
           <div className="space-y-2">
             <p>공식 데이터 및 주요 핫이슈 소식을 기반으로 작동하는 블로그 채널입니다.</p>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1 text-xs text-[#8B95A1]">
               <Link href="/privacy" className="hover:underline font-semibold">개인정보처리방침 (Privacy Policy)</Link>
-              <span className="text-[#E5E8EB]">|</span>
+              <span className="text-[#E5E8EB] dark:text-slate-800">|</span>
               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
             </div>
             <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
-          <div className="text-xs font-semibold text-[#4E5968]">
+          <div className="text-xs font-semibold text-[#4E5968] dark:text-slate-400">
             real-infos.com
           </div>
         </div>
