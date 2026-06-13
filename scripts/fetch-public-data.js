@@ -152,33 +152,10 @@ async function main() {
     const initialResult = await initialRes.json();
     const totalCount = initialResult.totalCount || 10000;
     
-    // 전체 페이지 수 계산 및 무작위 페이지 선택
+    // 전체 페이지 수 계산
     const perPage = 20;
     const totalPages = Math.ceil(totalCount / perPage);
-    const randomPage = Math.floor(Math.random() * totalPages) + 1;
     
-    console.log(`전체 공공서비스 개수: ${totalCount}개 (총 ${totalPages}페이지)`);
-    console.log(`무작위 선정 페이지: ${randomPage}페이지`);
-
-    const params = new URLSearchParams({
-      page: String(randomPage),
-      perPage: String(perPage),
-      returnType: 'JSON',
-      serviceKey: PUBLIC_DATA_API_KEY
-    });
-    const url = `${PUBLIC_DATA_ENDPOINT}?${params.toString()}`;
-    const response = await fetchWithRetry(url);
-    if (!response.ok) {
-      throw new Error(`공공데이터 API 호출 실패: ${response.status}`);
-    }
-    const result = await response.json();
-    const items = result.data || [];
-
-    if (items.length === 0) {
-      console.log('새로운 데이터가 없습니다');
-      return;
-    }
-
     // [2단계] 기존 데이터와 비교를 위해 기존 이름 목록 로드
     let existingData = [];
     if (fs.existsSync(LOCAL_INFO_PATH)) {
@@ -190,54 +167,88 @@ async function main() {
     }
     const existingNames = new Set(existingData.map(item => item.name));
 
-    // 미등록 및 차단 키워드가 없는 아이템들 필터링
-    const newItems = items.filter(item => item.서비스명 && !existingNames.has(item.서비스명) && !isBlocked(item));
-
-    if (newItems.length === 0) {
-      console.log('새로운 데이터가 없습니다');
-      return;
-    }
-
-    // 행사와 혜택 분류 (지역/전국 단위 기준 점수 15점 이상인 유효한 혜택/행사 정보만 수집)
-    const eventCandidates = newItems.filter(item => classifyItem(item) === '행사' && scoreItem(item) >= 15);
-    const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택' && scoreItem(item) >= 15);
-
-    // 스코어링 후 정렬
-    eventCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
-    benefitCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
-
     const targetItems = [];
+    let attempts = 0;
+    const maxAttempts = 10;
 
-    // 행사 1개 선택
-    if (eventCandidates.length > 0) {
-      targetItems.push(eventCandidates[0]);
-      console.log(`선택된 행사: ${eventCandidates[0].서비스명} (지역점수: ${scoreItem(eventCandidates[0])})`);
-    } else {
-      console.log('오늘 자 행사 관련 미등록 공공데이터가 없습니다 (혹은 대상 지역 정책이 아닙니다).');
-    }
+    console.log(`전체 공공서비스 개수: ${totalCount}개 (총 ${totalPages}페이지)`);
 
-    // 혜택 1개 선택
-    if (benefitCandidates.length > 0) {
-      targetItems.push(benefitCandidates[0]);
-      console.log(`선택된 혜택: ${benefitCandidates[0].서비스명} (지역점수: ${scoreItem(benefitCandidates[0])})`);
-    } else {
-      console.log('오늘 자 혜택 관련 미등록 공공데이터가 없습니다 (혹은 대상 지역 정책이 아닙니다).');
-    }
+    while (targetItems.length < 2 && attempts < maxAttempts) {
+      attempts++;
+      const randomPage = Math.floor(Math.random() * totalPages) + 1;
+      console.log(`[수집 시도 ${attempts}/${maxAttempts}] 무작위 선정 페이지: ${randomPage}페이지`);
 
-    // 만약 둘 중 한 쪽만 선별되어 총 2개가 채워지지 않았다면, 예비용으로 다른 쪽의 차순위 아이템 중 점수 조건(15점 이상)을 만족하는 대상을 채워줍니다.
-    if (targetItems.length === 1) {
-      const selected = targetItems[0];
-      const fallback = newItems.find(item => item.서비스명 !== selected.서비스명 && scoreItem(item) >= 15);
-      if (fallback) {
-        targetItems.push(fallback);
-        console.log(`대체 수집 대상 추가: ${fallback.서비스명}`);
-      }
-    } else if (targetItems.length === 0) {
-      // 둘 다 아예 없을 경우 전체 미등록 데이터 중 15점 이상인 우수 정책 우선으로 최대 2개 채워줌
-      const fallbackCandidates = newItems.filter(item => scoreItem(item) >= 15).sort((a, b) => scoreItem(b) - scoreItem(a));
-      targetItems.push(...fallbackCandidates.slice(0, 2));
-      if (targetItems.length > 0) {
-        console.log('비상 대체 데이터 수집:', targetItems.map(item => item.서비스명).join(', '));
+      const params = new URLSearchParams({
+        page: String(randomPage),
+        perPage: String(perPage),
+        returnType: 'JSON',
+        serviceKey: PUBLIC_DATA_API_KEY
+      });
+      const url = `${PUBLIC_DATA_ENDPOINT}?${params.toString()}`;
+      
+      try {
+        const response = await fetchWithRetry(url);
+        if (!response.ok) {
+          console.warn(`공공데이터 API 호출 실패 (페이지 ${randomPage}): ${response.status}`);
+          continue;
+        }
+        const result = await response.json();
+        const items = result.data || [];
+
+        if (items.length === 0) continue;
+
+        // 미등록 및 차단 키워드가 없는 아이템들 필터링
+        const newItems = items.filter(item => item.서비스명 && !existingNames.has(item.서비스명) && !isBlocked(item));
+
+        if (newItems.length === 0) continue;
+
+        // 행사와 혜택 분류 (지역/전국 단위 기준 점수 15점 이상인 유효한 혜택/행사 정보만 수집)
+        const eventCandidates = newItems.filter(item => classifyItem(item) === '행사' && scoreItem(item) >= 15);
+        const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택' && scoreItem(item) >= 15);
+
+        eventCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
+        benefitCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
+
+        const currentTargetNames = new Set(targetItems.map(item => item.서비스명));
+
+        // 혜택과 행사 각각 1개씩 골고루 섞어 담는 로직
+        const hasEvent = targetItems.some(item => classifyItem(item) === '행사');
+        if (!hasEvent && eventCandidates.length > 0) {
+          const cand = eventCandidates.find(c => !currentTargetNames.has(c.서비스명));
+          if (cand) {
+            targetItems.push(cand);
+            currentTargetNames.add(cand.서비스명);
+            console.log(`[행사 수집 성공] 서비스명: ${cand.서비스명} (점수: ${scoreItem(cand)})`);
+          }
+        }
+
+        const hasBenefit = targetItems.some(item => classifyItem(item) === '혜택');
+        if (!hasBenefit && benefitCandidates.length > 0) {
+          const cand = benefitCandidates.find(c => !currentTargetNames.has(c.서비스명));
+          if (cand) {
+            targetItems.push(cand);
+            currentTargetNames.add(cand.서비스명);
+            console.log(`[혜택 수집 성공] 서비스명: ${cand.서비스명} (점수: ${scoreItem(cand)})`);
+          }
+        }
+
+        // 여전히 2개가 채워지지 않았다면, 남는 후보 중 15점 이상인 것을 차순위로 보충
+        if (targetItems.length < 2) {
+          const remainingCandidates = [...eventCandidates, ...benefitCandidates]
+            .filter(c => !currentTargetNames.has(c.서비스명))
+            .sort((a, b) => scoreItem(b) - scoreItem(a));
+
+          for (const cand of remainingCandidates) {
+            if (targetItems.length < 2) {
+              targetItems.push(cand);
+              currentTargetNames.add(cand.서비스명);
+              console.log(`[대체 보충 수집] 서비스명: ${cand.서비스명} (점수: ${scoreItem(cand)})`);
+            }
+          }
+        }
+
+      } catch (err) {
+        console.error(`데이터 수집 중 에러 발생: ${err.message}`);
       }
     }
 
