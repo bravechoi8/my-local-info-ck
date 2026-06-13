@@ -91,7 +91,7 @@ async function run() {
       const bodyImageName = `body-${config.filenameKey}-${i}.jpg`;
       console.log(`[2단계] 본문 이미지 ${i} 생성 중 (${bodyImageName})...`);
       const bodyImagePrompt = `${config.keyword}, clean modern style`;
-      const savedPath = await generateAndSaveImage(bodyImagePrompt, bodyImageName);
+      const savedPath = await generateAndSaveImage(bodyImagePrompt, bodyImageName, '4:3', i - 1);
       console.log(`-> 본문 이미지 ${i} 완료: ${savedPath}`);
     }
   }

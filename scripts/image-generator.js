@@ -224,7 +224,7 @@ Summary: ${summary}`;
  * @param {string} aspectRatio 화면비 (기본값 '4:3', 지원값: '1:1', '16:9', '4:3' 등)
  * @returns {Promise<string|null>} 저장된 이미지의 상대 경로, 실패 시 null
  */
-export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3') {
+export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3', imageIndex = 0) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   try {
     // 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
@@ -233,8 +233,8 @@ export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3'
 
     // 1단계: Pixabay API에서 이미지 검색 시도
     try {
-      console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}"`);
-      const pixabayUrl = await getPixabayImage(pixabaySearchQuery);
+      console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}" (인덱스: ${imageIndex})`);
+      const pixabayUrl = await getPixabayImage(pixabaySearchQuery, imageIndex);
       if (pixabayUrl) {
         console.log(`[Pixabay 이미지 발견] 본문 이미지로 Pixabay 이미지를 다운로드합니다: ${pixabayUrl}`);
         await downloadImage(pixabayUrl, filename);

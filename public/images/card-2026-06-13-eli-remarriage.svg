@@ -22,7 +22,7 @@
   <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#F5F3FF">일라이 지연수 재혼 소식에 쏠린 대중의 관심과 향후 행보 총정리</text>
   
   <!-- Subtitle -->
-  <text x="50" y="142" font-family="'Pretendard', sans-serif" font-size="16" fill="#C084FC" font-weight="500">다시 모인 시선, 그들의 새로운 출발</text>
+  <text x="50" y="142" font-family="'Pretendard', sans-serif" font-size="16" fill="#C084FC" font-weight="500">새로운 출발과 대중의 시선</text>
 
   <!-- CENTRAL GRAPHIC (AI Image Frame) -->
   <g>
@@ -43,10 +43,10 @@
         <path d="M 16 0 L 324 0" stroke="#C084FC" stroke-width="4" stroke-linecap="round" />
         <circle cx="45" cy="45" r="16" fill="#C084FC" />
         <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
-        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F5F3FF">뜨거운 대중 관심</text>
+        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F5F3FF">뜨거운 대중의 관심</text>
         <line x1="25" y1="85" x2="315" y2="85" stroke="#3C285C" stroke-width="1" />
         <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">재혼 소식에 쏠린</text>
-        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">누리꾼들의 뜨거운 반응</text>
+        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">누리꾼들의 이목</text>
       </g>
       
       <!-- Card 2 -->
@@ -55,10 +55,10 @@
         <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="4" stroke-linecap="round" />
         <circle cx="45" cy="45" r="16" fill="#10B981" />
         <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
-        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F5F3FF">방송을 통한 소통</text>
+        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F5F3FF">향후 행보와 전망</text>
         <line x1="25" y1="85" x2="315" y2="85" stroke="#3C285C" stroke-width="1" />
-        <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">방송 프로그램 출연 후</text>
-        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">좁혀진 서로의 간격</text>
+        <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">앞으로의 방송 활동과</text>
+        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">새로운 시작에 주목</text>
       </g>
       
       <!-- Card 3 -->
@@ -67,10 +67,10 @@
         <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="4" stroke-linecap="round" />
         <circle cx="45" cy="45" r="16" fill="#38BDF8" />
         <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
-        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F5F3FF">앞으로의 행보</text>
+        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F5F3FF">따뜻한 응원의 시선</text>
         <line x1="25" y1="85" x2="315" y2="85" stroke="#3C285C" stroke-width="1" />
-        <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">오해를 극복하고</text>
-        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">함께 나아갈 새로운 길</text>
+        <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">두 사람의 앞날을 향한</text>
+        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="#C084FC" font-weight="500">진심 어린 축하와 우려</text>
       </g>
       
   </g>

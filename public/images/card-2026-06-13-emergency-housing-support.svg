@@ -41,7 +41,7 @@
       <line x1="0" y1="285" x2="500" y2="285" stroke="#4D3647" stroke-width="2" />
 
       <!-- 설명문 -->
-      <text y="340" font-family="'Pretendard', sans-serif" font-size="18" fill="#FDA4AF" font-weight="500">주거 위기, 긴급지원으로 해결</text>
+      <text y="340" font-family="'Pretendard', sans-serif" font-size="18" fill="#FDA4AF" font-weight="500">위기 가구를 위한 주거지원 가이드</text>
       
       <!-- 하단 데코 문구 -->
       <text y="600" font-family="'Pretendard', sans-serif" font-size="15" fill="#FB7185" font-weight="700" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>

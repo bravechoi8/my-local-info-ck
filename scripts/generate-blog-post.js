@@ -52,7 +52,7 @@ async function processBodyImages(markdownContent, safeFilename) {
     let retries = 3;
     while (retries > 0) {
       try {
-        imgPath = await generateAndSaveImage(finalPrompt, filename, '4:3');
+        imgPath = await generateAndSaveImage(finalPrompt, filename, '4:3', i);
         if (imgPath) break;
       } catch (err) {
         console.warn(`[본문 이미지 생성 실패, 재시도 남음: ${retries - 1}] ${err.message}`);

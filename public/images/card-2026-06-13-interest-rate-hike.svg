@@ -9,8 +9,8 @@
     </clipPath>
     <!-- 우측 배경용 그라데이션 -->
     <linearGradient id="splitBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0F172A" />
-      <stop offset="100%" stop-color="#020617" />
+      <stop offset="0%" stop-color="#0B0F19" />
+      <stop offset="100%" stop-color="#111827" />
     </linearGradient>
   </defs>
 
@@ -29,22 +29,22 @@
       <!-- 뱃지 -->
       <g transform="translate(0, 0)">
         <rect width="105" height="26" rx="13" fill="#334155" stroke="#334155" stroke-width="1" />
-        <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#60A5FA" text-anchor="middle">REAL INFO</text>
-        <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#7DD3FC">2026-06-13</text>
+        <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#38BDF8" text-anchor="middle">REAL INFO</text>
+        <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#94A3B8">2026-06-13</text>
       </g>
 
       <!-- 제목 (2줄 자동 분할) -->
-      <text y="140" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#F0F9FF">내 자산을 지키는 대출 관리법 다음 달 금리</text>
-      <text y="205" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#F0F9FF">인상 예고와 부동산 시장 대응 전략 총정리</text>
+      <text y="140" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF">한국은행 금융통화위원회 기준금리 추가 인상</text>
+      <text y="205" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#FFFFFF">전망 및 가계 금융 대응법 총정리</text>
 
       <!-- 구분선 -->
       <line x1="0" y1="285" x2="500" y2="285" stroke="#334155" stroke-width="2" />
 
       <!-- 설명문 -->
-      <text y="340" font-family="'Pretendard', sans-serif" font-size="18" fill="#7DD3FC" font-weight="500">금리 인상기 현명한 대출 관리</text>
+      <text y="340" font-family="'Pretendard', sans-serif" font-size="18" fill="#94A3B8" font-weight="500">금리 인상기 똑똑한 가계 재테크</text>
       
       <!-- 하단 데코 문구 -->
-      <text y="600" font-family="'Pretendard', sans-serif" font-size="15" fill="#60A5FA" font-weight="700" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
+      <text y="600" font-family="'Pretendard', sans-serif" font-size="15" fill="#38BDF8" font-weight="700" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
     </g>
   </g>
 </svg>
