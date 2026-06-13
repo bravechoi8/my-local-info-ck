@@ -1,29 +1,17 @@
+import pkg from '@next/env';
+const { loadEnvConfig } = pkg;
 import fs from 'fs';
-import path from 'url';
-import fileFs from 'fs';
 import filePath from 'path';
 import { fileURLToPath } from 'url';
-import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
-import { fetchWithRetry } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = filePath.dirname(__filename);
 
-// === 로컬 환경변수 파일(.env.local) 수동 로드 ===
-const envPath = filePath.join(__dirname, '..', '.env.local');
-if (fileFs.existsSync(envPath)) {
-  const envContent = fileFs.readFileSync(envPath, 'utf-8');
-  envContent.split('\n').forEach(line => {
-    const trimmed = line.trim();
-    if (trimmed && !trimmed.startsWith('#')) {
-      const [key, ...values] = trimmed.split('=');
-      if (key) {
-        const val = values.join('=').trim();
-        process.env[key.trim()] = val;
-      }
-    }
-  });
-}
+// 로컬 환경변수 파일(.env.local) 자동 로드
+loadEnvConfig(filePath.join(__dirname, '..'));
+
+import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
+import { fetchWithRetry } from './utils.js';
 
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;

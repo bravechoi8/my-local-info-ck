@@ -1,11 +1,17 @@
+import pkg from '@next/env';
+const { loadEnvConfig } = pkg;
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
-import { fetchWithRetry } from './utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// 로컬 환경변수 파일(.env.local) 자동 로드
+loadEnvConfig(path.join(__dirname, '..'));
+
+import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
+import { fetchWithRetry } from './utils.js';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
