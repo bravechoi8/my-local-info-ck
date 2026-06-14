@@ -1,6 +1,7 @@
 import pkg from '@next/env';
 const { loadEnvConfig } = pkg;
 import fs from 'fs';
+const fileFs = fs;
 import filePath from 'path';
 import { fileURLToPath } from 'url';
 

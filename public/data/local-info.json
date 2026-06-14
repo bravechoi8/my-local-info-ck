@@ -152,5 +152,27 @@
     "target": "긴급복지 주지원(생계, 의료, 주거, 복지시설이용 지원)을 받는 대상자(가구구성원 포함)가 출산 또는 출산예정인 경우",
     "summary": "긴급지원 주지원대상자가 출산(예정)한 경우 1인당 70만 원의 해산비를 현금으로 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005002"
+  },
+  {
+    "id": 12,
+    "name": "예술체육비전장학금",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국장학재단",
+    "target": "대한민국 국적 소지자로서 사업 참여대학의 예술 및 체육계열 학과(부) 재학생 중 선발기준을 충족한 우수학생",
+    "summary": "예술 및 체육계열 학과(부) 재학생에게 등록금 및 생활비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55252900018"
+  },
+  {
+    "id": 13,
+    "name": "이공계 우수학생 국가장학금 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국장학재단",
+    "target": "국내외 자연과학 및 공학계열 우수 대학생 및 대학원생",
+    "summary": "이공계 우수학생을 대상으로 등록금 전액과 생활비 등을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55252900005"
   }
 ]
