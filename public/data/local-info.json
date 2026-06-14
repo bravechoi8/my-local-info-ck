@@ -174,5 +174,27 @@
     "target": "국내외 자연과학 및 공학계열 우수 대학생 및 대학원생",
     "summary": "이공계 우수학생을 대상으로 등록금 전액과 생활비 등을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55252900005"
+  },
+  {
+    "id": 14,
+    "name": "라돈 무료 측정 및 저감 컨설팅 서비스",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국환경공단",
+    "target": "라돈 측정을 희망하는 일반 주택 거주자 및 마을회관(경로당 포함) 운영 담당자",
+    "summary": "실내 라돈 무료 측정 및 저감 컨설팅을 제공하고, 고농도 주택에는 실시간 측정기 대여 또는 저감 시공을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258400201"
+  },
+  {
+    "id": 15,
+    "name": "조기폐차 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국환경공단",
+    "target": "배출가스 4·5등급 경유차 및 도로용 건설기계, 노후 지게차·굴착기 소유자",
+    "summary": "노후 경유차와 건설기계 조기폐차 시 기준가액에 따라 조기폐차 지원금을 차등 지급합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258400207"
   }
 ]
