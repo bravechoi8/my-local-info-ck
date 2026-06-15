@@ -5,26 +5,43 @@ import matter from 'gray-matter';
 const postsDirectory = path.join(process.cwd(), 'src/content/posts');
 
 function formatDate(dateVal) {
+  let d;
+
   if (dateVal instanceof Date) {
-    const year = dateVal.getFullYear();
-    const month = String(dateVal.getMonth() + 1).padStart(2, '0');
-    const day = String(dateVal.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-  
-  if (typeof dateVal === 'string') {
+    d = dateVal;
+  } else if (typeof dateVal === 'string') {
     const parsed = Date.parse(dateVal);
-    if (!isNaN(parsed)) {
-      const d = new Date(parsed);
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+    if (isNaN(parsed)) {
+      return dateVal;
     }
-    return dateVal;
+    d = new Date(parsed);
+  } else {
+    return '';
   }
 
-  return '';
+  try {
+    const formatter = new Intl.DateTimeFormat('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    
+    const parts = formatter.formatToParts(d);
+    const year = parts.find(p => p.type === 'year')?.value;
+    const month = parts.find(p => p.type === 'month')?.value;
+    const day = parts.find(p => p.type === 'day')?.value;
+    
+    if (year && month && day) {
+      return `${year}-${month}-${day}`;
+    }
+  } catch (e) {
+  }
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 function test() {

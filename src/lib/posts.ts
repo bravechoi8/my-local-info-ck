@@ -17,29 +17,47 @@ export interface PostData {
 // 블로그 글 마크다운 파일들이 저장된 폴더 경로
 const postsDirectory = path.join(process.cwd(), 'src/content/posts');
 
-// 날짜를 YYYY-MM-DD 문자열로 변환하는 안전한 헬퍼 함수
+// 날짜를 YYYY-MM-DD 문자열로 변환하는 안전한 헬퍼 함수 (한국 시간 KST 기준)
 function formatDate(dateVal: any): string {
+  let d: Date;
+
   if (dateVal instanceof Date) {
-    const year = dateVal.getFullYear();
-    const month = String(dateVal.getMonth() + 1).padStart(2, '0');
-    const day = String(dateVal.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-  
-  if (typeof dateVal === 'string') {
-    // 문자열 날짜를 Date로 파싱해보고 가능하면 YYYY-MM-DD로 포맷팅
+    d = dateVal;
+  } else if (typeof dateVal === 'string') {
     const parsed = Date.parse(dateVal);
-    if (!isNaN(parsed)) {
-      const d = new Date(parsed);
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+    if (isNaN(parsed)) {
+      return dateVal;
     }
-    return dateVal;
+    d = new Date(parsed);
+  } else {
+    return '';
   }
 
-  return '';
+  try {
+    // 서버나 시스템의 타임존 설정에 상관없이 항상 한국 표준시(KST, Asia/Seoul) 기준으로 날짜를 포맷팅합니다.
+    const formatter = new Intl.DateTimeFormat('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    
+    const parts = formatter.formatToParts(d);
+    const year = parts.find(p => p.type === 'year')?.value;
+    const month = parts.find(p => p.type === 'month')?.value;
+    const day = parts.find(p => p.type === 'day')?.value;
+    
+    if (year && month && day) {
+      return `${year}-${month}-${day}`;
+    }
+  } catch (e) {
+    // 예외가 발생할 경우 기본 브라우저/서버 기준의 날짜를 가져옵니다.
+  }
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 // 제목과 본문을 분석해 행사/혜택 카테고리를 판별하는 함수
