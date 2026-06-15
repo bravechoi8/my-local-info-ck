@@ -19,9 +19,9 @@ const PUBLIC_DATA_ENDPOINT = 'https://api.odcloud.kr/api/gov24/v3/serviceList';
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
 const LOCAL_INFO_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info.json');
 
-const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실', '도서관'];
+const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실'];
 const BENEFIT_KEYWORDS = ['지원금', '지원', '수당', '연금', '혜택', '감면', '할인', '보조금', '비용', '자금', '대출', '금융', '융자', '바우처', '일자리', '취업', '장학', '장려금'];
-const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항'];
+const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항', '도서관', '도서대출', '도서 대출', '도서 대여', '책 대출', '책 대여', '달성군', '달성교육재단'];
 
 function isBlocked(item) {
   const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '')).toLowerCase();
@@ -77,7 +77,7 @@ function scoreItem(item) {
   const otherRegions = [
     '부산', '대구', '인천', '광주', '대전', '울산', '세종', 
     '강원', '충북', '충청북', '충남', '충청남', '전북', '전라북', '전남', '전라남', 
-    '경북', '경상북', '경남', '경상남', '제주'
+    '경북', '경상북', '경남', '경상남', '제주', '달성'
   ];
   const hasOtherRegion = otherRegions.some(reg => text.includes(reg));
   if (hasOtherRegion && !isYongin && !isSeoul) {
