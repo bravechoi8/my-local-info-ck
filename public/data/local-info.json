@@ -174,5 +174,27 @@
     "target": "국내외 자연과학 및 공학계열 우수 대학생 및 대학원생",
     "summary": "이공계 우수학생을 대상으로 등록금 전액과 생활비 등을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55252900005"
+  },
+  {
+    "id": 14,
+    "name": "장애인 대출기간 연장서비스",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "(재)달성교육재단",
+    "target": "장애인",
+    "summary": "장애인의 편의를 위해 대출기간을 15일에서 30일로 연장 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00075600001"
+  },
+  {
+    "id": 15,
+    "name": "농식품바우처 지원",
+    "category": "혜택",
+    "startDate": "2025-12-22",
+    "endDate": "2026-12-11",
+    "location": "한국농수산식품유통공사",
+    "target": "생계급여 수급가구 중 특정 기준(임산부, 영유아, 초/중/고등학생, 청년)을 충족하는 가구원 포함 가구",
+    "summary": "취약계층이 양질의 신선 농산물을 구매할 수 있는 이용권을 가구원 수에 따라 월 단위 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55284500010"
   }
 ]
