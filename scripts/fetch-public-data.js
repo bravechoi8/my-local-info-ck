@@ -54,20 +54,28 @@ function scoreItem(item) {
 
   // 2. 핵심 타겟 지역 가산점 (+20점)
   // 용인시, 서울특별시(또는 서울시), 경기도청(광역 단위) 정책
-  const isYongin = text.includes('용인');
-  const isSeoul = text.includes('서울');
+  const isYongin = agency.includes('용인');
+  const isSeoul = agency.includes('서울');
   const isGyeonggiProvincial = agency.includes('경기도') && !agency.endsWith('시') && !agency.endsWith('군');
 
   if (isYongin) score += 20;
   if (isSeoul) score += 20;
   if (isGyeonggiProvincial) score += 20;
 
-  // 3. 타 지역 기초단체(서울/용인이 아닌 타 시/군/구) 정책은 강력하게 감점 (-30점)
-  // 예: 양주시, 수원시, 서초구 등
-  const isOtherLocalAgency = (agency.endsWith('시') || agency.endsWith('군') || agency.endsWith('구')) 
-    && !agency.includes('용인시') 
-    && !agency.includes('서울특별시') 
-    && !agency.includes('서울시');
+  // 3. 타 지역 기초단체 및 산하기관(서울/용인/경기가 아닌 타 시/군/구/재단/공사/진흥원 등) 정책은 강력하게 감점 (-30점)
+  // 예: 양주시, 수원시, 서초구, 달성교육재단, 거제해양관광개발공사 등
+  const isOtherLocalAgency = (
+    agency.endsWith('시') || 
+    agency.endsWith('군') || 
+    agency.endsWith('구') || 
+    agency.includes('재단') || 
+    agency.includes('공사') || 
+    agency.includes('진흥원') ||
+    agency.includes('센터')
+  ) 
+    && !agency.includes('용인') 
+    && !agency.includes('서울') 
+    && !agency.includes('경기');
 
   if (isOtherLocalAgency) {
     score -= 30;
@@ -77,7 +85,7 @@ function scoreItem(item) {
   const otherRegions = [
     '부산', '대구', '인천', '광주', '대전', '울산', '세종', 
     '강원', '충북', '충청북', '충남', '충청남', '전북', '전라북', '전남', '전라남', 
-    '경북', '경상북', '경남', '경상남', '제주', '달성'
+    '경북', '경상북', '경남', '경상남', '제주', '달성', '거제'
   ];
   const hasOtherRegion = otherRegions.some(reg => text.includes(reg));
   if (hasOtherRegion && !isYongin && !isSeoul) {
