@@ -240,5 +240,27 @@
     "target": "중소기업 정책자금 융자계획 공고에서 정한 정책자금 융자제한기업을 제외한 중소기업",
     "summary": "중소기업 대상으로 기술·경영 전문가가 해결책 제시 및 맞춤 사업을 연계지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900029"
+  },
+  {
+    "id": 20,
+    "name": "로컬크리에이터 육성",
+    "category": "혜택",
+    "startDate": "2024-02-16",
+    "endDate": "2024-03-08",
+    "location": "소상공인시장진흥공단",
+    "target": "로컬크리에이터 요건을 충족하는 소상공인 및 협업팀",
+    "summary": "지역 자원에 혁신적인 아이디어를 접목하여 사업을 운영하는 소상공인의 사업화자금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700023"
+  },
+  {
+    "id": 21,
+    "name": "혁신성장촉진자금",
+    "category": "혜택",
+    "startDate": "2024-11-19",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "백년가게, 신사업창업사관학교 수료생, 수출 소상공인 등 혁신형 소상공인",
+    "summary": "소상공인의 디지털 격차 해소 및 혁신형 소상공인의 성장기반 마련을 위해 운전 및 시설자금을 융자 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700001"
   }
 ]
