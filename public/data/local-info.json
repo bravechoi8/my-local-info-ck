@@ -196,49 +196,5 @@
     "target": "배출가스 4·5등급 경유차 및 도로용 건설기계, 노후 지게차·굴착기 소유자",
     "summary": "노후 경유차와 건설기계 조기폐차 시 기준가액에 따라 조기폐차 지원금을 차등 지급합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258400207"
-  },
-  {
-    "id": 20,
-    "name": "워라밸일자리 장려금 지원",
-    "category": "혜택",
-    "startDate": "2026-03-31",
-    "endDate": "상시",
-    "location": "고용노동부",
-    "target": "소정근로시간 단축제도를 도입하고, 근로자의 필요에 따라 근로시간 단축을 허용한 우선지원대상기업 및 중견기업 사업주",
-    "summary": "소속 근로자의 근로시간 단축을 허용한 사업주에게 장려금 등을 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000034"
-  },
-  {
-    "id": 21,
-    "name": "체불청산 지원 융자(사업주 및 근로자)",
-    "category": "혜택",
-    "startDate": "2020-12-17",
-    "endDate": "상시",
-    "location": "고용노동부",
-    "target": "임금체불 발생 사업주 및 임금체불로 생계에 어려움을 겪는 근로자",
-    "summary": "임금을 체불한 사업주와 임금체불로 어려움을 겪는 근로자에게 융자를 지원하여 체불임금 청산 및 생계 안정을 돕습니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000030"
-  },
-  {
-    "id": 22,
-    "name": "글로벌비즈니스센터",
-    "category": "혜택",
-    "startDate": "2023-03-23",
-    "endDate": "상시",
-    "location": "중소벤처기업진흥공단",
-    "target": "해외진출을 희망하는 중소벤처기업",
-    "summary": "해외진출 희망 중소벤처기업을 대상으로 독립 사무공간, 금융·투자, 국가별 특화 프로그램 및 해외멘토단 상담을 제공합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900039"
-  },
-  {
-    "id": 23,
-    "name": "기업인력애로센터 활용 취업지원",
-    "category": "혜택",
-    "startDate": "2023-10-24",
-    "endDate": "상시",
-    "location": "중소벤처기업진흥공단",
-    "target": "중소기업 취업희망 구직자, 직원 채용을 원하는 중소기업",
-    "summary": "중소기업 구인·구직 지원(상담 및 온라인 인적성검사 등)",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900028"
   }
 ]
