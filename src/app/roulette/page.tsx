@@ -42,6 +42,9 @@ export default function RoulettePage() {
   // 룰렛이 끝났을 때 종이가루 효과(이펙트) 제어
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // 타이머 모달 열림 상태 추가
+  const [isTimerOpen, setIsTimerOpen] = useState(false);
+
   // 참가자 추가 함수
   const addParticipant = (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,7 +129,7 @@ export default function RoulettePage() {
     <div className="min-h-screen bg-[#F9FAFB] text-[#333D4B] antialiased flex flex-col justify-between">
       {/* 상단 헤더 네비게이션 */}
       <nav className="bg-white border-b border-[#F2F4F6] px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-sm font-bold text-[#191F28] hover:text-[#3182F6] transition-colors">
             &larr; 홈으로 돌아가기
           </Link>
@@ -135,7 +138,7 @@ export default function RoulettePage() {
       </nav>
 
       {/* 중앙 메인 레이아웃 */}
-      <main className="max-w-6xl mx-auto w-full px-6 py-10 flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <main className="max-w-4xl mx-auto w-full px-6 py-10 flex-grow grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         
         {/* 왼쪽 영역: 룰렛 원판 판넬 */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F2F4F6] shadow-[0_12px_40px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center space-y-6">
@@ -310,11 +313,22 @@ export default function RoulettePage() {
               ))}
             </div>
           </div>
+
+          {/* ⏱️ 스마트 멀티 타이머 실행 배너 카드 추가 */}
+          <div
+            onClick={() => setIsTimerOpen(true)}
+            className="bg-gradient-to-br from-[#3182F6] to-[#0051C6] rounded-3xl p-5 border border-[#F2F4F6] shadow-[0_12px_40px_rgba(49,130,246,0.15)] flex items-center justify-between cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all"
+          >
+            <div className="space-y-1 text-white">
+              <span className="inline-block text-[9px] font-bold bg-white/20 px-2.5 py-0.5 rounded-full mb-1">
+                스마트 유틸
+              </span>
+              <h3 className="text-sm font-extrabold">술자리 템포 조절 타이머 ⏱️</h3>
+              <p className="text-[11px] text-white/80">일반 타이머, 뽀모도로, 일정 알림까지 한 번에 쓰기!</p>
+            </div>
+            <div className="text-white text-lg font-bold pr-2 animate-bounce">&rarr;</div>
+          </div>
         </div>
-
-        {/* 오른쪽 영역: 멀티 타이머 판넬 */}
-        <TimerPanel />
-
       </main>
 
       {/* 당첨 결과 발표 팝업창 (룰렛 완료 후 등장) */}
@@ -347,9 +361,18 @@ export default function RoulettePage() {
         </div>
       )}
 
+      {/* ⏱️ 멀티 타이머 모달창 렌더링 */}
+      {isTimerOpen && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+          <div className="max-w-sm w-full">
+            <TimerPanel onClose={() => setIsTimerOpen(false)} />
+          </div>
+        </div>
+      )}
+
       {/* 하단 푸터 영역 */}
       <footer className="bg-white border-t border-[#F2F4F6] py-6 px-6 text-center text-xs text-[#8B95A1]">
-        <div className="max-w-6xl mx-auto space-y-1">
+        <div className="max-w-4xl mx-auto space-y-1">
           <p>© {new Date().getFullYear()} 복불복 술값 계산 룰렛 엔진. 재미로 함께 웃으며 즐겨주세요.</p>
         </div>
       </footer>
@@ -358,7 +381,7 @@ export default function RoulettePage() {
 }
 
 // 웹 브라우저 호환성 멀티 타이머 컴포넌트 추가
-function TimerPanel() {
+function TimerPanel({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<'normal' | 'pomodoro' | 'timetable'>('normal');
 
   // 1. 일반 카운트다운 타이머
@@ -601,8 +624,16 @@ function TimerPanel() {
   };
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F2F4F6] shadow-[0_12px_40px_rgba(0,0,0,0.03)] space-y-6">
-      <div className="text-center space-y-2">
+    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#F2F4F6] shadow-[0_12px_40px_rgba(0,0,0,0.03)] space-y-6 relative">
+      {/* 모달 닫기(✕) 버튼 */}
+      <button 
+        onClick={onClose} 
+        className="absolute top-6 right-6 text-[#8B95A1] hover:text-[#4E5968] font-bold text-lg transition-colors"
+      >
+        ✕
+      </button>
+
+      <div className="text-center space-y-2 pr-6">
         <span className="inline-block px-3 py-1 text-[11px] font-bold rounded-full bg-[#E8F3FF] text-[#3182F6]">
           멀티 타이머 ⏱️
         </span>
@@ -784,4 +815,3 @@ function TimerPanel() {
     </div>
   );
 }
-
