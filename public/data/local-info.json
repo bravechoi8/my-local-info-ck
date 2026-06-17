@@ -218,5 +218,27 @@
     "target": "경기도에 주민등록을 두고 주택에 거주 중인 기초생활보장수급자와 차상위계층",
     "summary": "경기도 내 기초생활수급자와 차상위계층을 대상으로 주택화재 안심보험 가입을 무료로 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000852"
+  },
+  {
+    "id": 18,
+    "name": "글로벌비즈니스센터",
+    "category": "혜택",
+    "startDate": "2023-03-23",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "해외진출을 희망하는 중소벤처기업",
+    "summary": "세계 주요 교역거점에 글로벌비즈니스센터를 설치ㆍ운영하여 특성화ㆍ전문화된 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900039"
+  },
+  {
+    "id": 19,
+    "name": "중소기업 기업진단 사업 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "중소기업 정책자금 융자계획 공고에서 정한 정책자금 융자제한기업을 제외한 중소기업",
+    "summary": "중소기업 대상으로 기술·경영 전문가가 해결책 제시 및 맞춤 사업을 연계지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900029"
   }
 ]
