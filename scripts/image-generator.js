@@ -38,7 +38,7 @@ const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models
  * @param {string} filenameKey 파일명 키워드 (이미지 저장 파일명에 사용)
  * @returns {Promise<string|null>} 저장된 이미지의 상대 경로 (예: '/images/summary-keyword.jpg'), 실패 시 null
  */
-export async function generateSummaryImage(title, summary, filenameKey) {
+export async function generateSummaryImage(title, summary, filenameKey, forceAI = false) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   try {
     if (!GEMINI_API_KEY) {
@@ -136,16 +136,20 @@ Summary: ${summary}`;
     let isPexelsUsed = false;
 
     // 2단계: Pexels API에서 이미지 검색 먼저 시도
-    try {
-      console.log(`[Pexels 검색 시도] 요약 배경 검색 중...`);
-      const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
-      if (pexelsUrl) {
-        console.log(`[Pexels 이미지 발견] 요약 배경으로 Pexels 이미지를 다운로드합니다: ${pexelsUrl}`);
-        await downloadImage(pexelsUrl, bgFilename);
-        isPexelsUsed = true;
+    if (!forceAI) {
+      try {
+        console.log(`[Pexels 검색 시도] 요약 배경 검색 중...`);
+        const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
+        if (pexelsUrl) {
+          console.log(`[Pexels 이미지 발견] 요약 배경으로 Pexels 이미지를 다운로드합니다: ${pexelsUrl}`);
+          await downloadImage(pexelsUrl, bgFilename);
+          isPexelsUsed = true;
+        }
+      } catch (pexelsErr) {
+        console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
       }
-    } catch (pexelsErr) {
-      console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
+    } else {
+      console.log(`[AI 이미지 그리기 강제 활성화] Pexels 검색을 생략하고 AI로 그립니다.`);
     }
 
     // 3단계: Pexels 이미지를 못 찾았을 경우에만 Google Imagen API로 직접 그리기 수행
@@ -224,7 +228,7 @@ Summary: ${summary}`;
  * @param {string} aspectRatio 화면비 (기본값 '4:3', 지원값: '1:1', '16:9', '4:3' 등)
  * @returns {Promise<string|null>} 저장된 이미지의 상대 경로, 실패 시 null
  */
-export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3', imageIndex = 0) {
+export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3', imageIndex = 0, forceAI = false) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   try {
     // 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
@@ -232,16 +236,20 @@ export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3'
     let isPixabayUsed = false;
 
     // 1단계: Pixabay API에서 이미지 검색 시도
-    try {
-      console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}" (인덱스: ${imageIndex})`);
-      const pixabayUrl = await getPixabayImage(pixabaySearchQuery, imageIndex);
-      if (pixabayUrl) {
-        console.log(`[Pixabay 이미지 발견] 본문 이미지로 Pixabay 이미지를 다운로드합니다: ${pixabayUrl}`);
-        await downloadImage(pixabayUrl, filename);
-        isPixabayUsed = true;
+    if (!forceAI) {
+      try {
+        console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}" (인덱스: ${imageIndex})`);
+        const pixabayUrl = await getPixabayImage(pixabaySearchQuery, imageIndex);
+        if (pixabayUrl) {
+          console.log(`[Pixabay 이미지 발견] 본문 이미지로 Pixabay 이미지를 다운로드합니다: ${pixabayUrl}`);
+          await downloadImage(pixabayUrl, filename);
+          isPixabayUsed = true;
+        }
+      } catch (pixabayErr) {
+        console.warn(`[Pixabay 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pixabayErr.message);
       }
-    } catch (pixabayErr) {
-      console.warn(`[Pixabay 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pixabayErr.message);
+    } else {
+      console.log(`[AI 이미지 그리기 강제 활성화] Pixabay 검색을 생략하고 AI로 그립니다.`);
     }
 
     // 2단계: 픽사베이에서 이미지를 찾지 못했을 경우에만 Imagen AI로 이미지 생성
