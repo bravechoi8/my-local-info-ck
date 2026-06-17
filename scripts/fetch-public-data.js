@@ -88,8 +88,11 @@ function scoreItem(item) {
     '경북', '경상북', '경남', '경상남', '제주', '달성', '거제'
   ];
   const hasOtherRegion = otherRegions.some(reg => text.includes(reg));
-  if (hasOtherRegion && !isYongin && !isSeoul) {
-    score -= 100;
+  if (hasOtherRegion) {
+    const isRealSeoulOrYongin = agency === '서울특별시' || agency === '용인시' || agency === '경기도';
+    if (!isRealSeoulOrYongin) {
+      score -= 100;
+    }
   }
 
   // 특정 구(서울의 개별 구청) 또는 특정 경기도 소도시(용인 제외) 명칭이 텍스트에 포함되어 있다면
