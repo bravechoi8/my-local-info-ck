@@ -407,21 +407,28 @@ function TimerPanel() {
       {/* 3. 시간표 알림 */}
       {tab === 'timetable' && (
         <div className="space-y-4">
-          <div className="flex gap-2">
-            <input
-              type="time"
-              value={tableTime}
-              onChange={(e) => setTableTime(e.target.value)}
-              className="border border-[#E5E8EB] rounded-2xl p-2.5 text-xs font-semibold focus:outline-none focus:border-[#3182F6] bg-white flex-grow"
-            />
-            <input
-              type="text"
-              placeholder="메모"
-              value={tableMemo}
-              onChange={(e) => setTableMemo(e.target.value)}
-              className="border border-[#E5E8EB] rounded-2xl p-2.5 text-xs focus:outline-none focus:border-[#3182F6] bg-white flex-[2]"
-            />
-            <button onClick={addTimetableItem} className="px-4 py-2.5 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-bold rounded-2xl transition-colors">추가</button>
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-2">
+              <input
+                type="time"
+                value={tableTime}
+                onChange={(e) => setTableTime(e.target.value)}
+                className="border border-[#E5E8EB] rounded-2xl p-2.5 text-xs font-semibold focus:outline-none focus:border-[#3182F6] bg-white w-1/3 min-w-[90px]"
+              />
+              <input
+                type="text"
+                placeholder="메모 입력"
+                value={tableMemo}
+                onChange={(e) => setTableMemo(e.target.value)}
+                className="border border-[#E5E8EB] rounded-2xl p-2.5 text-xs focus:outline-none focus:border-[#3182F6] bg-white flex-grow"
+              />
+            </div>
+            <button 
+              onClick={addTimetableItem} 
+              className="w-full py-2.5 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-bold rounded-2xl transition-colors"
+            >
+              알림 추가하기
+            </button>
           </div>
 
           <div className="max-h-40 overflow-y-auto bg-[#F9FAFB] rounded-2xl p-3 border border-[#F2F4F6] space-y-1.5">
