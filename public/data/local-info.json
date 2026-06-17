@@ -196,5 +196,27 @@
     "target": "배출가스 4·5등급 경유차 및 도로용 건설기계, 노후 지게차·굴착기 소유자",
     "summary": "노후 경유차와 건설기계 조기폐차 시 기준가액에 따라 조기폐차 지원금을 차등 지급합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258400207"
+  },
+  {
+    "id": 16,
+    "name": "어르신 안전 하우징",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "65세 이상 기초연금 수급자",
+    "summary": "고령자 주택 내 안전시설 보강 및 주거환경 개선 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000855"
+  },
+  {
+    "id": 17,
+    "name": "경기도 취약계층 주택화재 안심보험 지원",
+    "category": "혜택",
+    "startDate": "2024-11-20",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경기도에 주민등록을 두고 주택에 거주 중인 기초생활보장수급자와 차상위계층",
+    "summary": "경기도 내 기초생활수급자와 차상위계층을 대상으로 주택화재 안심보험 가입을 무료로 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000852"
   }
 ]
