@@ -13,6 +13,18 @@ interface HomeClientProps {
 
 export default function HomeClient({ posts }: HomeClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("전체");
+
+  const categories = [
+    { key: "전체", label: "전체" },
+    { key: "혜택", label: "지원금·혜택" },
+    { key: "행사", label: "축제·행사" },
+    { key: "생활정보", label: "생활정보" },
+    { key: "핫이슈", label: "핫이슈" },
+    { key: "재테크", label: "재테크" },
+    { key: "연예인이슈", label: "연예인이슈" },
+    { key: "도구게임", label: "미니게임·도구 🎮" }
+  ];
 
   // 날짜 형식 예쁘게 변환 (YYYY-MM-DD -> YYYY.MM.DD)
   const formatDate = (dateStr: string) => {
@@ -105,6 +117,10 @@ export default function HomeClient({ posts }: HomeClientProps) {
 
   const searchResults = getFilteredPosts(mappedPosts);
 
+  const currentCategoryPosts = searchResults.filter(
+    (p) => p.category === activeTab
+  );
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0B0F19] text-[#333D4B] dark:text-[#E5E8EB] antialiased transition-colors duration-300">
       {/* GNB (상단 네비게이션) - 토스 스타일 극도 미니멀 & 유리모피즘 */}
@@ -160,89 +176,37 @@ export default function HomeClient({ posts }: HomeClientProps) {
 
           {/* 카테고리 탭 UI */}
           <div className="flex flex-wrap gap-2 pt-2 border-b border-[#F2F4F6] dark:border-slate-800/80 pb-6">
-            {[
-              { key: "", label: "전체", href: "/blog/" },
-              { key: "혜택", label: "지원금·혜택", href: "/blog/?category=혜택" },
-              { key: "행사", label: "축제·행사", href: "/blog/?category=행사" },
-              { key: "생활정보", label: "생활정보", href: "/blog/?category=생활정보" },
-              { key: "핫이슈", label: "핫이슈", href: "/blog/?category=핫이슈" },
-              { key: "재테크", label: "재테크", href: "/blog/?category=재테크" },
-              { key: "연예인이슈", label: "연예인이슈", href: "/blog/?category=연예인이슈" },
-            ].map((cat) => (
-              <a
-                key={cat.key}
-                href={cat.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = cat.href;
-                }}
-                className="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#F2F4F6] dark:bg-slate-800/80 text-[#4E5968] dark:text-slate-300 hover:bg-[#E5E8EB] dark:hover:bg-slate-700 transition-all cursor-pointer"
-              >
-                {cat.label}
-              </a>
-            ))}
+            {categories.map((cat) => {
+              const isActive = activeTab === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  onClick={() => setActiveTab(cat.key)}
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                    isActive
+                      ? "bg-[#3182F6] text-white shadow-sm"
+                      : "bg-[#F2F4F6] dark:bg-slate-800/80 text-[#4E5968] dark:text-slate-300 hover:bg-[#E5E8EB] dark:hover:bg-slate-700"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       </header>
 
       {/* 메인 콘텐츠 영역 */}
       <main className="max-w-5xl mx-auto px-6 pb-24">
-        {searchQuery ? (
-          /* 검색 모드 활성화 시 검색 결과만 리스트업 */
-          <div className="space-y-8">
-            <div className="text-sm text-[#4E5968] dark:text-[#8B95A1] font-semibold">
-              &apos;{searchQuery}&apos; 검색 결과 총 <span className="text-[#3182F6]">{searchResults.length}</span>건
+        {activeTab === "도구게임" ? (
+          /* 도구게임 탭 전용 레이아웃 */
+          <div className="space-y-12 animate-fadeIn">
+            <div className="text-center py-6">
+              <h2 className="text-2xl font-extrabold text-[#191F28] dark:text-[#F3F4F6] mb-2">🎮 미니게임 &amp; 유용한 도구</h2>
+              <p className="text-sm text-[#4E5968] dark:text-[#8B95A1]">리얼인포가 제공하는 유용하고 재미있는 도구 모음입니다.</p>
             </div>
-            {searchResults.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-                {searchResults.map((post) => {
-                  const config = getCategoryConfig(post.category);
-                  return (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group flex flex-col justify-between bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800/80 rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-lg dark:hover:shadow-2xl dark:hover:shadow-slate-950/50 transition-all duration-300"
-                    >
-                      <div className="space-y-4 p-4">
-                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
-                          <img
-                            src={post.thumbnail}
-                            alt={post.title}
-                            className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <span className={`inline-block text-xs font-semibold ${config.text}`}>
-                            {config.label}
-                          </span>
-                          <h3 className="text-base sm:text-lg font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-                            {post.title}
-                          </h3>
-                          <p className="text-xs sm:text-sm text-[#4E5968] dark:text-[#8B95A1] leading-relaxed line-clamp-2">
-                            {post.summary}
-                          </p>
-                          <div className="text-[11px] sm:text-xs text-[#8B95A1] pt-1 font-medium">
-                            {formatDate(post.date)}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-24 bg-[#F9FAFB] dark:bg-slate-900 rounded-2xl border border-[#F2F4F6] dark:border-slate-800/80">
-                <span className="text-4xl inline-block mb-4">🔍</span>
-                <h3 className="text-base sm:text-lg font-bold text-[#191F28] dark:text-[#F3F4F6] mb-2">검색 결과가 없습니다</h3>
-                <p className="text-xs sm:text-sm text-[#8B95A1]">다른 키워드로 검색해 보세요.</p>
-              </div>
-            )}
-          </div>
-        ) : (
-          /* 포털형 첫 페이지 레이아웃 (정상 모드) */
-          <div className="space-y-20">
-            {/* 테토-에겐, 로또, 룰렛, 타이머 배너 영역 */}
-            <div className="max-w-5xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* 테토-에겐 성격 유형 테스트 배너 */}
               <section className="group bg-gradient-to-br from-[#FFEAE4] to-[#F0EDFF] dark:from-[#2E1F1A] dark:to-[#1C1A3A] rounded-2xl p-4 sm:p-4.5 border border-[#ebe4d9] dark:border-slate-800/80 border-b-[6px] border-b-[#d85a30]/50 dark:border-b-[#d85a30]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(216,90,48,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
                 <div className="space-y-1.5">
@@ -335,59 +299,222 @@ export default function HomeClient({ posts }: HomeClientProps) {
                 </div>
               </section>
             </div>
-
-            {/* 1. 최상단 히어로 추천 영역 */}
-            {heroPost && (
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xs font-bold text-[#8B95A1] uppercase tracking-wider">TODAY&apos;S HOT ISSUE</h2>
-                  <Link href="/blog?category=핫이슈" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+          </div>
+        ) : activeTab === "전체" ? (
+          /* 전체 탭 레이아웃 */
+          searchQuery ? (
+            /* 검색 모드 활성화 시 검색 결과만 리스트업 */
+            <div className="space-y-8 animate-fadeIn">
+              <div className="text-sm text-[#4E5968] dark:text-[#8B95A1] font-semibold">
+                &apos;{searchQuery}&apos; 검색 결과 총 <span className="text-[#3182F6]">{searchResults.length}</span>건
+              </div>
+              {searchResults.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                  {searchResults.map((post) => {
+                    const config = getCategoryConfig(post.category);
+                    return (
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group flex flex-col justify-between bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800/80 rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-lg dark:hover:shadow-2xl dark:hover:shadow-slate-950/50 transition-all duration-300"
+                      >
+                        <div className="space-y-4 p-4">
+                          <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
+                            <img
+                              src={post.thumbnail}
+                              alt={post.title}
+                              className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <span className={`inline-block text-xs font-semibold ${config.text}`}>
+                              {config.label}
+                            </span>
+                            <h3 className="text-base sm:text-lg font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                              {post.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-[#4E5968] dark:text-[#8B95A1] leading-relaxed line-clamp-2">
+                              {post.summary}
+                            </p>
+                            <div className="text-[11px] sm:text-xs text-[#8B95A1] pt-1 font-medium">
+                              {formatDate(post.date)}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
-                <Link
-                  href={`/blog/${heroPost.slug}`}
-                  className="group block overflow-hidden rounded-3xl border border-[#F2F4F6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
-                >
-                  <div className="flex flex-col lg:flex-row items-stretch">
-                    <div className="flex-1 p-8 sm:p-12 flex flex-col justify-between">
-                      <div className="space-y-4">
-                        <span className={`inline-block px-2.5 py-0.5 text-xs font-semibold rounded ${getCategoryConfig(heroPost.category).bg} ${getCategoryConfig(heroPost.category).text}`}>
-                          {getCategoryConfig(heroPost.category).label}
-                        </span>
-                        <h2 className="text-xl sm:text-3xl font-extrabold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-tight line-clamp-2">
-                          {heroPost.title}
-                        </h2>
-                        <p className="text-sm sm:text-base text-[#4E5968] dark:text-[#8B95A1] leading-relaxed line-clamp-3">
-                          {heroPost.summary}
-                        </p>
-                      </div>
-                      <div className="mt-8 text-xs sm:text-sm text-[#8B95A1] font-medium">
-                        {formatDate(heroPost.date)}
-                      </div>
-                    </div>
-                    <div className="lg:w-1/2 min-h-[220px] sm:min-h-[320px] relative overflow-hidden bg-slate-50 dark:bg-slate-800">
-                      <img 
-                        src={heroPost.thumbnail} 
-                        alt={heroPost.title} 
-                        className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
+              ) : (
+                <div className="text-center py-24 bg-[#F9FAFB] dark:bg-slate-900 rounded-2xl border border-[#F2F4F6] dark:border-slate-800/80">
+                  <span className="text-4xl inline-block mb-4">🔍</span>
+                  <h3 className="text-base sm:text-lg font-bold text-[#191F28] dark:text-[#F3F4F6] mb-2">검색 결과가 없습니다</h3>
+                  <p className="text-xs sm:text-sm text-[#8B95A1]">다른 키워드로 검색해 보세요.</p>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* 포털형 첫 페이지 레이아웃 (정상 모드) */
+            <div className="space-y-20 animate-fadeIn">
+              {/* 대표 배너 2개 + 전체 도구 숏컷 카드 (3열 그리드 구성) */}
+              <div className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* AI 로또번호 자동 생성기 배너 */}
+                <section className="group bg-gradient-to-br from-[#EBF3FF] to-[#E8F0FB] dark:from-[#1E293B]/40 dark:to-[#0F172A]/40 rounded-2xl p-4 sm:p-4.5 border border-[#d9e2eb] dark:border-slate-800/80 border-b-[6px] border-b-[#3182F6]/50 dark:border-b-[#3182F6]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(49,130,246,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                  <div className="space-y-1.5">
+                    <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#3182F6] border border-[#d2e2fa] dark:border-[#3182F6]/30 transition-colors">
+                      당첨 통계 기반 분석
+                    </span>
+                    <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                      AI 로또번호 자동 생성기
+                    </h2>
+                    <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
+                      역대 1등 당첨번호 통계 가중치를 활용해 번호를 예측합니다.
+                    </p>
                   </div>
-                </Link>
-              </section>
-            )}
+                  <div className="flex justify-end pt-1">
+                    <Link
+                      href="/lotto"
+                      className="px-3 py-1.5 bg-[#3182F6] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#1b64da] transition-all shadow-sm whitespace-nowrap"
+                    >
+                      행운번호 받기 &rarr;
+                    </Link>
+                  </div>
+                </section>
 
-            {/* 2. 돈이 되는 지원금 & 혜택 존 */}
-            {benefitSectionPosts.length > 0 && (
-              <div className="space-y-10">
+                {/* 술값 계산 복불복 룰렛 배너 */}
+                <section className="group bg-gradient-to-br from-[#FFF0F0] to-[#FFE4E4] dark:from-[#2D1B1E] dark:to-[#1A1112] rounded-2xl p-4 sm:p-4.5 border border-[#ffd5d6] dark:border-slate-800/80 border-b-[6px] border-b-[#F04452]/50 dark:border-b-[#F04452]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(240,68,82,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                  <div className="space-y-1.5">
+                    <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#F04452] border border-[#ffd5d6] dark:border-[#F04452]/30 transition-colors">
+                      모임·술자리 게임
+                    </span>
+                    <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                      술값 계산 복불복 룰렛
+                    </h2>
+                    <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
+                      오늘 술값이나 밥값을 계산할 사람을 룰렛으로 결정합니다!
+                    </p>
+                  </div>
+                  <div className="flex justify-end pt-1">
+                    <Link
+                      href="/roulette"
+                      className="px-3 py-1.5 bg-[#1d1d1b] dark:bg-slate-800 text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-black dark:hover:bg-slate-700 transition-all shadow-sm whitespace-nowrap"
+                    >
+                      룰렛 돌리기 &rarr;
+                    </Link>
+                  </div>
+                </section>
+
+                {/* 미니게임·도구 더보기 숏컷 카드 */}
+                <section
+                  onClick={() => setActiveTab("도구게임")}
+                  className="group bg-gradient-to-br from-[#F5F0FF] to-[#E8F0FB] dark:from-[#2A1E3D] dark:to-[#17203F] rounded-2xl p-4 sm:p-4.5 border border-[#e8dff5] dark:border-slate-800/80 border-b-[6px] border-b-[#7C3AED]/50 dark:border-b-[#7C3AED]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(124,58,237,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200 cursor-pointer text-left"
+                >
+                  <div className="space-y-1.5">
+                    <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#7C3AED] border border-[#e8dff5] dark:border-[#7C3AED]/30 transition-colors">
+                      유용한 도구 모음
+                    </span>
+                    <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                      재미있는 게임 &amp; 스마트 도구 더보기
+                    </h2>
+                    <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
+                      호르몬 성격 테스트, 멀티 타이머 등 리얼인포의 모든 도구를 한눈에 확인하세요.
+                    </p>
+                  </div>
+                  <div className="flex justify-end pt-1">
+                    <button
+                      className="px-3 py-1.5 bg-[#7C3AED] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#6D28D9] transition-all shadow-sm whitespace-nowrap"
+                    >
+                      전체 보기 &rarr;
+                    </button>
+                  </div>
+                </section>
+              </div>
+
+              {/* 1. 최상단 히어로 추천 영역 */}
+              {heroPost && (
+                <section className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xs font-bold text-[#8B95A1] uppercase tracking-wider">TODAY&apos;S HOT ISSUE</h2>
+                    <button onClick={() => setActiveTab("핫이슈")} className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</button>
+                  </div>
+                  <Link
+                    href={`/blog/${heroPost.slug}`}
+                    className="group block overflow-hidden rounded-3xl border border-[#F2F4F6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.04)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+                  >
+                    <div className="flex flex-col lg:flex-row items-stretch">
+                      <div className="flex-1 p-8 sm:p-12 flex flex-col justify-between">
+                        <div className="space-y-4">
+                          <span className={`inline-block px-2.5 py-0.5 text-xs font-semibold rounded ${getCategoryConfig(heroPost.category).bg} ${getCategoryConfig(heroPost.category).text}`}>
+                            {getCategoryConfig(heroPost.category).label}
+                          </span>
+                          <h2 className="text-xl sm:text-3xl font-extrabold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-tight line-clamp-2">
+                            {heroPost.title}
+                          </h2>
+                          <p className="text-sm sm:text-base text-[#4E5968] dark:text-[#8B95A1] leading-relaxed line-clamp-3">
+                            {heroPost.summary}
+                          </p>
+                        </div>
+                        <div className="mt-8 text-xs sm:text-sm text-[#8B95A1] font-medium">
+                          {formatDate(heroPost.date)}
+                        </div>
+                      </div>
+                      <div className="lg:w-1/2 min-h-[220px] sm:min-h-[320px] relative overflow-hidden bg-slate-50 dark:bg-slate-800">
+                        <img 
+                          src={heroPost.thumbnail} 
+                          alt={heroPost.title} 
+                          className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    </div>
+                  </Link>
+                </section>
+              )}
+
+              {/* 2. 돈이 되는 지원금 & 혜택 존 */}
+              {benefitSectionPosts.length > 0 && (
+                <div className="space-y-10">
+                  <section className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
+                        <span className="text-2xl">💰</span> 놓치기 쉬운 지원금 · 혜택
+                      </h2>
+                      <button onClick={() => setActiveTab("혜택")} className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      {benefitSectionPosts.map((post) => (
+                        <Link
+                          key={post.slug}
+                          href={`/blog/${post.slug}`}
+                          className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
+                        >
+                          <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
+                            <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          </div>
+                          <div className="space-y-1">
+                            <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                              {post.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </section>
+                  <AdBanner />
+                </div>
+              )}
+
+              {/* 3. 주말 나들이 축제 & 행사 존 */}
+              {eventSectionPosts.length > 0 && (
                 <section className="space-y-6">
                   <div className="flex items-center justify-between">
                     <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
-                      <span className="text-2xl">💰</span> 놓치기 쉬운 지원금 · 혜택
+                      <span className="text-2xl">🎈</span> 주말 여행 & 가볼 만한 축제
                     </h2>
-                    <Link href="/blog?category=혜택" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
+                    <button onClick={() => setActiveTab("행사")} className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</button>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {benefitSectionPosts.map((post) => (
+                    {eventSectionPosts.map((post) => (
                       <Link
                         key={post.slug}
                         href={`/blog/${post.slug}`}
@@ -406,132 +533,165 @@ export default function HomeClient({ posts }: HomeClientProps) {
                     ))}
                   </div>
                 </section>
-                <AdBanner />
+              )}
+
+              {/* 4. 알뜰 생활정보 존 */}
+              {infoSectionPosts.length > 0 && (
+                <section className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
+                      <span className="text-2xl">💡</span> 유용한 알뜰 생활정보
+                    </h2>
+                    <button onClick={() => setActiveTab("생활정보")} className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {infoSectionPosts.map((post) => (
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
+                      >
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
+                          <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div className="space-y-1">
+                          <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                            {post.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* 5. 돈이 되는 재테크 존 */}
+              {financeSectionPosts.length > 0 && (
+                <section className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
+                      <span className="text-2xl">📈</span> 돈이 되는 재테크 정보
+                    </h2>
+                    <button onClick={() => setActiveTab("재테크")} className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {financeSectionPosts.map((post) => (
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
+                      >
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
+                          <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div className="space-y-1">
+                          <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                            {post.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* 6. 연예인 핫이슈 & 뉴스 존 */}
+              {celebSectionPosts.length > 0 && (
+                <section className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
+                      <span className="text-2xl">⭐</span> 연예인 이슈 & 소식
+                    </h2>
+                    <button onClick={() => setActiveTab("연예인이슈")} className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {celebSectionPosts.map((post) => (
+                      <Link
+                        key={post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
+                      >
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
+                          <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
+                        <div className="space-y-1">
+                          <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                            {post.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </div>
+          )
+        ) : (
+          /* 개별 일반 카테고리 탭 레이아웃 */
+          <div className="space-y-8 animate-fadeIn">
+            <div className="flex items-center justify-between border-b border-[#F2F4F6] dark:border-slate-800/80 pb-4">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
+                <span>
+                  {activeTab === "혜택" && "💰"}
+                  {activeTab === "행사" && "🎈"}
+                  {activeTab === "생활정보" && "💡"}
+                  {activeTab === "핫이슈" && "🔥"}
+                  {activeTab === "재테크" && "📈"}
+                  {activeTab === "연예인이슈" && "⭐"}
+                </span>
+                {getCategoryConfig(activeTab).label} 정보
+              </h2>
+              <span className="text-xs sm:text-sm text-[#8B95A1] font-semibold">
+                총 <span className="text-[#3182F6]">{currentCategoryPosts.length}</span>개의 글
+              </span>
+            </div>
+
+            {currentCategoryPosts.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                {currentCategoryPosts.map((post) => {
+                  const config = getCategoryConfig(post.category);
+                  return (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group flex flex-col justify-between bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800/80 rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-lg dark:hover:shadow-2xl dark:hover:shadow-slate-950/50 transition-all duration-300"
+                    >
+                      <div className="space-y-4 p-4">
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
+                          <img
+                            src={post.thumbnail}
+                            alt={post.title}
+                            className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <span className={`inline-block text-xs font-semibold ${config.text}`}>
+                            {config.label}
+                          </span>
+                          <h3 className="text-base sm:text-lg font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
+                            {post.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-[#4E5968] dark:text-[#8B95A1] leading-relaxed line-clamp-2">
+                            {post.summary}
+                          </p>
+                          <div className="text-[11px] sm:text-xs text-[#8B95A1] pt-1 font-medium">
+                            {formatDate(post.date)}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
-            )}
-
-            {/* 3. 주말 나들이 축제 & 행사 존 */}
-            {eventSectionPosts.length > 0 && (
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
-                    <span className="text-2xl">🎈</span> 주말 여행 & 가볼 만한 축제
-                  </h2>
-                  <Link href="/blog?category=행사" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {eventSectionPosts.map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
-                    >
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
-                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      </div>
-                      <div className="space-y-1">
-                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* 4. 알뜰 생활정보 존 */}
-            {infoSectionPosts.length > 0 && (
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
-                    <span className="text-2xl">💡</span> 유용한 알뜰 생활정보
-                  </h2>
-                  <Link href="/blog?category=생활정보" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {infoSectionPosts.map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
-                    >
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
-                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      </div>
-                      <div className="space-y-1">
-                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* 5. 돈이 되는 재테크 존 */}
-            {financeSectionPosts.length > 0 && (
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
-                    <span className="text-2xl">📈</span> 돈이 되는 재테크 정보
-                  </h2>
-                  <Link href="/blog?category=재테크" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {financeSectionPosts.map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
-                    >
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
-                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      </div>
-                      <div className="space-y-1">
-                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* 5. 연예인 핫이슈 & 뉴스 존 */}
-            {celebSectionPosts.length > 0 && (
-              <section className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#191F28] dark:text-[#F3F4F6] flex items-center gap-2">
-                    <span className="text-2xl">⭐</span> 연예인 이슈 & 소식
-                  </h2>
-                  <Link href="/blog?category=연예인이슈" className="text-xs sm:text-sm font-semibold text-[#3182F6] hover:underline">더보기 &rarr;</Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {celebSectionPosts.map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group block space-y-4 hover:-translate-y-1 transition-transform duration-300"
-                    >
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800 border border-[#F2F4F6] dark:border-slate-800/80 relative">
-                        <img src={post.thumbnail} alt={post.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                      </div>
-                      <div className="space-y-1">
-                        <h3 className="text-sm sm:text-base font-bold text-[#191F28] dark:text-[#F3F4F6] group-hover:text-[#3182F6] dark:group-hover:text-[#3182F6] transition-colors leading-snug line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#8B95A1] line-clamp-1">{post.summary}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
+            ) : (
+              <div className="text-center py-24 bg-[#F9FAFB] dark:bg-slate-900 rounded-2xl border border-[#F2F4F6] dark:border-slate-800/80">
+                <span className="text-4xl inline-block mb-4">✍️</span>
+                <h3 className="text-base sm:text-lg font-bold text-[#191F28] dark:text-[#F3F4F6] mb-2">아직 작성된 글이 없습니다</h3>
+                <p className="text-xs sm:text-sm text-[#8B95A1]">새로운 유용한 소식을 준비하고 있습니다.</p>
+              </div>
             )}
           </div>
         )}
