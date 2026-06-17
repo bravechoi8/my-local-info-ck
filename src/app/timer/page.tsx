@@ -420,7 +420,7 @@ function TimerPanel() {
                 placeholder="메모 입력"
                 value={tableMemo}
                 onChange={(e) => setTableMemo(e.target.value)}
-                className="border border-[#E5E8EB] rounded-2xl p-2.5 text-xs focus:outline-none focus:border-[#3182F6] bg-white flex-grow"
+                className="border border-[#E5E8EB] rounded-2xl p-2.5 text-xs focus:outline-none focus:border-[#3182F6] bg-white w-2/3 min-w-0 flex-grow"
               />
             </div>
             <button 
