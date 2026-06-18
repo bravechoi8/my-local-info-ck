@@ -262,5 +262,27 @@
     "target": "백년가게, 신사업창업사관학교 수료생, 수출 소상공인 등 혁신형 소상공인",
     "summary": "소상공인의 디지털 격차 해소 및 혁신형 소상공인의 성장기반 마련을 위해 운전 및 시설자금을 융자 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700001"
+  },
+  {
+    "id": 22,
+    "name": "저소득층 스포츠 영재 지원",
+    "category": "혜택",
+    "startDate": "2025-05-24",
+    "endDate": "상시",
+    "location": "서울특별시",
+    "target": "초중고 저소득층선수(기초수급자, 차상위계층, 저소득 한부모, 소년소녀가장, 장애가정, 다문화 가정 선수 등)",
+    "summary": "저소득층 학생선수에게 장학금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/611000000111"
+  },
+  {
+    "id": 23,
+    "name": "독립유공생활지원수당",
+    "category": "혜택",
+    "startDate": "2026-02-18",
+    "endDate": "상시",
+    "location": "서울특별시",
+    "target": "독립유공자 (손)자녀 중 기초생활수급자 및 중위소득 70%이하인 자 및 기초연금수급자",
+    "summary": "저소득 독립유공자 후손에게 생활지원수당 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/611000000114"
   }
 ]
