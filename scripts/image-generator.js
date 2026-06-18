@@ -29,7 +29,7 @@ async function downloadImage(url, filename) {
 
 
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
-const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict';
+const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:predict';
 
 /**
  * 블로그 포스트의 제목과 요약을 바탕으로 요약 인포그래픽 카드 이미지를 생성하고 로컬에 저장합니다.
