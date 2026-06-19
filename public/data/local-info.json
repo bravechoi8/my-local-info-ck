@@ -284,5 +284,27 @@
     "target": "독립유공자 (손)자녀 중 기초생활수급자 및 중위소득 70%이하인 자 및 기초연금수급자",
     "summary": "저소득 독립유공자 후손에게 생활지원수당 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/611000000114"
+  },
+  {
+    "id": 24,
+    "name": "울주군 청소년 진로직업체험센터 서비스",
+    "category": "혜택",
+    "startDate": "2023-11-24",
+    "endDate": "상시",
+    "location": "울주군시설관리공단",
+    "target": "초,중,고등학교 및 특수학교, 소외계층 청소년",
+    "summary": "청소년 진로직업체험 및 자유학년제 매칭 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00025600004"
+  },
+  {
+    "id": 25,
+    "name": "공영주차장 이용요금 감면",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "울주군시설관리공단",
+    "target": "장애인, 국가유공자증 소지자, 고엽제 휴유증 지원 대상자, 5.18민주유공자",
+    "summary": "사회적 취약계층에게 구영공원주차장 이용요금 감면(대상별 상이)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00025600001"
   }
 ]
