@@ -328,5 +328,27 @@
     "target": "애국지사 본인, 국가유공상이자(1-7급), 5․18민주부상자(1-14급), 고엽제후유의증환자, 보훈보상대상자 중 친환경 보철용 차량(전기·수소차) 보유자",
     "summary": "국가유공자 등 보훈대상자에게 친환경차량 구매보조금 100만 원 및 월 2만 9천 원 한도의 충전비를 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000002"
+  },
+  {
+    "id": 28,
+    "name": "재생에너지보급지원 주택지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "단독주택 및 공동주택의 소유자 중 재생에너지설비 설치자",
+    "summary": "단독 및 공동주택에 태양광, 태양열 등 재생에너지원 설치 시 설치비의 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000201"
+  },
+  {
+    "id": 29,
+    "name": "신재생에너지 설비 고장 접수 지원센터 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "보조금을 지원받고 설치한 신재생에너지 설비 소유자",
+    "summary": "신재생에너지설비(보조금 지원설비)에 대한 A/S 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000214"
   }
 ]
