@@ -29,7 +29,7 @@ async function downloadImage(url, filename) {
 
 
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
-const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:predict';
+const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict';
 
 /**
  * 블로그 포스트의 제목과 요약을 바탕으로 요약 인포그래픽 카드 이미지를 생성하고 로컬에 저장합니다.
@@ -40,6 +40,16 @@ const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models
  */
 export async function generateSummaryImage(title, summary, filenameKey, forceAI = false) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  
+  // 스포츠 관련 글인 경우 Pixabay/Pexels 검색을 우회하고 AI 이미지 생성을 강제합니다.
+  const lowercaseTitle = (title || '').toLowerCase();
+  const lowercaseSummary = (summary || '').toLowerCase();
+  const lowercaseKey = (filenameKey || '').toLowerCase();
+  const isSports = 
+    lowercaseTitle.includes('soccer') || lowercaseTitle.includes('football') || lowercaseTitle.includes('sports') || lowercaseTitle.includes('축구') || lowercaseTitle.includes('야구') || lowercaseTitle.includes('농구') || lowercaseTitle.includes('배구') ||
+    lowercaseSummary.includes('soccer') || lowercaseSummary.includes('football') || lowercaseSummary.includes('sports') || lowercaseSummary.includes('축구') ||
+    lowercaseKey.includes('soccer') || lowercaseKey.includes('football') || lowercaseKey.includes('sports') || lowercaseKey.includes('축구') || lowercaseKey.includes('worldcup') || lowercaseKey.includes('world-cup');
+  const finalForceAI = forceAI || isSports;
   try {
     if (!GEMINI_API_KEY) {
       console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
@@ -136,7 +146,7 @@ Summary: ${summary}`;
     let isPexelsUsed = false;
 
     // 2단계: Pexels API에서 이미지 검색 먼저 시도
-    if (!forceAI) {
+    if (!finalForceAI) {
       try {
         console.log(`[Pexels 검색 시도] 요약 배경 검색 중...`);
         const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
@@ -230,13 +240,22 @@ Summary: ${summary}`;
  */
 export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3', imageIndex = 0, forceAI = false) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+  
+  // 스포츠 관련 글인 경우 Pixabay/Pexels 검색을 우회하고 AI 이미지 생성을 강제합니다.
+  const lowercasePrompt = (prompt || '').toLowerCase();
+  const lowercaseFilename = (filename || '').toLowerCase();
+  const isSports = 
+    lowercasePrompt.includes('soccer') || lowercasePrompt.includes('football') || lowercasePrompt.includes('sports') || lowercasePrompt.includes('soccer player') || lowercasePrompt.includes('축구') ||
+    lowercaseFilename.includes('soccer') || lowercaseFilename.includes('football') || lowercaseFilename.includes('sports') || lowercaseFilename.includes('worldcup') || lowercaseFilename.includes('world-cup');
+  const finalForceAI = forceAI || isSports;
+
   try {
     // 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
     const pixabaySearchQuery = prompt.split(',')[0].trim();
     let isPixabayUsed = false;
 
     // 1단계: Pixabay API에서 이미지 검색 시도
-    if (!forceAI) {
+    if (!finalForceAI) {
       try {
         console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}" (인덱스: ${imageIndex})`);
         const pixabayUrl = await getPixabayImage(pixabaySearchQuery, imageIndex);

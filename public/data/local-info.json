@@ -287,24 +287,46 @@
   },
   {
     "id": 24,
-    "name": "울주군 청소년 진로직업체험센터 서비스",
+    "name": "공공급식 운영 활성화(융자)",
     "category": "혜택",
-    "startDate": "2023-11-24",
+    "startDate": "2023-10-27",
     "endDate": "상시",
-    "location": "울주군시설관리공단",
-    "target": "초,중,고등학교 및 특수학교, 소외계층 청소년",
-    "summary": "청소년 진로직업체험 및 자유학년제 매칭 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00025600004"
+    "location": "농림축산식품부",
+    "target": "공공급식 식재료 공급망 구축이 가능한 공공(학교)급식지원센터, 먹거리(푸드)통합지원센터, 공공급식공급업체, 로컬푸드직매장 등",
+    "summary": "급식지원센터 역할 수행 가능업체에게 공공급식 식재료 구입비 자금 융자",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000051"
   },
   {
     "id": 25,
-    "name": "공영주차장 이용요금 감면",
+    "name": "농촌맞춤형봉사활동지원(농촌 재능나눔) 공모사업",
     "category": "혜택",
-    "startDate": "2024-05-20",
+    "startDate": "2024-05-24",
     "endDate": "상시",
-    "location": "울주군시설관리공단",
-    "target": "장애인, 국가유공자증 소지자, 고엽제 휴유증 지원 대상자, 5.18민주유공자",
-    "summary": "사회적 취약계층에게 구영공원주차장 이용요금 감면(대상별 상이)",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00025600001"
+    "location": "농림축산식품부",
+    "target": "대한민국 봉사 단체",
+    "summary": "봉사단체 대상으로 농촌지역 봉사활동에 대한 부대 경비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000052"
+  },
+  {
+    "id": 26,
+    "name": "생계지원금 지급",
+    "category": "혜택",
+    "startDate": "2024-01-17",
+    "endDate": "상시",
+    "location": "국가보훈부",
+    "target": "80세 이상으로서 기준중위소득 50%이하 참전유공자 및 배우자, 고엽제후유의증환자 본인, 특수임무유공자, 5.18민주유공자 본인 및 선순위유족",
+    "summary": "생활수준조사결과 중위소득 50%이하 대상자에게 매월 15만원 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000001"
+  },
+  {
+    "id": 27,
+    "name": "친환경차량지원",
+    "category": "혜택",
+    "startDate": "2024-05-18",
+    "endDate": "상시",
+    "location": "국가보훈부",
+    "target": "애국지사 본인, 국가유공상이자(1-7급), 5․18민주부상자(1-14급), 고엽제후유의증환자, 보훈보상대상자 중 친환경 보철용 차량(전기·수소차) 보유자",
+    "summary": "국가유공자 등 보훈대상자에게 친환경차량 구매보조금 100만 원 및 월 2만 9천 원 한도의 충전비를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000002"
   }
 ]

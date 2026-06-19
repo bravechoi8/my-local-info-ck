@@ -21,11 +21,31 @@ const LOCAL_INFO_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info
 
 const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실'];
 const BENEFIT_KEYWORDS = ['지원금', '지원', '수당', '연금', '혜택', '감면', '할인', '보조금', '비용', '자금', '대출', '금융', '융자', '바우처', '일자리', '취업', '장학', '장려금'];
-const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항', '도서관', '도서대출', '도서 대출', '도서 대여', '책 대출', '책 대여', '달성군', '달성교육재단'];
+const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항', '도서관', '도서대출', '도서 대출', '도서 대여', '책 대출', '책 대여', '달성군', '달성교육재단', '울주', '울주군'];
 
 function isBlocked(item) {
   const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '')).toLowerCase();
-  return BLOCK_KEYWORDS.some(kw => text.includes(kw));
+  
+  // 1. 금지 키워드가 포함된 경우 즉시 차단
+  if (BLOCK_KEYWORDS.some(kw => text.includes(kw))) {
+    return true;
+  }
+
+  // 2. 소관기관이 서울, 용인, 경기 또는 전국 단위 국가기관이 아닌 타 지역 지자체(시, 군, 구, 도 등)인 경우 원천 차단
+  const agency = (item.소관기관명 || '').toLowerCase();
+  if (agency) {
+    const isNational = /부$|처$|청$|공단$|공사$|정부|대한민국|국가|국민/.test(agency);
+    const isTargetRegion = agency.includes('서울') || agency.includes('용인') || agency.includes('경기');
+    
+    // 소관기관명에 행정구역 식별어(시, 군, 구, 도, 특별시, 광역시, 자치)가 포함되나, 대상 지역 및 전국 단위가 아닌 경우
+    const hasLocalSuffix = /시|군|구|도|특별시|광역시|자치/.test(agency);
+    if (hasLocalSuffix && !isTargetRegion && !isNational) {
+      console.log(`[원천 차단] 타 지방 지자체 소관 정책 제외: ${item.서비스명} (소관기관: ${item.소관기관명})`);
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function classifyItem(item) {
@@ -85,7 +105,7 @@ function scoreItem(item) {
   const otherRegions = [
     '부산', '대구', '인천', '광주', '대전', '울산', '세종', 
     '강원', '충북', '충청북', '충남', '충청남', '전북', '전라북', '전남', '전라남', 
-    '경북', '경상북', '경남', '경상남', '제주', '달성', '거제'
+    '경북', '경상북', '경남', '경상남', '제주', '달성', '거제', '울주'
   ];
   const hasOtherRegion = otherRegions.some(reg => text.includes(reg));
   if (hasOtherRegion) {
