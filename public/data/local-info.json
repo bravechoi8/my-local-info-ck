@@ -350,5 +350,27 @@
     "target": "보조금을 지원받고 설치한 신재생에너지 설비 소유자",
     "summary": "신재생에너지설비(보조금 지원설비)에 대한 A/S 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000214"
+  },
+  {
+    "id": 30,
+    "name": "용인시 난임부부 시술비 약제비 지원(처인구)",
+    "category": "혜택",
+    "startDate": "2024-06-04",
+    "endDate": "상시",
+    "location": "경기도 용인시",
+    "target": "난임부부 시술비 지원사업 대상자 중 해당지원회차의 정부지원금액 잔액이 남은 자(주소지 처인구만 해당)",
+    "summary": "난임시술과 직접적 관련 있는 원외처방 약제비에 대해 정부지원금액 한도 내에서 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000685"
+  },
+  {
+    "id": 31,
+    "name": "용인시 난임부부 시술비 약제비 지원(수지구)",
+    "category": "혜택",
+    "startDate": "2024-06-05",
+    "endDate": "상시",
+    "location": "경기도 용인시 수지구보건소",
+    "target": "난임부부 시술비 지원사업 대상자 중 해당 지원 회차의 정부지원금 잔액이 남은 자",
+    "summary": "난임시술과 직접적 관련 있는 원외처방 약제비에 대해 정부지원금액 한도 내에서 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000686"
   }
 ]
