@@ -8,7 +8,7 @@ naver_title: "\"사랑스러운 친구\"…이강인과 아기레 감독, 월드
 naver_link: "https://n.news.naver.com/mnews/article/448/0000620869?sid=104"
 ---
 
-![포스트 소개](/images/card-2026-06-20-leekangin-aguirre.svg)
+![포스트 소개](/images/card-2026-06-20-leekangin-aguirre.png)
 
 여러분, 축구 좋아하시나요? 요즘 스포츠계에 정말 한 편의 영화나 드라마라고 해도 믿을 법한 가슴 설레고 흥미진진한 소식이 들려와서 얼른 소개해 드리려고 달려왔답니다! 
 
@@ -24,7 +24,7 @@ naver_link: "https://n.news.naver.com/mnews/article/448/0000620869?sid=104"
 
 그러던 2022년 3월, 마요르카에 소방수로 부임한 인물이 바로 멕시코 출신의 베테랑 지도자, 하비에르 아기레 감독이었습니다.
 
-![포스트 소개](/images/body-2026-06-20-leekangin-aguirre-1.jpg)
+![포스트 소개](/images/body-2026-06-20-leekangin-aguirre-1.png)
 
 아기레 감독은 부임하자마자 이강인 선수의 천재적인 능력을 단번에 알아봤더라고요! 많은 이들이 이강인 선수의 수비 가담이나 속도에 대해 아쉬움을 표할 때, 아기레 감독은 오히려 그의 독보적인 강점에 주목했습니다.
 
@@ -49,7 +49,7 @@ naver_link: "https://n.news.naver.com/mnews/article/448/0000620869?sid=104"
 
 이렇게 끈끈했던 두 사람이 이제는 각자의 조국과 팀의 운명을 걸고 월드컵이라는 외나무다리에서 마주치게 되었습니다. 
 
-![포스트 소개](/images/body-2026-06-20-leekangin-aguirre-2.jpg)
+![포스트 소개](/images/body-2026-06-20-leekangin-aguirre-2.png)
 
 이 대결이 정말 흥미진진한 이유는 서로를 너무나도 잘 알고 있기 때문이에요!
 
