@@ -1,12 +1,51 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 import { fetchWithRetry } from './utils.js';
 import { getPexelsImage } from './pexels.js';
 import { getPixabayImage } from './pixabay.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+/**
+ * 다운로드받은 이미지의 해시 및 크기를 기존 이미지들과 비교하여 중복 여부를 감지합니다.
+ * @param {Buffer} buffer 다운로드된 이미지 버퍼
+ * @returns {boolean} 중복 여부
+ */
+function isDuplicateImage(buffer) {
+  const hash = crypto.createHash('md5').update(buffer).digest('hex');
+  const size = buffer.length;
+
+  // 사용자가 중복이라고 지적한 고유 블랙리스트 파일 크기 차단 (예: 책 위의 하트 끈 이미지 등)
+  const BLACKLIST_SIZES = [201184, 408599];
+  if (BLACKLIST_SIZES.includes(size)) {
+    console.warn(`[중복 이미지 감지] 블랙리스트 이미지 크기 매칭 (${size} 바이트). 다운로드를 취소하고 AI 생성으로 넘어갑니다.`);
+    return true;
+  }
+
+  const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
+  if (!fs.existsSync(publicImagesDir)) return false;
+
+  const files = fs.readdirSync(publicImagesDir);
+  for (const file of files) {
+    const filePathFull = path.join(publicImagesDir, file);
+    if (!fs.statSync(filePathFull).isFile()) continue;
+
+    // 크기가 완전히 같은 경우에만 정밀 해시 비교 진행 (성능 최적화)
+    const existingSize = fs.statSync(filePathFull).size;
+    if (existingSize === size) {
+      const existingBuffer = fs.readFileSync(filePathFull);
+      const existingHash = crypto.createHash('md5').update(existingBuffer).digest('hex');
+      if (existingHash === hash) {
+        console.warn(`[중복 이미지 감지] 기존 파일 '${file}'과 동일한 이미지로 감지되어 차단합니다.`);
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 /**
  * 외부 이미지 URL을 다운로드하여 로컬 파일로 저장합니다.
@@ -23,7 +62,14 @@ async function downloadImage(url, filename) {
     throw new Error(`이미지 다운로드 실패: ${response.status} ${response.statusText}`);
   }
   const arrayBuffer = await response.arrayBuffer();
-  fs.writeFileSync(outputPath, Buffer.from(arrayBuffer));
+  const buffer = Buffer.from(arrayBuffer);
+
+  // 중복 이미지 체크 수행
+  if (isDuplicateImage(buffer)) {
+    throw new Error(`다운로드한 이미지가 기존 이미지와 중복되어 다운로드를 중단합니다.`);
+  }
+
+  fs.writeFileSync(outputPath, buffer);
   return `/images/${filename}`;
 }
 
