@@ -18,6 +18,17 @@ const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models
 const DATA_FILE_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info.json');
 const POSTS_DIR_PATH = path.join(__dirname, '..', 'src', 'content', 'posts');
 
+const BLOCK_KEYWORDS = [
+  '건설노동자', '건설근로자', '난임', '유산', '사산', '어선', '어업', '원양', 
+  '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항', '해산비',
+  '참전유공자', '독립유공자', '농촌맞춤형', '재능나눔'
+];
+
+function isBlocked(item) {
+  const text = ((item.name || '') + ' ' + (item.title || '') + ' ' + (item.summary || '') + ' ' + (item.target || '')).toLowerCase();
+  return BLOCK_KEYWORDS.some(kw => text.includes(kw));
+}
+
 /**
  * 본문 내의 [IMAGE_PROMPT: ...] 형식의 플레이스홀더를 찾아 실시간으로 이미지를 생성하고 치환합니다.
  * (병렬 처리 및 개별 재시도 기능 탑재)
@@ -109,6 +120,12 @@ async function main() {
     for (const item of dataList) {
       const itemName = item.name || item.title || '';
       if (!itemName) continue;
+
+      // 대중성이 낮아 인기 없을 만한 글 필터링
+      if (isBlocked(item)) {
+        console.log(`[인기 필터링] 대중성 낮은 혜택 제외: ${itemName}`);
+        continue;
+      }
 
       let isPosted = false;
       for (const content of existingContents) {
