@@ -460,5 +460,27 @@
     "target": "대학생, 취업준비생, 재직자 등",
     "summary": "대학생 등을 대상으로 실제 광고프로젝트의 실무업무를 지원하는 인재교육사업",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000217"
+  },
+  {
+    "id": 40,
+    "name": "유축기 대여 서비스(처인구)",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경기도 용인시 처인구보건소",
+    "target": "관내 임산부 등록이 되어 있으며, 출산 후 1달 이내인 산모",
+    "summary": "출산 후 1달 이내인 산모 대상 유축기 대여 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000671"
+  },
+  {
+    "id": 41,
+    "name": "용인시 장애인가정 출산지원금",
+    "category": "혜택",
+    "startDate": "2024-11-20",
+    "endDate": "상시",
+    "location": "경기도 용인시",
+    "target": "신생아 출생일을 기준으로 180일 전부터 계속하여 용인시 관내에 주민등록을 두고 거주하는 신생아의 등록장애인 부 또는 모",
+    "summary": "용인시 관내 거주하는 장애인 가정의 부 또는 모에게 신생아 1인당 최대 100만 원의 출산지원금을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000672"
   }
 ]
