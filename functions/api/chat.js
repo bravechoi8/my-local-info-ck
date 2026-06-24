@@ -123,9 +123,8 @@ ${blogDataStr}`;
     });
   } catch (error) {
     return new Response(
-      JSON.stringify({ error: error.message || "Internal Server Error" }),
+      JSON.stringify({ response: `[서버 오류 상세] ${error.message}` }),
       {
-        status: 500,
         headers: { "Content-Type": "application/json" },
       }
     );
