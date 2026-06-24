@@ -49,6 +49,28 @@ export async function onRequestPost(context) {
       "INSERT INTO chat_messages (userId, message, sender, timestamp) VALUES (?, ?, ?, ?)"
     ).bind(finalUserId, message, sender, timestamp).run();
 
+    // 텔레그램 실시간 알림 발송 (손님이 메시지를 보냈을 때만 발송)
+    if (sender === "user") {
+      const telegramBotToken = context.env.TELEGRAM_BOT_TOKEN;
+      const telegramChatId = context.env.TELEGRAM_CHAT_ID;
+
+      if (telegramBotToken && telegramChatId) {
+        const text = `🚨 [척척댕이 1:1 상담 알림]\n\n새로운 대화가 도착했습니다!\n- 사용자 ID: ${finalUserId}\n- 질문 내용: ${message}\n\n👉 어드민 바로가기: https://real-infos.com/admin`;
+        
+        // Cloudflare Workers 환경에서 백그라운드로 텔레그램 API를 빠르게 호출함
+        context.waitUntil(
+          fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: telegramChatId,
+              text: text,
+            }),
+          }).catch(err => console.error("Failed to send telegram notification:", err))
+        );
+      }
+    }
+
     // 3. 최근 100개 외의 오래된 메시지 삭제 (용량 관리)
     await context.env.DB.prepare(`
       DELETE FROM chat_messages WHERE id NOT IN (
