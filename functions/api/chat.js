@@ -133,7 +133,7 @@ ${blogDataStr}`;
 
 // 구글 제미나이 API 직접 호출 함수 (실시간 구글 검색 연동 지원)
 async function callGemini(apiKey, systemPrompt, userMessage, useSearch) {
-  const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-gemini/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
   
   const requestBody = {
     contents: [
