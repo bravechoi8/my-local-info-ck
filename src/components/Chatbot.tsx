@@ -24,7 +24,20 @@ export default function Chatbot({ chatData }: ChatbotProps) {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isHumanMode, setIsHumanMode] = useState(false); // 상담원 모드 여부
+  const [chatUserId, setChatUserId] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // 사용자 고유 방 ID 발급 및 로드
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let uId = localStorage.getItem("cookieChatUserId");
+      if (!uId) {
+        uId = "user_" + Math.random().toString(36).substring(2, 10);
+        localStorage.setItem("cookieChatUserId", uId);
+      }
+      setChatUserId(uId);
+    }
+  }, []);
 
   // 챗봇 창이 열릴 때 최초 웰컴 메시지 등록
   useEffect(() => {
@@ -50,8 +63,9 @@ export default function Chatbot({ chatData }: ChatbotProps) {
 
   // 상담원 대화 데이터를 가져오는 함수 (실시간 동기화)
   const fetchAdminMessages = async () => {
+    if (!chatUserId) return;
     try {
-      const res = await fetch("/api/chat-poll?t=" + Date.now(), { cache: "no-store" });
+      const res = await fetch("/api/chat-poll?userId=" + chatUserId + "&t=" + Date.now(), { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         // 응답이 배열 [{ sender: "admin", text: "..." }] 또는 { messages: [...] } 인지 유연하게 파싱
@@ -162,7 +176,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: userText, sender: "user" }),
+          body: JSON.stringify({ userId: chatUserId, message: userText, sender: "user" }),
         });
 
         if (!res.ok) {

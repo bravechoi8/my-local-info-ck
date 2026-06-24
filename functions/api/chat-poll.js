@@ -11,21 +11,54 @@ export async function onRequestGet(context) {
       );
     }
 
-    // 1. D1에서 대화 내역 조회 (시간 순 정렬)
-    const { results } = await context.env.DB.prepare(
-      "SELECT message, sender, timestamp FROM chat_messages ORDER BY timestamp ASC LIMIT 100"
-    ).all();
-
-    // 2. 쿼리 스트링의 sender 필터가 있는 경우 처리
     const { searchParams } = new URL(context.request.url);
-    const filterSender = searchParams.get("sender"); // 'user' 또는 'admin'
+    const userId = searchParams.get("userId");
+    const isAdmin = searchParams.get("admin") === "true";
 
-    let filteredMessages = results;
-    if (filterSender) {
-      filteredMessages = results.filter((m) => m.sender === filterSender);
+    // 1. 관리자 룸 리스팅 요청인 경우 (admin=true)
+    if (isAdmin) {
+      // 각 유저별 가장 최근 대화 메시지, 발신자 및 그 시각을 그룹화하여 최신 대화 순으로 정렬해 목록 추출
+      const { results } = await context.env.DB.prepare(`
+        SELECT m.userId, m.message, m.sender, m.timestamp
+        FROM chat_messages m
+        INNER JOIN (
+          SELECT userId, MAX(timestamp) as max_ts
+          FROM chat_messages
+          GROUP BY userId
+        ) t ON m.userId = t.userId AND m.timestamp = t.max_ts
+        ORDER BY m.timestamp DESC
+      `).all();
+
+      return new Response(JSON.stringify(results), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          "Pragma": "no-cache",
+          "Expires": "0"
+        },
+      });
     }
 
-    return new Response(JSON.stringify(filteredMessages), {
+    // 2. 특정 유저 대화 폴링 요청인 경우 (userId 제공)
+    if (userId) {
+      const { results } = await context.env.DB.prepare(
+        "SELECT userId, message, sender, timestamp FROM chat_messages WHERE userId = ? ORDER BY timestamp ASC LIMIT 100"
+      ).bind(userId).all();
+
+      return new Response(JSON.stringify(results), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+          "Pragma": "no-cache",
+          "Expires": "0"
+        },
+      });
+    }
+
+    // 3. 둘 다 없는 경우 빈 배열 응답
+    return new Response(JSON.stringify([]), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
