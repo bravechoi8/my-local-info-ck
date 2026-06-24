@@ -20,6 +20,8 @@ interface Message {
 export default function Chatbot({ chatData }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // 챗봇 창이 열릴 때 최초 웰컴 메시지 등록
@@ -29,23 +31,24 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         {
           id: 1,
           sender: "bot",
-          text: "안녕하세요! '리얼인포' AI 상담원입니다. 아래 질문 리스트에서 궁금하신 내용을 선택하시면 자세히 안내해 드릴게요!",
+          text: "안녕하세요! '리얼인포'의 친절한 정보 가이드 '리얼 알리미'입니다. 아래 질문 리스트에서 궁금하신 내용을 선택하시거나, 입력창에 직접 질문을 남겨주시면 자세히 답변해 드릴게요!",
         },
       ]);
     }
   }, [messages]);
 
-  // 대화가 추가될 때마다 최하단으로 부드러운 스크롤 이동
+  // 대화가 추가되거나 로딩 상태가 바뀔 때마다 최하단으로 부드러운 스크롤 이동
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
       }, 50);
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, isLoading]);
 
-  // 질문 버튼 클릭 시 처리 로직
+  // 자주 묻는 질문 버튼 클릭 시 처리 로직
   const handleQuestionClick = (question: string, answer: string) => {
+    if (isLoading) return; // 로딩 중에는 클릭 방지
     const userMsgId = Date.now();
     const botMsgId = userMsgId + 1;
 
@@ -64,12 +67,71 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     }, 300);
   };
 
+  // 사용자가 텍스트를 입력해서 전송할 때 처리 로직
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isLoading) return;
+
+    const userText = inputValue.trim();
+    const userMsgId = Date.now();
+
+    // 1. 유저의 입력 질문 추가
+    setMessages((prev) => [
+      ...prev,
+      { id: userMsgId, sender: "user", text: userText },
+    ]);
+
+    setInputValue("");
+    setIsLoading(true);
+
+    try {
+      // 2. /api/chat 엔드포인트로 POST 요청 전송
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userText }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      
+      // Workers AI의 응답 형태(data.response 또는 data.result.response)에서 답변 텍스트 추출
+      const botText =
+        data.response ||
+        data.result?.response ||
+        "죄송합니다. 답변을 처리하지 못했습니다. 다시 시도해 주세요.";
+
+      // 3. AI 답변 추가
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now(), sender: "bot", text: botText },
+      ]);
+    } catch (error) {
+      console.error("AI chat error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          sender: "bot",
+          text: "서버와 통신하는 과정에서 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
-      {/* 1. 플로팅 챗봇 버튼 */}
+      {/* 1. 플로팅 챗봇 버튼 (오렌지색 테마) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 p-4 bg-[#3182F6] hover:bg-[#1b64da] text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center focus:outline-none"
+        className="fixed bottom-6 right-6 z-50 p-4 bg-[#FF8A00] hover:bg-[#e07b00] text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center focus:outline-none"
         aria-label="채팅 상담 열기"
       >
         {isOpen ? (
@@ -117,13 +179,13 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         {/* 채팅창 헤더 */}
         <div className="flex items-center justify-between px-4 py-4 bg-white border-b border-[#F2F4F6] shrink-0">
           <div className="flex items-center gap-2">
-            {/* 챗봇 프로필 아이콘 영역 */}
-            <div className="relative w-8 h-8 rounded-full bg-[#E5E8EB] flex items-center justify-center text-sm font-bold text-[#4E5968]">
-              RI
+            {/* 챗봇 프로필 아이콘 영역 (오렌지색 테마) */}
+            <div className="relative w-8 h-8 rounded-full bg-[#FFEEDC] flex items-center justify-center text-sm font-bold text-[#FF8A00]">
+              알
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#2EBD59] rounded-full border-2 border-white"></span>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#191F28]">리얼인포 AI 상담원</h3>
+              <h3 className="text-sm font-bold text-[#191F28]">리얼 알리미</h3>
               <p className="text-[10px] text-[#2EBD59] font-semibold">온라인 · 실시간 답변</p>
             </div>
           </div>
@@ -152,8 +214,8 @@ export default function Chatbot({ chatData }: ChatbotProps) {
               {msg.sender === "bot" ? (
                 // 봇의 메시지 (왼쪽 배치)
                 <div className="flex items-start gap-2 max-w-[85%]">
-                  <div className="w-6 h-6 rounded-full bg-[#E5E8EB] flex items-center justify-center text-[10px] font-bold text-[#8B95A1] shrink-0">
-                    AI
+                  <div className="w-6 h-6 rounded-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00] shrink-0">
+                    알
                   </div>
                   <div className="bg-white text-[#191F28] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs leading-relaxed shadow-sm whitespace-pre-line">
                     {msg.text}
@@ -167,26 +229,84 @@ export default function Chatbot({ chatData }: ChatbotProps) {
               )}
             </div>
           ))}
+
+          {/* AI 답변 로딩 중 스피너 표시 */}
+          {isLoading && (
+            <div className="flex items-start gap-2 max-w-[85%]">
+              <div className="w-6 h-6 rounded-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00] shrink-0">
+                알
+              </div>
+              <div className="bg-white text-[#8B95A1] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs leading-relaxed shadow-sm flex items-center gap-1.5 animate-pulse">
+                <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                <span className="text-[10px] ml-1 text-[#8B95A1] font-semibold">알리미가 생각하는 중...</span>
+              </div>
+            </div>
+          )}
+
           <div ref={messagesEndRef} />
         </div>
 
         {/* 채팅창 하단: 질문 버튼 목록 */}
-        <div className="bg-white border-t border-[#F2F4F6] p-4 shrink-0 flex flex-col gap-2 max-h-[180px] overflow-y-auto">
-          <p className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider mb-1">
+        <div className="bg-white border-t border-[#F2F4F6] p-3 shrink-0 flex flex-col gap-1.5 max-h-[140px] overflow-y-auto">
+          <p className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">
             자주 묻는 질문
           </p>
-          <div className="space-y-1.5">
+          <div className="flex flex-col gap-1">
             {chatData.map((item, index) => (
               <button
                 key={index}
+                type="button"
+                disabled={isLoading}
                 onClick={() => handleQuestionClick(item.question, item.answer)}
-                className="w-full text-left text-xs bg-[#F9FAFB] hover:bg-[#F2F4F6] text-[#4E5968] hover:text-[#191F28] py-2.5 px-3 rounded-xl border border-[#F2F4F6] transition-all duration-200 line-clamp-1 font-medium focus:outline-none"
+                className="w-full text-left text-[11px] bg-[#F9FAFB] hover:bg-[#F2F4F6] disabled:opacity-50 disabled:cursor-not-allowed text-[#4E5968] hover:text-[#191F28] py-2 px-3 rounded-xl border border-[#F2F4F6] transition-all duration-200 line-clamp-1 font-medium focus:outline-none"
               >
                 {item.question}
               </button>
             ))}
           </div>
         </div>
+
+        {/* 직접 텍스트 질문 입력창 추가 */}
+        <form
+          onSubmit={handleSend}
+          className="border-t border-[#F2F4F6] p-3 bg-white flex items-center gap-2 shrink-0"
+        >
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="알리미에게 무엇이든 물어보세요..."
+            disabled={isLoading}
+            className="flex-1 bg-[#F2F4F6] border-0 outline-none rounded-xl py-2 px-3 text-xs text-[#191F28] placeholder-[#8B95A1] focus:ring-1 focus:ring-[#FF8A00] disabled:opacity-60"
+          />
+          <button
+            type="submit"
+            disabled={isLoading || !inputValue.trim()}
+            className={`p-2 rounded-xl transition-all duration-200 flex items-center justify-center ${
+              inputValue.trim() && !isLoading
+                ? "bg-[#FF8A00] text-white hover:bg-[#e07b00]"
+                : "bg-[#F2F4F6] text-[#8B95A1] cursor-not-allowed"
+            }`}
+            aria-label="메시지 전송"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+              />
+            </svg>
+          </button>
+        </form>
       </div>
     </>
   );
