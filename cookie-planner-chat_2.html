@@ -1073,16 +1073,13 @@ async function askCookie(messages){
     headers["anthropic-version"]="2023-06-01";
     headers["anthropic-dangerous-direct-browser-access"]="true";
   }
-  const isAlt = inArtifact();
   const requestBody = {
     model: "claude-sonnet-4-6",
     max_tokens: 1200,
     system: SYSTEM,
-    messages: messages
+    messages: messages,
+    tools: [{type:"web_search_20250305",name:"web_search",max_uses:3}]
   };
-  if (isAlt) {
-    requestBody.tools = [{type:"web_search_20250305",name:"web_search",max_uses:3}];
-  }
   // web_search is a server-side tool: Claude runs the search and returns the final text in one response.
   const res=await fetch("https://api.anthropic.com/v1/messages",{
     method:"POST",headers,
@@ -1321,16 +1318,13 @@ async function weatherViaClaude(cityText){
   const sys='You are a weather data API. Use web search to find the CURRENT weather for the city named, then output ONLY one JSON object and nothing else (no prose, no markdown fences, no commentary before or after). Schema exactly: {"name":string (city name, Korean if natural),"country":string,"temp":number,"feels":number,"hi":number,"lo":number,"humidity":number,"wind":number,"pop":number,"code":number}. temp/feels/hi/lo are Celsius. humidity and pop are percent 0-100. wind is km/h. code is a WMO weather code (0 clear,1 mainly clear,2 partly cloudy,3 overcast,45 fog,51/53/55 drizzle,61/63/65 rain,71/73/75 snow,80/81/82 showers,95 thunderstorm). Output the JSON object as the final thing in your reply.';
   const msgs=[{role:'user',content:cityText+' 의 지금 현재 날씨를 검색해서 JSON으로만 답해줘.'}];
   let res;
-  const isAlt = inArtifact();
   const requestBody = {
     model: "claude-sonnet-4-6",
     max_tokens: 1500,
     system: sys,
-    messages: msgs
+    messages: msgs,
+    tools: [{type:"web_search_20250305",name:"web_search",max_uses:3}]
   };
-  if (isAlt) {
-    requestBody.tools = [{type:"web_search_20250305",name:"web_search",max_uses:3}];
-  }
   try{
     res=await fetch("https://api.anthropic.com/v1/messages",{
       method:"POST",
