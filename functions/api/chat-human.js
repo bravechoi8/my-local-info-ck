@@ -1,3 +1,4 @@
+// D1 Database integration for real-time 1:1 chat support
 export async function onRequestPost(context) {
   try {
     const { message, sender } = await context.request.json();
