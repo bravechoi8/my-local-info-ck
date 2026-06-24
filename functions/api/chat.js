@@ -77,34 +77,21 @@ export async function onRequestPost(context) {
       .map((x) => x.item);
 
     let botAnswer = "";
+    const apiKey = context.env.GEMINI_API_KEY || "AIzaSyCgyZMALhpUY-kpzPa9VflkbkkL_vjp4-o";
 
-    // 3. 분기 처리: 블로그 내 관련 정보의 존재 여부에 따라 프롬프트와 접두사 조정
+    // 3. 분기 처리: 블로그 내 관련 정보의 존재 여부에 따라 프롬프트와 구글 실시간 검색 여부 세팅
     if (top3.length === 0) {
-      // ⚠️ 블로그에 관련 정보가 없는 경우: 일반 AI로 우회 답변 제공
+      // ⚠️ 블로그에 관련 정보가 없는 경우: 구글 실시간 검색(google_search)을 켜서 인터넷 검색 결과를 기반으로 답변
       const systemPrompt = `You are an AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
-Answer the user's question to the best of your knowledge as a helpful assistant.`;
+Answer the user's question accurately using Google Search grounding.`;
 
-      const response = await context.env.AI.run(
-        "@cf/meta/llama-3.1-8b-instruct-fast",
-        {
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: message },
-          ],
-          max_tokens: 150,
-        }
-      );
-
-      let rawAnswer = response.response || response.result?.response || "";
-      rawAnswer = stripMarkdown(rawAnswer);
-
-      // 사용자가 요청한 접두사 문구 붙이기
-      botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${rawAnswer}`;
+      const rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
+      botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${stripMarkdown(rawAnswer)}`;
     } else {
-      // 📝 블로그에 관련 정보가 있는 경우: 블로그 데이터를 최우선 기반으로 요약 답변
+      // 📝 블로그에 관련 정보가 있는 경우: 블로그 데이터를 최우선 기반으로 요약 답변 (구글 검색 미사용)
       const blogDataStr = top3
         .map((item, idx) => {
           const title = item.title || item.name || "제목 없음";
@@ -125,18 +112,7 @@ Analyze the user's question and the provided [블로그 데이터] carefully.
 [블로그 데이터]
 ${blogDataStr}`;
 
-      const response = await context.env.AI.run(
-        "@cf/meta/llama-3.1-8b-instruct-fast",
-        {
-          messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: message },
-          ],
-          max_tokens: 150,
-        }
-      );
-
-      let rawAnswer = response.response || response.result?.response || "";
+      const rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
       botAnswer = stripMarkdown(rawAnswer);
     }
 
@@ -154,6 +130,42 @@ ${blogDataStr}`;
       }
     );
   }
+}
+
+// 구글 제미나이 API 직접 호출 함수 (실시간 구글 검색 연동 지원)
+async function callGemini(apiKey, systemPrompt, userMessage, useSearch) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  
+  const requestBody = {
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: userMessage }]
+      }
+    ],
+    systemInstruction: {
+      parts: [{ text: systemPrompt }]
+    }
+  };
+
+  // 실시간 구글 검색(Google Search Grounding) 활성화
+  if (useSearch) {
+    requestBody.tools = [{ google_search: {} }];
+  }
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(requestBody)
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Gemini API Error: ${res.status} - ${errText}`);
+  }
+
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 }
 
 // AI 응답 텍스트에서 마크다운 기호를 지워주는 함수
