@@ -119,8 +119,8 @@ export default function Chatbot({ chatData }: ChatbotProps) {
       // 즉시 한 번 동기화 실행
       fetchAdminMessages();
 
-      // 0.5초 주기로 빠르게 갱신
-      intervalId = setInterval(fetchAdminMessages, 500);
+      // 1초 주기로 갱신
+      intervalId = setInterval(fetchAdminMessages, 1000);
     }
 
     return () => {

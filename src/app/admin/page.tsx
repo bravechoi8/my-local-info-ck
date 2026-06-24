@@ -101,12 +101,12 @@ export default function AdminPage() {
     };
   }, [isAuthorized]);
 
-  // 6. 활성화된 방 0.5초 주기 폴링
+  // 6. 활성화된 방 1초 주기 폴링
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (isAuthorized && selectedUserId) {
       fetchMessages(selectedUserId);
-      intervalId = setInterval(() => fetchMessages(selectedUserId), 500);
+      intervalId = setInterval(() => fetchMessages(selectedUserId), 1000);
     } else {
       setMessages([]);
     }
