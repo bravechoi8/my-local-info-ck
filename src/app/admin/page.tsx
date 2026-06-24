@@ -158,6 +158,35 @@ export default function AdminPage() {
     }
   };
 
+  const handleDeleteRoom = async (userId: string) => {
+    if (!confirm("정말 이 대화방을 삭제하시겠습니까?\n삭제된 대화는 복구할 수 없습니다.")) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/chat-poll?userId=${userId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      // 목록 갱신
+      await fetchRooms();
+
+      // 만약 방금 지운 방이 활성화되어 있었다면 선택 해제
+      if (selectedUserId === userId) {
+        setSelectedUserId(null);
+        setMessages([]);
+      }
+      alert("대화방이 정상적으로 삭제되었습니다.");
+    } catch (error) {
+      console.error("Failed to delete room:", error);
+      alert("대화방 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   // 시간 포맷팅 함수
   const formatTime = (ts: number) => {
     if (!ts) return "";
@@ -288,13 +317,28 @@ export default function AdminPage() {
                       isActive ? "bg-[#FFEEDC]" : "hover:bg-[#F9FAFB]"
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#191F28] truncate max-w-[150px]">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-[#191F28] truncate max-w-[120px]">
                         {room.userId.replace("user_", "손님 #")}
                       </span>
-                      <span className="text-[10px] text-[#8B95A1] font-medium shrink-0">
-                        {formatTime(room.timestamp)}
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="text-[10px] text-[#8B95A1] font-medium">
+                          {formatTime(room.timestamp)}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteRoom(room.userId);
+                          }}
+                          className="p-1 text-[#8B95A1] hover:text-[#F04452] rounded transition-colors focus:outline-none"
+                          title="대화방 삭제"
+                          aria-label="대화방 삭제"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                     <p className="text-xs text-[#4E5968] truncate pr-2">
                       {room.sender === "admin" ? "[상담원] " : ""}{room.message}
@@ -322,19 +366,33 @@ export default function AdminPage() {
                 {messages.map((msg) => (
                   <div key={msg.id} className="flex flex-col">
                     {msg.sender === "admin" ? (
-                      <div className="flex items-start gap-2.5 max-w-[85%]">
-                        <div className="w-8 h-8 rounded-full bg-[#FFEEDC] flex items-center justify-center text-xs font-bold text-[#FF8A00] shrink-0 shadow-sm">
-                          상
+                      <div className="flex items-end gap-2 max-w-[85%]">
+                        <div className="flex items-start gap-2.5">
+                          <div className="w-8 h-8 rounded-full bg-[#FFEEDC] flex items-center justify-center text-xs font-bold text-[#FF8A00] shrink-0 shadow-sm">
+                            상
+                          </div>
+                          <div className="bg-white text-[#191F28] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs sm:text-sm leading-relaxed shadow-sm whitespace-pre-line">
+                            {msg.text}
+                          </div>
                         </div>
-                        <div className="bg-white text-[#191F28] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs sm:text-sm leading-relaxed shadow-sm whitespace-pre-line">
-                          {msg.text}
-                        </div>
+                        {msg.id > 1000000000000 && (
+                          <span className="text-[9px] text-[#8B95A1] font-semibold shrink-0 mb-1">
+                            {formatTime(msg.id)}
+                          </span>
+                        )}
                       </div>
                     ) : (
                       <div className="flex flex-col items-end ml-auto max-w-[85%]">
                         <span className="text-[10px] text-[#8B95A1] font-semibold mb-1 pr-1">고객 문의</span>
-                        <div className="bg-[#3182F6] text-white rounded-2xl rounded-tr-none p-3 text-xs sm:text-sm leading-relaxed shadow-sm">
-                          {msg.text}
+                        <div className="flex items-end gap-2 justify-end w-full">
+                          {msg.id > 1000000000000 && (
+                            <span className="text-[9px] text-[#8B95A1] font-semibold shrink-0 mb-1">
+                              {formatTime(msg.id)}
+                            </span>
+                          )}
+                          <div className="bg-[#3182F6] text-white rounded-2xl rounded-tr-none p-3 text-xs sm:text-sm leading-relaxed shadow-sm text-left">
+                            {msg.text}
+                          </div>
                         </div>
                       </div>
                     )}

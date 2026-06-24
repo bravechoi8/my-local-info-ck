@@ -77,3 +77,48 @@ export async function onRequestGet(context) {
     );
   }
 }
+
+export async function onRequestDelete(context) {
+  try {
+    if (!context.env.DB) {
+      return new Response(
+        JSON.stringify({ error: "DB (D1) 바인딩이 설정되지 않았습니다." }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    const { searchParams } = new URL(context.request.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+      return new Response(
+        JSON.stringify({ error: "userId 파라미터가 누락되었습니다." }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // 해당 유저의 대화 내용 전체 삭제
+    await context.env.DB.prepare(
+      "DELETE FROM chat_messages WHERE userId = ?"
+    ).bind(userId).run();
+
+    return new Response(
+      JSON.stringify({ success: true, message: "대화방이 삭제되었습니다." }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-store, no-cache, must-revalidate",
+        },
+      }
+    );
+  } catch (error) {
+    return new Response(
+      JSON.stringify({ error: error.message || "Internal Server Error" }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+}

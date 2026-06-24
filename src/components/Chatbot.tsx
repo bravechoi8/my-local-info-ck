@@ -267,6 +267,13 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     }
   };
 
+  const formatTime = (msg: Message) => {
+    const ts = msg.timestamp || (msg.id > 1000000000000 ? msg.id : null);
+    if (!ts) return "";
+    const date = new Date(ts);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   return (
     <>
       {/* 1. 플로팅 챗봇 버튼 (오렌지색 테마) */}
@@ -358,18 +365,30 @@ export default function Chatbot({ chatData }: ChatbotProps) {
             <div key={msg.id} className="flex flex-col">
               {msg.sender === "bot" || msg.sender === "admin" ? (
                 // 봇 또는 관리자 상담원 메시지 (왼쪽 배치)
-                <div className="flex items-start gap-2 max-w-[85%]">
-                  <div className="w-6 h-6 rounded-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00] shrink-0">
+                <div className="flex items-end gap-1.5 max-w-[85%]">
+                  <div className="w-6 h-6 rounded-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00] shrink-0 self-start">
                     {msg.sender === "admin" ? "상" : "알"}
                   </div>
                   <div className="bg-white text-[#191F28] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs leading-relaxed shadow-sm whitespace-pre-line">
                     {msg.text}
                   </div>
+                  {formatTime(msg) && (
+                    <span className="text-[9px] text-[#8B95A1] font-semibold shrink-0 mb-1">
+                      {formatTime(msg)}
+                    </span>
+                  )}
                 </div>
               ) : (
                 // 유저의 메시지 (오른쪽 배치)
-                <div className="bg-[#3182F6] text-white rounded-2xl rounded-tr-none p-3 text-xs leading-relaxed shadow-sm max-w-[85%] ml-auto">
-                  {msg.text}
+                <div className="flex items-end gap-1.5 max-w-[85%] ml-auto justify-end">
+                  {formatTime(msg) && (
+                    <span className="text-[9px] text-[#8B95A1] font-semibold shrink-0 mb-1">
+                      {formatTime(msg)}
+                    </span>
+                  )}
+                  <div className="bg-[#3182F6] text-white rounded-2xl rounded-tr-none p-3 text-xs leading-relaxed shadow-sm text-left">
+                    {msg.text}
+                  </div>
                 </div>
               )}
             </div>
