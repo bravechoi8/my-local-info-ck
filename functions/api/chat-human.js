@@ -57,6 +57,8 @@ export async function onRequestPost(context) {
       if (telegramBotToken && telegramChatId) {
         const text = `🚨 [척척댕이 1:1 상담 알림]\n\n새로운 대화가 도착했습니다!\n- 사용자 ID: ${finalUserId}\n- 질문 내용: ${message}\n\n👉 어드민 바로가기: https://real-infos.com/admin`;
         
+        console.log(`[Telegram Alert] Sending notification to chat ${telegramChatId}...`);
+        
         // Cloudflare Workers 환경에서 백그라운드로 텔레그램 API를 빠르게 호출함
         context.waitUntil(
           fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
@@ -66,8 +68,17 @@ export async function onRequestPost(context) {
               chat_id: telegramChatId,
               text: text,
             }),
-          }).catch(err => console.error("Failed to send telegram notification:", err))
+          })
+          .then(res => {
+            if (!res.ok) {
+              return res.text().then(t => console.error(`Telegram API Error: ${res.status} - ${t}`));
+            }
+            console.log("[Telegram Alert] Notification sent successfully!");
+          })
+          .catch(err => console.error("Failed to send telegram notification:", err))
         );
+      } else {
+        console.log("[Telegram Alert] Disabled: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing.");
       }
     }
 
