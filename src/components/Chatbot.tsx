@@ -146,13 +146,13 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     // 상담원 대화 모드인 경우
     if (isHumanMode) {
       try {
-        // /api/chat-human으로 POST 요청
+        // /api/chat-human으로 POST 요청 (sender: "user" 추가)
         const res = await fetch("/api/chat-human", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message: userText }),
+          body: JSON.stringify({ message: userText, sender: "user" }),
         });
 
         if (!res.ok) {
