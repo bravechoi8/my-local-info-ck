@@ -1,6 +1,2 @@
 [ai]
 binding = "AI"
-
-[[kv_namespaces]]
-binding = "CHAT_KV"
-id = "0d5679d3e0334d8eb8508c9595d88e55"
