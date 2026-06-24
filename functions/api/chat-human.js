@@ -24,18 +24,39 @@ export async function onRequestPost(context) {
     }
 
     const timestamp = Date.now();
-    const key = `msg_${timestamp}`;
     const value = {
       message,
       sender,
       timestamp,
     };
 
-    // Cloudflare KV 저장소에 저장
-    await context.env.CHAT_KV.put(key, JSON.stringify(value));
+    // 1. 기존 대화 목록 가져오기
+    let history = [];
+    const existingStr = await context.env.CHAT_KV.get("chat_history");
+    if (existingStr) {
+      try {
+        history = JSON.parse(existingStr);
+        if (!Array.isArray(history)) {
+          history = [];
+        }
+      } catch (e) {
+        history = [];
+      }
+    }
+
+    // 2. 새 메시지 추가
+    history.push(value);
+
+    // 3. 최근 100개까지만 유지하여 용량 최적화
+    if (history.length > 100) {
+      history = history.slice(history.length - 100);
+    }
+
+    // 4. KV 저장소에 덮어쓰기
+    await context.env.CHAT_KV.put("chat_history", JSON.stringify(history));
 
     return new Response(
-      JSON.stringify({ success: true, key, data: value }),
+      JSON.stringify({ success: true, key: "chat_history", data: value }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },

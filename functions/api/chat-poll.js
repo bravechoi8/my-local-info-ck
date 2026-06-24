@@ -11,28 +11,24 @@ export async function onRequestGet(context) {
       );
     }
 
-    // 1. "msg_" 로 시작하는 모든 키 가져오기
-    const listResult = await context.env.CHAT_KV.list({ prefix: "msg_" });
-    const keys = listResult.keys; // [{ name: "msg_171923..." }, ...]
-
-    // 2. 각 키에 매핑된 데이터 값(value)을 가져오기
-    const messages = [];
-    for (const key of keys) {
-      const valStr = await context.env.CHAT_KV.get(key.name);
-      if (valStr) {
-        try {
-          const parsed = JSON.parse(valStr);
-          messages.push(parsed);
-        } catch (e) {
-          console.error(`Failed to parse message value for key ${key.name}:`, e);
+    // 1. "chat_history" 키 하나만 가져오기
+    let messages = [];
+    const historyStr = await context.env.CHAT_KV.get("chat_history");
+    if (historyStr) {
+      try {
+        messages = JSON.parse(historyStr);
+        if (!Array.isArray(messages)) {
+          messages = [];
         }
+      } catch (e) {
+        messages = [];
       }
     }
 
-    // 3. 시간 순서대로 정렬 (과거 ➡️ 최신)
+    // 2. 시간 순서대로 정렬
     messages.sort((a, b) => a.timestamp - b.timestamp);
 
-    // 4. 쿼리 스트링의 sender 필터가 있는 경우 처리
+    // 3. 쿼리 스트링의 sender 필터가 있는 경우 처리
     const { searchParams } = new URL(context.request.url);
     const filterSender = searchParams.get("sender"); // 'user' 또는 'admin'
 
