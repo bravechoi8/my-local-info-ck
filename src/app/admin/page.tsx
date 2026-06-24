@@ -52,22 +52,21 @@ export default function AdminPage() {
         const data = await res.json();
         const list = Array.isArray(data) ? data : data.messages || [];
 
-        setMessages((prev) => {
-          // 중복 렌더링 방지를 위해 기존 메시지들의 텍스트 세트 생성
-          const existingTexts = prev.map((m) => m.text);
+        // 최초 공지사항을 첫 줄에 둔 상태로 서버의 최신 데이터를 통째로 덮어씌웁니다.
+        const formattedList = list.map((m: any) => ({
+          id: m.timestamp,
+          sender: m.sender as "user" | "admin",
+          text: m.message,
+        }));
 
-          // 서버에서 받은 전체 대화 내역 중 화면에 없는 메시지만 필터링해서 추가
-          const newMsgs = list
-            .filter((m: any) => !existingTexts.includes(m.message))
-            .map((m: any) => ({
-              id: Date.now() + Math.random(),
-              sender: m.sender as "user" | "admin",
-              text: m.message,
-            }));
-
-          if (newMsgs.length === 0) return prev;
-          return [...prev, ...newMsgs];
-        });
+        setMessages([
+          {
+            id: 1,
+            sender: "admin",
+            text: "고객 상담 관리 모드가 시작되었습니다. 2초 주기로 새 문의 사항을 동기화합니다.",
+          },
+          ...formattedList,
+        ]);
       }
     } catch (error) {
       console.error("Admin poll error:", error);
@@ -99,14 +98,6 @@ export default function AdminPage() {
     if (!inputValue.trim() || isLoading) return;
 
     const replyText = inputValue.trim();
-    const replyMsgId = Date.now();
-
-    // 관리자 메시지를 로컬 화면에 즉시 노출 (좌측 정렬)
-    setMessages((prev) => [
-      ...prev,
-      { id: replyMsgId, sender: "admin", text: replyText },
-    ]);
-
     setInputValue("");
     setIsLoading(true);
 

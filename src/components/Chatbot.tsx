@@ -15,6 +15,7 @@ interface Message {
   id: number;
   sender: "user" | "bot" | "admin";
   text: string;
+  timestamp?: number;
 }
 
 export default function Chatbot({ chatData }: ChatbotProps) {
@@ -57,18 +58,20 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         const list = Array.isArray(data) ? data : data.messages || [];
 
         setMessages((prev) => {
-          // 중복 렌더링 방지를 위해 기존 admin 메시지 텍스트 리스트 추출
-          const existingAdminTexts = prev
+          // 중복 렌더링 방지를 위해 기존 admin 메시지의 timestamp 리스트 추출
+          const existingAdminTimestamps = prev
             .filter((m) => m.sender === "admin")
-            .map((m) => m.text);
+            .map((m) => m.timestamp)
+            .filter(Boolean);
 
-          // 새로 들어온 admin 메시지만 필터링
+          // 새로 들어온 admin 메시지만 필터링 (timestamp 기준)
           const newAdminMsgs = list
-            .filter((m: any) => m.sender === "admin" && !existingAdminTexts.includes(m.message))
+            .filter((m: any) => m.sender === "admin" && !existingAdminTimestamps.includes(m.timestamp))
             .map((m: any) => ({
-              id: Date.now() + Math.random(),
+              id: m.timestamp,
               sender: "admin" as const,
               text: m.message,
+              timestamp: m.timestamp,
             }));
 
           if (newAdminMsgs.length === 0) return prev;
