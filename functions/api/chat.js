@@ -12,6 +12,12 @@ export async function onRequestPost(context) {
       weekday: "long",
     });
 
+    // 한국 전통 12지신(띠) 계산 로직
+    const seoulYear = parseInt(now.toLocaleDateString("ko-KR", { timeZone: "Asia/Seoul", year: "numeric" }));
+    const zodiacs = ["쥐띠", "소띠", "호랑이띠", "토끼띠", "용띠", "뱀띠", "말띠", "양띠", "원숭이띠", "닭띠", "개띠", "돼지띠"];
+    const currentZodiac = zodiacs[(seoulYear - 4) % 12];
+    const dateWithZodiac = `${currentDate} (올해 띠: ${currentZodiac})`;
+
     if (!message) {
       return new Response(
         JSON.stringify({ error: "Message is required" }),
@@ -78,7 +84,7 @@ export async function onRequestPost(context) {
       const systemPrompt = `You are an AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
-Today's date is ${currentDate}. Always use this as the current date when answering questions about time or year.
+Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 Answer the user's question to the best of your knowledge as a helpful assistant.`;
 
       const response = await context.env.AI.run(
@@ -110,7 +116,7 @@ Answer the user's question to the best of your knowledge as a helpful assistant.
       const systemPrompt = `You are a helpful AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
-Today's date is ${currentDate}. Always use this as the current date when answering questions about time or year.
+Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 
 Analyze the user's question and the provided [블로그 데이터] carefully.
 - If the [블로그 데이터] contains the exact, direct, and correct information to answer the user's question, construct your response using only that data. Do NOT add any prefix.
