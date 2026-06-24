@@ -73,6 +73,9 @@ jobs:
           NEXT_PUBLIC_ADSENSE_ID: ca-pub-3945445534439467
           NEXT_PUBLIC_COUPANG_PARTNER_ID: 나중에_입력
 
+      - name: Functions 폴더를 out 폴더 내부로 복사 (Pages Functions 동기화용)
+        run: cp -r functions out/functions
+
       - name: Cloudflare Pages 배포
         run: npx wrangler pages deploy out --project-name=my-local-info-ck
         env:
