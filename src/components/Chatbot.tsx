@@ -276,42 +276,50 @@ export default function Chatbot({ chatData }: ChatbotProps) {
 
   return (
     <>
-      {/* 1. 플로팅 챗봇 버튼 (오렌지색 테마) */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 p-4 bg-[#FF8A00] hover:bg-[#e07b00] text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center focus:outline-none"
-        aria-label="채팅 상담 열기"
-      >
-        {isOpen ? (
-          // 닫기 아이콘 SVG
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          // 채팅 아이콘 SVG
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
-            />
-          </svg>
+      {/* 1. 플로팅 챗봇 버튼 (귀여운 강아지 이미지와 챗봇 텍스트 말풍선 라벨) */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        {/* '챗봇' 안내 말풍선 (손님이 한눈에 알아볼 수 있도록) */}
+        {!isOpen && (
+          <div className="relative bg-white text-[#FF8A00] border border-[#FFEEDC] px-3.5 py-2 rounded-2xl shadow-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 animate-pulse">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2EBD59] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2EBD59]"></span>
+            </span>
+            알리미 챗봇 💬
+            {/* 말풍선 꼬리 */}
+            <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px] border-l-white"></div>
+          </div>
         )}
-      </button>
+
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative w-14 h-14 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 flex items-center justify-center focus:outline-none overflow-hidden border-2 border-[#FF8A00] bg-white"
+          aria-label="채팅 상담 열기"
+        >
+          {isOpen ? (
+            // 닫기 상태일 때는 흰 배경에 오렌지색 X 아이콘
+            <div className="w-full h-full bg-[#FF8A00] flex items-center justify-center text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+          ) : (
+            // 열기 전에는 귀여운 강아지 이미지 표시
+            <img
+              src="/images/chatbot-icon.jpg"
+              alt="리얼 알리미 챗봇 아이콘"
+              className="w-full h-full object-cover"
+            />
+          )}
+        </button>
+      </div>
 
       {/* 2. 채팅창 UI */}
       <div
@@ -327,9 +335,19 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         {/* 채팅창 헤더 */}
         <div className="flex items-center justify-between px-4 py-4 bg-white border-b border-[#F2F4F6] shrink-0">
           <div className="flex items-center gap-2">
-            {/* 챗봇 프로필 아이콘 영역 (오렌지색 테마) */}
-            <div className="relative w-8 h-8 rounded-full bg-[#FFEEDC] flex items-center justify-center text-sm font-bold text-[#FF8A00]">
-              {isHumanMode ? "상" : "알"}
+            {/* 챗봇 프로필 아이콘 영역 (귀여운 강아지 이미지로 변경) */}
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#FFEEDC] shrink-0 bg-white">
+              {isHumanMode ? (
+                <div className="w-full h-full bg-[#FFEEDC] flex items-center justify-center text-sm font-bold text-[#FF8A00]">
+                  상
+                </div>
+              ) : (
+                <img
+                  src="/images/chatbot-icon.jpg"
+                  alt="리얼 알리미"
+                  className="w-full h-full object-cover"
+                />
+              )}
               <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#2EBD59] rounded-full border-2 border-white"></span>
             </div>
             <div>
@@ -366,8 +384,16 @@ export default function Chatbot({ chatData }: ChatbotProps) {
               {msg.sender === "bot" || msg.sender === "admin" ? (
                 // 봇 또는 관리자 상담원 메시지 (왼쪽 배치)
                 <div className="flex items-end gap-1.5 max-w-[85%]">
-                  <div className="w-6 h-6 rounded-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00] shrink-0 self-start">
-                    {msg.sender === "admin" ? "상" : "알"}
+                  <div className="w-6 h-6 rounded-full overflow-hidden border border-[#FFEEDC] shrink-0 self-start bg-white">
+                    {msg.sender === "admin" ? (
+                      <div className="w-full h-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00]">상</div>
+                    ) : (
+                      <img
+                        src="/images/chatbot-icon.jpg"
+                        alt="알리미"
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="bg-white text-[#191F28] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs leading-relaxed shadow-sm whitespace-pre-line">
                     {msg.text}
@@ -397,8 +423,12 @@ export default function Chatbot({ chatData }: ChatbotProps) {
           {/* AI 답변 로딩 중 스피너 표시 */}
           {isLoading && !isHumanMode && (
             <div className="flex items-start gap-2 max-w-[85%]">
-              <div className="w-6 h-6 rounded-full bg-[#FFEEDC] flex items-center justify-center text-[10px] font-bold text-[#FF8A00] shrink-0">
-                알
+              <div className="w-6 h-6 rounded-full overflow-hidden border border-[#FFEEDC] shrink-0 bg-white">
+                <img
+                  src="/images/chatbot-icon.jpg"
+                  alt="알리미"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="bg-white text-[#8B95A1] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs leading-relaxed shadow-sm flex items-center gap-1.5 animate-pulse">
                 <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
