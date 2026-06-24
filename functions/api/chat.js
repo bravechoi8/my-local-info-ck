@@ -27,7 +27,6 @@ export async function onRequestPost(context) {
     // 2. 질문 단어 분리 및 각 항목의 텍스트와 키워드 매칭
     const queryWords = message.split(/\s+/).filter(Boolean);
     const scoredItems = searchIndex.map((item) => {
-      // 검색어 매칭 대상 텍스트 조립
       const searchText = [
         item.name,
         item.title,
@@ -54,58 +53,71 @@ export async function onRequestPost(context) {
       return { item, score };
     });
 
-    // 매칭 점수가 높은 상위 3개 항목 추출 (단, 1글자라도 매칭된 0점 초과 항목만 대상)
+    // 매칭 점수가 0점보다 큰 항목들을 정렬하여 상위 3개만 추출
     const top3 = scoredItems
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((x) => x.item);
 
-    // 검색된 블로그 데이터를 문자열로 포맷팅
-    let blogDataStr = "";
-    if (top3.length > 0) {
-      blogDataStr = top3
+    let botAnswer = "";
+
+    // 3. 분기 처리: 블로그 내 관련 정보의 존재 여부에 따라 프롬프트와 접두사 조정
+    if (top3.length === 0) {
+      // ⚠️ 블로그에 관련 정보가 없는 경우: 일반 AI로 우회 답변 제공
+      const systemPrompt = `You are an AI assistant for a Korean local information blog.
+Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
+Do NOT use any markdown symbols (**, *, #, -). Plain text only.
+Answer the user's question to the best of your knowledge as a helpful assistant.`;
+
+      const response = await context.env.AI.run(
+        "@cf/meta/llama-3.1-8b-instruct-fast",
+        {
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: message },
+          ],
+          max_tokens: 150,
+        }
+      );
+
+      let rawAnswer = response.response || response.result?.response || "";
+      rawAnswer = stripMarkdown(rawAnswer);
+
+      // 사용자가 요청한 접두사 문구 붙이기
+      botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${rawAnswer}`;
+    } else {
+      // 📝 블로그에 관련 정보가 있는 경우: 블로그 데이터를 최우선 기반으로 요약 답변
+      const blogDataStr = top3
         .map((item, idx) => {
           const title = item.title || item.name || "제목 없음";
           const summary = item.summary || "요약 없음";
           return `${idx + 1}. 제목: ${title}\n   요약: ${summary}`;
         })
         .join("\n");
-    } else {
-      blogDataStr = "검색된 관련 블로그 데이터 없음";
-    }
 
-    // 3. 업데이트된 시스템 프롬프트 정의
-    const systemPrompt = `You are an AI assistant for a Korean local information blog.
+      const systemPrompt = `You are an AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
-Base your answer ONLY on the following blog data. If not relevant, reply: 해당 내용은 블로그에서 확인이 어렵습니다. 다른 질문을 해주세요.
+Base your answer ONLY on the following blog data.
 
 [블로그 데이터]
 ${blogDataStr}`;
 
-    // 4. Workers AI 호출 (max_tokens: 150)
-    const response = await context.env.AI.run(
-      "@cf/meta/llama-3.1-8b-instruct-fast",
-      {
-        messages: [
-          {
-            role: "system",
-            content: systemPrompt,
-          },
-          {
-            role: "user",
-            content: message,
-          },
-        ],
-        max_tokens: 150,
-      }
-    );
+      const response = await context.env.AI.run(
+        "@cf/meta/llama-3.1-8b-instruct-fast",
+        {
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: message },
+          ],
+          max_tokens: 150,
+        }
+      );
 
-    let botAnswer = response.response || response.result?.response || "";
-
-    // 5. AI 응답에서 마크다운 기호 완전히 제거
-    botAnswer = stripMarkdown(botAnswer);
+      let rawAnswer = response.response || response.result?.response || "";
+      botAnswer = stripMarkdown(rawAnswer);
+    }
 
     return new Response(JSON.stringify({ response: botAnswer }), {
       headers: {
@@ -123,23 +135,17 @@ ${blogDataStr}`;
   }
 }
 
-// AI 답변 내에 들어있는 마크다운 기호들을 정제하는 함수
+// AI 응답 텍스트에서 마크다운 기호를 지워주는 함수
 function stripMarkdown(text) {
   if (!text) return "";
   return text
-    // 볼드 및 이탤릭 마크다운 기호 제거
     .replace(/(\*\*|__)(.*?)\1/g, "$2")
     .replace(/(\*|_)(.*?)\1/g, "$2")
-    // 헤더 기호 제거
     .replace(/^#+\s+/gm, "")
-    // 목록용 대시 및 글머리 기호 제거
     .replace(/^\s*[-*+]\s+/gm, "")
-    // 인라인 코드 백틱 제거
     .replace(/`([^`]+)`/g, "$1")
-    // 이미지 및 링크 문법의 주소 부분 지우고 텍스트만 유지
     .replace(/!\[(.*?)\]\(.*?\)/g, "$1")
     .replace(/\[(.*?)\]\(.*?\)/g, "$1")
-    // 불필요하게 줄바꿈된 연속 공백들을 한 칸 공백으로 정제
     .replace(/\s+/g, " ")
     .trim();
 }

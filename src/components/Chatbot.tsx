@@ -68,11 +68,11 @@ export default function Chatbot({ chatData }: ChatbotProps) {
 
               // 새로 들어온 admin 메시지만 필터링
               const newAdminMsgs = list
-                .filter((m: any) => m.sender === "admin" && !existingAdminTexts.includes(m.text))
+                .filter((m: any) => m.sender === "admin" && !existingAdminTexts.includes(m.message))
                 .map((m: any) => ({
                   id: Date.now() + Math.random(),
                   sender: "admin" as const,
-                  text: m.text,
+                  text: m.message,
                 }));
 
               if (newAdminMsgs.length === 0) return prev;

@@ -74,16 +74,15 @@ function buildSearchIndex() {
         // gray-matter를 이용해 frontmatter와 본문 분리
         const { data, content } = matter(fileContent);
 
-        // 마크다운 서식을 제거한 뒤 500자만 추출
+        // 마크다운 서식을 제거한 평문 전체 추출 (정보 누락 방지)
         const plainTextContent = removeMarkdown(content);
-        const slicedContent = plainTextContent.slice(0, 500);
 
         searchIndex.push({
           type: "post",
           slug: fileName.replace(/\.md$/, ""),
           title: data.title || "",
           summary: data.summary || "",
-          content: slicedContent
+          content: plainTextContent
         });
       });
     } catch (error) {

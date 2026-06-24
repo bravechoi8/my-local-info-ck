@@ -62,11 +62,11 @@ export default function AdminPage() {
 
               // 서버에서 받은 전체 대화 내역 중 화면에 없는 메시지만 필터링해서 추가
               const newMsgs = list
-                .filter((m: any) => !existingTexts.includes(m.text))
+                .filter((m: any) => !existingTexts.includes(m.message))
                 .map((m: any) => ({
                   id: Date.now() + Math.random(),
                   sender: m.sender as "user" | "admin",
-                  text: m.text,
+                  text: m.message,
                 }));
 
               if (newMsgs.length === 0) return prev;
