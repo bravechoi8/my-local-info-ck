@@ -504,5 +504,27 @@
     "target": "다자녀 가정, 제대군인, 장애인, 국가보훈대상자",
     "summary": "다자녀 가정, 제대군인, 장애인 및 국가보훈대상자 대상 국립자연휴양림 시설 이용요금 감면 혜택 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016521"
+  },
+  {
+    "id": 44,
+    "name": "원산지검증 대응 지원",
+    "category": "혜택",
+    "startDate": "2025-02-24",
+    "endDate": "2025-07-18",
+    "location": "관세청",
+    "target": "상호출자제한기업이 아니며 최근 2년간 FTA 컨설팅 수혜 및 체납 실적이 없는 중소·중견기업 및 소상공인",
+    "summary": "수출 및 내수기업을 대상으로 FTA 원산지검증에 대비한 맞춤형 컨설팅을 제공합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/122000000003"
+  },
+  {
+    "id": 45,
+    "name": "북한이탈주민 자산형성 지원 (미래행복통장)",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "통일부",
+    "target": "2014년 11월 29일 이후 입국하여 보호 결정을 받은 만 18세 이상의 3개월 이상 경제활동 중인 북한이탈주민",
+    "summary": "북한이탈주민 대상으로 매월 10~50만 원 저축 시, 적립금과 동일한 금액 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/125000000004"
   }
 ]
