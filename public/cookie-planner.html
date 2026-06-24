@@ -1037,11 +1037,20 @@ function openKeyPrompt(){
   document.getElementById('key-modal').classList.add('on');
 }
 function closeKey(){document.getElementById('key-modal').classList.remove('on');}
+
 function saveKey(){
   const k=document.getElementById('f-apikey').value.trim();
   const elKey=document.getElementById('f-elkey').value.trim();
   const elVoice=document.getElementById('f-elvoice').value.trim();
-  if(!k){alert('API 키를 넣어주세요 🐾');return;}
+  
+  // Claude API 키 입력란이 비어있다면, 기존 키를 삭제하고 기본 로컬 모드로 전환합니다.
+  if(!k){
+    clearApiKey();
+    closeKey();
+    addMsg('dog','API 키가 삭제되었습니다! 이제 기본 애교 모드(로컬 답변)로 대화할게 🐾');
+    return;
+  }
+  
   if(!k.startsWith('sk-ant-')){if(!confirm('형식이 조금 달라 보여요. 그래도 저장할까요?'))return;}
   setApiKey(k);
   setElevenKey(elKey);
