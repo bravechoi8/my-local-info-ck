@@ -526,5 +526,27 @@
     "target": "2014년 11월 29일 이후 입국하여 보호 결정을 받은 만 18세 이상의 3개월 이상 경제활동 중인 북한이탈주민",
     "summary": "북한이탈주민 대상으로 매월 10~50만 원 저축 시, 적립금과 동일한 금액 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/125000000004"
+  },
+  {
+    "id": 46,
+    "name": "문화관광해설사 역량강화지원사업",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "문화체육관광부",
+    "target": "문화관광해설사",
+    "summary": "문화관광해설사 역량강화를 위한 교육 콘텐츠 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000035"
+  },
+  {
+    "id": 47,
+    "name": "주거안정 월세대출",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "국토교통부",
+    "target": "우대형(사회취약계층 무주택 세대주) 및 일반형(부부합산소득 5천만원 이하 무주택 세대주)",
+    "summary": "일반형 및 우대형 저소득 임차가구를 대상으로 연 960만원 한도로 월세대출 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000025"
   }
 ]
