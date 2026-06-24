@@ -416,5 +416,71 @@
     "target": "양육수당을 받고 있으며 신청일 기준 경기도에 주민등록을 둔 보육가정 미취학(86개월 미만) 어린이",
     "summary": "경기도 미취학 가정보육 어린이에게 제철 과일 꾸러미를 배송 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000111"
+  },
+  {
+    "id": 36,
+    "name": "다문화가족 자녀 방문학습지 지원",
+    "category": "혜택",
+    "startDate": "2024-05-21",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "다문화가족 자녀",
+    "summary": "다문화가족 자녀를 대상으로 주 1회 방문하여 한글 및 국어 등의 학습지 교육 서비스를 제공합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000122"
+  },
+  {
+    "id": 37,
+    "name": "지역공동체일자리사업(전환)",
+    "category": "혜택",
+    "startDate": "2024-06-03",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "취업취약계층(저소득층, 장애인, 6개월 이상 장기실직자, 결혼이민자, 여성가장, 성매매피해자, 한부모가족 지원법에 의한 보호대상자, 북한이탈주민, 위기청소년, 갱생보호대상자, 수형자로서 출소 후 6개월 미만 자, 노숙인)",
+    "summary": "취업취약계층의 생계 안정을 위해 지역특화 공공일자리를 제공하여 소득을 보조하는 사업입니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000115"
+  },
+  {
+    "id": 38,
+    "name": "청년 문화예술패스",
+    "category": "혜택",
+    "startDate": "2026-02-25",
+    "endDate": "2026-06-30",
+    "location": "문화체육관광부",
+    "target": "19세~20세 청년(2006~2007년 출생자)",
+    "summary": "청년의 공연, 전시, 영화 관람비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000239"
+  },
+  {
+    "id": 39,
+    "name": "글로벌 광고인재 육성",
+    "category": "혜택",
+    "startDate": "2024-11-21",
+    "endDate": "상시",
+    "location": "문화체육관광부",
+    "target": "대학생, 취업준비생, 재직자 등",
+    "summary": "대학생 등을 대상으로 실제 광고프로젝트의 실무업무를 지원하는 인재교육사업",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000217"
+  },
+  {
+    "id": 40,
+    "name": "유축기 대여 서비스(처인구)",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경기도 용인시 처인구보건소",
+    "target": "관내 임산부 등록이 되어 있으며, 출산 후 1달 이내인 산모",
+    "summary": "출산 후 1달 이내인 산모 대상 유축기 대여 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000671"
+  },
+  {
+    "id": 41,
+    "name": "용인시 장애인가정 출산지원금",
+    "category": "혜택",
+    "startDate": "2024-11-20",
+    "endDate": "상시",
+    "location": "경기도 용인시",
+    "target": "신생아 출생일을 기준으로 180일 전부터 계속하여 용인시 관내에 주민등록을 두고 거주하는 신생아의 등록장애인 부 또는 모",
+    "summary": "용인시 관내 거주하는 장애인 가정의 부 또는 모에게 신생아 1인당 최대 100만 원의 출산지원금을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000672"
   }
 ]
