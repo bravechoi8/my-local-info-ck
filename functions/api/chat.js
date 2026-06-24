@@ -41,8 +41,25 @@ export async function onRequestPost(context) {
     }
 
     // 2. 질문 단어 분리 및 각 항목의 텍스트와 키워드 매칭
-    const queryWords = message.split(/\s+/).filter(Boolean);
+    // 문장 기호 및 특수문자 제거
+    const cleanMessage = message.replace(/[?!.,~@#$%^&*()_+={}\[\]|\\:;"'<>\/-]/g, " ").trim();
+    const rawWords = cleanMessage.split(/\s+/).filter(Boolean);
+
+    // 한국어 조사 목록 (단어 뒤에 붙는 조사들을 제거하여 핵심 키워드 추출)
+    const josaRegex = /(은|는|이|가|을|를|에|에서|의|으로|로|와|과|도|만|나|이나|하고|랑|이랑|께서|에게|한테|에대해|에대해서)$/;
+    const queryWords = rawWords.map(word => {
+      if (word.length > 1) {
+        const baseWord = word.replace(josaRegex, "");
+        if (baseWord.length > 0) {
+          return baseWord;
+        }
+      }
+      return word;
+    }).filter(Boolean);
+
     const scoredItems = searchIndex.map((item) => {
+      const itemTitle = (item.title || item.name || "").toLowerCase();
+
       const searchText = [
         item.name,
         item.title,
@@ -57,14 +74,39 @@ export async function onRequestPost(context) {
         .toLowerCase();
 
       let score = 0;
+
+      // 단어 기반 매칭 (단어가 검색 텍스트에 포함된 횟수만큼 점수 증가)
       queryWords.forEach((word) => {
         const lowercaseWord = word.toLowerCase();
+        if (lowercaseWord.length === 0) return;
+
         let index = searchText.indexOf(lowercaseWord);
         while (index !== -1) {
           score += 1;
           index = searchText.indexOf(lowercaseWord, index + 1);
         }
+
+        // 제목에 키워드가 직접 들어있다면 추가 점수(가산점)를 부여
+        if (itemTitle.includes(lowercaseWord)) {
+          score += 5;
+        }
       });
+
+      // 띄어쓰기를 제거하고 질문 전체가 제목이나 본문에 포함되어 있는지 검사 (띄어쓰기가 달라도 매칭되도록 함)
+      const flatSearchText = searchText.replace(/\s+/g, "");
+      const flatMessage = cleanMessage.replace(/\s+/g, "").toLowerCase();
+
+      if (flatMessage.length >= 2) {
+        // 본문에 띄어쓰기 없이 포함되는 경우
+        if (flatSearchText.includes(flatMessage)) {
+          score += 15;
+        }
+        // 제목에 띄어쓰기 없이 포함되는 경우
+        const flatTitle = itemTitle.replace(/\s+/g, "");
+        if (flatTitle.includes(flatMessage)) {
+          score += 25;
+        }
+      }
 
       return { item, score };
     });
