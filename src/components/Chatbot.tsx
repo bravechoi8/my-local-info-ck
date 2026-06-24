@@ -55,7 +55,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         {
           id: 1,
           sender: "bot",
-          text: "안녕하세요! '리얼인포'의 친절한 정보 가이드 '리얼 알리미'입니다. 아래 질문 리스트에서 궁금하신 내용을 선택하시거나, 입력창에 직접 질문을 남겨주시면 자세히 답변해 드릴게요!",
+          text: "안녕하세요! '리얼인포'의 친절한 정보 가이드 '척척댕이'입니다. 아래 질문 리스트에서 궁금하신 내용을 선택하시거나, 입력창에 직접 질문을 남겨주시면 자세히 답변해 드릴게요!",
         },
       ]);
     }
@@ -285,7 +285,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2EBD59] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#2EBD59]"></span>
             </span>
-            알리미 챗봇 💬
+            척척댕이 챗봇 💬
             {/* 말풍선 꼬리 */}
             <div className="absolute right-[-6px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px] border-l-white"></div>
           </div>
@@ -314,7 +314,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
             // 열기 전에는 귀여운 강아지 이미지 표시
             <img
               src="/images/chatbot-icon.jpg"
-              alt="리얼 알리미 챗봇 아이콘"
+              alt="척척댕이 챗봇 아이콘"
               className="w-full h-full object-cover"
             />
           )}
@@ -344,7 +344,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
               ) : (
                 <img
                   src="/images/chatbot-icon.jpg"
-                  alt="리얼 알리미"
+                  alt="척척댕이"
                   className="w-full h-full object-cover"
                 />
               )}
@@ -352,7 +352,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
             </div>
             <div>
               <h3 className="text-sm font-bold text-[#191F28]">
-                {isHumanMode ? "1:1 실시간 상담" : "리얼 알리미"}
+                {isHumanMode ? "1:1 실시간 상담" : "척척댕이"}
               </h3>
               <p className="text-[10px] text-[#2EBD59] font-semibold">
                 {isHumanMode ? "상담원 연결 대기" : "온라인 · 실시간 답변"}
@@ -390,7 +390,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
                     ) : (
                       <img
                         src="/images/chatbot-icon.jpg"
-                        alt="알리미"
+                        alt="척척댕이"
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -426,7 +426,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
               <div className="w-6 h-6 rounded-full overflow-hidden border border-[#FFEEDC] shrink-0 bg-white">
                 <img
                   src="/images/chatbot-icon.jpg"
-                  alt="알리미"
+                  alt="척척댕이"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -434,7 +434,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
                 <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
                 <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
                 <span className="w-1.5 h-1.5 bg-[#FF8A00] rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
-                <span className="text-[10px] ml-1 text-[#8B95A1] font-semibold">알리미가 생각하는 중...</span>
+                <span className="text-[10px] ml-1 text-[#8B95A1] font-semibold">척척댕이가 생각하는 중...</span>
               </div>
             </div>
           )}
@@ -511,7 +511,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
             placeholder={
               isHumanMode
                 ? "상담원에게 메시지를 보내세요..."
-                : "알리미에게 무엇이든 물어보세요..."
+                : "척척댕이에게 무엇이든 물어보세요..."
             }
             disabled={isLoading && !isHumanMode}
             className="flex-1 bg-[#F2F4F6] border-0 outline-none rounded-xl py-2 px-3 text-xs text-[#191F28] placeholder-[#8B95A1] focus:ring-1 focus:ring-[#FF8A00] disabled:opacity-60"
