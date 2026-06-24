@@ -51,7 +51,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
   // 상담원 대화 데이터를 가져오는 함수 (실시간 동기화)
   const fetchAdminMessages = async () => {
     try {
-      const res = await fetch("/api/chat-poll");
+      const res = await fetch("/api/chat-poll?t=" + Date.now(), { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         // 응답이 배열 [{ sender: "admin", text: "..." }] 또는 { messages: [...] } 인지 유연하게 파싱

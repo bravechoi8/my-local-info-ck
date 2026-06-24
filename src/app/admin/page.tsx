@@ -47,7 +47,7 @@ export default function AdminPage() {
   // 3. 메시지 데이터를 가져오는 함수 (실시간 동기화)
   const fetchMessages = async () => {
     try {
-      const res = await fetch("/api/chat-poll");
+      const res = await fetch("/api/chat-poll?t=" + Date.now(), { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         const list = Array.isArray(data) ? data : data.messages || [];
