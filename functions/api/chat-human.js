@@ -50,9 +50,10 @@ export async function onRequestPost(context) {
     ).bind(finalUserId, message, sender, timestamp).run();
 
     // 텔레그램 실시간 알림 발송 (손님이 메시지를 보냈을 때만 발송)
+    // [재배포 트리거] 사용자가 대시보드 환경변수 등록 완료 후 최종 배포 실행
     if (sender === "user") {
-      const telegramBotToken = context.env.TELEGRAM_BOT_TOKEN || "8859779404:AAGE0NqNkouKU0wJtcxMqhN063AI-1_zy24";
-      const telegramChatId = context.env.TELEGRAM_CHAT_ID || "478328074";
+      const telegramBotToken = context.env.TELEGRAM_BOT_TOKEN;
+      const telegramChatId = context.env.TELEGRAM_CHAT_ID;
 
       if (telegramBotToken && telegramChatId) {
         const text = `🚨 [척척댕이 1:1 상담 알림]\n\n새로운 대화가 도착했습니다!\n- 사용자 ID: ${finalUserId}\n- 질문 내용: ${message}\n\n👉 어드민 바로가기: https://real-infos.com/admin`;

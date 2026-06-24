@@ -77,7 +77,11 @@ export async function onRequestPost(context) {
       .map((x) => x.item);
 
     let botAnswer = "";
-    const apiKey = context.env.GEMINI_API_KEY || "AIzaSyCgyZMALhpUY-kpzPa9VflkbkkL_vjp4-o";
+    const apiKey = context.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY 환경변수가 설정되지 않았습니다. Cloudflare 대시보드에 API 키를 등록해 주세요.");
+    }
 
     // 3. 분기 처리: 블로그 내 관련 정보의 존재 여부에 따라 프롬프트와 구글 실시간 검색 여부 세팅
     if (top3.length === 0) {
