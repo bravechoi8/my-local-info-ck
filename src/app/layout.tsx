@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import fs from "fs";
+import path from "path";
+import Chatbot from "@/components/Chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +33,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let chatData = [];
+  try {
+    const filePath = path.join(process.cwd(), "chat-data.json");
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    chatData = JSON.parse(fileContent);
+  } catch (error) {
+    console.error("Failed to read chat-data.json:", error);
+  }
+
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -117,7 +129,10 @@ export default function RootLayout({
             </>
           )}
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Chatbot chatData={chatData} />
+      </body>
     </html>
   );
 }
