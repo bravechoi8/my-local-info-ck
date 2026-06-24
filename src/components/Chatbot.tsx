@@ -58,24 +58,24 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         const list = Array.isArray(data) ? data : data.messages || [];
 
         setMessages((prev) => {
-          // 중복 렌더링 방지를 위해 기존 admin 메시지의 timestamp 리스트 추출
-          const existingAdminTimestamps = prev
-            .filter((m) => m.sender === "admin")
+          // 중복 렌더링 방지를 위해 기존 user 및 admin 메시지의 timestamp 리스트 추출
+          const existingTimestamps = prev
+            .filter((m) => m.sender === "user" || m.sender === "admin")
             .map((m) => m.timestamp)
             .filter(Boolean);
 
-          // 새로 들어온 admin 메시지만 필터링 (timestamp 기준)
-          const newAdminMsgs = list
-            .filter((m: any) => m.sender === "admin" && !existingAdminTimestamps.includes(m.timestamp))
+          // 새로 들어온 메시지(user, admin 모두 포함)만 필터링 (timestamp 기준)
+          const newMsgs = list
+            .filter((m: any) => (m.sender === "user" || m.sender === "admin") && !existingTimestamps.includes(m.timestamp))
             .map((m: any) => ({
               id: m.timestamp,
-              sender: "admin" as const,
+              sender: m.sender as "user" | "admin",
               text: m.message,
               timestamp: m.timestamp,
             }));
 
-          if (newAdminMsgs.length === 0) return prev;
-          return [...prev, ...newAdminMsgs];
+          if (newMsgs.length === 0) return prev;
+          return [...prev, ...newMsgs];
         });
       }
     } catch (error) {
@@ -145,10 +145,10 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     const userText = inputValue.trim();
     const userMsgId = Date.now();
 
-    // 1. 유저의 입력 질문 추가
+    // 1. 유저의 입력 질문 추가 (임시 timestamp 부여)
     setMessages((prev) => [
       ...prev,
-      { id: userMsgId, sender: "user", text: userText },
+      { id: userMsgId, sender: "user", text: userText, timestamp: userMsgId },
     ]);
 
     setInputValue("");
@@ -167,6 +167,20 @@ export default function Chatbot({ chatData }: ChatbotProps) {
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        const serverTimestamp = data.data?.timestamp; // 서버에서 발급한 진짜 타임스탬프
+
+        if (serverTimestamp) {
+          // 로컬 임시 메시지의 id와 timestamp를 서버 값으로 치환하여 중복 노출을 방지합니다.
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === userMsgId
+                ? { ...m, id: serverTimestamp, timestamp: serverTimestamp }
+                : m
+            )
+          );
         }
 
         // 전송 성공 후 즉시 메시지 갱신 실행
