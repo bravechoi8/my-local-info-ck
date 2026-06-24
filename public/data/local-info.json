@@ -603,5 +603,27 @@
     "target": "육아휴직, 육아기 근로시간 단축 등을 허용한 우선지원대상기업 사업주",
     "summary": "모성보호제도를 허용한 우선지원대상기업 사업주에게 육아휴직, 대체인력, 업무분담 지원금을 지급합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000001060"
+  },
+  {
+    "id": 53,
+    "name": "맞춤형 창업성장 프로그램",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "기술보증기금",
+    "target": "창업 후 7년 이내의 지식문화창업, 이공계챌린저, 기술경력 뿌리창업, 첨단성장 연계 창업기업",
+    "summary": "창업기업을 대상으로 맞춤형 보증을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55369400001"
+  },
+  {
+    "id": 54,
+    "name": "지역냉방 보조금 지원",
+    "category": "혜택",
+    "startDate": "2024-05-25",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "지역냉방설비를 신(증)설 한 자 및 건축설계에 반영한 설비사무소",
+    "summary": "지역냉방설비에 대한 보조금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000223"
   }
 ]
