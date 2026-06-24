@@ -44,39 +44,46 @@ export default function AdminPage() {
     }
   }, [messages, isAuthorized]);
 
-  // 3. 2초 주기 폴링 (인증 완료된 경우에만 작동)
+  // 3. 메시지 데이터를 가져오는 함수 (실시간 동기화)
+  const fetchMessages = async () => {
+    try {
+      const res = await fetch("/api/chat-poll");
+      if (res.ok) {
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : data.messages || [];
+
+        setMessages((prev) => {
+          // 중복 렌더링 방지를 위해 기존 메시지들의 텍스트 세트 생성
+          const existingTexts = prev.map((m) => m.text);
+
+          // 서버에서 받은 전체 대화 내역 중 화면에 없는 메시지만 필터링해서 추가
+          const newMsgs = list
+            .filter((m: any) => !existingTexts.includes(m.message))
+            .map((m: any) => ({
+              id: Date.now() + Math.random(),
+              sender: m.sender as "user" | "admin",
+              text: m.message,
+            }));
+
+          if (newMsgs.length === 0) return prev;
+          return [...prev, ...newMsgs];
+        });
+      }
+    } catch (error) {
+      console.error("Admin poll error:", error);
+    }
+  };
+
+  // 4. 0.5초 주기 폴링 (인증 완료된 경우에만 작동)
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (isAuthorized) {
-      intervalId = setInterval(async () => {
-        try {
-          const res = await fetch("/api/chat-poll");
-          if (res.ok) {
-            const data = await res.json();
-            const list = Array.isArray(data) ? data : data.messages || [];
+      // 즉시 한 번 동기화 실행
+      fetchMessages();
 
-            setMessages((prev) => {
-              // 중복 렌더링 방지를 위해 기존 메시지들의 텍스트 세트 생성
-              const existingTexts = prev.map((m) => m.text);
-
-              // 서버에서 받은 전체 대화 내역 중 화면에 없는 메시지만 필터링해서 추가
-              const newMsgs = list
-                .filter((m: any) => !existingTexts.includes(m.message))
-                .map((m: any) => ({
-                  id: Date.now() + Math.random(),
-                  sender: m.sender as "user" | "admin",
-                  text: m.message,
-                }));
-
-              if (newMsgs.length === 0) return prev;
-              return [...prev, ...newMsgs];
-            });
-          }
-        } catch (error) {
-          console.error("Admin poll error:", error);
-        }
-      }, 2000);
+      // 0.5초 주기로 빠르게 갱신
+      intervalId = setInterval(fetchMessages, 500);
     }
 
     return () => {
@@ -86,7 +93,7 @@ export default function AdminPage() {
     };
   }, [isAuthorized]);
 
-  // 4. 답장 전송 핸들러
+  // 5. 답장 전송 핸들러
   const handleSendReply = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() || isLoading) return;
@@ -119,6 +126,9 @@ export default function AdminPage() {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
+
+      // 답장 전송 성공 후 즉시 메시지 갱신 실행
+      await fetchMessages();
     } catch (error) {
       console.error("Failed to send reply:", error);
       setMessages((prev) => [

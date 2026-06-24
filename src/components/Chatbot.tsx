@@ -47,42 +47,49 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     }
   }, [messages, isOpen, isLoading]);
 
-  // 상담원 대기 모드일 때 2초마다 /api/chat-poll 호출해서 admin 새 메시지 확인 (폴링)
+  // 상담원 대화 데이터를 가져오는 함수 (실시간 동기화)
+  const fetchAdminMessages = async () => {
+    try {
+      const res = await fetch("/api/chat-poll");
+      if (res.ok) {
+        const data = await res.json();
+        // 응답이 배열 [{ sender: "admin", text: "..." }] 또는 { messages: [...] } 인지 유연하게 파싱
+        const list = Array.isArray(data) ? data : data.messages || [];
+
+        setMessages((prev) => {
+          // 중복 렌더링 방지를 위해 기존 admin 메시지 텍스트 리스트 추출
+          const existingAdminTexts = prev
+            .filter((m) => m.sender === "admin")
+            .map((m) => m.text);
+
+          // 새로 들어온 admin 메시지만 필터링
+          const newAdminMsgs = list
+            .filter((m: any) => m.sender === "admin" && !existingAdminTexts.includes(m.message))
+            .map((m: any) => ({
+              id: Date.now() + Math.random(),
+              sender: "admin" as const,
+              text: m.message,
+            }));
+
+          if (newAdminMsgs.length === 0) return prev;
+          return [...prev, ...newAdminMsgs];
+        });
+      }
+    } catch (error) {
+      console.error("Polling admin messages error:", error);
+    }
+  };
+
+  // 상담원 대기 모드일 때 0.5초마다 /api/chat-poll 호출해서 admin 새 메시지 확인 (폴링)
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (isOpen && isHumanMode) {
-      intervalId = setInterval(async () => {
-        try {
-          const res = await fetch("/api/chat-poll");
-          if (res.ok) {
-            const data = await res.json();
-            // 응답이 배열 [{ sender: "admin", text: "..." }] 또는 { messages: [...] } 인지 유연하게 파싱
-            const list = Array.isArray(data) ? data : data.messages || [];
+      // 즉시 한 번 동기화 실행
+      fetchAdminMessages();
 
-            setMessages((prev) => {
-              // 중복 렌더링 방지를 위해 기존 admin 메시지 텍스트 리스트 추출
-              const existingAdminTexts = prev
-                .filter((m) => m.sender === "admin")
-                .map((m) => m.text);
-
-              // 새로 들어온 admin 메시지만 필터링
-              const newAdminMsgs = list
-                .filter((m: any) => m.sender === "admin" && !existingAdminTexts.includes(m.message))
-                .map((m: any) => ({
-                  id: Date.now() + Math.random(),
-                  sender: "admin" as const,
-                  text: m.message,
-                }));
-
-              if (newAdminMsgs.length === 0) return prev;
-              return [...prev, ...newAdminMsgs];
-            });
-          }
-        } catch (error) {
-          console.error("Polling admin messages error:", error);
-        }
-      }, 2000);
+      // 0.5초 주기로 빠르게 갱신
+      intervalId = setInterval(fetchAdminMessages, 500);
     }
 
     return () => {
@@ -158,6 +165,9 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
+
+        // 전송 성공 후 즉시 메시지 갱신 실행
+        await fetchAdminMessages();
       } catch (error) {
         console.error("Failed to send message to counselor:", error);
         setMessages((prev) => [
