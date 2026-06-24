@@ -2,6 +2,16 @@ export async function onRequestPost(context) {
   try {
     const { message } = await context.request.json();
 
+    // 현재 날짜 정보 (서버 기준, 한국 시간대)
+    const now = new Date();
+    const currentDate = now.toLocaleDateString("ko-KR", {
+      timeZone: "Asia/Seoul",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      weekday: "long",
+    });
+
     if (!message) {
       return new Response(
         JSON.stringify({ error: "Message is required" }),
@@ -68,6 +78,7 @@ export async function onRequestPost(context) {
       const systemPrompt = `You are an AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
+Today's date is ${currentDate}. Always use this as the current date when answering questions about time or year.
 Answer the user's question to the best of your knowledge as a helpful assistant.`;
 
       const response = await context.env.AI.run(
@@ -99,6 +110,7 @@ Answer the user's question to the best of your knowledge as a helpful assistant.
       const systemPrompt = `You are a helpful AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
+Today's date is ${currentDate}. Always use this as the current date when answering questions about time or year.
 
 Analyze the user's question and the provided [블로그 데이터] carefully.
 - If the [블로그 데이터] contains the exact, direct, and correct information to answer the user's question, construct your response using only that data. Do NOT add any prefix.
