@@ -1081,8 +1081,26 @@ async function askCookie(messages){
     body:JSON.stringify(requestBody)
   });
   if(res.status===401||res.status===403){ const e=new Error('BAD_KEY'); e.code='BAD_KEY'; throw e; }
+  
+  if(!res.ok){
+    let errMsg = `HTTP ${res.status}`;
+    try {
+      const errData = await res.json();
+      if (errData && errData.error) {
+        errMsg = `${errData.error.type || 'API_ERR'}: ${errData.error.message || ''}`;
+      }
+    } catch(e) {}
+    const e = new Error(errMsg);
+    e.code = 'API_ERR';
+    throw e;
+  }
+
   const data=await res.json();
-  if(data.error){ const e=new Error(data.error.message||'API_ERR'); e.code='API_ERR'; throw e; }
+  if(data.error){
+    const e=new Error(`${data.error.type || 'API_ERR'}: ${data.error.message || ''}`);
+    e.code='API_ERR';
+    throw e;
+  }
   // collect any web search happening -> update status
   const usedSearch=(data.content||[]).some(c=>c.type==='server_tool_use'||c.type==='web_search_tool_result');
   if(usedSearch)document.getElementById('chat-status').textContent='● 검색했어 🔎';
