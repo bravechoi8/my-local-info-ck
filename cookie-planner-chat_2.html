@@ -365,9 +365,17 @@
       </div>
       <div class="chips" style="justify-content:center;margin-top:6px" id="dur-chips">
         <button data-min="15" onclick="setDur(15)">15분</button>
-        <button data-min="25" class="on" onclick="setDur(25)">25분</button>
-        <button data-min="45" onclick="setDur(45)">45분</button>
+        <button data-min="30" class="on" onclick="setDur(30)">30분</button>
         <button data-min="60" onclick="setDur(60)">60분</button>
+        <button data-min="90" onclick="setDur(90)">90분</button>
+      </div>
+      <div class="pomo-wrap" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:12.5px;font-weight:700;color:#3a322b;">
+        <span>🍅 뽀모도로:</span>
+        <input type="number" id="p-study" value="50" min="1" max="180" style="width:42px;padding:4px 6px;border-radius:8px;border:1px solid var(--line);text-align:center;font-family:inherit;font-weight:800;background:#fff;">
+        <span>분 공부 /</span>
+        <input type="number" id="p-break" value="10" min="1" max="60" style="width:42px;padding:4px 6px;border-radius:8px;border:1px solid var(--line);text-align:center;font-family:inherit;font-weight:800;background:#fff;">
+        <span>분 휴식</span>
+        <button class="pomo-btn" onclick="startPomoMode()" style="padding:4px 10px;background:var(--accent);color:#fff;border-radius:8px;font-size:11.5px;font-weight:800;cursor:pointer;">설정</button>
       </div>
       <div class="timer-ctrl">
         <button class="tbtn go" id="t-go" onclick="toggleTimer()">시작</button>
@@ -949,7 +957,8 @@ async function speakBrief(){
 }
 
 /* ===== timer ===== */
-let durMin=DB.dur||25,remain=durMin*60,ticking=false,tHandle=null;
+let durMin=DB.dur||30,remain=durMin*60,ticking=false,tHandle=null;
+let isPomo=false,pomoState='study',pomoStudyMin=50,pomoBreakMin=10;
 const RING=2*Math.PI*88;
 document.getElementById('ring').setAttribute('stroke-dasharray',RING.toFixed(1));
 const SONGS=[{id:'lofi',name:'🎧 Lo-fi',freq:[261.6,329.6,392]},{id:'piano',name:'🎹 피아노',freq:[293.7,349.2,440]},{id:'rain',name:'🌧️ 빗소리',freq:[180,200,220]},{id:'forest',name:'🌲 숲속',freq:[330,392,494]},{id:'none',name:'🔇 무음',freq:[]}];
@@ -957,14 +966,15 @@ function renderSongs(){
   const box=document.getElementById('song-pick');box.innerHTML='';
   SONGS.forEach(s=>{const b=document.createElement('button');b.textContent=s.name;b.className=(DB.song===s.id)?'on':'';b.onclick=()=>{DB.song=s.id;save();renderSongs();if(ticking)startMusic();};box.appendChild(b);});
 }
-function setDur(m){if(ticking)return;durMin=m;DB.dur=m;save();remain=m*60;updateTimer();document.querySelectorAll('#dur-chips button').forEach(b=>b.classList.toggle('on',+b.dataset.min===m));}
+function setDur(m){if(ticking)return;isPomo=false;durMin=m;DB.dur=m;save();remain=m*60;updateTimer();document.querySelectorAll('#dur-chips button').forEach(b=>b.classList.toggle('on',+b.dataset.min===m));document.getElementById('t-state').textContent='시작 준비!';}
+function startPomoMode(){if(ticking)return;const sInput=document.getElementById('p-study');const bInput=document.getElementById('p-break');if(!sInput||!bInput)return;const sMin=parseInt(sInput.value,10)||50;const bMin=parseInt(bInput.value,10)||10;isPomo=true;pomoState='study';pomoStudyMin=sMin;pomoBreakMin=bMin;document.querySelectorAll('#dur-chips button').forEach(b=>b.classList.remove('on'));durMin=sMin;remain=durMin*60;updateTimer();document.getElementById('t-state').textContent='뽀모도로 공부 준비! 🍅';}
 function fmt(s){return pad(Math.floor(s/60))+':'+pad(s%60);}
 function updateTimer(){document.getElementById('t-time').textContent=fmt(remain);const p=1-remain/(durMin*60);document.getElementById('ring').setAttribute('stroke-dashoffset',(RING*p).toFixed(1));}
 function toggleTimer(){ticking?pauseTimer():startTimer();}
-function startTimer(){ticking=true;const g=document.getElementById('t-go');g.textContent='일시정지';g.classList.remove('go');g.classList.add('stop');document.getElementById('t-state').textContent='공부 중... 🐾';startMusic();tHandle=setInterval(()=>{remain--;updateTimer();if(remain<=0)finishTimer();},1000);}
+function startTimer(){ticking=true;const g=document.getElementById('t-go');g.textContent='일시정지';g.classList.remove('go');g.classList.add('stop');if(isPomo){document.getElementById('t-state').textContent=pomoState==='study'?'뽀모도로 공부 중... 🐾🍅':'뽀모도로 휴식 중... ☕';}else{document.getElementById('t-state').textContent='공부 중... 🐾';}startMusic();tHandle=setInterval(()=>{remain--;updateTimer();if(remain<=0)finishTimer();},1000);}
 function pauseTimer(){ticking=false;clearInterval(tHandle);stopMusic();const g=document.getElementById('t-go');g.textContent='이어서';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='잠깐 멈춤';}
 function resetTimer(){ticking=false;clearInterval(tHandle);stopMusic();remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='시작 준비!';}
-function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:durMin+'분 공부 끝! 멋져 🎉'});chime();renderStats();}
+function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();if(isPomo){if(pomoState==='study'){logSession(pomoStudyMin);pomoState='break';durMin=pomoBreakMin;remain=durMin*60;updateTimer();if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:pomoStudyMin+'분 공부 끝! 이제 휴식 시간이야 ☕'});chime();startTimer();renderStats();}else{isPomo=false;durMin=DB.dur||30;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='뽀모도로 완료! 수고했어 🥳';if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:'휴식 시간이 끝났어! 뽀모도로 한 세트 완료 🎉'});chime();renderStats();}}else{logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:durMin+'분 공부 끝! 멋져 🎉'});chime();renderStats();}}
 function logSession(min){DB.sessions.push({date:todayStr(),min,ts:Date.now()});save();}
 let actx=null,oscs=[],gain=null;
 function ensureCtx(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}
