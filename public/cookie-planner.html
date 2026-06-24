@@ -371,9 +371,9 @@
       </div>
       <div class="pomo-wrap" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;font-size:12.5px;font-weight:700;color:#3a322b;">
         <span>🍅 뽀모도로:</span>
-        <input type="number" id="p-study" value="50" min="1" max="180" style="width:42px;padding:4px 6px;border-radius:8px;border:1px solid var(--line);text-align:center;font-family:inherit;font-weight:800;background:#fff;">
+        <input type="number" id="p-study" value="50" min="1" max="180" style="width:55px;padding:4px 4px;border-radius:8px;border:1px solid var(--line);text-align:center;font-family:inherit;font-weight:800;background:#fff;">
         <span>분 공부 /</span>
-        <input type="number" id="p-break" value="10" min="1" max="60" style="width:42px;padding:4px 6px;border-radius:8px;border:1px solid var(--line);text-align:center;font-family:inherit;font-weight:800;background:#fff;">
+        <input type="number" id="p-break" value="10" min="1" max="60" style="width:55px;padding:4px 4px;border-radius:8px;border:1px solid var(--line);text-align:center;font-family:inherit;font-weight:800;background:#fff;">
         <span>분 휴식</span>
         <button class="pomo-btn" onclick="startPomoMode()" style="padding:4px 10px;background:var(--accent);color:#fff;border-radius:8px;font-size:11.5px;font-weight:800;cursor:pointer;">설정</button>
       </div>
@@ -961,7 +961,7 @@ let durMin=DB.dur||30,remain=durMin*60,ticking=false,tHandle=null;
 let isPomo=false,pomoState='study',pomoStudyMin=50,pomoBreakMin=10;
 const RING=2*Math.PI*88;
 document.getElementById('ring').setAttribute('stroke-dasharray',RING.toFixed(1));
-const SONGS=[{id:'lofi',name:'🎧 Lo-fi',freq:[261.6,329.6,392]},{id:'piano',name:'🎹 피아노',freq:[293.7,349.2,440]},{id:'rain',name:'🌧️ 빗소리',freq:[180,200,220]},{id:'forest',name:'🌲 숲속',freq:[330,392,494]},{id:'none',name:'🔇 무음',freq:[]}];
+const SONGS=[{id:'lofi',name:'🎧 Lo-fi',url:'https://stream.chillhop.com/mp3/9476'},{id:'piano',name:'🎹 피아노',url:'https://stream.chillhop.com/mp3/8440'},{id:'rain',name:'🌧️ 빗소리',url:'https://stream.chillhop.com/mp3/8562'},{id:'forest',name:'🌲 숲속',url:'https://stream.chillhop.com/mp3/8598'},{id:'none',name:'🔇 무음',url:''}];
 function renderSongs(){
   const box=document.getElementById('song-pick');box.innerHTML='';
   SONGS.forEach(s=>{const b=document.createElement('button');b.textContent=s.name;b.className=(DB.song===s.id)?'on':'';b.onclick=()=>{DB.song=s.id;save();renderSongs();if(ticking)startMusic();};box.appendChild(b);});
@@ -976,10 +976,10 @@ function pauseTimer(){ticking=false;clearInterval(tHandle);stopMusic();const g=d
 function resetTimer(){ticking=false;clearInterval(tHandle);stopMusic();remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='시작 준비!';}
 function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();if(isPomo){if(pomoState==='study'){logSession(pomoStudyMin);pomoState='break';durMin=pomoBreakMin;remain=durMin*60;updateTimer();if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:pomoStudyMin+'분 공부 끝! 이제 휴식 시간이야 ☕'});chime();startTimer();renderStats();}else{isPomo=false;durMin=DB.dur||30;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='뽀모도로 완료! 수고했어 🥳';if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:'휴식 시간이 끝났어! 뽀모도로 한 세트 완료 🎉'});chime();renderStats();}}else{logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';if('Notification'in window&&Notification.permission==='granted')new Notification('🐾 쿠키',{body:durMin+'분 공부 끝! 멋져 🎉'});chime();renderStats();}}
 function logSession(min){DB.sessions.push({date:todayStr(),min,ts:Date.now()});save();}
-let actx=null,oscs=[],gain=null;
+let actx=null,gain=null,bgAudio=null;
 function ensureCtx(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}
-function startMusic(){stopMusic();const s=SONGS.find(x=>x.id===DB.song);if(!s||!s.freq.length)return;ensureCtx();gain=actx.createGain();gain.gain.value=0.04;gain.connect(actx.destination);s.freq.forEach((f,i)=>{const o=actx.createOscillator();o.type=(DB.song==='rain'||DB.song==='forest')?'sine':'triangle';o.frequency.value=f;const g=actx.createGain();g.gain.value=0.6/(i+1);o.connect(g);g.connect(gain);o.start();const lfo=actx.createOscillator();lfo.frequency.value=0.15+i*0.07;const lg=actx.createGain();lg.gain.value=0.3;lfo.connect(lg);lg.connect(g.gain);lfo.start();oscs.push(o,lfo);});}
-function stopMusic(){oscs.forEach(o=>{try{o.stop();}catch(e){}});oscs=[];}
+function startMusic(){stopMusic();const s=SONGS.find(x=>x.id===DB.song);if(!s||!s.url)return;try{bgAudio=new Audio(s.url);bgAudio.loop=true;bgAudio.volume=0.25;bgAudio.play().catch(e=>console.warn(e));}catch(e){console.error(e);}}
+function stopMusic(){if(bgAudio){try{bgAudio.pause();}catch(e){}bgAudio=null;}}
 function chime(){ensureCtx();[523,659,784].forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(0,actx.currentTime+i*0.15);g.gain.linearRampToValueAtTime(0.2,actx.currentTime+i*0.15+0.05);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+i*0.15+0.6);o.connect(g);g.connect(actx.destination);o.start(actx.currentTime+i*0.15);o.stop(actx.currentTime+i*0.15+0.7);});}
 
 function minsOn(d){return DB.sessions.filter(s=>s.date===d).reduce((a,s)=>a+s.min,0);}

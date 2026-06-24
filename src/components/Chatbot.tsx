@@ -30,10 +30,19 @@ export default function Chatbot({ chatData }: ChatbotProps) {
   // 사용자 고유 방 ID 발급 및 로드
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let uId = localStorage.getItem("cookieChatUserId");
+      let uId = null;
+      try {
+        uId = localStorage.getItem("cookieChatUserId");
+      } catch (e) {
+        console.warn("localStorage access blocked:", e);
+      }
       if (!uId) {
         uId = "user_" + Math.random().toString(36).substring(2, 10);
-        localStorage.setItem("cookieChatUserId", uId);
+        try {
+          localStorage.setItem("cookieChatUserId", uId);
+        } catch (e) {
+          console.warn("localStorage write blocked:", e);
+        }
       }
       setChatUserId(uId);
     }
@@ -72,15 +81,20 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         const list = Array.isArray(data) ? data : data.messages || [];
 
         setMessages((prev) => {
-          // 중복 렌더링 방지를 위해 기존 user 및 admin 메시지의 timestamp 리스트 추출
-          const existingTimestamps = prev
-            .filter((m) => m.sender === "user" || m.sender === "admin")
-            .map((m) => m.timestamp)
-            .filter(Boolean);
-
-          // 새로 들어온 메시지(user, admin 모두 포함)만 필터링 (timestamp 기준)
+          // 새로 들어온 메시지 중 이미 렌더링된 메시지와 텍스트 및 발신자가 같은 중복 건 필터링
           const newMsgs = list
-            .filter((m: any) => (m.sender === "user" || m.sender === "admin") && !existingTimestamps.includes(m.timestamp))
+            .filter((m: any) => {
+              if (m.sender !== "user" && m.sender !== "admin") return false;
+              // 이미 동일한 내용의 텍스트가 1분 이내에 추가되었었는지 검증하여 중복 노출 차단
+              const isDuplicate = prev.some(
+                (prevMsg) =>
+                  prevMsg.sender === m.sender &&
+                  prevMsg.text === m.message &&
+                  prevMsg.timestamp &&
+                  Math.abs(prevMsg.timestamp - m.timestamp) < 60000
+              );
+              return !isDuplicate;
+            })
             .map((m: any) => ({
               id: m.timestamp,
               sender: m.sender as "user" | "admin",

@@ -51,7 +51,10 @@ export default function AdminPage() {
       const res = await fetch("/api/chat-poll?admin=true&t=" + Date.now(), { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
-        setRooms(Array.isArray(data) ? data : []);
+        const rawRooms = Array.isArray(data) ? data : [];
+        // 최근 메시지 타임스탬프 기준으로 정렬하여 가장 최근에 대화한 손님이 목록 상단에 노출되도록 보장
+        const sortedRooms = [...rawRooms].sort((a, b) => b.timestamp - a.timestamp);
+        setRooms(sortedRooms);
       }
     } catch (error) {
       console.error("Admin fetch rooms error:", error);
