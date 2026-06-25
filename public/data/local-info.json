@@ -625,5 +625,27 @@
     "target": "지역냉방설비를 신(증)설 한 자 및 건축설계에 반영한 설비사무소",
     "summary": "지역냉방설비에 대한 보조금 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000223"
+  },
+  {
+    "id": 55,
+    "name": "친환경 농산물 직거래 지원사업",
+    "category": "혜택",
+    "startDate": "2023-10-27",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "친환경농축산물 직거래사업에 참여를 희망하는 생산자단체, 생협, 전문유통업체, 유기 및 무농약원료 가공식품업체, 전자상거래사업자, 개인사업자 등",
+    "summary": "친환경농산물 직거래를 위한 구매자금 융자지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000133"
+  },
+  {
+    "id": 56,
+    "name": "해외 인증 활성화 지원",
+    "category": "혜택",
+    "startDate": "2024-11-20",
+    "endDate": "상시",
+    "location": "한국농수산식품유통공사",
+    "target": "농식품 수출업체 등",
+    "summary": "농식품 수출업체 등에게 해외인증 취득 및 연장에 소요되는 비용의 70%지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000136"
   }
 ]
