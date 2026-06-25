@@ -21,7 +21,12 @@ const LOCAL_INFO_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info
 
 const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실'];
 const BENEFIT_KEYWORDS = ['지원금', '지원', '수당', '연금', '혜택', '감면', '할인', '보조금', '비용', '자금', '대출', '금융', '융자', '바우처', '일자리', '취업', '장학', '장려금'];
-const BLOCK_KEYWORDS = ['어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', '선박', '어항', '도서관', '도서대출', '도서 대출', '도서 대여', '책 대출', '책 대여', '달성군', '달성교육재단', '울주', '울주군'];
+const BLOCK_KEYWORDS = [
+  '어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', 
+  '선박', '어항', '도서관', '도서대출', '도서 대출', '도서 대여', '책 대출', 
+  '책 대여', '달성군', '달성교육재단', '울주', '울주군', '처인구', '기흥구', 
+  '수지구', '용인시', '용인', '구청', '동주민센터', '행정복지센터'
+];
 
 function isBlocked(item) {
   const text = ((item.서비스명 || '') + ' ' + (item.서비스목적요약 || '') + ' ' + (item.지원대상 || '')).toLowerCase();
@@ -31,17 +36,31 @@ function isBlocked(item) {
     return true;
   }
 
-  // 2. 소관기관이 서울, 용인, 경기 또는 전국 단위 국가기관이 아닌 타 지역 지자체(시, 군, 구, 도 등)인 경우 원천 차단
+  // 2. 소관기관 필터링
   const agency = (item.소관기관명 || '').toLowerCase();
   if (agency) {
     const isNational = /부$|처$|청$|공단$|공사$|정부|대한민국|국가|국민/.test(agency);
-    const isTargetRegion = agency.includes('서울') || agency.includes('용인') || agency.includes('경기');
+    const isGyeonggiProvincial = agency.includes('경기') && !agency.endsWith('시') && !agency.endsWith('군') && !agency.endsWith('구');
+    const isEvent = classifyItem(item) === '행사';
     
-    // 소관기관명에 행정구역 식별어(시, 군, 구, 도, 특별시, 광역시, 자치)가 포함되나, 대상 지역 및 전국 단위가 아닌 경우
-    const hasLocalSuffix = /시|군|구|도|특별시|광역시|자치/.test(agency);
-    if (hasLocalSuffix && !isTargetRegion && !isNational) {
-      console.log(`[원천 차단] 타 지방 지자체 소관 정책 제외: ${item.서비스명} (소관기관: ${item.소관기관명})`);
-      return true;
+    if (isEvent) {
+      // 행사/축제 글인 경우: 전국 단위이거나 경기도 광역 또는 경기도 산하 지자체(시, 군)인 경우 수집 허용
+      // 단, 서울시 등 타 지역 광역지자체 및 용인(이미 BLOCK_KEYWORDS에서 걸림) 등은 배제
+      const isGyeonggiLocal = agency.includes('경기') || agency.endsWith('도');
+      const isOtherRegion = /서울특별시|서울시|부산|대구|인천|광주|대전|울산|세종|강원|충북|충남|전북|전남|경북|경남|제주/.test(agency);
+      
+      if (!isNational && !isGyeonggiLocal && !isGyeonggiProvincial) {
+        return true;
+      }
+      if (isOtherRegion && !agency.includes('경기')) {
+        return true;
+      }
+    } else {
+      // 혜택 글인 경우: 철저히 전국 단위 또는 경기도 광역(도청 등)만 수집 허용
+      if (!isNational && !isGyeonggiProvincial) {
+        console.log(`[원천 차단] 경기도 광역/전국 단위가 아닌 지자체 혜택 제외: ${item.서비스명} (소관기관: ${item.소관기관명})`);
+        return true;
+      }
     }
   }
 
@@ -73,16 +92,14 @@ function scoreItem(item) {
   }
 
   // 2. 핵심 타겟 지역 가산점 (+20점)
-  // 용인시, 서울특별시(또는 서울시), 경기도청(광역 단위) 정책
-  const isYongin = agency.includes('용인');
-  const isSeoul = agency.includes('서울');
-  const isGyeonggiProvincial = agency.includes('경기도') && !agency.endsWith('시') && !agency.endsWith('군');
+  // 경기도청(광역 단위) 정책
+  const isGyeonggiProvincial = agency.includes('경기') && !agency.endsWith('시') && !agency.endsWith('군') && !agency.endsWith('구');
 
-  if (isYongin) score += 20;
-  if (isSeoul) score += 20;
   if (isGyeonggiProvincial) score += 20;
 
-  // 3. 타 지역 기초단체 및 산하기관(서울/용인/경기가 아닌 타 시/군/구/재단/공사/진흥원 등) 정책은 강력하게 감점 (-30점)
+  const isEvent = classifyItem(item) === '행사';
+
+  // 3. 타 지역 기초단체 및 산하기관(서울/용인/경기가 아닌 타 시/군/구/재단/공사/진흥원 등) 정책은 강력하게 감점 (행사 글은 예외) (-30점)
   // 예: 양주시, 수원시, 서초구, 달성교육재단, 거제해양관광개발공사 등
   const isOtherLocalAgency = (
     agency.endsWith('시') || 
@@ -97,26 +114,26 @@ function scoreItem(item) {
     && !agency.includes('서울') 
     && !agency.includes('경기');
 
-  if (isOtherLocalAgency) {
+  if (isOtherLocalAgency && !isEvent) {
     score -= 30;
   }
 
-  // 타 광역지자체 및 타 지자체명 감점 (-100점) - 전국 단위가 아닌 타 지역 전용 정책은 절대 선정되지 않도록 차단
+  // 타 광역지자체 및 타 지자체명 감점 (행사 글은 예외) (-100점) - 전국 단위가 아닌 타 지역 전용 정책은 절대 선정되지 않도록 차단
   const otherRegions = [
     '부산', '대구', '인천', '광주', '대전', '울산', '세종', 
     '강원', '충북', '충청북', '충남', '충청남', '전북', '전라북', '전남', '전라남', 
     '경북', '경상북', '경남', '경상남', '제주', '달성', '거제', '울주'
   ];
   const hasOtherRegion = otherRegions.some(reg => text.includes(reg));
-  if (hasOtherRegion) {
-    const isRealSeoulOrYongin = agency === '서울특별시' || agency === '용인시' || agency === '경기도';
-    if (!isRealSeoulOrYongin) {
+  if (hasOtherRegion && !isEvent) {
+    const isRealGyeonggi = agency === '경기도' || (agency.includes('경기') && !agency.endsWith('시') && !agency.endsWith('군') && !agency.endsWith('구'));
+    if (!isRealGyeonggi) {
       score -= 100;
     }
   }
 
   // 특정 구(서울의 개별 구청) 또는 특정 경기도 소도시(용인 제외) 명칭이 텍스트에 포함되어 있다면
-  // 광역(서울전체, 경기전체)이 아닌 극도로 좁은 지역 혜택이므로 감점 (-40점)
+  // 광역(서울전체, 경기전체)이 아닌 극도로 좁은 지역 혜택이므로 감점 (행사 글은 예외) (-40점)
   const seoulGu = [
     '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구',
     '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구', '구로구', '금천구',
@@ -133,7 +150,7 @@ function scoreItem(item) {
   const hasSeoulGu = seoulGu.some(gu => text.includes(gu));
   const hasGgCity = ggCities.some(city => text.includes(city));
 
-  if (hasSeoulGu || hasGgCity) {
+  if ((hasSeoulGu || hasGgCity) && !isEvent) {
     score -= 40;
   }
 
@@ -206,7 +223,7 @@ async function main() {
 
     const targetItems = [];
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 30;
 
     console.log(`전체 공공서비스 개수: ${totalCount}개 (총 ${totalPages}페이지)`);
 
