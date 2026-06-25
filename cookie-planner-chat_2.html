@@ -1147,7 +1147,13 @@ async function callGeminiAPI(key, messages, useKey) {
     contents: contents,
     systemInstruction: {
       parts: [{ text: SYSTEM }]
-    }
+    },
+    safetySettings: [
+      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+    ]
   };
   
   const res = await fetch(url, {
@@ -1178,6 +1184,21 @@ async function callGeminiAPI(key, messages, useKey) {
   
   const data = await res.json();
   const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  if (!reply) {
+    if (data.candidates?.[0]?.finishReason && data.candidates[0].finishReason !== 'STOP') {
+      const e = new Error(`대화 차단됨 (이유: ${data.candidates[0].finishReason})`);
+      e.code = 'API_ERR';
+      throw e;
+    }
+    if (data.promptFeedback?.blockReason) {
+      const e = new Error(`입력값 차단됨 (이유: ${data.promptFeedback.blockReason})`);
+      e.code = 'API_ERR';
+      throw e;
+    }
+    const e = new Error('응답이 비어있습니다. API 설정을 확인해 주세요.');
+    e.code = 'API_ERR';
+    throw e;
+  }
   return reply.trim();
 }
 
@@ -1484,7 +1505,13 @@ async function weatherViaGemini(cityText) {
     systemInstruction: {
       parts: [{ text: sys }]
     },
-    tools: [{ google_search: {} }] // 구글 실시간 검색 활성화
+    tools: [{ google_search: {} }], // 구글 실시간 검색 활성화
+    safetySettings: [
+      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+    ]
   };
   
   let res;
