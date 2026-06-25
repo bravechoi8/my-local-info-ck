@@ -458,12 +458,27 @@
     <div style="border-bottom: 1.5px dashed var(--line); margin-bottom: 14px; padding-bottom: 6px;">
       <h4 style="margin: 0 0 8px 0; font-size: 14px; color: var(--accent-deep);">💬 쿠키 비서 대화 설정</h4>
       <div class="field">
-        <label>Claude API 키 (sk-ant-... )</label>
-        <input id="f-apikey" type="password" placeholder="sk-ant-api03-..." autocomplete="off">
+        <label>사용할 AI 비서 모델</label>
+        <select id="f-active-model" onchange="toggleKeyFields()" style="width:100%;padding:8px;border-radius:12px;border:1.5px solid var(--line);font-family:inherit;font-weight:700;font-size:13px;background:var(--card);color:#3a322b;">
+          <option value="gemini">Google Gemini (초저렴/추천)</option>
+          <option value="claude">Claude 3.5 Sonnet (비쌈/정교함)</option>
+        </select>
       </div>
-      <div style="font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.6;background:var(--cream);border-radius:12px;padding:8px 10px;margin-bottom:6px">
-        📌 키 발급: <b>console.anthropic.com</b> → API Keys<br>
-        🔒 키는 이 기기(브라우저)에만 안전하게 보관됩니다.
+      <div class="field" id="gemini-key-field" style="margin-top:10px">
+        <label>Gemini API 키 (AIzaSy...)</label>
+        <input id="f-geminikey" type="password" placeholder="AIzaSy-..." autocomplete="off">
+        <div style="font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.6;background:var(--cream);border-radius:12px;padding:8px 10px;margin-top:6px">
+          📌 키 발급: <a href="https://aistudio.google.com/" target="_blank" style="color:var(--accent-deep);text-decoration:underline;">Google AI Studio</a> (무료 발급 가능)<br>
+          🔒 키는 이 기기(브라우저)에만 안전하게 보관됩니다.
+        </div>
+      </div>
+      <div class="field" id="claude-key-field" style="margin-top:10px;display:none">
+        <label>Claude API 키 (sk-ant-...)</label>
+        <input id="f-claudekey" type="password" placeholder="sk-ant-api03-..." autocomplete="off">
+        <div style="font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.6;background:var(--cream);border-radius:12px;padding:8px 10px;margin-top:6px">
+          📌 키 발급: <a href="https://console.anthropic.com/" target="_blank" style="color:var(--accent-deep);text-decoration:underline;">console.anthropic.com</a> → API Keys<br>
+          🔒 키는 이 기기(브라우저)에만 안전하게 보관됩니다.
+        </div>
       </div>
     </div>
 
@@ -1032,72 +1047,162 @@ const SYSTEM=`너는 '쿠키(Cookie)'라는 이름의 사랑스러운 강아지 
 - 항상 쿠키 캐릭터를 유지해.`;
 
 let sending=false;
-function getApiKey(){try{return localStorage.getItem('cookieApiKey')||'';}catch(e){return '';}}
-function setApiKey(k){try{localStorage.setItem('cookieApiKey',k);}catch(e){}}
+function getActiveModel(){try{return localStorage.getItem('cookieActiveModel')||'gemini';}catch(e){return 'gemini';}}
+function setActiveModel(m){try{localStorage.setItem('cookieActiveModel',m);}catch(e){}}
+function getClaudeKey(){try{return localStorage.getItem('cookieClaudeKey')||localStorage.getItem('cookieApiKey')||'';}catch(e){return '';}}
+function setClaudeKey(k){try{localStorage.setItem('cookieClaudeKey',k);}catch(e){}}
+function getGeminiKey(){try{return localStorage.getItem('cookieGeminiKey')||'';}catch(e){return '';}}
+function setGeminiKey(k){try{localStorage.setItem('cookieGeminiKey',k);}catch(e){}}
 function getElevenKey(){try{return localStorage.getItem('cookieElevenKey')||'';}catch(e){return '';}}
 function setElevenKey(k){try{localStorage.setItem('cookieElevenKey',k);}catch(e){}}
 function getElevenVoiceId(){try{return localStorage.getItem('cookieElevenVoiceId')||'';}catch(e){return '';}}
 function setElevenVoiceId(v){try{localStorage.setItem('cookieElevenVoiceId',v);}catch(e){}}
-function clearApiKey(){try{localStorage.removeItem('cookieApiKey');localStorage.removeItem('cookieElevenKey');localStorage.removeItem('cookieElevenVoiceId');}catch(e){}}
+function clearAllKeys(){try{localStorage.removeItem('cookieClaudeKey');localStorage.removeItem('cookieGeminiKey');localStorage.removeItem('cookieActiveModel');localStorage.removeItem('cookieApiKey');localStorage.removeItem('cookieElevenKey');localStorage.removeItem('cookieElevenVoiceId');}catch(e){}}
+
+function toggleKeyFields() {
+  const model = document.getElementById('f-active-model').value;
+  if (model === 'gemini') {
+    document.getElementById('gemini-key-field').style.display = 'block';
+    document.getElementById('claude-key-field').style.display = 'none';
+  } else {
+    document.getElementById('gemini-key-field').style.display = 'none';
+    document.getElementById('claude-key-field').style.display = 'block';
+  }
+}
 
 function openKeyPrompt(){
-  document.getElementById('f-apikey').value=getApiKey();
+  document.getElementById('f-active-model').value=getActiveModel();
+  document.getElementById('f-claudekey').value=getClaudeKey();
+  document.getElementById('f-geminikey').value=getGeminiKey();
   document.getElementById('f-elkey').value=getElevenKey();
   document.getElementById('f-elvoice').value=getElevenVoiceId();
+  toggleKeyFields();
   document.getElementById('key-modal').classList.add('on');
 }
 function closeKey(){document.getElementById('key-modal').classList.remove('on');}
+
 function saveKey(){
-  const k=document.getElementById('f-apikey').value.trim();
-  const elKey=document.getElementById('f-elkey').value.trim();
-  const elVoice=document.getElementById('f-elvoice').value.trim();
+  const model = document.getElementById('f-active-model').value;
+  const cKey = document.getElementById('f-claudekey').value.trim();
+  const gKey = document.getElementById('f-geminikey').value.trim();
+  const elKey = document.getElementById('f-elkey').value.trim();
+  const elVoice = document.getElementById('f-elvoice').value.trim();
   
-  // Claude API 키 입력란이 비어있다면, 기존 키를 삭제하고 기본 로컬 모드로 전환합니다.
-  if(!k){
-    clearApiKey();
+  const activeKey = model === 'gemini' ? gKey : cKey;
+  
+  if(!activeKey){
+    clearAllKeys();
     closeKey();
     addMsg('dog','API 키가 삭제되었습니다! 이제 기본 애교 모드(로컬 답변)로 대화할게 🐾');
     return;
   }
   
-  if(!k.startsWith('sk-ant-')){if(!confirm('형식이 조금 달라 보여요. 그래도 저장할까요?'))return;}
-  setApiKey(k);
+  if(model === 'claude' && !cKey.startsWith('sk-ant-')){
+    if(!confirm('클로드 키 형식이 조금 달라 보여요. 그래도 저장할까요?')) return;
+  }
+  if(model === 'gemini' && !gKey.startsWith('AIzaSy')){
+    if(!confirm('제미나이 키 형식이 조금 달라 보여요. 그래도 저장할까요?')) return;
+  }
+  
+  setActiveModel(model);
+  setClaudeKey(cKey);
+  setGeminiKey(gKey);
   setElevenKey(elKey);
   setElevenVoiceId(elVoice);
   closeKey();
   addMsg('dog','고마워! 이제 준비됐어 🐾 뭐든 물어봐!');
 }
-// Detect whether we're running inside Claude's artifact sandbox (key-free API access).
+
 function inArtifact(){
   try{ return location.hostname.endsWith('claudeusercontent.com') || location.hostname.endsWith('claude.ai') || location.hostname.endsWith('anthropic.com'); }
   catch(e){ return false; }
 }
 
 async function askCookie(messages){
-  const key=getApiKey();
-  const useKey = !inArtifact(); // outside the artifact sandbox we must send the user's own key
-  const headers={"Content-Type":"application/json"};
-  if(useKey){
-    if(!key){ const e=new Error('NO_KEY'); e.code='NO_KEY'; throw e; }
-    headers["x-api-key"]=key;
-    headers["anthropic-version"]="2023-06-01";
-    headers["anthropic-dangerous-direct-browser-access"]="true";
+  const model = getActiveModel();
+  const useKey = !inArtifact();
+  
+  if (model === 'gemini') {
+    const key = getGeminiKey();
+    return await callGeminiAPI(key, messages, useKey);
+  } else {
+    const key = getClaudeKey();
+    return await callClaudeAPI(key, messages, useKey);
+  }
+}
+
+async function callGeminiAPI(key, messages, useKey) {
+  if (useKey && !key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
+  
+  const headers = { "Content-Type": "application/json" };
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+  
+  const contents = messages.map(m => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }]
+  }));
+  
+  const requestBody = {
+    contents: contents,
+    systemInstruction: {
+      parts: [{ text: SYSTEM }]
+    }
+  };
+  
+  const res = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody)
+  });
+  
+  if (res.status === 400) {
+    const errText = await res.text();
+    if (errText.includes('API_KEY_INVALID')) {
+      const e = new Error('BAD_KEY'); e.code = 'BAD_KEY'; throw e;
+    }
+  }
+  
+  if (!res.ok) {
+    let errMsg = `HTTP ${res.status}`;
+    try {
+      const errData = await res.json();
+      if (errData && errData.error) {
+        errMsg = `${errData.error.status || 'API_ERR'}: ${errData.error.message || ''}`;
+      }
+    } catch(e) {}
+    const e = new Error(errMsg);
+    e.code = 'API_ERR';
+    throw e;
+  }
+  
+  const data = await res.json();
+  const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  return reply.trim();
+}
+
+async function callClaudeAPI(key, messages, useKey) {
+  const headers = { "Content-Type": "application/json" };
+  if (useKey) {
+    if (!key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
+    headers["x-api-key"] = key;
+    headers["anthropic-version"] = "2023-06-01";
+    headers["anthropic-dangerous-direct-browser-access"] = "true";
   }
   const requestBody = {
     model: "claude-sonnet-4-6",
     max_tokens: 1200,
     system: SYSTEM,
     messages: messages,
-    tools: [{type:"web_search_20250305",name:"web_search",max_uses:3}]
+    tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 3 }]
   };
-  // web_search is a server-side tool: Claude runs the search and returns the final text in one response.
-  const res=await fetch("https://api.anthropic.com/v1/messages",{
-    method:"POST",headers,
-    body:JSON.stringify(requestBody)
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody)
   });
-  if(res.status===401||res.status===403){ const e=new Error('BAD_KEY'); e.code='BAD_KEY'; throw e; }
+  if (res.status === 401 || res.status === 403) { const e = new Error('BAD_KEY'); e.code = 'BAD_KEY'; throw e; }
   
-  if(!res.ok){
+  if (!res.ok) {
     let errMsg = `HTTP ${res.status}`;
     try {
       const errData = await res.json();
@@ -1110,16 +1215,15 @@ async function askCookie(messages){
     throw e;
   }
 
-  const data=await res.json();
-  if(data.error){
-    const e=new Error(`${data.error.type || 'API_ERR'}: ${data.error.message || ''}`);
-    e.code='API_ERR';
+  const data = await res.json();
+  if (data.error) {
+    const e = new Error(`${data.error.type || 'API_ERR'}: ${data.error.message || ''}`);
+    e.code = 'API_ERR';
     throw e;
   }
-  // collect any web search happening -> update status
-  const usedSearch=(data.content||[]).some(c=>c.type==='server_tool_use'||c.type==='web_search_tool_result');
-  if(usedSearch)document.getElementById('chat-status').textContent='● 검색했어 🔎';
-  const reply=(data.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('\n').trim();
+  const usedSearch = (data.content || []).some(c => c.type === 'server_tool_use' || c.type === 'web_search_tool_result');
+  if (usedSearch) document.getElementById('chat-status').textContent = '● 검색했어 🔎';
+  const reply = (data.content || []).filter(c => c.type === 'text').map(c => c.text).join('\n').trim();
   return reply;
 }
 
@@ -1322,9 +1426,13 @@ async function fetchWeather(lat,lon){
   const r=await fetch(url);if(!r.ok)throw new Error('wx '+r.status);return await r.json();
 }
 
-// Fallback: ask Claude (with web search) for the weather as structured JSON.
-// Works whenever the chat API works (inside artifact key-free, outside with saved key).
+// Fallback: ask AI (Gemini or Claude) for the weather as structured JSON.
 async function weatherViaClaude(cityText){
+  const model = getActiveModel();
+  if (model === 'gemini') {
+    return await weatherViaGemini(cityText);
+  }
+  
   const sys='You are a weather data API. Use web search to find the CURRENT weather for the city named, then output ONLY one JSON object and nothing else (no prose, no markdown fences, no commentary before or after). Schema exactly: {"name":string (city name, Korean if natural),"country":string,"temp":number,"feels":number,"hi":number,"lo":number,"humidity":number,"wind":number,"pop":number,"code":number}. temp/feels/hi/lo are Celsius. humidity and pop are percent 0-100. wind is km/h. code is a WMO weather code (0 clear,1 mainly clear,2 partly cloudy,3 overcast,45 fog,51/53/55 drizzle,61/63/65 rain,71/73/75 snow,80/81/82 showers,95 thunderstorm). Output the JSON object as the final thing in your reply.';
   const msgs=[{role:'user',content:cityText+' 의 지금 현재 날씨를 검색해서 JSON으로만 답해줘.'}];
   let res;
@@ -1347,7 +1455,6 @@ async function weatherViaClaude(cityText){
   const data=await res.json();
   if(data.error){const e=new Error(data.error.message||'api');e.code='API';e.detail=data.error.message;throw e;}
   const txt=(data.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('\n');
-  // grab the LAST {...} block (the final JSON), tolerant of search citations above it
   const matches=txt.match(/\{[^{}]*\}/g);
   let jsonStr=null;
   if(matches&&matches.length){ jsonStr=matches[matches.length-1]; }
@@ -1356,10 +1463,64 @@ async function weatherViaClaude(cityText){
   try{ return JSON.parse(jsonStr); }
   catch(pe){ const e=new Error('PARSE');e.code='PARSE';e.detail=jsonStr.slice(0,80);throw e; }
 }
+
+async function weatherViaGemini(cityText) {
+  const key = getGeminiKey();
+  if (!key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
+  
+  const headers = { "Content-Type": "application/json" };
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+  
+  const sys = 'You are a weather data API. Use search to find the CURRENT weather for the city named, then output ONLY one JSON object and nothing else (no prose, no markdown fences, no commentary before or after). Schema exactly: {"name":string (city name, Korean if natural),"country":string,"temp":number,"feels":number,"hi":number,"lo":number,"humidity":number,"wind":number,"pop":number,"code":number}. temp/feels/hi/lo are Celsius. humidity and pop are percent 0-100. wind is km/h. code is a WMO weather code (0 clear,1 mainly clear,2 partly cloudy,3 overcast,45 fog,51/53/55 drizzle,61/63/65 rain,71/73/75 snow,80/81/82 showers,95 thunderstorm). Output the JSON object as the final thing in your reply.';
+  
+  const requestBody = {
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: cityText + ' 의 지금 현재 날씨를 검색해서 JSON으로만 답해줘.' }]
+      }
+    ],
+    systemInstruction: {
+      parts: [{ text: sys }]
+    },
+    tools: [{ google_search: {} }] // 구글 실시간 검색 활성화
+  };
+  
+  let res;
+  try {
+    res = await fetch(url, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(requestBody)
+    });
+  } catch(netErr) { const e = new Error('NETWORK'); e.code = 'NETWORK'; throw e; }
+  
+  if (res.status === 400) {
+    const errText = await res.text();
+    if (errText.includes('API_KEY_INVALID')) {
+      const e = new Error('BAD_KEY'); e.code = 'BAD_KEY'; throw e;
+    }
+  }
+  
+  if (!res.ok) { const e = new Error('HTTP ' + res.status); e.code = 'HTTP'; e.detail = res.status; throw e; }
+  
+  const data = await res.json();
+  const txt = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  
+  const matches = txt.match(/\{[^{}]*\}/g);
+  let jsonStr = null;
+  if (matches && matches.length) { jsonStr = matches[matches.length-1]; }
+  else { const m = txt.match(/\{[\s\S]*\}/); if(m) jsonStr = m[0]; }
+  
+  if (!jsonStr) { const e = new Error('PARSE'); e.code = 'PARSE'; e.detail = txt.slice(0, 80); throw e; }
+  try { return JSON.parse(jsonStr); }
+  catch(pe) { const e = new Error('PARSE'); e.code = 'PARSE'; e.detail = jsonStr.slice(0, 80); throw e; }
+}
+
 function apiHeaders(){
   const h={"Content-Type":"application/json"};
   if(!inArtifact()){
-    const k=getApiKey();
+    const k=getClaudeKey();
     if(!k){const e=new Error('NO_KEY');e.code='NO_KEY';throw e;}
     h["x-api-key"]=k;h["anthropic-version"]="2023-06-01";h["anthropic-dangerous-direct-browser-access"]="true";
   }
