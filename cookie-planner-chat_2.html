@@ -1049,6 +1049,7 @@ const SYSTEM=`너는 '쿠키(Cookie)'라는 이름의 사랑스러운 강아지 
 let sending=false;
 function getActiveModel(){try{return localStorage.getItem('cookieActiveModel')||'gemini';}catch(e){return 'gemini';}}
 function setActiveModel(m){try{localStorage.setItem('cookieActiveModel',m);}catch(e){}}
+function getApiKey(){return getActiveModel() === 'gemini' ? getGeminiKey() : getClaudeKey();}
 function getClaudeKey(){try{return localStorage.getItem('cookieClaudeKey')||localStorage.getItem('cookieApiKey')||'';}catch(e){return '';}}
 function setClaudeKey(k){try{localStorage.setItem('cookieClaudeKey',k);}catch(e){}}
 function getGeminiKey(){try{return localStorage.getItem('cookieGeminiKey')||'';}catch(e){return '';}}
