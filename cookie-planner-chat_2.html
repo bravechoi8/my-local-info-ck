@@ -879,8 +879,9 @@ function checkAlarms(){
     const ds=ymd(day);
     eventsOn(ds).forEach(e=>{
       if(!e.alarm||!e.time||isDone(e,ds))return;
-      const [hh,mm]=e.time.split(':').map(Number);
-      const target=new Date(ds+'T00:00');target.setHours(hh,mm,0,0);
+      const [yr, mon, dy] = ds.split('-').map(Number);
+      const [hh, mm] = e.time.split(':').map(Number);
+      const target = new Date(yr, mon - 1, dy, hh, mm, 0, 0);
       const fireAt=new Date(target.getTime()-(e.alarmBefore||0)*60000);
       // fire if current minute matches the fire time
       if(pad(fireAt.getHours())+':'+pad(fireAt.getMinutes())===pad(now.getHours())+':'+pad(now.getMinutes())
