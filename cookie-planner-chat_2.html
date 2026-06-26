@@ -800,6 +800,15 @@ function showLocalNotification(title, body) {
     badge: '/next.svg',
     vibrate: [200, 100, 200]
   };
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isMobile) {
+    try {
+      new Notification(title, options);
+      return;
+    } catch (e) {
+      console.warn("PC Notification failed, falling back to service worker:", e);
+    }
+  }
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(reg => {
       reg.showNotification(title, options);
