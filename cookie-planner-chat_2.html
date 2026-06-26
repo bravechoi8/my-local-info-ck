@@ -873,6 +873,19 @@ function whenLabel(min){return ({0:'정시',60:'1시간 전',1440:'하루 전',2
 function checkAlarms(){
   if(!('Notification'in window)||Notification.permission!=='granted')return;
   const now=new Date();
+  
+  // 오래된 알림 기록 정리 (어제 이전 기록 삭제)
+  const todayStrYmd = ymd(now);
+  for(let i=localStorage.length-1; i>=0; i--){
+    const key = localStorage.key(i);
+    if(key && key.startsWith('fired_')){
+      const parts = key.split('_');
+      if(parts[2] && parts[2] < todayStrYmd){
+        localStorage.removeItem(key);
+      }
+    }
+  }
+
   // check events occurring within the next 8 days (covers up to 일주일 전 lead)
   for(let d=0;d<=8;d++){
     const day=new Date();day.setDate(now.getDate()+d);
@@ -883,15 +896,15 @@ function checkAlarms(){
       const [hh, mm] = e.time.split(':').map(Number);
       const target = new Date(yr, mon - 1, dy, hh, mm, 0, 0);
       const fireAt=new Date(target.getTime()-(e.alarmBefore||0)*60000);
-      // fire if current minute matches the fire time
-      if(pad(fireAt.getHours())+':'+pad(fireAt.getMinutes())===pad(now.getHours())+':'+pad(now.getMinutes())
-         && ymd(fireAt)===ymd(now)){
-        const k='fired_'+e.id+ds+(e.alarmBefore||0);
-        if(!sessionStorage.getItem(k)){
+      
+      // 알림 예정 시각을 경과했는지 검사
+      if(now.getTime() >= fireAt.getTime()){
+        const k='fired_'+e.id+'_'+ds+'_'+(e.alarmBefore||0);
+        if(!localStorage.getItem(k)){
           const wl=whenLabel(e.alarmBefore||0);
           const body=(e.alarmBefore? e.title+' — '+wl+' 알림이야! ('+(day.getMonth()+1)+'/'+day.getDate()+' '+e.time+')' : e.title+' 시간이에요!');
           showLocalNotification('🐾 쿠키 알림', body);
-          sessionStorage.setItem(k,'1');
+          localStorage.setItem(k,'1');
         }
       }
     });
