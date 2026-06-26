@@ -509,6 +509,17 @@ if ('serviceWorker' in navigator) {
     <div class="sheet-actions">
       <button class="save-btn" onclick="saveKey()">설정 저장하기</button>
     </div>
+    
+    <div style="border-top: 1.5px dashed var(--line); margin-top: 14px; padding-top: 14px; margin-bottom: 14px;">
+      <h4 style="margin: 0 0 8px 0; font-size: 14px; color: var(--accent-deep);">🔔 알림 시스템 테스트</h4>
+      <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px;line-height:1.5">
+        알림이 컴퓨터나 폰에 정상적으로 오는지 테스트해 볼 수 있습니다.
+      </div>
+      <button class="theme-btn" onclick="testNotification()" style="width:100%;padding:10px 0;background:var(--accent);color:#fff;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;border:none;">
+        테스트 알림 보내기 🐾
+      </button>
+    </div>
+    
     <button style="width:100%;margin-top:10px;color:var(--muted);font-weight:800;font-size:14px;padding:8px" onclick="closeKey()">나중에</button>
   </div>
 </div>
@@ -792,12 +803,45 @@ function saveEvent(){
 }
 function deleteEvent(){if(!editing)return;if(!confirm('이 일정을 삭제할까요?'))return;DB.events=DB.events.filter(e=>e!==editing);save();closeModal();renderAll();}
 
+let silentAudio = null;
+function playSilentAudio() {
+  if (!silentAudio) {
+    silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAAA");
+    silentAudio.loop = true;
+  }
+  silentAudio.play().catch(e => console.log("Silent audio blocked or failed:", e));
+}
+function stopSilentAudio() {
+  if (silentAudio) {
+    try { silentAudio.pause(); } catch(e) {}
+  }
+}
+
+function testNotification() {
+  if (!('Notification' in window)) {
+    alert("이 브라우저는 알림을 지원하지 않습니다 🐾");
+    return;
+  }
+  if (Notification.permission !== 'granted') {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        showLocalNotification("🐾 쿠키 알림 테스트", "알림 권한이 허용되어 테스트 알림을 보냅니다!");
+      } else {
+        alert("알림 권한이 허용되지 않았습니다. 브라우저 설정에서 알림을 허용해주세요 🐾");
+      }
+    });
+  } else {
+    showLocalNotification("🐾 쿠키 알림 테스트", "쿠키 알림이 정상적으로 작동하고 있습니다!");
+  }
+}
+
 function showLocalNotification(title, body) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const iconUrl = window.location.origin + '/next.svg';
   const options = {
     body: body,
-    icon: '/next.svg',
-    badge: '/next.svg',
+    icon: iconUrl,
+    badge: iconUrl,
     vibrate: [200, 100, 200]
   };
   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -806,17 +850,23 @@ function showLocalNotification(title, body) {
       new Notification(title, options);
       return;
     } catch (e) {
-      console.warn("PC Notification failed, falling back to service worker:", e);
+      console.warn("PC Notification options failed, trying basic Notification:", e);
+      try {
+        new Notification(title, { body: body });
+        return;
+      } catch (err2) {
+        console.error("PC basic Notification failed:", err2);
+      }
     }
   }
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(reg => {
       reg.showNotification(title, options);
     }).catch(err => {
-      try { new Notification(title, options); } catch(e) {}
+      try { new Notification(title, { body: body }); } catch(e) {}
     });
   } else {
-    try { new Notification(title, options); } catch(e) {}
+    try { new Notification(title, { body: body }); } catch(e) {}
   }
 }
 function whenLabel(min){return ({0:'정시',60:'1시간 전',1440:'하루 전',2880:'이틀 전',10080:'일주일 전'})[min]||(min+'분 전');}
@@ -1044,10 +1094,10 @@ function startPomoMode(){if(ticking)return;const sInput=document.getElementById(
 function fmt(s){return pad(Math.floor(s/60))+':'+pad(s%60);}
 function updateTimer(){document.getElementById('t-time').textContent=fmt(remain);const p=1-remain/(durMin*60);document.getElementById('ring').setAttribute('stroke-dashoffset',(RING*p).toFixed(1));}
 function toggleTimer(){ticking?pauseTimer():startTimer();}
-function startTimer(){ticking=true;const g=document.getElementById('t-go');g.textContent='일시정지';g.classList.remove('go');g.classList.add('stop');if(isPomo){document.getElementById('t-state').textContent=pomoState==='study'?'뽀모도로 공부 중... 🐾🍅':'뽀모도로 휴식 중... ☕';}else{document.getElementById('t-state').textContent='공부 중... 🐾';}startMusic();tHandle=setInterval(()=>{remain--;updateTimer();if(remain<=0)finishTimer();},1000);}
-function pauseTimer(){ticking=false;clearInterval(tHandle);stopMusic();const g=document.getElementById('t-go');g.textContent='이어서';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='잠깐 멈춤';}
-function resetTimer(){ticking=false;clearInterval(tHandle);stopMusic();remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='시작 준비!';}
-function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();if(isPomo){if(pomoState==='study'){logSession(pomoStudyMin);pomoState='break';durMin=pomoBreakMin;remain=durMin*60;updateTimer();showLocalNotification('🐾 쿠키',pomoStudyMin+'분 공부 끝! 이제 휴식 시간이야 ☕');chime();startTimer();renderStats();}else{isPomo=false;durMin=DB.dur||30;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='뽀모도로 완료! 수고했어 🥳';showLocalNotification('🐾 쿠키','휴식 시간이 끝났어! 뽀모도로 한 세트 완료 🎉');chime();renderStats();}}else{logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';showLocalNotification('🐾 쿠키',durMin+'분 공부 끝! 멋져 🎉');chime();renderStats();}}
+function startTimer(){ticking=true;const g=document.getElementById('t-go');g.textContent='일시정지';g.classList.remove('go');g.classList.add('stop');if(isPomo){document.getElementById('t-state').textContent=pomoState==='study'?'뽀모도로 공부 중... 🐾🍅':'뽀모도로 휴식 중... ☕';}else{document.getElementById('t-state').textContent='공부 중... 🐾';}startMusic();playSilentAudio();tHandle=setInterval(()=>{remain--;updateTimer();if(remain<=0)finishTimer();},1000);}
+function pauseTimer(){ticking=false;clearInterval(tHandle);stopMusic();stopSilentAudio();const g=document.getElementById('t-go');g.textContent='이어서';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='잠깐 멈춤';}
+function resetTimer(){ticking=false;clearInterval(tHandle);stopMusic();stopSilentAudio();remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='시작 준비!';}
+function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();stopSilentAudio();if(isPomo){if(pomoState==='study'){logSession(pomoStudyMin);pomoState='break';durMin=pomoBreakMin;remain=durMin*60;updateTimer();showLocalNotification('🐾 쿠키',pomoStudyMin+'분 공부 끝! 이제 휴식 시간이야 ☕');chime();startTimer();renderStats();}else{isPomo=false;durMin=DB.dur||30;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='뽀모도로 완료! 수고했어 🥳';showLocalNotification('🐾 쿠키','휴식 시간이 끝났어! 뽀모도로 한 세트 완료 🎉');chime();renderStats();}}else{logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';showLocalNotification('🐾 쿠키',durMin+'분 공부 끝! 멋져 🎉');chime();renderStats();}}
 function logSession(min){DB.sessions.push({date:todayStr(),min,ts:Date.now()});save();}
 let actx=null,gain=null,bgAudio=null;
 function ensureCtx(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}
