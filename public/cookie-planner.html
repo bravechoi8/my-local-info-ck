@@ -1081,6 +1081,7 @@ async function speakBrief(){
 
 /* ===== timer ===== */
 let durMin=DB.dur||30,remain=durMin*60,ticking=false,tHandle=null;
+let timerTargetTime=null;
 let isPomo=false,pomoState='study',pomoStudyMin=50,pomoBreakMin=10;
 const RING=2*Math.PI*88;
 document.getElementById('ring').setAttribute('stroke-dasharray',RING.toFixed(1));
@@ -1094,10 +1095,10 @@ function startPomoMode(){if(ticking)return;const sInput=document.getElementById(
 function fmt(s){return pad(Math.floor(s/60))+':'+pad(s%60);}
 function updateTimer(){document.getElementById('t-time').textContent=fmt(remain);const p=1-remain/(durMin*60);document.getElementById('ring').setAttribute('stroke-dashoffset',(RING*p).toFixed(1));}
 function toggleTimer(){ticking?pauseTimer():startTimer();}
-function startTimer(){ticking=true;const g=document.getElementById('t-go');g.textContent='일시정지';g.classList.remove('go');g.classList.add('stop');if(isPomo){document.getElementById('t-state').textContent=pomoState==='study'?'뽀모도로 공부 중... 🐾🍅':'뽀모도로 휴식 중... ☕';}else{document.getElementById('t-state').textContent='공부 중... 🐾';}startMusic();playSilentAudio();tHandle=setInterval(()=>{remain--;updateTimer();if(remain<=0)finishTimer();},1000);}
-function pauseTimer(){ticking=false;clearInterval(tHandle);stopMusic();stopSilentAudio();const g=document.getElementById('t-go');g.textContent='이어서';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='잠깐 멈춤';}
-function resetTimer(){ticking=false;clearInterval(tHandle);stopMusic();stopSilentAudio();remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='시작 준비!';}
-function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();stopSilentAudio();if(isPomo){if(pomoState==='study'){logSession(pomoStudyMin);pomoState='break';durMin=pomoBreakMin;remain=durMin*60;updateTimer();showLocalNotification('🐾 쿠키',pomoStudyMin+'분 공부 끝! 이제 휴식 시간이야 ☕');chime();startTimer();renderStats();}else{isPomo=false;durMin=DB.dur||30;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='뽀모도로 완료! 수고했어 🥳';showLocalNotification('🐾 쿠키','휴식 시간이 끝났어! 뽀모도로 한 세트 완료 🎉');chime();renderStats();}}else{logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';showLocalNotification('🐾 쿠키',durMin+'분 공부 끝! 멋져 🎉');chime();renderStats();}}
+function startTimer(){ticking=true;const g=document.getElementById('t-go');g.textContent='일시정지';g.classList.remove('go');g.classList.add('stop');if(isPomo){document.getElementById('t-state').textContent=pomoState==='study'?'뽀모도로 공부 중... 🐾🍅':'뽀모도로 휴식 중... ☕';}else{document.getElementById('t-state').textContent='공부 중... 🐾';}startMusic();playSilentAudio();timerTargetTime=Date.now()+remain*1000;tHandle=setInterval(()=>{const left=Math.ceil((timerTargetTime-Date.now())/1000);remain=Math.max(0,left);updateTimer();if(remain<=0)finishTimer();},1000);}
+function pauseTimer(){ticking=false;clearInterval(tHandle);stopMusic();stopSilentAudio();if(timerTargetTime){const left=Math.ceil((timerTargetTime-Date.now())/1000);remain=Math.max(0,left);}updateTimer();const g=document.getElementById('t-go');g.textContent='이어서';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='잠깐 멈춤';}
+function resetTimer(){ticking=false;clearInterval(tHandle);stopMusic();stopSilentAudio();timerTargetTime=null;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='시작 준비!';}
+function finishTimer(){clearInterval(tHandle);ticking=false;stopMusic();stopSilentAudio();timerTargetTime=null;if(isPomo){if(pomoState==='study'){logSession(pomoStudyMin);pomoState='break';durMin=pomoBreakMin;remain=durMin*60;updateTimer();showLocalNotification('🐾 쿠키',pomoStudyMin+'분 공부 끝! 이제 휴식 시간이야 ☕');chime();startTimer();renderStats();}else{isPomo=false;durMin=DB.dur||30;remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='뽀모도로 완료! 수고했어 🥳';showLocalNotification('🐾 쿠키','휴식 시간이 끝났어! 뽀모도로 한 세트 완료 🎉');chime();renderStats();}}else{logSession(durMin);remain=durMin*60;updateTimer();const g=document.getElementById('t-go');g.textContent='시작';g.classList.add('go');g.classList.remove('stop');document.getElementById('t-state').textContent='완료! 잘했어 🎉';showLocalNotification('🐾 쿠키',durMin+'분 공부 끝! 멋져 🎉');chime();renderStats();}}
 function logSession(min){DB.sessions.push({date:todayStr(),min,ts:Date.now()});save();}
 let actx=null,gain=null,bgAudio=null;
 function ensureCtx(){if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();}
@@ -1753,8 +1754,17 @@ applyTheme(DB.theme||'apricot');renderSongs();setDur(durMin);updateTimer();rende
 document.getElementById('f-city').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitCity();}});
 (function(){try{const d=localStorage.getItem('cookieDraft');if(d){const ta=document.getElementById('chat-text');ta.value=d;autoGrow(ta);}}catch(e){}document.getElementById('send-btn').disabled=!document.getElementById('chat-text').value.trim();})();
 if('Notification'in window&&Notification.permission==='default'){document.body.addEventListener('click',()=>{Notification.requestPermission();},{once:true});}
-window.addEventListener('focus', checkAlarms);
-document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') checkAlarms(); });
+function onWakeUp() {
+  checkAlarms();
+  if (ticking && timerTargetTime) {
+    const left = Math.ceil((timerTargetTime - Date.now()) / 1000);
+    remain = Math.max(0, left);
+    updateTimer();
+    if (remain <= 0) finishTimer();
+  }
+}
+window.addEventListener('focus', onWakeUp);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') onWakeUp(); });
 </script>
 </body>
 </html>
