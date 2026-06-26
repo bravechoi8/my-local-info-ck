@@ -647,5 +647,27 @@
     "target": "농식품 수출업체 등",
     "summary": "농식품 수출업체 등에게 해외인증 취득 및 연장에 소요되는 비용의 70%지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000136"
+  },
+  {
+    "id": 57,
+    "name": "어린이집 입학준비금 지원",
+    "category": "혜택",
+    "startDate": "2025-05-13",
+    "endDate": "상시",
+    "location": "경기도 안양시",
+    "target": "안양시 소재 어린이집에 최초 입소하는 만 0~5세 아동 (부모 중 1명 이상과 아동 모두 안양시 거주)",
+    "summary": "안양시 어린이집에 최초 입소하는 만 5세 이하 아동에게 최대 10만 원의 입학준비금을 최초 1회 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000114"
+  },
+  {
+    "id": 58,
+    "name": "법정저소득·셋째아 필요경비 지원",
+    "category": "혜택",
+    "startDate": "2021-09-23",
+    "endDate": "상시",
+    "location": "경기도 안양시",
+    "target": "만0~5세 어린이집 재원 중인 법정저소득 및 셋째아 이상 아동(부모 중 1명 이상과 보육아동 안양시 거주)",
+    "summary": "어린이집 재원 중인 만 5세 이하 저소득 아동 등에게 특별활동비 및 현장학습비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000122"
   }
 ]
