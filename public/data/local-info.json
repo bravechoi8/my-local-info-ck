@@ -669,5 +669,27 @@
     "target": "만0~5세 어린이집 재원 중인 법정저소득 및 셋째아 이상 아동(부모 중 1명 이상과 보육아동 안양시 거주)",
     "summary": "어린이집 재원 중인 만 5세 이하 저소득 아동 등에게 특별활동비 및 현장학습비 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000122"
+  },
+  {
+    "id": 59,
+    "name": "용산청소년센터 프로그램 할인(기초생활수급자)",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "용산청소년센터",
+    "target": "국민기초생활 보장법에 의한 수급자 또는 그 가족",
+    "summary": "기초생활수급자 및 가족에게 용산청소년센터 문화체육 프로그램 이용요금을 50%에서 최대 100%까지 감면해 줍니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024000039"
+  },
+  {
+    "id": 60,
+    "name": "용산문화체육센터 프로그램 할인(장애인)",
+    "category": "혜택",
+    "startDate": "2025-05-14",
+    "endDate": "상시",
+    "location": "용산문화체육센터",
+    "target": "장애인 복지카드 소지자",
+    "summary": "장애인에게 용산문화체육센터 프로그램 이용요금 50% 감면 혜택 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024000040"
   }
 ]
