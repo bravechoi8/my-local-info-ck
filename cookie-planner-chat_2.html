@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<link rel="manifest" href="/manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg error:', err));
+  });
+}
+</script>
 <title>쿠키 플래너 + 쿠키 챗봇</title>
 <style>
   :root{
@@ -738,8 +746,31 @@ function openEvent(ev){
 }
 function toggleAlarm(){
   const sw=document.getElementById('f-alarm');
-  sw.classList.toggle('on');
-  document.getElementById('f-alarm-when').style.display=sw.classList.contains('on')?'block':'none';
+  const turningOn = !sw.classList.contains('on');
+  
+  if (turningOn) {
+    if (!('Notification' in window)) {
+      alert('이 브라우저는 알림 기능을 지원하지 않아요 🐾');
+      return;
+    }
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    Notification.requestPermission().then(perm => {
+      if (perm === 'granted') {
+        sw.classList.add('on');
+        document.getElementById('f-alarm-when').style.display = 'block';
+        if (isMobile && !window.matchMedia('(display-mode: standalone)').matches) {
+          alert('💡 팁: 스마트폰 화면이 꺼져 있을 때도 알림을 받으시려면, 브라우저 메뉴의 [홈 화면에 추가] 버튼을 눌러 앱으로 설치하신 뒤 실행해 주세요! 🐾');
+        }
+      } else {
+        alert('알림 권한이 차단되어 있어요 🐾\n브라우저 주소창 왼쪽의 설정 아이콘을 눌러 알림 권한을 허용해 주세요!');
+        sw.classList.remove('on');
+        document.getElementById('f-alarm-when').style.display = 'none';
+      }
+    });
+  } else {
+    sw.classList.remove('on');
+    document.getElementById('f-alarm-when').style.display = 'none';
+  }
 }
 function pickWhen(w){document.querySelectorAll('#f-when button').forEach(b=>b.classList.toggle('on',+b.dataset.w===+w));}
 function curWhen(){const b=document.querySelector('#f-when button.on');return b?+b.dataset.w:0;}
@@ -1644,6 +1675,8 @@ applyTheme(DB.theme||'apricot');renderSongs();setDur(durMin);updateTimer();rende
 document.getElementById('f-city').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitCity();}});
 (function(){try{const d=localStorage.getItem('cookieDraft');if(d){const ta=document.getElementById('chat-text');ta.value=d;autoGrow(ta);}}catch(e){}document.getElementById('send-btn').disabled=!document.getElementById('chat-text').value.trim();})();
 if('Notification'in window&&Notification.permission==='default'){document.body.addEventListener('click',()=>{Notification.requestPermission();},{once:true});}
+window.addEventListener('focus', checkAlarms);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') checkAlarms(); });
 </script>
 </body>
 </html>
