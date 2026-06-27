@@ -691,5 +691,27 @@
     "target": "장애인 복지카드 소지자",
     "summary": "장애인에게 용산문화체육센터 프로그램 이용요금 50% 감면 혜택 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024000040"
+  },
+  {
+    "id": 61,
+    "name": "쌀 가공산업 육성 지원 사업",
+    "category": "혜택",
+    "startDate": "2024-05-27",
+    "endDate": "상시",
+    "location": "시·군·구청",
+    "target": "쌀 가공업체, 정부 관리 양곡 도정 및 보관업체",
+    "summary": "쌀가공업체 및 양곡도정·보관업체에 시설 및 개보수 자금에 대한 대출 금리를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000008"
+  },
+  {
+    "id": 62,
+    "name": "가족돌봄휴가 제도",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "가족(조부모, 부모, 배우자, 배우자의 부모, 자녀, 손자녀)의 질병, 사고, 노령, 또는 자녀의 양육으로 긴급하게 돌봄이 필요한 근로자",
+    "summary": "근로자가 긴급하게 가족을 돌봐야 할 경우 연간 최장 10일의 휴가를 사용할 수 있는 제도",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005038"
   }
 ]
