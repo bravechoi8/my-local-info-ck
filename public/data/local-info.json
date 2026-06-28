@@ -735,5 +735,27 @@
     "target": "초, 중, 고등학생 및 대학생, 일반인",
     "summary": "초등학생부터 일반인에 이르기까지 해양사진대전, 해양캠프 등의 문화행사 참여를 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/119200000176"
+  },
+  {
+    "id": 65,
+    "name": "가스안전 관리자금 융자 지원",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "LPG충전사업자, LPG판매사업자, 집단공급사업자, 가스용품 및 용기 등 제조사업자, 수입사, 도시가스사업자, 전문검사기관",
+    "summary": "LPG충전·판매사업자 등에게 가스유통구조 개선 및 노후시설 개선 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016523"
+  },
+  {
+    "id": 66,
+    "name": "소상공인, 중소기업, 중견기업, 대기업등 무역 보험 지원",
+    "category": "혜택",
+    "startDate": "2024-05-17",
+    "endDate": "상시",
+    "location": "무역보험공사",
+    "target": "소상공인, 중소기업, 중견기업, 대기업",
+    "summary": "소상공인 및 기업들의 안전한 수출입 사업을 위해 수출보험, 수입보험 및 수출신용보증 등 무역보험을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016528"
   }
 ]
