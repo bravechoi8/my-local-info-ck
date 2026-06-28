@@ -757,5 +757,27 @@
     "target": "소상공인, 중소기업, 중견기업, 대기업",
     "summary": "소상공인 및 기업들의 안전한 수출입 사업을 위해 수출보험, 수입보험 및 수출신용보증 등 무역보험을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016528"
+  },
+  {
+    "id": 67,
+    "name": "국가지정문화유산 및 천연기념물 등의 관람료 감면",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "국가유산청",
+    "target": "장애인, 국가유공자, 해당 국가유산 소재 시·군·구 주민 등",
+    "summary": "장애인, 국가유공자, 지역주민 등에게 국가지정문화유산 및 천연기념물의 관람료를 감면해 줍니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/155000000023"
+  },
+  {
+    "id": 68,
+    "name": "공유형모기지 융자",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "국토교통부",
+    "target": "생애최초 또는 5년이상 무주택세대주(부부합산 연소득 6천만원 이하, 생애최초 7천만원 이하)",
+    "summary": "생애최초, 5년이상 무주택세대주에게 수익공유형, 손익공유형에 따라 융자 차등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/161300000001"
   }
 ]
