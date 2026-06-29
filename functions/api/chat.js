@@ -135,10 +135,10 @@ Do NOT use any markdown symbols (**, *, #, -). Plain text only.
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 Answer the user's question accurately using Google Search grounding.`;
 
-      // ⚠️ 블로그에 관련 정보가 없는 경우: 무료 API 키 한도 안정을 위해 구글 검색 기능을 끄고 일반 AI 지식으로만 답변
+      // ⚠️ 블로그에 관련 정보가 없는 경우: 유료 API 키이므로 실시간 구글 검색(Grounding) 기능을 켜서 최신 지식 답변
       let rawAnswer = "";
       try {
-        rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
+        rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
         botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${stripMarkdown(rawAnswer)}`;
       } catch (geminiError) {
         // 완전 먹통일 때의 기본 로컬 답변
