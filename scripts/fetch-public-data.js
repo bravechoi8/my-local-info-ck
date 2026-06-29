@@ -25,7 +25,9 @@ const BLOCK_KEYWORDS = [
   '어선', '어업', '원양', '옵서버', '수산물', '어선원', '해양선사', '수산', 
   '선박', '어항', '도서관', '도서대출', '도서 대출', '도서 대여', '책 대출', 
   '책 대여', '달성군', '달성교육재단', '울주', '울주군', '처인구', '기흥구', 
-  '수지구', '용인시', '용인', '구청', '동주민센터', '행정복지센터', '안양시', '안양'
+  '수지구', '용인시', '용인', '구청', '동주민센터', '행정복지센터', '안양시', '안양',
+  '무역보험', '수출입', '가스안전', '가스 사업자', '가스사업자', '융자지원', '쌀 가공', '쌀가공',
+  '도정업', '양곡', '임업', '농업인', '어민', '농민', '농가', '어가'
 ];
 
 function isBlocked(item) {
@@ -256,9 +258,9 @@ async function main() {
 
         if (newItems.length === 0) continue;
 
-        // 행사와 혜택 분류 (지역/전국 단위 기준 점수 15점 이상인 유효한 혜택/행사 정보만 수집)
-        const eventCandidates = newItems.filter(item => classifyItem(item) === '행사' && scoreItem(item) >= 15);
-        const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택' && scoreItem(item) >= 15);
+        // 행사와 혜택 분류 (지역/전국 단위 기준 점수 30점 이상인 대중적이고 확실한 정보만 수집)
+        const eventCandidates = newItems.filter(item => classifyItem(item) === '행사' && scoreItem(item) >= 30);
+        const benefitCandidates = newItems.filter(item => classifyItem(item) === '혜택' && scoreItem(item) >= 30);
 
         eventCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
         benefitCandidates.sort((a, b) => scoreItem(b) - scoreItem(a));
@@ -286,7 +288,7 @@ async function main() {
           }
         }
 
-        // 여전히 2개가 채워지지 않았다면, 남는 후보 중 15점 이상인 것을 차순위로 보충
+        // 여전히 2개가 채워지지 않았다면, 남는 후보 중 30점 이상인 것을 차순위로 보충
         if (targetItems.length < 2) {
           const remainingCandidates = [...eventCandidates, ...benefitCandidates]
             .filter(c => !currentTargetNames.has(c.서비스명))
