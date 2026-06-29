@@ -1,3 +1,4 @@
+// Trigger deploy to load updated Cloudflare environment variables
 export async function onRequestPost(context) {
   try {
     const { message } = await context.request.json();
