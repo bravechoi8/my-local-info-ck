@@ -135,8 +135,14 @@ Today's date is ${dateWithZodiac}. Always use this as the current date when answ
 Answer the user's question accurately using Google Search grounding.`;
 
       // ⚠️ 블로그에 관련 정보가 없는 경우: 무료 API 키 한도 안정을 위해 구글 검색 기능을 끄고 일반 AI 지식으로만 답변
-      const rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
-      botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${stripMarkdown(rawAnswer)}`;
+      let rawAnswer = "";
+      try {
+        rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
+        botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${stripMarkdown(rawAnswer)}`;
+      } catch (geminiError) {
+        // 완전 먹통일 때의 기본 로컬 답변
+        botAnswer = `죄송합니다. 현재 AI 서비스 서버가 바빠서 답변하기 어렵습니다. 잠시 후 다시 시도해 주세요. 🐾`;
+      }
     } else {
       // 📝 블로그에 관련 정보가 있는 경우: 블로그 데이터를 최우선 기반으로 요약 답변 (구글 검색 미사용)
       const blogDataStr = top3
@@ -159,8 +165,22 @@ Analyze the user's question and the provided [블로그 데이터] carefully.
 [블로그 데이터]
 ${blogDataStr}`;
 
-      const rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
-      botAnswer = stripMarkdown(rawAnswer);
+      try {
+        const rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
+        botAnswer = stripMarkdown(rawAnswer);
+      } catch (geminiError) {
+        // 🛡️ 구글 서버 503 에러 발생 시 로컬 백업 요약 답변 작동
+        const localSummary = top3
+          .map((item) => {
+            const title = item.title || item.name || "제목 없음";
+            const summary = item.summary || "요약 설명 없음";
+            const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
+            return `제목: ${title}\n요약: ${summary}${linkText}`;
+          })
+          .join("\n\n");
+
+        botAnswer = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary}`;
+      }
     }
 
     return new Response(JSON.stringify({ response: botAnswer }), {
