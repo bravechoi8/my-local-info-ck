@@ -396,7 +396,56 @@ export default function Chatbot({ chatData }: ChatbotProps) {
                     )}
                   </div>
                   <div className="bg-white text-[#191F28] border border-[#E5E8EB] rounded-2xl rounded-tl-none p-3 text-xs leading-relaxed shadow-sm whitespace-pre-line">
-                    {msg.text}
+                    {(() => {
+                      const text = msg.text;
+                      // 마크다운 링크 정규식: [링크이름](URL)
+                      const linkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+                      const parts = [];
+                      let lastIndex = 0;
+                      let match;
+
+                      while ((match = linkRegex.exec(text)) !== null) {
+                        const index = match.index;
+                        const matchText = match[0];
+                        const linkText = match[1];
+                        const linkUrl = match[2];
+
+                        // 이전 텍스트 추가
+                        if (index > lastIndex) {
+                          parts.push(text.substring(lastIndex, index));
+                        }
+
+                        // 링크 요소 추가
+                        parts.push(
+                          <a
+                            key={index}
+                            href={linkUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#3182F6] hover:text-[#1b64da] underline font-bold"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {linkText}
+                          </a>
+                        );
+
+                        lastIndex = index + matchText.length;
+                      }
+
+                      if (lastIndex < text.length) {
+                        parts.push(text.substring(lastIndex));
+                      }
+
+                      return parts.length > 0 ? (
+                        <>
+                          {parts.map((part, idx) => (
+                            <React.Fragment key={idx}>{part}</React.Fragment>
+                          ))}
+                        </>
+                      ) : (
+                        text
+                      );
+                    })()}
                   </div>
                   {formatTime(msg) && (
                     <span className="text-[9px] text-[#8B95A1] font-semibold shrink-0 mb-1">
