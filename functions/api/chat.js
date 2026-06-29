@@ -149,13 +149,14 @@ Answer the user's question accurately using Google Search grounding.`;
         .map((item, idx) => {
           const title = item.title || item.name || "제목 없음";
           const summary = item.summary || "요약 없음";
-          return `${idx + 1}. 제목: ${title}\n   요약: ${summary}`;
+          const link = item.slug ? `https://real-infos.com/blog/${item.slug}` : "";
+          return `${idx + 1}. 제목: ${title}\n   요약: ${summary}\n   링크: ${link}`;
         })
         .join("\n");
 
       const systemPrompt = `You are a helpful AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
-Do NOT use any markdown symbols (**, *, #, -). Plain text only.
+Do NOT use any markdown symbols except for links. Plain text only, but you MUST add a markdown link like '[자세히 보기](링크)' at the very end of your answer if a relevant link is provided in the [블로그 데이터].
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 
 Analyze the user's question and the provided [블로그 데이터] carefully.
@@ -234,7 +235,7 @@ async function callGemini(apiKey, systemPrompt, userMessage, useSearch) {
   return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 }
 
-// AI 응답 텍스트에서 마크다운 기호를 지워주는 함수
+// AI 응답 텍스트에서 마크다운 기호를 지워주되, 링크는 유지하는 함수
 function stripMarkdown(text) {
   if (!text) return "";
   return text
@@ -244,7 +245,6 @@ function stripMarkdown(text) {
     .replace(/^\s*[-*+]\s+/gm, "")
     .replace(/`([^`]+)`/g, "$1")
     .replace(/!\[(.*?)\]\(.*?\)/g, "$1")
-    .replace(/\[(.*?)\]\(.*?\)/g, "$1")
     .replace(/\s+/g, " ")
     .trim();
 }
