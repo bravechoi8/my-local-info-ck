@@ -801,5 +801,27 @@
     "target": "장애인, 기초생활보장 수급자, 국가유공자, 만 65세 이상 어르신, 병역 명문가, 우수자원봉사자, 다둥이 가정 등",
     "summary": "동대문구체육관 체육문화 프로그램 수강료를 대상별로 5%에서 50%까지 감면 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00023100001"
+  },
+  {
+    "id": 71,
+    "name": "골목상권 활성화 지원",
+    "category": "혜택",
+    "startDate": "2026-03-25",
+    "endDate": "2026-04-09",
+    "location": "경기도",
+    "target": "경기도내 개별 소상공인 30명 이상의 골목상권 공동체",
+    "summary": "골목상권을 공동체로 조직화하여 단계별 지원을 통한 상권 자생력 강화 및 상인 역량 강화 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000853"
+  },
+  {
+    "id": 72,
+    "name": "햇살하우징 사업",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "기준 중위소득 50% 이하 가구(기초생활수급자, 차상위계층 등)",
+    "summary": "난방비 및 전기료 절감을 위한 주택 에너지 효율 개선 개보수 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000856"
   }
 ]
