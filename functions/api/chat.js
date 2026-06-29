@@ -134,7 +134,8 @@ Do NOT use any markdown symbols (**, *, #, -). Plain text only.
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 Answer the user's question accurately using Google Search grounding.`;
 
-      const rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
+      // ⚠️ 블로그에 관련 정보가 없는 경우: 무료 API 키 한도 안정을 위해 구글 검색 기능을 끄고 일반 AI 지식으로만 답변
+      const rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
       botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${stripMarkdown(rawAnswer)}`;
     } else {
       // 📝 블로그에 관련 정보가 있는 경우: 블로그 데이터를 최우선 기반으로 요약 답변 (구글 검색 미사용)
@@ -179,7 +180,7 @@ ${blogDataStr}`;
 
 // 구글 제미나이 API 직접 호출 함수 (실시간 구글 검색 연동 지원)
 async function callGemini(apiKey, systemPrompt, userMessage, useSearch) {
-  const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
   
   const requestBody = {
     contents: [
