@@ -445,23 +445,17 @@ export default function TetrisPage() {
               <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider mb-2 self-start">Next Block</div>
               <div className="flex items-center justify-center h-16 w-full">
                 {gameStarted && !gameOver && (
-                  <div className="grid grid-cols-4 gap-1">
+                  <div className="flex flex-col gap-1">
                     {SHAPES[nextPiece].map((row, r) => (
                       <div key={r} className="flex gap-1 justify-center">
                         {row.map((val, c) => (
                           <div
                             key={c}
-                            className={`w-3.5 h-3.5 rounded-sm ${
+                            className={`w-4 h-4 rounded-sm ${
                               val ? COLORS[nextPiece] : "bg-transparent"
                             }`}
                           />
                         ))}
-                        {/* 4열 격자 폭 맞춤 빈 공간 채우기 */}
-                        {Array(4 - row.length)
-                          .fill(null)
-                          .map((_, idx) => (
-                            <div key={idx} className="w-3.5 h-3.5 bg-transparent" />
-                          ))}
                       </div>
                     ))}
                   </div>
@@ -499,7 +493,7 @@ export default function TetrisPage() {
                     </p>
                     <button
                       onClick={startGame}
-                      className="px-6 py-2.5 bg-[#3182F6] text-white text-xs font-bold rounded-xl hover:bg-[#1b64da] transition-all shadow-md active:scale-95"
+                      className="px-6 py-2.5 bg-[#3182F6] text-white text-xs font-bold rounded-xl hover:bg-[#1b64da] transition-all shadow-md active:scale-95 cursor-pointer"
                     >
                       다시 도전하기 🔄
                     </button>
@@ -511,7 +505,7 @@ export default function TetrisPage() {
                     <p className="text-xs text-slate-300">잠시 멈춤 상태입니다.</p>
                     <button
                       onClick={() => setIsPaused(false)}
-                      className="px-6 py-2.5 bg-[#3182F6] text-white text-xs font-bold rounded-xl hover:bg-[#1b64da] transition-all shadow-md"
+                      className="px-6 py-2.5 bg-[#3182F6] text-white text-xs font-bold rounded-xl hover:bg-[#1b64da] transition-all shadow-md cursor-pointer"
                     >
                       게임 계속하기 ➡️
                     </button>
@@ -527,7 +521,7 @@ export default function TetrisPage() {
                     </p>
                     <button
                       onClick={startGame}
-                      className="px-8 py-3 bg-[#3182F6] text-white text-xs font-bold rounded-xl hover:bg-[#1b64da] transition-all shadow-md active:scale-95"
+                      className="px-8 py-3 bg-[#3182F6] text-white text-xs font-bold rounded-xl hover:bg-[#1b64da] transition-all shadow-md active:scale-95 cursor-pointer"
                     >
                       게임 시작하기 🚀
                     </button>
@@ -543,7 +537,7 @@ export default function TetrisPage() {
             {gameStarted && !gameOver && (
               <button
                 onClick={() => setIsPaused(!isPaused)}
-                className="w-full py-2 bg-slate-100 dark:bg-slate-800 text-[#4E5968] dark:text-slate-300 hover:bg-slate-200 text-xs font-bold rounded-xl transition-all"
+                className="w-full py-2 bg-slate-100 dark:bg-slate-800 text-[#4E5968] dark:text-slate-300 hover:bg-slate-200 text-xs font-bold rounded-xl transition-all cursor-pointer"
               >
                 {isPaused ? "재개하기 ▶️" : "잠시 멈춤 ⏸️"}
               </button>
@@ -556,34 +550,34 @@ export default function TetrisPage() {
               {/* 모바일 화면 방향 조절 십자패드 */}
               <div className="flex flex-col items-center gap-1.5 select-none">
                 <button
+                  onMouseDown={(e) => { e.preventDefault(); rotatePiece(); }}
                   onTouchStart={(e) => { e.preventDefault(); rotatePiece(); }}
-                  onClick={rotatePiece}
-                  className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white"
+                  className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                   title="블록 회전"
                 >
                   🔄
                 </button>
                 <div className="flex gap-1.5">
                   <button
+                    onMouseDown={(e) => { e.preventDefault(); moveHorizontal(-1); }}
                     onTouchStart={(e) => { e.preventDefault(); moveHorizontal(-1); }}
-                    onClick={() => moveHorizontal(-1)}
-                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white"
+                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                     title="왼쪽 이동"
                   >
                     ⬅️
                   </button>
                   <button
+                    onMouseDown={(e) => { e.preventDefault(); moveDown(); }}
                     onTouchStart={(e) => { e.preventDefault(); moveDown(); }}
-                    onClick={moveDown}
-                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white"
+                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                     title="아래 한칸"
                   >
                     ⬇️
                   </button>
                   <button
+                    onMouseDown={(e) => { e.preventDefault(); moveHorizontal(1); }}
                     onTouchStart={(e) => { e.preventDefault(); moveHorizontal(1); }}
-                    onClick={() => moveHorizontal(1)}
-                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white"
+                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                     title="오른쪽 이동"
                   >
                     ➡️
@@ -595,9 +589,9 @@ export default function TetrisPage() {
 
               {/* 🚀 한 번에 쭉 내려가기 (하드 드롭) 버튼 */}
               <button
+                onMouseDown={(e) => { e.preventDefault(); hardDrop(); }}
                 onTouchStart={(e) => { e.preventDefault(); hardDrop(); }}
-                onClick={hardDrop}
-                className="w-full py-3 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-black rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 select-none"
+                className="w-full py-3 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-black rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 select-none cursor-pointer"
               >
                 ⚡ 한 번에 끝까지 내리기 (Space)
               </button>
