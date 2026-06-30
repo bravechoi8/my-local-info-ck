@@ -266,7 +266,12 @@ async function main() {
 
     // 만약 환경변수 SELECTED_KEYWORD가 있다면 우선적으로 포함
     if (process.env.SELECTED_KEYWORD) {
-      tasks.push({ keyword: process.env.SELECTED_KEYWORD, isSonMonthFirst: false, isLottoSunday: false });
+      tasks.push({
+        keyword: process.env.SELECTED_KEYWORD,
+        isSonMonthFirst: false,
+        isLottoSunday: false,
+        forcedCategory: '핫이슈'
+      });
     }
 
     // 일요일에는 로또 당첨번호 추가
@@ -274,7 +279,8 @@ async function main() {
       tasks.push({
         keyword: '로또 당첨번호',
         isSonMonthFirst: false,
-        isLottoSunday: true
+        isLottoSunday: true,
+        forcedCategory: '생활정보'
       });
     }
 
@@ -285,12 +291,14 @@ async function main() {
       tasks.push({
         keyword: `${currentYear}년 ${currentMonth}월 손없는날`,
         isSonMonthFirst: true,
-        isLottoSunday: false
+        isLottoSunday: false,
+        forcedCategory: '생활정보'
       });
     }
 
     // 실시간 트렌드 키워드 수집 (총 3개에서 특수 키워드를 제외한 나머지만큼 채우기)
     const neededKeywordsCount = 3 - tasks.length;
+    let isFirstTrendingUsed = false;
     if (neededKeywordsCount > 0) {
       const trendingKeywords = await fetchTrendingKeywords();
       for (const kw of trendingKeywords) {
@@ -300,7 +308,19 @@ async function main() {
           console.log(`[중복 키워드 필터] '로또' 관련 작업이 이미 존재하므로 '${kw}' 키워드는 제외합니다.`);
           continue;
         }
-        tasks.push({ keyword: kw, isSonMonthFirst: false, isLottoSunday: false });
+        
+        // 트렌드 키워드 중 첫 번째로 추가되는 것에는 '핫이슈' 카테고리를 강제합니다.
+        const forcedCategory = !isFirstTrendingUsed ? '핫이슈' : null;
+        if (!isFirstTrendingUsed) {
+          isFirstTrendingUsed = true;
+        }
+
+        tasks.push({
+          keyword: kw,
+          isSonMonthFirst: false,
+          isLottoSunday: false,
+          forcedCategory: forcedCategory
+        });
       }
     }
 
@@ -320,7 +340,16 @@ async function main() {
       for (const kw of backupKeywords) {
         if (tasks.length >= 3) break;
         if (!tasks.some(t => t.keyword === kw)) {
-          tasks.push({ keyword: kw, isSonMonthFirst: false, isLottoSunday: false });
+          // tasks 중에 forcedCategory: '핫이슈'인 게 없다면 첫 번째 백업 키워드에 부여
+          const hasHotIssue = tasks.some(t => t.forcedCategory === '핫이슈');
+          const forcedCategory = !hasHotIssue ? '핫이슈' : null;
+
+          tasks.push({
+            keyword: kw,
+            isSonMonthFirst: false,
+            isLottoSunday: false,
+            forcedCategory: forcedCategory
+          });
         }
       }
     }
@@ -384,9 +413,34 @@ async function main() {
 
         for (const file of existingFiles) {
           const content = fileFs.readFileSync(filePath.join(POSTS_DIR_PATH, file), 'utf-8');
+          // 1. 직접적인 제목 또는 링크 매칭 검사
           if (content.includes(cleanTitle) || content.includes(item.link)) {
             alreadyExists = true;
             break;
+          }
+
+          // 2. 제목 단어 오버랩 유사도 분석을 통한 중복 체크 (텍스트 유사도 검사)
+          const titleMatch = content.match(/title:\s*(.+)/);
+          if (titleMatch) {
+            const existingTitle = titleMatch[1].replace(/['"]/g, '').trim();
+            // 특수문자, 쉼표 등 제거하여 텍스트 정규화
+            const cleanTitleA = cleanTitle.replace(/[^a-zA-Z0-9가-힣\s]/g, '').replace(/,/g, '');
+            const cleanTitleB = existingTitle.replace(/[^a-zA-Z0-9가-힣\s]/g, '').replace(/,/g, '');
+            
+            const wordsA = cleanTitleA.split(/\s+/).filter(w => w.length > 1);
+            const wordsB = cleanTitleB.split(/\s+/).filter(w => w.length > 1);
+            
+            if (wordsA.length > 0 && wordsB.length > 0) {
+              const intersection = wordsA.filter(w => wordsB.includes(w));
+              const minLength = Math.min(wordsA.length, wordsB.length);
+              const overlapRatio = intersection.length / minLength;
+              
+              if (overlapRatio >= 0.4) { // 40% 이상 단어가 겹치면 중복 사건/주제로 판정
+                console.log(`[중복 유사도 감지] "${cleanTitle}" 기사가 기존 글 "${existingTitle}"과 매우 유사하여(유사도: ${Math.round(overlapRatio*100)}%) 건너뜁니다.`);
+                alreadyExists = true;
+                break;
+              }
+            }
           }
         }
 
@@ -417,6 +471,10 @@ async function main() {
       const todayFullStr = kstDate.toISOString().slice(0, 19) + '+09:00';
       let prompt = '';
 
+      const forcedCategoryStr = task.forcedCategory
+        ? `${task.forcedCategory} (반드시 이 카테고리로 고정해서 작성해줘. 다른 카테고리는 허용 안 됨)`
+        : `(반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)`;
+
       if (isSonMonthFirst) {
         const year = kstDate.getUTCFullYear();
         const month = kstDate.getUTCMonth() + 1;
@@ -436,7 +494,7 @@ async function main() {
 title: (친근하고 흥미로운 제목, 예: ${year}년 ${month}월~${nextMonth}월 이사 가기 좋은 손없는날 달력 및 꿀팁 총정리, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 date: ${todayFullStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
+category: ${forcedCategoryStr}
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 naver_title: "${escapedTitle}"
 naver_link: "${escapedLink}"
@@ -482,7 +540,7 @@ naver_link: "${escapedLink}"
 title: (친근하고 흥미진진하여 사람들의 클릭을 부르는 매력적인 제목. 검색어 노출이 잘 되도록 중요한 키워드를 자연스럽게 포함하면서도 딱딱한 뉴스투를 벗어나 'OO하는 법', 'OO 총정리', '놓치면 손해보는 OO' 등 호기심이나 혜택을 강조한 친근한 말투로 지어줘. 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
 date: ${todayFullStr}
 summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
-category: (반드시 [행사, 혜택, 핫이슈, 재테크, 생활정보, 연예인이슈] 중 이 글의 주제에 가장 어울리는 카테고리명을 하나 골라 기재해줘. 다른 텍스트는 허용 안 됨)
+category: ${forcedCategoryStr}
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 naver_title: "${escapedTitle}"
 naver_link: "${escapedLink}"
