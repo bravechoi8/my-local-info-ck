@@ -597,7 +597,7 @@ export default function TetrisPage() {
                   <button
                     onPointerDown={(e) => { e.preventDefault(); handlePressStart(() => moveHorizontal(-1)); }}
                     onPointerUp={handlePressEnd}
-                    onPointerLeave={handlePressEnd}
+                    onPointerCancel={handlePressEnd}
                     className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-xl sm:text-2xl active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer select-none"
                     title="왼쪽 이동"
                   >
@@ -606,7 +606,7 @@ export default function TetrisPage() {
                   <button
                     onPointerDown={(e) => { e.preventDefault(); handlePressStart(moveDown); }}
                     onPointerUp={handlePressEnd}
-                    onPointerLeave={handlePressEnd}
+                    onPointerCancel={handlePressEnd}
                     className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-xl sm:text-2xl active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer select-none"
                     title="아래 한칸"
                   >
@@ -615,7 +615,7 @@ export default function TetrisPage() {
                   <button
                     onPointerDown={(e) => { e.preventDefault(); handlePressStart(() => moveHorizontal(1)); }}
                     onPointerUp={handlePressEnd}
-                    onPointerLeave={handlePressEnd}
+                    onPointerCancel={handlePressEnd}
                     className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-xl sm:text-2xl active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer select-none"
                     title="오른쪽 이동"
                   >
