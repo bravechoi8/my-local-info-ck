@@ -415,13 +415,13 @@ export default function TetrisPage() {
       </nav>
 
       {/* 게임 인터페이스 메인 레이아웃 */}
-      <main className="max-w-5xl mx-auto w-full px-2 py-3 sm:px-4 sm:py-8 flex-grow flex items-center justify-center">
-        <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl flex flex-col md:flex-row gap-4 sm:gap-8 items-center md:items-start justify-center transition-colors">
+      <main className="max-w-5xl mx-auto w-full px-2 py-1 flex-grow flex items-center justify-center">
+        <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-xl sm:rounded-3xl p-3 sm:p-6 md:p-8 shadow-xl flex flex-col md:flex-row gap-2 sm:gap-8 items-center md:items-start justify-center transition-colors">
           
           {/* 왼쪽: 통계 및 다음 블록 미리보기 패널 */}
-          <div className="flex flex-row md:flex-col justify-between w-full md:w-48 gap-3 shrink-0">
+          <div className="flex flex-row md:flex-col justify-between w-full md:w-48 gap-2 sm:gap-3 shrink-0">
             {/* 스코어 & 레벨 카드 */}
-            <div className="flex-grow bg-[#F9FAFB] dark:bg-slate-800/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-[#F2F4F6] dark:border-slate-800 space-y-2 sm:space-y-3">
+            <div className="flex-grow bg-[#F9FAFB] dark:bg-slate-800/40 rounded-xl sm:rounded-2xl p-2 sm:p-4 border border-[#F2F4F6] dark:border-slate-800 space-y-1 sm:space-y-3">
               <div className="flex flex-row md:flex-col justify-between md:justify-start gap-2">
                 <div>
                   <div className="text-[8px] sm:text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">High Score</div>
@@ -472,7 +472,7 @@ export default function TetrisPage() {
           {/* 중앙: 테트리스 10x20 실제 메인 게임 보드 */}
           <div className="relative">
             <div className="bg-slate-900 border-2 sm:border-4 border-slate-700 dark:border-slate-800 rounded-xl sm:rounded-2xl p-0.5 sm:p-1 shadow-2xl overflow-hidden">
-              <div className="grid grid-cols-10 gap-0.5 bg-slate-950 w-[200px] h-[400px] sm:w-[280px] sm:h-[560px]">
+              <div className="grid grid-cols-10 gap-0.5 bg-slate-950 w-[180px] h-[360px] sm:w-[280px] sm:h-[560px]">
                 {displayBoard.map((row, rIndex) =>
                   row.map((cell, cIndex) => (
                     <div
@@ -537,19 +537,19 @@ export default function TetrisPage() {
           </div>
 
           {/* 오른쪽: 모바일 및 원터치 하드드롭 컨트롤러 패널 */}
-          <div className="flex flex-col gap-4 w-full md:w-56 shrink-0 text-center">
+          <div className="flex flex-col gap-2 w-full md:w-56 shrink-0 text-center">
             {/* 일시정지 제어 영역 */}
             {gameStarted && !gameOver && (
               <button
                 onClick={() => setIsPaused(!isPaused)}
-                className="w-full py-2 bg-slate-100 dark:bg-slate-800 text-[#4E5968] dark:text-slate-300 hover:bg-slate-200 text-xs font-bold rounded-xl transition-all cursor-pointer"
+                className="w-full py-1.5 bg-slate-100 dark:bg-slate-800 text-[#4E5968] dark:text-slate-300 hover:bg-slate-200 text-xs font-bold rounded-xl transition-all cursor-pointer"
               >
                 {isPaused ? "재개하기 ▶️" : "잠시 멈춤 ⏸️"}
               </button>
             )}
 
             {/* 터치 컨트롤러 (모바일 터치 및 마우스 한번에 내리기 지원) */}
-            <div className="bg-[#F9FAFB] dark:bg-slate-800/40 rounded-2xl p-3 border border-[#F2F4F6] dark:border-slate-800 space-y-3">
+            <div className="bg-[#F9FAFB] dark:bg-slate-800/40 rounded-xl p-2.5 border border-[#F2F4F6] dark:border-slate-800 space-y-2">
               <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Controls</div>
               
               {/* 모바일 화면 방향 조절 십자패드 */}
