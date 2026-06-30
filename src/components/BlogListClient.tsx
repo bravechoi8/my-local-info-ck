@@ -202,10 +202,12 @@ export default function BlogListClient({ initialPosts }: BlogListClientProps) {
           <div className="space-y-2">
             <p>공식 데이터 및 주요 핫이슈 소식을 기반으로 작동하는 블로그 채널입니다.</p>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1 text-xs text-[#8B95A1]">
-              <Link href="/privacy" className="hover:underline font-semibold">개인정보처리방침 (Privacy Policy)</Link>
-              <span className="text-[#E5E8EB] dark:text-slate-800">|</span>
-              <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
-            </div>
+               <Link href="/privacy" className="hover:underline font-semibold">개인정보처리방침 (Privacy Policy)</Link>
+               <span className="text-[#E5E8EB] dark:text-slate-800">|</span>
+               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
+               <span className="text-[#E5E8EB] dark:text-slate-800">|</span>
+               <span className="font-semibold">문의: <a href="mailto:bravechoi8@gmail.com" className="hover:underline">bravechoi8@gmail.com</a></span>
+             </div>
             <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
           <div className="text-xs font-semibold text-[#4E5968] dark:text-slate-400">real-infos.com</div>

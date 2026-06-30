@@ -752,6 +752,8 @@ export default function HomeClient({ posts }: HomeClientProps) {
               <Link href="/privacy" className="hover:underline font-semibold">개인정보처리방침 (Privacy Policy)</Link>
               <span className="text-[#E5E8EB] dark:text-slate-800">|</span>
               <Link href="/terms" className="hover:underline font-semibold">이용약관 (Terms of Service)</Link>
+              <span className="text-[#E5E8EB] dark:text-slate-800">|</span>
+              <span className="font-semibold">문의: <a href="mailto:bravechoi8@gmail.com" className="hover:underline">bravechoi8@gmail.com</a></span>
             </div>
             <p>© {new Date().getFullYear()} 리얼인포. All rights reserved.</p>
           </div>
