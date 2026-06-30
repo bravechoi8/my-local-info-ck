@@ -70,6 +70,8 @@ export default function TetrisPage() {
   const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const pressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const pressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const currentPieceRef = useRef(currentPiece);
+  currentPieceRef.current = currentPiece;
 
   const handlePressStart = (action: () => void) => {
     handlePressEnd();
@@ -177,19 +179,19 @@ export default function TetrisPage() {
   };
 
   // 블록을 보드에 고정 및 줄 지우기
-  const lockPiece = () => {
-    if (!currentPiece) return;
+  const lockPiece = (pieceToLock = currentPieceRef.current) => {
+    if (!pieceToLock) return;
 
     const newBoard = board.map(row => [...row]);
     
     // 보드에 블록 삽입
-    for (let r = 0; r < currentPiece.shape.length; r++) {
-      for (let c = 0; c < currentPiece.shape[r].length; c++) {
-        if (currentPiece.shape[r][c]) {
-          const targetY = currentPiece.y + r;
-          const targetX = currentPiece.x + c;
+    for (let r = 0; r < pieceToLock.shape.length; r++) {
+      for (let c = 0; c < pieceToLock.shape[r].length; c++) {
+        if (pieceToLock.shape[r][c]) {
+          const targetY = pieceToLock.y + r;
+          const targetX = pieceToLock.x + c;
           if (targetY >= 0) {
-            newBoard[targetY][targetX] = currentPiece.type;
+            newBoard[targetY][targetX] = pieceToLock.type;
           }
         }
       }
@@ -245,34 +247,37 @@ export default function TetrisPage() {
 
   // 블록 한 칸 아래로 이동
   const moveDown = () => {
-    if (!currentPiece || gameOver || isPaused || !gameStarted) return;
+    const piece = currentPieceRef.current;
+    if (!piece || gameOver || isPaused || !gameStarted) return;
 
-    if (!checkCollision(currentPiece, board, 0, 1)) {
-      setCurrentPiece(prev => prev ? { ...prev, y: prev.y + 1 } : null);
+    if (!checkCollision(piece, board, 0, 1)) {
+      setCurrentPiece({ ...piece, y: piece.y + 1 });
     } else {
-      lockPiece();
+      lockPiece(piece);
     }
   };
 
   // 블록 좌우 이동
   const moveHorizontal = (dir: number) => {
-    if (!currentPiece || gameOver || isPaused || !gameStarted) return;
-    if (!checkCollision(currentPiece, board, dir, 0)) {
-      setCurrentPiece(prev => prev ? { ...prev, x: prev.x + dir } : null);
+    const piece = currentPieceRef.current;
+    if (!piece || gameOver || isPaused || !gameStarted) return;
+    if (!checkCollision(piece, board, dir, 0)) {
+      setCurrentPiece({ ...piece, x: piece.x + dir });
     }
   };
 
   // 블록 회전
   const rotatePiece = () => {
-    if (!currentPiece || gameOver || isPaused || !gameStarted) return;
+    const piece = currentPieceRef.current;
+    if (!piece || gameOver || isPaused || !gameStarted) return;
 
     // 행렬 회전 (시계방향 90도)
-    const rotated = currentPiece.shape[0].map((_, index) =>
-      currentPiece.shape.map(row => row[index]).reverse()
+    const rotated = piece.shape[0].map((_, index) =>
+      piece.shape.map(row => row[index]).reverse()
     );
 
     const testPiece = {
-      ...currentPiece,
+      ...piece,
       shape: rotated
     };
 
@@ -287,20 +292,21 @@ export default function TetrisPage() {
       else return; // 회전 불가
     }
 
-    setCurrentPiece(prev => prev ? { ...prev, shape: rotated, x: prev.x + offsetX } : null);
+    setCurrentPiece({ ...piece, shape: rotated, x: piece.x + offsetX });
   };
 
   // 한 번에 수직 아래로 떨어뜨리기 (하드 드롭)
   const hardDrop = () => {
-    if (!currentPiece || gameOver || isPaused || !gameStarted) return;
+    const piece = currentPieceRef.current;
+    if (!piece || gameOver || isPaused || !gameStarted) return;
 
     let offset = 0;
-    while (!checkCollision(currentPiece, board, 0, offset + 1)) {
+    while (!checkCollision(piece, board, 0, offset + 1)) {
       offset++;
     }
 
     // 보드에 고정하기 직전 좌표 갱신
-    const droppedPiece = { ...currentPiece, y: currentPiece.y + offset };
+    const droppedPiece = { ...piece, y: piece.y + offset };
     
     // 직접 lockPiece 함수 로직 인라인 수행하여 동기화 에러 차단
     const newBoard = board.map(row => [...row]);
