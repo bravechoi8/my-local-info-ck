@@ -65,6 +65,12 @@ export default function RootLayout({
         "position": 2,
         "name": "블로그",
         "item": "https://real-infos.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "테트리스 게임",
+        "item": "https://real-infos.com/tetris"
       }
     ]
   };

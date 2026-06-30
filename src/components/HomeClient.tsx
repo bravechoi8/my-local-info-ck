@@ -321,6 +321,29 @@ export default function HomeClient({ posts }: HomeClientProps) {
                   </Link>
                 </div>
               </section>
+
+              {/* 클래식 테트리스 미니게임 배너 */}
+              <section className="group bg-gradient-to-br from-[#E6FFFA] to-[#E6F4EA] dark:from-[#1E3B33] dark:to-[#172D2B] rounded-2xl p-4 sm:p-4.5 border border-[#d2efe2] dark:border-slate-800/80 border-b-[6px] border-b-[#059669]/50 dark:border-b-[#059669]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(5,150,105,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#059669] border border-[#d2efe2] dark:border-[#059669]/30 transition-colors">
+                    클래식 아케이드 🎮
+                  </span>
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                    클래식 테트리스 게임
+                  </h2>
+                  <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
+                    속도 레벨업, 다음 블록 예측, 모바일 일체형 터치 조작까지 지원합니다!
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/tetris"
+                    className="px-3 py-1.5 bg-[#059669] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#047857] transition-all shadow-sm whitespace-nowrap"
+                  >
+                    게임하기 &rarr;
+                  </Link>
+                </div>
+              </section>
             </div>
           </div>
         ) : activeTab === "전체" ? (
