@@ -53,7 +53,17 @@ async function processBodyImages(markdownContent, safeFilename) {
     return markdownContent;
   }
 
-  console.log(`[본문 이미지 생성] 총 ${matches.length}개의 이미지 생성 요청을 감지했습니다.`);
+  // 글 하나당 본문 이미지 생성 개수를 최대 2개 이하로 엄격히 제한
+  if (matches.length > 2) {
+    console.log(`[본문 이미지 제한] 감지된 ${matches.length}개 중 앞의 2개만 생성하고 나머지는 제외합니다.`);
+    // 2개를 초과하는 플레이스홀더는 본문에서 미리 공백으로 치환하여 삭제 처리
+    for (let i = 2; i < matches.length; i++) {
+      markdownContent = markdownContent.replace(matches[i].fullMatch, '');
+    }
+    matches = matches.slice(0, 2);
+  }
+
+  console.log(`[본문 이미지 생성] 총 ${matches.length}개의 이미지 생성 요청을 처리합니다.`);
   
   // 모든 이미지 생성을 병렬로 실행
   const promises = matches.map(async (item, i) => {
@@ -204,7 +214,7 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 [이미지 삽입 가이드라인]
 1. 본문 흐름 중간중간에 관련된 이미지 삽입을 위해, 글의 내용과 흐름에 맞춰 어울리는 위치에 다음과 같은 형식의 플레이스홀더를 삽입해줘:
 [IMAGE_PROMPT: A detailed, clear English description of the illustration for this section]
-2. 글의 주제와 내용 분량에 따라 이미지의 개수를 **최소 1개에서 최대 4개 사이로 매번 유동적이고 랜덤하게** 조율해서 넣어줘. 글이 짧다면 본문에 1개만 들어가도 충분하고, 정보가 많고 긴 글이라면 흐름에 맞춰 2~4개까지 자유롭게 들어가도록 해줘. 이미지 개수가 모든 글마다 같으면 기계가 작성한 것처럼 보이므로 꼭 랜덤하고 다양하게 지정해줘.
+2. 글의 주제와 내용 분량에 따라 이미지의 개수를 **최소 1개에서 최대 2개 이하로만 매번 유동적이고 랜덤하게** 조율해서 넣어줘. 글이 짧다면 본문에 1개만 들어가도 충분하고, 정보가 많고 긴 글이라도 최대 2개까지만 제한해서 들어가도록 해줘. 이미지 개수가 모든 글마다 같으면 기계가 작성한 것처럼 보이므로 1개 또는 2개로 랜덤하게 지정해줘.
 3. **주의**: 플레이스홀더를 마크다운 이미지 링크 형식으로 만들지 말고, 반드시 대괄호 형태의 \`[IMAGE_PROMPT: ...]\` 형식 그대로 작성해줘.
 4. 프롬프트 내용(English description)은 본문 해당 단락의 주제와 어울리는 구체적인 개념적 설명이어야 하고, 사람, 금융, 지원금 등 구체적 대상을 지정하되 텍스트가 들어가선 안 돼.
 
