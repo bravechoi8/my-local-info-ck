@@ -397,16 +397,16 @@ export default function TetrisPage() {
   return (
     <div className="min-h-screen bg-[#F9FAFB] dark:bg-[#0B0F19] text-[#333D4B] dark:text-[#E5E8EB] antialiased flex flex-col justify-between transition-colors">
       {/* 상단 GNB 네비게이션 */}
-      <nav className="bg-white dark:bg-[#0B0F19] border-b border-[#F2F4F6] dark:border-slate-800/80 px-6 py-4 transition-colors">
+      <nav className="bg-white dark:bg-[#0B0F19] border-b border-[#F2F4F6] dark:border-slate-800/80 px-4 py-3 sm:px-6 sm:py-4 transition-colors">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 text-sm font-bold text-[#191F28] dark:text-[#F3F4F6] hover:text-[#3182F6] transition-colors"
+            className="flex items-center gap-2 text-xs sm:text-sm font-bold text-[#191F28] dark:text-[#F3F4F6] hover:text-[#3182F6] transition-colors"
           >
             &larr; 홈으로 돌아가기
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-xs font-semibold text-[#8B95A1] dark:text-slate-400 tracking-wider">
+            <span className="text-[10px] sm:text-xs font-semibold text-[#8B95A1] dark:text-slate-400 tracking-wider">
               미니 테트리스 🎮
             </span>
             <DarkModeToggle />
@@ -415,45 +415,48 @@ export default function TetrisPage() {
       </nav>
 
       {/* 게임 인터페이스 메인 레이아웃 */}
-      <main className="max-w-5xl mx-auto w-full px-4 py-8 flex-grow flex items-center justify-center">
-        <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl flex flex-col md:flex-row gap-8 items-center md:items-start justify-center transition-colors">
+      <main className="max-w-5xl mx-auto w-full px-2 py-3 sm:px-4 sm:py-8 flex-grow flex items-center justify-center">
+        <div className="w-full max-w-4xl bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl flex flex-col md:flex-row gap-4 sm:gap-8 items-center md:items-start justify-center transition-colors">
           
           {/* 왼쪽: 통계 및 다음 블록 미리보기 패널 */}
-          <div className="flex flex-row md:flex-col justify-between w-full md:w-48 gap-4 shrink-0">
+          <div className="flex flex-row md:flex-col justify-between w-full md:w-48 gap-3 shrink-0">
             {/* 스코어 & 레벨 카드 */}
-            <div className="flex-1 bg-[#F9FAFB] dark:bg-slate-800/40 rounded-2xl p-4 border border-[#F2F4F6] dark:border-slate-800 space-y-3">
-              <div>
-                <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">High Score</div>
-                <div className="text-lg font-black text-[#191F28] dark:text-white">{highScore}</div>
-              </div>
-              <div>
-                <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Score</div>
-                <div className="text-xl font-black text-[#3182F6]">{score}</div>
-              </div>
-              <div className="flex justify-between md:block md:space-y-3">
+            <div className="flex-grow bg-[#F9FAFB] dark:bg-slate-800/40 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-[#F2F4F6] dark:border-slate-800 space-y-2 sm:space-y-3">
+              <div className="flex flex-row md:flex-col justify-between md:justify-start gap-2">
                 <div>
-                  <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Level</div>
-                  <div className="text-base font-extrabold text-[#191F28] dark:text-white">{level}</div>
+                  <div className="text-[8px] sm:text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">High Score</div>
+                  <div className="text-sm sm:text-lg font-black text-[#191F28] dark:text-white">{highScore}</div>
                 </div>
-                <div className="md:mt-3">
-                  <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Lines</div>
-                  <div className="text-base font-extrabold text-[#191F28] dark:text-white">{lines}</div>
+                <div>
+                  <div className="text-[8px] sm:text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Score</div>
+                  <div className="text-base sm:text-xl font-black text-[#3182F6]">{score}</div>
+                </div>
+              </div>
+              <div className="border-t border-[#F2F4F6] dark:border-slate-800/50 hidden md:block"></div>
+              <div className="flex justify-between md:block md:space-y-2">
+                <div>
+                  <div className="text-[8px] sm:text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Level</div>
+                  <div className="text-xs sm:text-base font-extrabold text-[#191F28] dark:text-white">{level}</div>
+                </div>
+                <div className="md:mt-2">
+                  <div className="text-[8px] sm:text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Lines</div>
+                  <div className="text-xs sm:text-base font-extrabold text-[#191F28] dark:text-white">{lines}</div>
                 </div>
               </div>
             </div>
 
             {/* 다음 블록 패널 */}
-            <div className="flex-1 bg-[#F9FAFB] dark:bg-slate-800/40 rounded-2xl p-4 border border-[#F2F4F6] dark:border-slate-800 flex flex-col items-center justify-center min-h-[110px]">
-              <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider mb-2 self-start">Next Block</div>
-              <div className="flex items-center justify-center h-16 w-full">
+            <div className="bg-[#F9FAFB] dark:bg-slate-800/40 rounded-xl sm:rounded-2xl p-3 border border-[#F2F4F6] dark:border-slate-800 flex flex-col items-center justify-center min-h-[80px] sm:min-h-[110px] px-4">
+              <div className="text-[8px] sm:text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider mb-1 self-start">Next</div>
+              <div className="flex items-center justify-center h-10 sm:h-16 w-full">
                 {gameStarted && !gameOver && (
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-0.5 sm:gap-1">
                     {SHAPES[nextPiece].map((row, r) => (
-                      <div key={r} className="flex gap-1 justify-center">
+                      <div key={r} className="flex gap-0.5 sm:gap-1 justify-center">
                         {row.map((val, c) => (
                           <div
                             key={c}
-                            className={`w-4 h-4 rounded-sm ${
+                            className={`w-3 h-3 sm:w-4 sm:h-4 rounded-sm ${
                               val ? COLORS[nextPiece] : "bg-transparent"
                             }`}
                           />
@@ -468,13 +471,13 @@ export default function TetrisPage() {
 
           {/* 중앙: 테트리스 10x20 실제 메인 게임 보드 */}
           <div className="relative">
-            <div className="bg-slate-900 border-4 border-slate-700 dark:border-slate-800 rounded-2xl p-1 shadow-2xl overflow-hidden">
-              <div className="grid grid-cols-10 gap-0.5 bg-slate-950 w-[240px] h-[480px] sm:w-[280px] sm:h-[560px]">
+            <div className="bg-slate-900 border-2 sm:border-4 border-slate-700 dark:border-slate-800 rounded-xl sm:rounded-2xl p-0.5 sm:p-1 shadow-2xl overflow-hidden">
+              <div className="grid grid-cols-10 gap-0.5 bg-slate-950 w-[200px] h-[400px] sm:w-[280px] sm:h-[560px]">
                 {displayBoard.map((row, rIndex) =>
                   row.map((cell, cIndex) => (
                     <div
                       key={`${rIndex}-${cIndex}`}
-                      className={`w-full h-full rounded-[3px] border border-slate-950/20 transition-all duration-75 ${
+                      className={`w-full h-full rounded-[2px] sm:rounded-[3px] border border-slate-950/20 transition-all duration-75 ${
                         cell ? COLORS[cell] : "bg-slate-900/30"
                       }`}
                     />
@@ -546,40 +549,36 @@ export default function TetrisPage() {
             )}
 
             {/* 터치 컨트롤러 (모바일 터치 및 마우스 한번에 내리기 지원) */}
-            <div className="bg-[#F9FAFB] dark:bg-slate-800/40 rounded-2xl p-4 border border-[#F2F4F6] dark:border-slate-800 space-y-4">
+            <div className="bg-[#F9FAFB] dark:bg-slate-800/40 rounded-2xl p-3 border border-[#F2F4F6] dark:border-slate-800 space-y-3">
               <div className="text-[10px] font-bold text-[#8B95A1] uppercase tracking-wider">Controls</div>
               
               {/* 모바일 화면 방향 조절 십자패드 */}
-              <div className="flex flex-col items-center gap-1.5 select-none">
+              <div className="flex flex-col items-center gap-1 select-none">
                 <button
-                  onMouseDown={(e) => { e.preventDefault(); rotatePiece(); }}
-                  onTouchStart={(e) => { e.preventDefault(); rotatePiece(); }}
-                  className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                  onClick={(e) => { e.preventDefault(); rotatePiece(); }}
+                  className="w-11 h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                   title="블록 회전"
                 >
                   🔄
                 </button>
-                <div className="flex gap-1.5">
+                <div className="flex gap-1">
                   <button
-                    onMouseDown={(e) => { e.preventDefault(); moveHorizontal(-1); }}
-                    onTouchStart={(e) => { e.preventDefault(); moveHorizontal(-1); }}
-                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                    onClick={(e) => { e.preventDefault(); moveHorizontal(-1); }}
+                    className="w-11 h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                     title="왼쪽 이동"
                   >
                     ⬅️
                   </button>
                   <button
-                    onMouseDown={(e) => { e.preventDefault(); moveDown(); }}
-                    onTouchStart={(e) => { e.preventDefault(); moveDown(); }}
-                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                    onClick={(e) => { e.preventDefault(); moveDown(); }}
+                    className="w-11 h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                     title="아래 한칸"
                   >
                     ⬇️
                   </button>
                   <button
-                    onMouseDown={(e) => { e.preventDefault(); moveHorizontal(1); }}
-                    onTouchStart={(e) => { e.preventDefault(); moveHorizontal(1); }}
-                    className="w-12 h-12 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                    onClick={(e) => { e.preventDefault(); moveHorizontal(1); }}
+                    className="w-11 h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
                     title="오른쪽 이동"
                   >
                     ➡️
@@ -591,15 +590,14 @@ export default function TetrisPage() {
 
               {/* 🚀 한 번에 쭉 내려가기 (하드 드롭) 버튼 */}
               <button
-                onMouseDown={(e) => { e.preventDefault(); hardDrop(); }}
-                onTouchStart={(e) => { e.preventDefault(); hardDrop(); }}
-                className="w-full py-3 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-black rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 select-none cursor-pointer"
+                onClick={(e) => { e.preventDefault(); hardDrop(); }}
+                className="w-full py-2.5 bg-[#3182F6] hover:bg-[#1b64da] text-white text-xs font-black rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 select-none cursor-pointer"
               >
                 ⚡ 한 번에 끝까지 내리기 (Space)
               </button>
             </div>
             
-            <p className="text-[10px] text-[#8B95A1] leading-relaxed">
+            <p className="text-[9px] text-[#8B95A1] leading-normal hidden sm:block">
               PC에서는 키보드 방향키(좌우이동, 위 회전) 및 스페이스바(하드드롭)를 사용해 편리하게 플레이할 수 있습니다.
             </p>
           </div>
