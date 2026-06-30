@@ -108,9 +108,8 @@ export default function TetrisPage() {
 
   // 레벨에 따른 속도 계산 (레벨이 올라갈수록 더 빨리 떨어짐)
   const getSpeed = () => {
-    // 레벨 1: 800ms (0.8초)
-    // 레벨이 올라갈 때마다 80ms씩 빨라짐 (최대 100ms까지 빨라짐)
-    return Math.max(100, 800 - (level - 1) * 80);
+    // 레벨 1: 650ms로 더 긴장감 있게 시작하고, 레벨당 90ms씩 급격히 가속화 (최대 한계 속도 70ms)
+    return Math.max(70, 650 - (level - 1) * 90);
   };
 
   // 새로운 블록 생성
