@@ -68,6 +68,33 @@ export default function TetrisPage() {
   const [highScore, setHighScore] = useState(0);
 
   const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const pressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const pressTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handlePressStart = (action: () => void) => {
+    handlePressEnd();
+    action();
+    pressTimeoutRef.current = setTimeout(() => {
+      pressIntervalRef.current = setInterval(() => {
+        action();
+      }, 70);
+    }, 200);
+  };
+
+  const handlePressEnd = () => {
+    if (pressTimeoutRef.current) {
+      clearTimeout(pressTimeoutRef.current);
+      pressTimeoutRef.current = null;
+    }
+    if (pressIntervalRef.current) {
+      clearInterval(pressIntervalRef.current);
+      pressIntervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => handlePressEnd();
+  }, []);
 
   // 최고 점수 불러오기
   useEffect(() => {
@@ -563,22 +590,34 @@ export default function TetrisPage() {
                 </button>
                 <div className="flex gap-0.5">
                   <button
-                    onClick={(e) => { e.preventDefault(); moveHorizontal(-1); }}
-                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-base sm:text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                    onMouseDown={(e) => { e.preventDefault(); handlePressStart(() => moveHorizontal(-1)); }}
+                    onTouchStart={(e) => { e.preventDefault(); handlePressStart(() => moveHorizontal(-1)); }}
+                    onMouseUp={handlePressEnd}
+                    onMouseLeave={handlePressEnd}
+                    onTouchEnd={handlePressEnd}
+                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-base sm:text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer select-none"
                     title="왼쪽 이동"
                   >
                     ⬅️
                   </button>
                   <button
-                    onClick={(e) => { e.preventDefault(); moveDown(); }}
-                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-base sm:text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                    onMouseDown={(e) => { e.preventDefault(); handlePressStart(moveDown); }}
+                    onTouchStart={(e) => { e.preventDefault(); handlePressStart(moveDown); }}
+                    onMouseUp={handlePressEnd}
+                    onMouseLeave={handlePressEnd}
+                    onTouchEnd={handlePressEnd}
+                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-base sm:text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer select-none"
                     title="아래 한칸"
                   >
                     ⬇️
                   </button>
                   <button
-                    onClick={(e) => { e.preventDefault(); moveHorizontal(1); }}
-                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-base sm:text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer"
+                    onMouseDown={(e) => { e.preventDefault(); handlePressStart(() => moveHorizontal(1)); }}
+                    onTouchStart={(e) => { e.preventDefault(); handlePressStart(() => moveHorizontal(1)); }}
+                    onMouseUp={handlePressEnd}
+                    onMouseLeave={handlePressEnd}
+                    onTouchEnd={handlePressEnd}
+                    className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-white dark:bg-slate-700 shadow-sm border border-[#E5E8EB] dark:border-slate-600 flex items-center justify-center text-base sm:text-lg active:scale-95 transition-all text-[#191F28] dark:text-white cursor-pointer select-none"
                     title="오른쪽 이동"
                   >
                     ➡️
