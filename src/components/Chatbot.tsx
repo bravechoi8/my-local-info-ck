@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 interface ChatItem {
   question: string;
@@ -19,6 +20,7 @@ interface Message {
 }
 
 export default function Chatbot({ chatData }: ChatbotProps) {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -273,6 +275,8 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     const date = new Date(ts);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
+
+  if (pathname === "/tetris") return null;
 
   return (
     <>
