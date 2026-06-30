@@ -19,10 +19,21 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
 
-      - name: Node.js 20 설정
+      - name: Node.js 22 설정
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
+
+      - name: Next.js 빌드 캐시 설정
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/.next/cache
+          # 패키지 매니저의 package-lock.json 파일이 바뀔 때 또는 소스코드 해시가 바뀔 때 캐시를 업데이트함
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx', '**.md') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: 패키지 설치
         run: npm ci
