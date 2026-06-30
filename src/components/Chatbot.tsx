@@ -276,14 +276,12 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  if (pathname === "/tetris") return null;
-
   return (
     <>
       {/* 1. 플로팅 챗봇 버튼 (귀여운 강아지 이미지와 챗봇 텍스트 말풍선 라벨) */}
       <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-        {/* '챗봇' 안내 말풍선 (손님이 한눈에 알아볼 수 있도록) */}
-        {!isOpen && (
+        {/* '챗봇' 안내 말풍선 (손님이 한눈에 알아볼 수 있도록 - 테트리스 페이지에선 숨김) */}
+        {!isOpen && pathname !== "/tetris" && (
           <div className="absolute bottom-16 right-0 bg-white text-[#FF8A00] border border-[#FFEEDC] px-3.5 py-2 rounded-2xl shadow-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 animate-pulse z-50">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2EBD59] opacity-75"></span>
