@@ -1267,7 +1267,7 @@ async function callGeminiAPI(key, messages, useKey) {
   if (useKey && !key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
   
   const headers = { "Content-Type": "application/json" };
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
   
   // Claude의 메시지 형태 [{role: "user", content: "..."}]를 Gemini 형태 [{role: "user", parts: [{text: "..."}]}]로 변환
   const contents = messages.map(m => ({
@@ -1624,7 +1624,7 @@ async function weatherViaGemini(cityText) {
   if (!key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
   
   const headers = { "Content-Type": "application/json" };
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
   
   const sys = 'You are a weather data API. Use search to find the CURRENT weather for the city named, then output ONLY one JSON object and nothing else (no prose, no markdown fences, no commentary before or after). Schema exactly: {"name":string (city name, Korean if natural),"country":string,"temp":number,"feels":number,"hi":number,"lo":number,"humidity":number,"wind":number,"pop":number,"code":number}. temp/feels/hi/lo are Celsius. humidity and pop are percent 0-100. wind is km/h. code is a WMO weather code (0 clear,1 mainly clear,2 partly cloudy,3 overcast,45 fog,51/53/55 drizzle,61/63/65 rain,71/73/75 snow,80/81/82 showers,95 thunderstorm). Output the JSON object as the final thing in your reply.';
   
