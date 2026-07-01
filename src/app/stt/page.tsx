@@ -234,17 +234,23 @@ export default function STTPage() {
   };
 
   const handleToggleDictation = () => {
-    const nextState = !showDictationPanel;
-    setShowDictationPanel(nextState);
-    
-    if (nextState) {
+    // 패널이 닫혀 있으면 열고 녹음을 시작합니다.
+    if (!showDictationPanel) {
+      setShowDictationPanel(true);
       if (!isRecording) {
         toggleRecording();
       }
     } else {
-      if (isRecording) {
-        toggleRecording();
-      }
+      // 패널이 이미 열려 있는 경우: 녹음 상태만 토글하고 패널은 닫지 않고 유지합니다.
+      toggleRecording();
+    }
+  };
+
+  // 받아쓰기 패널 닫기 (녹음 중이면 녹음도 중지)
+  const handleCloseDictation = () => {
+    setShowDictationPanel(false);
+    if (isRecording) {
+      toggleRecording();
     }
   };
 
@@ -1282,13 +1288,22 @@ JSON 배열:`;
           <div className="bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-2xl p-5 flex flex-col gap-3 shadow-sm animate-fadeIn">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold text-[#191F28] dark:text-white">🎙️ STT 실시간 마이크 받아쓰기</h3>
-              <div className="flex items-center gap-2 text-xs">
-                <span className="text-slate-500 dark:text-slate-400 font-medium">단축키:</span>
+              <div className="flex items-center gap-3 text-xs">
+                <div className="flex items-center gap-1">
+                  <span className="text-slate-500 dark:text-slate-400 font-medium">단축키:</span>
+                  <button
+                    onClick={handleListenHotkey}
+                    className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-bold text-[#3182F6] hover:bg-slate-200 cursor-pointer"
+                  >
+                    {hotkey}
+                  </button>
+                </div>
                 <button
-                  onClick={handleListenHotkey}
-                  className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-bold text-[#3182F6] hover:bg-slate-200 cursor-pointer"
+                  onClick={handleCloseDictation}
+                  className="text-slate-400 hover:text-red-500 font-bold text-lg cursor-pointer p-1"
+                  title="받아쓰기 창 닫기"
                 >
-                  {hotkey}
+                  &times;
                 </button>
               </div>
             </div>
