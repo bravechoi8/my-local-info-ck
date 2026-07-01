@@ -18,23 +18,55 @@ function decodeHtmlEntities(s) {
 
 // 유튜브 페이지에서 자막 XML URL 목록 추출
 async function getCaptionsTracks(videoId) {
-  const pageUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  // 모바일 유튜브 주소를 활용해 429 차단을 줄입니다.
+  const pageUrl = `https://m.youtube.com/watch?v=${videoId}`;
   const res = await fetch(pageUrl, {
     headers: {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
-      "Accept-Language": "ko,en-US;q=0.9,en;q=0.8"
+      "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Mobile Safari/537.36",
+      "Accept-Language": "ko,en-US;q=0.9,en;q=0.8",
+      "Referer": "https://m.youtube.com/",
+      "Sec-Fetch-Mode": "navigate"
     }
   });
 
   if (!res.ok) {
-    throw new Error(`유튜브 페이지 로드 실패 (HTTP ${res.status})`);
+    // 1차 모바일 실패 시 데스크탑 URL로 한 번 더 폴백 시도
+    const fallbackUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    const fallbackRes = await fetch(fallbackUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "ko,en-US;q=0.9,en;q=0.8",
+        "Referer": "https://www.google.com/"
+      }
+    });
+
+    if (!fallbackRes.ok) {
+      throw new Error(`유튜브 페이지 로드 실패 (HTTP ${fallbackRes.status})`);
+    }
+    
+    return parseHtmlCaptions(await fallbackRes.text());
   }
 
-  const html = await res.text();
+  return parseHtmlCaptions(await res.text());
+}
+
+function parseHtmlCaptions(html) {
+  // ytInitialPlayerResponse 가 포함된 JSON 데이터를 찾습니다. (모바일/데스크톱 대응)
+  let regex = /ytInitialPlayerResponse\s*=\s*({.+?});/;
+  let match = html.match(regex);
   
-  // ytInitialPlayerResponse 가 포함된 JSON 데이터를 찾습니다.
-  const regex = /ytInitialPlayerResponse\s*=\s*({.+?});/;
-  const match = html.match(regex);
+  if (!match) {
+    // 모바일 등에서 세미콜론이 없는 경우 대응
+    regex = /ytInitialPlayerResponse\s*=\s*({.+?})\s*</;
+    match = html.match(regex);
+  }
+  
+  if (!match) {
+    // 세 번째 시도: JSON 원본 변수 매칭
+    regex = /var\s+ytInitialPlayerResponse\s*=\s*({.+?});/;
+    match = html.match(regex);
+  }
+
   if (!match) {
     throw new Error("유튜브 플레이어 응답 데이터를 찾을 수 없습니다. (연령 제한 등이 걸린 영상일 수 있습니다)");
   }
@@ -46,7 +78,7 @@ async function getCaptionsTracks(videoId) {
     throw new Error("이 영상에는 자막이 비활성화되어 있거나 자막 트랙이 존재하지 않습니다.");
   }
 
-  return captions; // [{ baseUrl, vssId, languageCode, name: { simpleText } }]
+  return captions;
 }
 
 // 자막 XML(TimedText)을 파싱하여 세그먼트 배열로 반환
