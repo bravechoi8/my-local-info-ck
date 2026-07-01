@@ -417,14 +417,152 @@ export default function STTPage() {
     setShowApiKeyModal(false);
   };
 
+  // 클라이언트 브라우저 단에서 직접 프록시를 경유해 유튜브 자막을 수집하는 폴백 파서
+  const fetchYoutubeCaptionsFallback = async (videoId: string): Promise<any> => {
+    triggerToast("⏳ 서버 대역 차단 감지: 브라우저 대체 프록시 채널로 가져오는 중...");
+    
+    // allorigins CORS 프록시를 통해 유튜브 모바일 웹페이지 긁어오기
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://m.youtube.com/watch?v=${videoId}`)}`;
+    const pageRes = await fetch(proxyUrl);
+    if (!pageRes.ok) {
+      throw new Error("대체 채널로도 유튜브 페이지를 로드하지 못했습니다.");
+    }
+    const pageData = await pageRes.json();
+    const html = pageData.contents; // allorigins는 결과 HTML을 contents 필드에 담아줍니다.
+    
+    // ytInitialPlayerResponse JSON 추출
+    let regex = /ytInitialPlayerResponse\s*=\s*({.+?});/;
+    let match = html.match(regex);
+    if (!match) {
+      regex = /ytInitialPlayerResponse\s*=\s*({.+?})\s*</;
+      match = html.match(regex);
+    }
+    if (!match) {
+      regex = /var\s+ytInitialPlayerResponse\s*=\s*({.+?});/;
+      match = html.match(regex);
+    }
+    if (!match) {
+      throw new Error("유튜브 플레이어 정보 파싱 실패 (연령제한 또는 자막 지원 안됨)");
+    }
+    
+    const playerResponse = JSON.parse(match[1]);
+    const captions = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+    
+    if (!captions || captions.length === 0) {
+      throw new Error("이 영상에는 한글/영어 자막 트랙이 없습니다.");
+    }
+    
+    let selectedTrack = captions.find((t: any) => t.languageCode === "ko") ||
+                        captions.find((t: any) => t.languageCode === "en") ||
+                        captions[0];
+                        
+    let xmlUrl = selectedTrack.baseUrl;
+    xmlUrl = decodeHtmlEntities(xmlUrl);
+    if (xmlUrl.startsWith("//")) {
+      xmlUrl = "https:" + xmlUrl;
+    } else if (!xmlUrl.startsWith("http")) {
+      xmlUrl = "https://www.youtube.com" + xmlUrl;
+    }
+    if (!xmlUrl.includes("fmt=")) {
+      xmlUrl = xmlUrl + "&fmt=srv1";
+    }
+    
+    // XML 자막 데이터 다운로드 (마찬가지로 CORS 프록시 경유)
+    const xmlProxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(xmlUrl)}`;
+    const xmlRes = await fetch(xmlProxyUrl);
+    if (!xmlRes.ok) {
+      throw new Error("자막 데이터 파일 다운로드 실패");
+    }
+    
+    const xmlData = await xmlRes.json();
+    const xmlText = xmlData.contents;
+    
+    // XML 정규식 파싱
+    const textTagRegex = /<text[^>]*start="([\d.]+)"[^>]*dur="([\d.]+)"[^>]*>([\s\S]*?)<\/text>/gi;
+    const segments: Segment[] = [];
+    let xmlMatch;
+    
+    while ((xmlMatch = textTagRegex.exec(xmlText)) !== null) {
+      const start = parseFloat(xmlMatch[1]);
+      const duration = parseFloat(xmlMatch[2]);
+      const rawText = xmlMatch[3];
+      const text = decodeHtmlEntities(rawText)
+        .replace(/<[^>]*>/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (text) {
+        segments.push({
+          start,
+          end: start + duration,
+          text
+        });
+      }
+    }
+    
+    if (segments.length === 0) {
+      throw new Error("자막을 정상적으로 추출하지 못했습니다 (포맷 불일치).");
+    }
+    
+    const duration = segments.length > 0 ? segments[segments.length - 1].end : 0;
+    
+    return {
+      segments,
+      lang: selectedTrack.languageCode,
+      title: `유튜브 영상 (${videoId})`,
+      duration
+    };
+  };
+
+  // 유튜브 ID 추출 헬퍼 (프론트엔드용)
+  const extractYoutubeId = (url: string) => {
+    if (!url) return null;
+    const match = url.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+    return match ? match[1] : null;
+  };
+
+  // HTML 엔티티 디코더 (프론트엔드용)
+  const decodeHtmlEntities = (s: string) => {
+    if (!s) return "";
+    return s
+      .replace(/&amp;/g, "&")
+      .replace(/&#39;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(parseInt(dec, 10)));
+  };
+
   // 유튜브 자막 가져오기
   const handleFetchYoutube = async () => {
     if (!ytUrl.trim()) return;
+    const targetUrl = ytUrl.trim();
     setShowYtModal(false);
     triggerToast("🎬 유튜브 자막을 파싱하고 있습니다...");
+    
+    const videoId = extractYoutubeId(targetUrl);
+    
     try {
-      const res = await fetch(`/api/youtube-captions?url=${encodeURIComponent(ytUrl.trim())}`);
+      const res = await fetch(`/api/youtube-captions?url=${encodeURIComponent(targetUrl)}`);
       if (!res.ok) {
+        // 429 등 서버리스 차단 에러 시 로컬 브라우저 프록시 폴백 작동
+        if (videoId) {
+          const fallbackData = await fetchYoutubeCaptionsFallback(videoId);
+          setFiles([]);
+          setYtSource(fallbackData);
+          
+          const resData = {
+            title: fallbackData.title,
+            segments: fallbackData.segments,
+            hasTimestamps: true,
+          };
+          setTransResult(resData);
+          triggerToast("✅ 대체 채널로 유튜브 자막 추출 성공!");
+          await runAiAnalysis(fallbackData.segments, fallbackData.segments.map((s: any) => s.text).join(" "));
+          return;
+        }
+        
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || "자막을 가져오는데 실패했습니다.");
       }
@@ -443,6 +581,27 @@ export default function STTPage() {
       // AI 후속 처리 실행
       await runAiAnalysis(data.segments, data.segments.map((s: any) => s.text).join(" "));
     } catch (err: any) {
+      // 3차 최종 폴백 시도
+      if (videoId) {
+        try {
+          const fallbackData = await fetchYoutubeCaptionsFallback(videoId);
+          setFiles([]);
+          setYtSource(fallbackData);
+          
+          const resData = {
+            title: fallbackData.title,
+            segments: fallbackData.segments,
+            hasTimestamps: true,
+          };
+          setTransResult(resData);
+          triggerToast("✅ 대체 채널로 유튜브 자막 추출 성공!");
+          await runAiAnalysis(fallbackData.segments, fallbackData.segments.map((s: any) => s.text).join(" "));
+          return;
+        } catch (fallbackErr: any) {
+          triggerToast(`자막 추출 실패: ${fallbackErr.message}`);
+          return;
+        }
+      }
       triggerToast(err.message);
     }
   };
