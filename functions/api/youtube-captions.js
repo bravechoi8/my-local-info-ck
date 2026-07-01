@@ -50,30 +50,42 @@ async function getCaptionsTracks(videoId) {
   return parseHtmlCaptions(await res.text());
 }
 
-function parseHtmlCaptions(html) {
-  // ytInitialPlayerResponse 가 포함된 JSON 데이터를 찾습니다. (모바일/데스크톱 대응)
-  let regex = /ytInitialPlayerResponse\s*=\s*({.+?});/;
-  let match = html.match(regex);
-  
-  if (!match) {
-    // 모바일 등에서 세미콜론이 없는 경우 대응
-    regex = /ytInitialPlayerResponse\s*=\s*({.+?})\s*</;
-    match = html.match(regex);
+function parseInlineJson(html, globalName) {
+  const startToken = `${globalName} = `;
+  let startIndex = html.indexOf(startToken);
+  if (startIndex === -1) {
+    const varStartToken = `var ${globalName} = `;
+    startIndex = html.indexOf(varStartToken);
+    if (startIndex === -1) return null;
+    startIndex += varStartToken.length - startToken.length;
   }
   
-  if (!match) {
-    // 세 번째 시도: JSON 원본 변수 매칭
-    regex = /var\s+ytInitialPlayerResponse\s*=\s*({.+?});/;
-    match = html.match(regex);
+  const jsonStart = startIndex + startToken.length;
+  let depth = 0;
+  for (let i = jsonStart; i < html.length; i++) {
+    if (html[i] === "{") {
+      depth++;
+    } else if (html[i] === "}") {
+      depth--;
+      if (depth === 0) {
+        try {
+          return JSON.parse(html.slice(jsonStart, i + 1));
+        } catch (e) {
+          return null;
+        }
+      }
+    }
   }
+  return null;
+}
 
-  if (!match) {
+function parseHtmlCaptions(html) {
+  const playerResponse = parseInlineJson(html, "ytInitialPlayerResponse");
+  if (!playerResponse) {
     throw new Error("유튜브 플레이어 응답 데이터를 찾을 수 없습니다. (연령 제한 등이 걸린 영상일 수 있습니다)");
   }
 
-  const playerResponse = JSON.parse(match[1]);
   const captions = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-  
   if (!captions || captions.length === 0) {
     throw new Error("이 영상에는 자막이 비활성화되어 있거나 자막 트랙이 존재하지 않습니다.");
   }

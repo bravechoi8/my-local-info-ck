@@ -421,35 +421,77 @@ export default function STTPage() {
   const fetchYoutubeCaptionsFallback = async (videoId: string): Promise<any> => {
     triggerToast("⏳ 서버 대역 차단 감지: 브라우저 대체 프록시 채널로 가져오는 중...");
     
-    // allorigins CORS 프록시를 통해 유튜브 모바일 웹페이지 긁어오기
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://m.youtube.com/watch?v=${videoId}`)}`;
-    const pageRes = await fetch(proxyUrl);
-    if (!pageRes.ok) {
-      throw new Error("대체 채널로도 유튜브 페이지를 로드하지 못했습니다.");
-    }
-    const pageData = await pageRes.json();
-    const html = pageData.contents; // allorigins는 결과 HTML을 contents 필드에 담아줍니다.
+    const targetVideoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    let html = "";
     
-    // ytInitialPlayerResponse JSON 추출
-    let regex = /ytInitialPlayerResponse\s*=\s*({.+?});/;
-    let match = html.match(regex);
-    if (!match) {
-      regex = /ytInitialPlayerResponse\s*=\s*({.+?})\s*</;
-      match = html.match(regex);
+    // 1차 시도: corsproxy.io 프록시 사용 (데스크톱 주소)
+    try {
+      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetVideoUrl)}`;
+      const res = await fetch(proxyUrl);
+      if (res.ok) {
+        html = await res.text();
+      }
+    } catch (e) {
+      console.warn("corsproxy.io 실패, allorigins로 재시도합니다.", e);
     }
-    if (!match) {
-      regex = /var\s+ytInitialPlayerResponse\s*=\s*({.+?});/;
-      match = html.match(regex);
+    
+    // 2차 시도: allorigins 프록시 사용 (데스크톱 주소)
+    if (!html) {
+      try {
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetVideoUrl)}`;
+        const res = await fetch(proxyUrl);
+        if (res.ok) {
+          const data = await res.json();
+          html = data.contents;
+        }
+      } catch (e) {
+        console.error("allorigins 실패", e);
+      }
     }
-    if (!match) {
+    
+    if (!html) {
+      throw new Error("대체 프록시 채널로도 유튜브 페이지를 로드하지 못했습니다.");
+    }
+    
+    // 인라인 JSON 파서
+    const parseInlineJson = (htmlStr: string, globalName: string) => {
+      const startToken = `${globalName} = `;
+      let startIndex = htmlStr.indexOf(startToken);
+      if (startIndex === -1) {
+        const varStartToken = `var ${globalName} = `;
+        startIndex = htmlStr.indexOf(varStartToken);
+        if (startIndex === -1) return null;
+        startIndex += varStartToken.length - startToken.length;
+      }
+      
+      const jsonStart = startIndex + startToken.length;
+      let depth = 0;
+      for (let i = jsonStart; i < htmlStr.length; i++) {
+        if (htmlStr[i] === "{") {
+          depth++;
+        } else if (htmlStr[i] === "}") {
+          depth--;
+          if (depth === 0) {
+            try {
+              return JSON.parse(htmlStr.slice(jsonStart, i + 1));
+            } catch (e) {
+              return null;
+            }
+          }
+        }
+      }
+      return null;
+    };
+
+    const playerResponse = parseInlineJson(html, "ytInitialPlayerResponse");
+    if (!playerResponse) {
       throw new Error("유튜브 플레이어 정보 파싱 실패 (연령제한 또는 자막 지원 안됨)");
     }
     
-    const playerResponse = JSON.parse(match[1]);
     const captions = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
     
     if (!captions || captions.length === 0) {
-      throw new Error("이 영상에는 한글/영어 자막 트랙이 없습니다.");
+      throw new Error("이 영상에는 활성화된 자막 트랙이 없습니다.");
     }
     
     let selectedTrack = captions.find((t: any) => t.languageCode === "ko") ||
@@ -467,15 +509,27 @@ export default function STTPage() {
       xmlUrl = xmlUrl + "&fmt=srv1";
     }
     
-    // XML 자막 데이터 다운로드 (마찬가지로 CORS 프록시 경유)
-    const xmlProxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(xmlUrl)}`;
-    const xmlRes = await fetch(xmlProxyUrl);
-    if (!xmlRes.ok) {
-      throw new Error("자막 데이터 파일 다운로드 실패");
+    // XML 자막 데이터 다운로드 (corsproxy.io 혹은 allorigins)
+    let xmlText = "";
+    try {
+      const xmlProxyUrl = `https://corsproxy.io/?${encodeURIComponent(xmlUrl)}`;
+      const xmlRes = await fetch(xmlProxyUrl);
+      if (xmlRes.ok) {
+        xmlText = await xmlRes.text();
+      }
+    } catch (e) {
+      console.warn("XML corsproxy.io 실패, allorigins로 재시도");
     }
     
-    const xmlData = await xmlRes.json();
-    const xmlText = xmlData.contents;
+    if (!xmlText) {
+      const xmlProxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(xmlUrl)}`;
+      const xmlRes = await fetch(xmlProxyUrl);
+      if (!xmlRes.ok) {
+        throw new Error("자막 데이터 파일 다운로드 실패");
+      }
+      const xmlData = await xmlRes.json();
+      xmlText = xmlData.contents;
+    }
     
     // XML 정규식 파싱 (srv3 및 클래식 형식 모두 지원)
     const segments: Segment[] = [];
