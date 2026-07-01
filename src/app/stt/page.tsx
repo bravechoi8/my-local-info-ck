@@ -1489,6 +1489,9 @@ JSON 배열:`;
                   onChange={(e) => setOpenaiKey(e.target.value)}
                   className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:border-[#3182F6] text-slate-800 dark:text-slate-200"
                 />
+                <div className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                  OpenAI 키 발급: <a href="https://platform.openai.com/api-keys" target="_blank" className="text-[#3182F6] underline">platform.openai.com/api-keys</a>
+                </div>
               </div>
               
               <div>
