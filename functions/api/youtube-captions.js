@@ -1,0 +1,153 @@
+function extractYoutubeId(url) {
+  if (!url) return null;
+  const match = url.match(/(?:v=|youtu\.be\/|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+function decodeHtmlEntities(s) {
+  if (!s) return "";
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(parseInt(dec, 10)));
+}
+
+// 유튜브 페이지에서 자막 XML URL 목록 추출
+async function getCaptionsTracks(videoId) {
+  const pageUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  const res = await fetch(pageUrl, {
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+      "Accept-Language": "ko,en-US;q=0.9,en;q=0.8"
+    }
+  });
+
+  if (!res.ok) {
+    throw new Error(`유튜브 페이지 로드 실패 (HTTP ${res.status})`);
+  }
+
+  const html = await res.text();
+  
+  // ytInitialPlayerResponse 가 포함된 JSON 데이터를 찾습니다.
+  const regex = /ytInitialPlayerResponse\s*=\s*({.+?});/;
+  const match = html.match(regex);
+  if (!match) {
+    throw new Error("유튜브 플레이어 응답 데이터를 찾을 수 없습니다. (연령 제한 등이 걸린 영상일 수 있습니다)");
+  }
+
+  const playerResponse = JSON.parse(match[1]);
+  const captions = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+  
+  if (!captions || captions.length === 0) {
+    throw new Error("이 영상에는 자막이 비활성화되어 있거나 자막 트랙이 존재하지 않습니다.");
+  }
+
+  return captions; // [{ baseUrl, vssId, languageCode, name: { simpleText } }]
+}
+
+// 자막 XML(TimedText)을 파싱하여 세그먼트 배열로 반환
+async function fetchAndParseXml(xmlUrl) {
+  const res = await fetch(xmlUrl);
+  if (!res.ok) {
+    throw new Error("자막 데이터 다운로드 실패");
+  }
+  const xmlText = await res.text();
+  
+  // 간단한 XML 정규식 파서 (Cloudflare Worker에 DOMParser가 없기 때문)
+  // 예시: <text start="1.23" dur="4.56">안녕하세요</text>
+  const textTagRegex = /<text[^>]*start="([\d.]+)"[^>]*dur="([\d.]+)"[^>]*>([\s\S]*?)<\/text>/gi;
+  const segments = [];
+  let match;
+  
+  while ((match = textTagRegex.exec(xmlText)) !== null) {
+    const start = parseFloat(match[1]);
+    const duration = parseFloat(match[2]);
+    const rawText = match[3];
+    const text = decodeHtmlEntities(rawText)
+      .replace(/<[^>]*>/g, "") // HTML 태그 제거
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (text) {
+      segments.push({
+        start,
+        end: start + duration,
+        text
+      });
+    }
+  }
+
+  return segments;
+}
+
+export async function onRequestGet(context) {
+  try {
+    const { searchParams } = new URL(context.request.url);
+    const url = searchParams.get("url");
+
+    if (!url) {
+      return new Response(JSON.stringify({ error: "유튜브 주소(URL)가 누락되었습니다." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    const videoId = extractYoutubeId(url);
+    if (!videoId) {
+      return new Response(JSON.stringify({ error: "유효한 유튜브 주소가 아닙니다." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    // 1. 자막 트랙 정보 가져오기
+    let tracks;
+    try {
+      tracks = await getCaptionsTracks(videoId);
+    } catch (e) {
+      return new Response(JSON.stringify({ error: e.message }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    // 2. 한국어(ko), 영어(en), 그 외 순으로 적절한 트랙 매칭
+    let selectedTrack = tracks.find(t => t.languageCode === "ko") ||
+                        tracks.find(t => t.languageCode === "en") ||
+                        tracks[0];
+
+    if (!selectedTrack) {
+      return new Response(JSON.stringify({ error: "사용 가능한 자막 트랙이 없습니다." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    // 3. 자막 데이터 가져오기 및 파싱
+    const segments = await fetchAndParseXml(selectedTrack.baseUrl);
+    const duration = segments.length > 0 ? segments[segments.length - 1].end : 0;
+
+    return new Response(
+      JSON.stringify({
+        segments,
+        lang: selectedTrack.languageCode,
+        title: `유튜브 영상 (${videoId})`,
+        duration
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      }
+    );
+  } catch (error) {
+    console.error("유튜브 자막 로드 오류:", error);
+    return new Response(JSON.stringify({ error: error.message || "서버 오류가 발생했습니다." }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}

@@ -368,6 +368,29 @@ export default function HomeClient({ posts }: HomeClientProps) {
                   </Link>
                 </div>
               </section>
+
+              {/* AI STT 받아쓰기 스튜디오 배너 */}
+              <section className="group bg-gradient-to-br from-[#FFF5F5] to-[#FFF0F5] dark:from-[#321C20] dark:to-[#2B1B26] rounded-2xl p-4 sm:p-4.5 border border-[#ffdbe3] dark:border-slate-800/80 border-b-[6px] border-b-[#E53E3E]/50 dark:border-b-[#E53E3E]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(229,62,62,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#E53E3E] border border-[#ffdbe3] dark:border-[#E53E3E]/30 transition-colors">
+                    AI 음성 받아쓰기 🎙️
+                  </span>
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                    AI STT 받아쓰기 스튜디오
+                  </h2>
+                  <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
+                    음성 파일을 업로드하거나 실시간 마이크 녹음으로 즉시 텍스트 변환 및 요약을 지원합니다!
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/stt"
+                    className="px-3 py-1.5 bg-[#E53E3E] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#C53030] transition-all shadow-sm whitespace-nowrap"
+                  >
+                    스튜디오 켜기 &rarr;
+                  </Link>
+                </div>
+              </section>
             </div>
           </div>
         ) : activeTab === "전체" ? (
