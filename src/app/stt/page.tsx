@@ -208,6 +208,7 @@ export default function STTPage() {
   const [dictationText, setDictationText] = useState("");
   const [hotkey, setHotkey] = useState("F8");
   const [isListeningHotkey, setIsListeningHotkey] = useState(false);
+  const [showDictationPanel, setShowDictationPanel] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -232,6 +233,21 @@ export default function STTPage() {
     }, 2500);
   };
 
+  const handleToggleDictation = () => {
+    const nextState = !showDictationPanel;
+    setShowDictationPanel(nextState);
+    
+    if (nextState) {
+      if (!isRecording) {
+        toggleRecording();
+      }
+    } else {
+      if (isRecording) {
+        toggleRecording();
+      }
+    }
+  };
+
   // 단축키 녹음 기능 연동
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -243,12 +259,12 @@ export default function STTPage() {
 
       if (e.key.toUpperCase() === hotkey.toUpperCase()) {
         e.preventDefault();
-        toggleRecording();
+        handleToggleDictation();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [hotkey, isRecording, isListeningHotkey, openaiKey]);
+  }, [hotkey, isRecording, isListeningHotkey, openaiKey, showDictationPanel]);
 
   // 마이크 녹음 시작/중지
   const toggleRecording = async () => {
@@ -763,7 +779,7 @@ JSON 배열:`;
               STT Studio
             </h1>
             <button
-              onClick={(e) => { e.stopPropagation(); toggleRecording(); }}
+              onClick={(e) => { e.stopPropagation(); handleToggleDictation(); }}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all border cursor-pointer select-none active:scale-95 flex items-center gap-1.5 ${
                 isRecording 
                   ? "bg-red-500 hover:bg-red-600 text-white border-red-500 animate-pulse font-extrabold" 
@@ -924,58 +940,60 @@ JSON 배열:`;
           {isProcessing ? "오디오 변환 처리 중..." : "변환 시작 🚀"}
         </button>
 
-        {/* 실시간 마이크 녹음 대시보드 */}
-        <div className="bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-2xl p-5 flex flex-col gap-3 shadow-sm">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-[#191F28] dark:text-white">🎙️ STT 실시간 마이크 받아쓰기</h3>
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-slate-500 dark:text-slate-400 font-medium">단축키:</span>
+        {/* 실시간 마이크 녹음 대시보드 (토글형 확장 구조) */}
+        {showDictationPanel && (
+          <div className="bg-white dark:bg-slate-900 border border-[#F2F4F6] dark:border-slate-800 rounded-2xl p-5 flex flex-col gap-3 shadow-sm animate-fadeIn">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-[#191F28] dark:text-white">🎙️ STT 실시간 마이크 받아쓰기</h3>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">단축키:</span>
+                <button
+                  onClick={handleListenHotkey}
+                  className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-bold text-[#3182F6] hover:bg-slate-200 cursor-pointer"
+                >
+                  {hotkey}
+                </button>
+              </div>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              단축키를 누르면 녹음이 시작되고, 다시 누르면 마이크 녹음본이 즉시 텍스트로 자동 받아쓰기 됩니다.
+            </p>
+
+            <div className="relative">
+              <textarea
+                value={dictationText}
+                onChange={(e) => setDictationText(e.target.value)}
+                placeholder="단축키를 한 번 누른 뒤 편하게 말씀하시고, 완료되면 다시 단축키를 눌러보세요. 변환 결과가 여기에 자동으로 입력됩니다..."
+                className="w-full h-32 p-3 text-xs bg-[#F9FAFB] dark:bg-slate-800/40 border border-[#F2F4F6] dark:border-slate-800 rounded-xl focus:outline-none focus:border-[#3182F6] text-[#191F28] dark:text-white leading-relaxed resize-y"
+              ></textarea>
+              {isRecording && (
+                <span className="absolute top-3 right-3 text-[10px] font-bold text-red-500 animate-pulse flex items-center gap-1 bg-red-100/80 px-2 py-0.5 rounded">
+                  🔴 녹음 중...
+                </span>
+              )}
+              {isTranscribingMic && (
+                <span className="absolute top-3 right-3 text-[10px] font-bold text-yellow-600 animate-pulse flex items-center gap-1 bg-yellow-100/80 px-2 py-0.5 rounded">
+                  ⏳ 텍스트로 변환하는 중...
+                </span>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-2 text-xs">
               <button
-                onClick={handleListenHotkey}
-                className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-bold text-[#3182F6] hover:bg-slate-200 cursor-pointer"
+                onClick={() => setDictationText("")}
+                className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-400 rounded-lg cursor-pointer font-bold"
               >
-                {hotkey}
+                🧹 지우기
+              </button>
+              <button
+                onClick={() => handleCopyText(dictationText)}
+                className="px-3 py-1.5 bg-[#3182F6] text-white hover:bg-[#1b64da] rounded-lg cursor-pointer font-bold"
+              >
+                📋 결과 복사
               </button>
             </div>
           </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            단축키를 누르면 녹음이 시작되고, 다시 누르면 마이크 녹음본이 즉시 텍스트로 자동 받아쓰기 됩니다.
-          </p>
-
-          <div className="relative">
-            <textarea
-              value={dictationText}
-              onChange={(e) => setDictationText(e.target.value)}
-              placeholder="단축키를 한 번 누른 뒤 편하게 말씀하시고, 완료되면 다시 단축키를 눌러보세요. 변환 결과가 여기에 자동으로 입력됩니다..."
-              className="w-full h-32 p-3 text-xs bg-[#F9FAFB] dark:bg-slate-800/40 border border-[#F2F4F6] dark:border-slate-800 rounded-xl focus:outline-none focus:border-[#3182F6] text-[#191F28] dark:text-white leading-relaxed resize-y"
-            ></textarea>
-            {isRecording && (
-              <span className="absolute top-3 right-3 text-[10px] font-bold text-red-500 animate-pulse flex items-center gap-1 bg-red-100/80 px-2 py-0.5 rounded">
-                🔴 녹음 중...
-              </span>
-            )}
-            {isTranscribingMic && (
-              <span className="absolute top-3 right-3 text-[10px] font-bold text-yellow-600 animate-pulse flex items-center gap-1 bg-yellow-100/80 px-2 py-0.5 rounded">
-                ⏳ 텍스트로 변환하는 중...
-              </span>
-            )}
-          </div>
-
-          <div className="flex justify-end gap-2 text-xs">
-            <button
-              onClick={() => setDictationText("")}
-              className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 dark:text-slate-400 rounded-lg cursor-pointer font-bold"
-            >
-              🧹 지우기
-            </button>
-            <button
-              onClick={() => handleCopyText(dictationText)}
-              className="px-3 py-1.5 bg-[#3182F6] text-white hover:bg-[#1b64da] rounded-lg cursor-pointer font-bold"
-            >
-              📋 결과 복사
-            </button>
-          </div>
-        </div>
+        )}
 
         {/* AI 분석 결과 패널 */}
         {(aiProgress || aiResult.keywords || aiResult.summary || aiResult.diarize) && (

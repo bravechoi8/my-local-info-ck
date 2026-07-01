@@ -159,8 +159,15 @@ export async function onRequestGet(context) {
       });
     }
 
-    // 3. 자막 데이터 가져오기 및 파싱
-    const segments = await fetchAndParseXml(selectedTrack.baseUrl);
+    // 3. 자막 데이터 가져오기 및 파싱 (URL 디코딩 및 프로토콜 보정)
+    let xmlUrl = selectedTrack.baseUrl;
+    xmlUrl = decodeHtmlEntities(xmlUrl);
+    if (xmlUrl.startsWith("//")) {
+      xmlUrl = "https:" + xmlUrl;
+    } else if (!xmlUrl.startsWith("http")) {
+      xmlUrl = "https://www.youtube.com" + xmlUrl;
+    }
+    const segments = await fetchAndParseXml(xmlUrl);
     const duration = segments.length > 0 ? segments[segments.length - 1].end : 0;
 
     return new Response(
