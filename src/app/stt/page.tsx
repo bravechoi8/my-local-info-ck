@@ -590,16 +590,27 @@ export default function STTPage() {
       xmlUrl = xmlUrl + "&fmt=srv1";
     }
     
-    // XML 자막 데이터 다운로드 (corsproxy.io 혹은 allorigins)
+    // XML 자막 데이터 다운로드 (1차: TimedText 다이렉트 fetch - CORS 개방, 2차: corsproxy, 3차: allorigins)
     let xmlText = "";
     try {
-      const xmlProxyUrl = `https://corsproxy.io/?${encodeURIComponent(xmlUrl)}`;
-      const xmlRes = await fetchWithTimeout(xmlProxyUrl);
+      const xmlRes = await fetchWithTimeout(xmlUrl, {}, 4000); // 프록시 없이 다이렉트 요청
       if (xmlRes.ok) {
         xmlText = await xmlRes.text();
       }
     } catch (e) {
-      console.warn("XML corsproxy.io 실패, allorigins로 재시도");
+      console.warn("자막 XML 다이렉트 페치 실패, 프록시로 우회 시도합니다.", e);
+    }
+    
+    if (!xmlText) {
+      try {
+        const xmlProxyUrl = `https://corsproxy.io/?${encodeURIComponent(xmlUrl)}`;
+        const xmlRes = await fetchWithTimeout(xmlProxyUrl);
+        if (xmlRes.ok) {
+          xmlText = await xmlRes.text();
+        }
+      } catch (e) {
+        console.warn("XML corsproxy.io 실패, allorigins로 재시도");
+      }
     }
     
     if (!xmlText) {
