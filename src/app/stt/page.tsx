@@ -121,7 +121,30 @@ function checkHallucination(text: string, elapsed?: number): boolean {
   if (!text) return false;
   const normalized = text.replace(/\s+/g, "").toLowerCase();
   
-  const hallucinationPhrases = [
+  // 1. 다른 문장과 섞이지 않고 딱 이 단어만 단독으로 나왔을 때 차단할 단어들 (일반 대화 중 사용 가능성 있음)
+  const exactMatchPhrases = [
+    "고맙습니다",
+    "감사합니다",
+    "고맙습니다.",
+    "감사합니다.",
+    "네이버",
+    "배달의민족",
+    "쿠팡플레이",
+    "쿠팡이츠",
+    "mbc뉴스",
+    "kbs뉴스",
+    "sbs뉴스",
+    "jtbc뉴스",
+    "ytn",
+    "이덕영입니다",
+    "플레임tv",
+    "자막제공",
+    "한국어자막",
+    "번역제공"
+  ];
+
+  // 2. 문장 내에 이 단어가 포함되어 있기만 해도 차단할 단어들 (일상 대화에서 거의 쓰이지 않는 유튜브 환각용 멘트)
+  const partialMatchPhrases = [
     "시청해주셔서감사합니다",
     "시청해주셔서감사합니다.",
     "구독과좋아요",
@@ -131,38 +154,28 @@ function checkHallucination(text: string, elapsed?: number): boolean {
     "좋아요부탁드립니다",
     "다음영상에서만나요",
     "다음시간에만나요",
-    "플레임tv",
-    "자막제공",
-    "한국어자막",
-    "번역제공",
-    "배달의민족",
-    "쿠팡플레이",
-    "쿠팡이츠",
-    "네이버",
-    "mbc뉴스",
-    "kbs뉴스",
-    "sbs뉴스",
-    "jtbc뉴스",
-    "ytn",
-    "이덕영입니다",
     "thanksforwatching",
     "thankyouforwatching",
     "plsesubscribe",
     "subscribetomychannel",
-    "likeandsubscribe",
-    "고맙습니다",
-    "감사합니다",
-    "고맙습니다.",
-    "감사합니다."
+    "likeandsubscribe"
   ];
 
-  for (const phrase of hallucinationPhrases) {
-    if (normalized === phrase || normalized.includes(phrase)) {
+  // 완전 일치 검사
+  for (const phrase of exactMatchPhrases) {
+    if (normalized === phrase) {
       return true;
     }
   }
 
-  // 2초 이하 초단기 소리인데 글자수가 비정상적으로 쏟아져 들어온 경우 차단
+  // 부분 일치 검사
+  for (const phrase of partialMatchPhrases) {
+    if (normalized.includes(phrase)) {
+      return true;
+    }
+  }
+
+  // 3. 2초 이하 초단기 소리인데 글자수가 비정상적으로 쏟아져 들어온 경우 차단
   if (elapsed !== undefined && elapsed <= 2.0 && text.length > elapsed * 12) {
     return true;
   }
