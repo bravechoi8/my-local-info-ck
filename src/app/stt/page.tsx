@@ -417,6 +417,23 @@ export default function STTPage() {
     setShowApiKeyModal(false);
   };
 
+  // 타임아웃 기능이 있는 fetch 유틸리티
+  const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeout = 4500) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal
+      });
+      clearTimeout(id);
+      return response;
+    } catch (error) {
+      clearTimeout(id);
+      throw error;
+    }
+  };
+
   // 클라이언트 브라우저 단에서 직접 프록시를 경유해 유튜브 자막을 수집하는 폴백 파서
   const fetchYoutubeCaptionsFallback = async (videoId: string): Promise<any> => {
     triggerToast("⏳ 서버 대역 차단 감지: 브라우저 대체 프록시 채널로 가져오는 중...");
@@ -427,7 +444,7 @@ export default function STTPage() {
     // 1차 시도: corsproxy.io 프록시 사용 (데스크톱 주소)
     try {
       const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetVideoUrl)}`;
-      const res = await fetch(proxyUrl);
+      const res = await fetchWithTimeout(proxyUrl);
       if (res.ok) {
         html = await res.text();
       }
@@ -439,7 +456,7 @@ export default function STTPage() {
     if (!html) {
       try {
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetVideoUrl)}`;
-        const res = await fetch(proxyUrl);
+        const res = await fetchWithTimeout(proxyUrl);
         if (res.ok) {
           const data = await res.json();
           html = data.contents;
@@ -513,7 +530,7 @@ export default function STTPage() {
     let xmlText = "";
     try {
       const xmlProxyUrl = `https://corsproxy.io/?${encodeURIComponent(xmlUrl)}`;
-      const xmlRes = await fetch(xmlProxyUrl);
+      const xmlRes = await fetchWithTimeout(xmlProxyUrl);
       if (xmlRes.ok) {
         xmlText = await xmlRes.text();
       }
@@ -523,7 +540,7 @@ export default function STTPage() {
     
     if (!xmlText) {
       const xmlProxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(xmlUrl)}`;
-      const xmlRes = await fetch(xmlProxyUrl);
+      const xmlRes = await fetchWithTimeout(xmlProxyUrl, {}, 6000); // 2차 프록시는 6초 부여
       if (!xmlRes.ok) {
         throw new Error("자막 데이터 파일 다운로드 실패");
       }
