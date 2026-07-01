@@ -81,21 +81,47 @@ function parseHtmlCaptions(html) {
   return captions;
 }
 
-// 자막 XML(TimedText)을 파싱하여 세그먼트 배열로 반환
+// 자막 XML(TimedText)을 파싱하여 세그먼트 배열로 반환 (srv3 및 클래식 포맷 지원)
 async function fetchAndParseXml(xmlUrl) {
   const res = await fetch(xmlUrl);
   if (!res.ok) {
     throw new Error("자막 데이터 다운로드 실패");
   }
   const xmlText = await res.text();
-  
-  // 간단한 XML 정규식 파서 (Cloudflare Worker에 DOMParser가 없기 때문)
-  // 예시: <text start="1.23" dur="4.56">안녕하세요</text>
-  const textTagRegex = /<text[^>]*start="([\d.]+)"[^>]*dur="([\d.]+)"[^>]*>([\s\S]*?)<\/text>/gi;
   const segments = [];
   let match;
-  
-  while ((match = textTagRegex.exec(xmlText)) !== null) {
+
+  // 1. srv3 포맷 시도: <p t="ms" d="ms">
+  const pRegex = /<p\s+t="(\d+)"\s+d="(\d+)"[^>]*>([\s\S]*?)<\/p>/gi;
+  while ((match = pRegex.exec(xmlText)) !== null) {
+    const startMs = parseInt(match[1], 10);
+    const durMs = parseInt(match[2], 10);
+    const inner = match[3];
+    
+    let text = "";
+    const sRegex = /<s[^>]*>([^<]*)<\/s>/gi;
+    let sMatch;
+    while ((sMatch = sRegex.exec(inner)) !== null) {
+      text += sMatch[1];
+    }
+    if (!text) {
+      text = inner.replace(/<[^>]+>/g, ""); // HTML 태그 제거
+    }
+    text = decodeHtmlEntities(text).trim();
+    if (text) {
+      segments.push({
+        start: startMs / 1000,
+        end: (startMs + durMs) / 1000,
+        text
+      });
+    }
+  }
+
+  if (segments.length > 0) return segments;
+
+  // 2. 클래식 포맷 시도: <text start="s" dur="s">
+  const classicRegex = /<text\s+start="([\d.]+)"\s+dur="([\d.]+)"[^>]*>([\s\S]*?)<\/text>/gi;
+  while ((match = classicRegex.exec(xmlText)) !== null) {
     const start = parseFloat(match[1]);
     const duration = parseFloat(match[2]);
     const rawText = match[3];

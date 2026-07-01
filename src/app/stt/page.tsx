@@ -477,26 +477,55 @@ export default function STTPage() {
     const xmlData = await xmlRes.json();
     const xmlText = xmlData.contents;
     
-    // XML 정규식 파싱
-    const textTagRegex = /<text[^>]*start="([\d.]+)"[^>]*dur="([\d.]+)"[^>]*>([\s\S]*?)<\/text>/gi;
+    // XML 정규식 파싱 (srv3 및 클래식 형식 모두 지원)
     const segments: Segment[] = [];
     let xmlMatch;
-    
-    while ((xmlMatch = textTagRegex.exec(xmlText)) !== null) {
-      const start = parseFloat(xmlMatch[1]);
-      const duration = parseFloat(xmlMatch[2]);
-      const rawText = xmlMatch[3];
-      const text = decodeHtmlEntities(rawText)
-        .replace(/<[^>]*>/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
 
+    // 1. srv3 포맷 시도
+    const pRegex = /<p\s+t="(\d+)"\s+d="(\d+)"[^>]*>([\s\S]*?)<\/p>/gi;
+    while ((xmlMatch = pRegex.exec(xmlText)) !== null) {
+      const startMs = parseInt(xmlMatch[1], 10);
+      const durMs = parseInt(xmlMatch[2], 10);
+      const inner = xmlMatch[3];
+      
+      let text = "";
+      const sRegex = /<s[^>]*>([^<]*)<\/s>/gi;
+      let sMatch;
+      while ((sMatch = sRegex.exec(inner)) !== null) {
+        text += sMatch[1];
+      }
+      if (!text) {
+        text = inner.replace(/<[^+>]+>/g, ""); // HTML 태그 제거
+      }
+      text = decodeHtmlEntities(text).trim();
       if (text) {
         segments.push({
-          start,
-          end: start + duration,
+          start: startMs / 1000,
+          end: (startMs + durMs) / 1000,
           text
         });
+      }
+    }
+
+    // 2. 클래식 포맷 시도 (srv3가 매칭되지 않은 경우)
+    if (segments.length === 0) {
+      const classicRegex = /<text\s+start="([\d.]+)"\s+dur="([\d.]+)"[^>]*>([\s\S]*?)<\/text>/gi;
+      while ((xmlMatch = classicRegex.exec(xmlText)) !== null) {
+        const start = parseFloat(xmlMatch[1]);
+        const duration = parseFloat(xmlMatch[2]);
+        const rawText = xmlMatch[3];
+        const text = decodeHtmlEntities(rawText)
+          .replace(/<[^>]*>/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        if (text) {
+          segments.push({
+            start,
+            end: start + duration,
+            text
+          });
+        }
       }
     }
     
@@ -567,6 +596,9 @@ export default function STTPage() {
         throw new Error(err.error || "자막을 가져오는데 실패했습니다.");
       }
       const data = await res.json();
+      if (!data.segments || data.segments.length === 0) {
+        throw new Error("가져온 자막 데이터가 비어 있습니다.");
+      }
       setFiles([]); // 파일목록 클리어
       setYtSource(data);
       
