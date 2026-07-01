@@ -436,76 +436,139 @@ export default function STTPage() {
 
   // 클라이언트 브라우저 단에서 직접 프록시를 경유해 유튜브 자막을 수집하는 폴백 파서
   const fetchYoutubeCaptionsFallback = async (videoId: string): Promise<any> => {
-    triggerToast("⏳ 서버 대역 차단 감지: 브라우저 대체 프록시 채널로 가져오는 중...");
+    triggerToast("⏳ 서버 대역 차단 감지: 브라우저 대체 InnerTube 채널로 가져오는 중...");
     
-    const targetVideoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    let html = "";
-    
-    // 1차 시도: corsproxy.io 프록시 사용 (데스크톱 주소)
+    const INNERTUBE_API_URL = "https://www.youtube.com/youtubei/v1/player?prettyPrint=false";
+    const INNERTUBE_CLIENT_VERSION = "20.10.38";
+    const INNERTUBE_CONTEXT = {
+      client: {
+        clientName: "ANDROID",
+        clientVersion: INNERTUBE_CLIENT_VERSION,
+      },
+    };
+    const INNERTUBE_USER_AGENT = `com.google.android.youtube/${INNERTUBE_CLIENT_VERSION} (Linux; U; Android 14)`;
+
+    let captions: any[] | null = null;
+    let fallbackLang = "ko";
+
+    // --- 1. InnerTube API 1차 시도 (corsproxy.io POST) ---
     try {
-      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetVideoUrl)}`;
-      const res = await fetchWithTimeout(proxyUrl);
+      const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(INNERTUBE_API_URL)}`;
+      const res = await fetchWithTimeout(proxyUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent": INNERTUBE_USER_AGENT
+        },
+        body: JSON.stringify({
+          context: INNERTUBE_CONTEXT,
+          videoId: videoId
+        })
+      });
       if (res.ok) {
-        html = await res.text();
+        const data = await res.json();
+        captions = data?.captions?.playerCaptionsTracklistRenderer?.captionTracks || null;
       }
     } catch (e) {
-      console.warn("corsproxy.io 실패, allorigins로 재시도합니다.", e);
+      console.warn("corsproxy.io InnerTube POST 실패", e);
     }
-    
-    // 2차 시도: allorigins 프록시 사용 (데스크톱 주소)
-    if (!html) {
+
+    // --- 2. InnerTube API 2차 시도 (allorigins POST) ---
+    if (!captions) {
       try {
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetVideoUrl)}`;
-        const res = await fetchWithTimeout(proxyUrl);
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(INNERTUBE_API_URL)}`;
+        const res = await fetchWithTimeout(proxyUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": INNERTUBE_USER_AGENT
+          },
+          body: JSON.stringify({
+            context: INNERTUBE_CONTEXT,
+            videoId: videoId
+          })
+        });
         if (res.ok) {
           const data = await res.json();
-          html = data.contents;
+          const parsed = typeof data.contents === "string" ? JSON.parse(data.contents) : data;
+          captions = parsed?.captions?.playerCaptionsTracklistRenderer?.captionTracks || null;
         }
       } catch (e) {
-        console.error("allorigins 실패", e);
+        console.error("allorigins InnerTube POST 실패", e);
       }
     }
-    
-    if (!html) {
-      throw new Error("대체 프록시 채널로도 유튜브 페이지를 로드하지 못했습니다.");
-    }
-    
-    // 인라인 JSON 파서
-    const parseInlineJson = (htmlStr: string, globalName: string) => {
-      const startToken = `${globalName} = `;
-      let startIndex = htmlStr.indexOf(startToken);
-      if (startIndex === -1) {
-        const varStartToken = `var ${globalName} = `;
-        startIndex = htmlStr.indexOf(varStartToken);
-        if (startIndex === -1) return null;
-        startIndex += varStartToken.length - startToken.length;
+
+    // --- 3. HTML 스크래핑 폴백 시도 (InnerTube가 둘 다 막혔을 때) ---
+    if (!captions) {
+      const targetVideoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+      let html = "";
+      
+      // 1차 HTML 스크래핑: corsproxy.io
+      try {
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetVideoUrl)}`;
+        const res = await fetchWithTimeout(proxyUrl);
+        if (res.ok) {
+          html = await res.text();
+        }
+      } catch (e) {
+        console.warn("HTML corsproxy.io 실패", e);
       }
       
-      const jsonStart = startIndex + startToken.length;
-      let depth = 0;
-      for (let i = jsonStart; i < htmlStr.length; i++) {
-        if (htmlStr[i] === "{") {
-          depth++;
-        } else if (htmlStr[i] === "}") {
-          depth--;
-          if (depth === 0) {
-            try {
-              return JSON.parse(htmlStr.slice(jsonStart, i + 1));
-            } catch (e) {
-              return null;
+      // 2차 HTML 스크래핑: allorigins
+      if (!html) {
+        try {
+          const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetVideoUrl)}`;
+          const res = await fetchWithTimeout(proxyUrl);
+          if (res.ok) {
+            const data = await res.json();
+            html = data.contents;
+          }
+        } catch (e) {
+          console.error("HTML allorigins 실패", e);
+        }
+      }
+      
+      if (!html) {
+        throw new Error("대체 프록시 채널로도 유튜브 페이지를 로드하지 못했습니다.");
+      }
+      
+      // 인라인 JSON 파서
+      const parseInlineJson = (htmlStr: string, globalName: string) => {
+        const startToken = `${globalName} = `;
+        let startIndex = htmlStr.indexOf(startToken);
+        if (startIndex === -1) {
+          const varStartToken = `var ${globalName} = `;
+          startIndex = htmlStr.indexOf(varStartToken);
+          if (startIndex === -1) return null;
+          startIndex += varStartToken.length - startToken.length;
+        }
+        
+        const jsonStart = startIndex + startToken.length;
+        let depth = 0;
+        for (let i = jsonStart; i < htmlStr.length; i++) {
+          if (htmlStr[i] === "{") {
+            depth++;
+          } else if (htmlStr[i] === "}") {
+            depth--;
+            if (depth === 0) {
+              try {
+                return JSON.parse(htmlStr.slice(jsonStart, i + 1));
+              } catch (e) {
+                return null;
+              }
             }
           }
         }
-      }
-      return null;
-    };
+        return null;
+      };
 
-    const playerResponse = parseInlineJson(html, "ytInitialPlayerResponse");
-    if (!playerResponse) {
-      throw new Error("유튜브 플레이어 정보 파싱 실패 (연령제한 또는 자막 지원 안됨)");
+      const playerResponse = parseInlineJson(html, "ytInitialPlayerResponse");
+      if (!playerResponse) {
+        throw new Error("유튜브 플레이어 정보 파싱 실패 (연령제한 또는 자막 지원 안됨)");
+      }
+      
+      captions = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks || null;
     }
-    
-    const captions = playerResponse.captions?.playerCaptionsTracklistRenderer?.captionTracks;
     
     if (!captions || captions.length === 0) {
       throw new Error("이 영상에는 활성화된 자막 트랙이 없습니다.");
@@ -515,6 +578,7 @@ export default function STTPage() {
                         captions.find((t: any) => t.languageCode === "en") ||
                         captions[0];
                         
+    fallbackLang = selectedTrack.languageCode;
     let xmlUrl = selectedTrack.baseUrl;
     xmlUrl = decodeHtmlEntities(xmlUrl);
     if (xmlUrl.startsWith("//")) {

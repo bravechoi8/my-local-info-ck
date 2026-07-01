@@ -16,37 +16,57 @@ function decodeHtmlEntities(s) {
     .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(parseInt(dec, 10)));
 }
 
+const INNERTUBE_API_URL = "https://www.youtube.com/youtubei/v1/player?prettyPrint=false";
+const INNERTUBE_CLIENT_VERSION = "20.10.38";
+const INNERTUBE_CONTEXT = {
+  client: {
+    clientName: "ANDROID",
+    clientVersion: INNERTUBE_CLIENT_VERSION,
+  },
+};
+const INNERTUBE_USER_AGENT = `com.google.android.youtube/${INNERTUBE_CLIENT_VERSION} (Linux; U; Android 14)`;
+
 // 유튜브 페이지에서 자막 XML URL 목록 추출
 async function getCaptionsTracks(videoId) {
-  // 모바일 유튜브 주소를 활용해 429 차단을 줄입니다.
-  const pageUrl = `https://m.youtube.com/watch?v=${videoId}`;
+  // 1. InnerTube API 최우선 시도 (유튜브 공식 앱 프로토콜 - 차단 우회)
+  try {
+    const resp = await fetch(INNERTUBE_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": INNERTUBE_USER_AGENT,
+      },
+      body: JSON.stringify({
+        context: INNERTUBE_CONTEXT,
+        videoId: videoId,
+      }),
+    });
+    
+    if (resp.ok) {
+      const data = await resp.json();
+      const captionTracks = data?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+      if (Array.isArray(captionTracks) && captionTracks.length > 0) {
+        return captionTracks;
+      }
+    }
+  } catch (e) {
+    console.warn("InnerTube API 실패, HTML 스크래핑으로 전환합니다.", e);
+  }
+
+  // 2. HTML 스크래핑 폴백 (InnerTube가 차단되거나 실패한 경우)
+  const pageUrl = `https://www.youtube.com/watch?v=${videoId}`;
   const res = await fetch(pageUrl, {
     headers: {
-      "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Mobile Safari/537.36",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       "Accept-Language": "ko,en-US;q=0.9,en;q=0.8",
-      "Referer": "https://m.youtube.com/",
-      "Sec-Fetch-Mode": "navigate"
+      "Referer": "https://www.google.com/"
     }
   });
 
   if (!res.ok) {
-    // 1차 모바일 실패 시 데스크탑 URL로 한 번 더 폴백 시도
-    const fallbackUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    const fallbackRes = await fetch(fallbackUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "ko,en-US;q=0.9,en;q=0.8",
-        "Referer": "https://www.google.com/"
-      }
-    });
-
-    if (!fallbackRes.ok) {
-      throw new Error(`유튜브 페이지 로드 실패 (HTTP ${fallbackRes.status})`);
-    }
-    
-    return parseHtmlCaptions(await fallbackRes.text());
+    throw new Error(`유튜브 페이지 로드 실패 (HTTP ${res.status})`);
   }
-
+  
   return parseHtmlCaptions(await res.text());
 }
 
