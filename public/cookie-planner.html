@@ -1526,7 +1526,7 @@ async function geocodeCity(q){
     '제주': 'Jeju City', '제주도': 'Jeju City', '수원': 'Suwon', '고양': 'Goyang', '용인': 'Yongin-si', '용인시': 'Yongin-si',
     '성남': 'Seongnam', '부천': 'Bucheon', '안산': 'Ansan', '화성': 'Hwaseong',
     '남양주': 'Namyangju', '안양': 'Anyang', '평택': 'Pyeongtaek', '의정부': 'Uijeongbu',
-    '파주': 'Paju', '시흥': 'Siheung', '김포': 'Gimpo-si', '광명': 'Gwangmyeong', '하남': 'Hanam-si',
+    '파주': 'Paju', '시흥': 'Siheung', '김포': 'Gimpo-si', '광명': 'Gwangmyeong', '하남': 'Hanam-si', '하남시': 'Hanam-si',
     '종로': 'Seoul', '중구': 'Seoul', '강남': 'Seoul', '서초': 'Seoul',
     '춘천': 'Chuncheon', '원주': 'Wonju', '강릉': 'Gangneung',
     '청주': 'Cheongju', '충주': 'Chungju', '천안': 'Cheonan', '아산': 'Asan',
@@ -1568,10 +1568,21 @@ async function geocodeCity(q){
       query = await translateToEnglish(query);
     }
   }
-  const url='https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(query)+'&count=1&language=ko&format=json';
+  const url='https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(query)+'&count=10&language=ko&format=json';
   const r=await fetch(url);if(!r.ok)throw new Error('geo '+r.status);const d=await r.json();
   if(!d.results||!d.results.length)return null;
-  const g=d.results[0];
+  
+  // 읍, 면, 리 단위를 배제하기 위한 정렬
+  let results = d.results;
+  results.sort((a, b) => {
+    const isALocal = /읍$|면$|리$|myeon$|ri$|eup$/i.test(a.name || '') || /읍$|면$|리$|myeon$|ri$|eup$/i.test(a.admin3 || '');
+    const isBLocal = /읍$|면$|리$|myeon$|ri$|eup$/i.test(b.name || '') || /읍$|면$|리$|myeon$|ri$|eup$/i.test(b.admin3 || '');
+    if (isALocal && !isBLocal) return 1;
+    if (!isALocal && isBLocal) return -1;
+    return 0;
+  });
+  
+  const g=results[0];
   return {lat:g.latitude,lon:g.longitude,name:g.name,country:g.country||'',admin:g.admin1||''};
 }
 async function fetchWeather(lat,lon){
