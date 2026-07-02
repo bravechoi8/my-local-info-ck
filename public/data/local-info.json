@@ -955,5 +955,27 @@
     "target": "통일부 장관의 보호결정을 받은 북한이탈주민",
     "summary": "북한이탈주민에게 정착금 지원(세대별 차등지급)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/125000000014"
+  },
+  {
+    "id": 85,
+    "name": "학교 밖 청소년 도움센터",
+    "category": "혜택",
+    "startDate": "2023-10-26",
+    "endDate": "상시",
+    "location": "학교 밖 청소년 도움센터",
+    "target": "학력인정 사업 - 만 24세 이하 학교 밖 청소년; 교육참여활동비 - 학교 밖 청소년 도움센터 등록자 중 프로그램에 지급요건을 충족한 만9세~18세 학교 밖 청소년",
+    "summary": "학교 밖 청소년 대상 다양한 학습․상담․진로 교육지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/701000000027"
+  },
+  {
+    "id": 86,
+    "name": "초·중·고 입학준비금 지원",
+    "category": "혜택",
+    "startDate": "2026-04-01",
+    "endDate": "상시",
+    "location": "서울특별시교육청",
+    "target": "서울특별시교육청 관내 초·중·고등학교(특수학교 포함) 1학년 입학생: 2026년 1,355교, 186,040명 대상\n- 현물(교복), 현금성(포인트)",
+    "summary": "관내 초·중·고 입학 1학년 대상 입학준비금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/701000000202"
   }
 ]
