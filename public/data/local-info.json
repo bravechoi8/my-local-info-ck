@@ -1043,5 +1043,27 @@
     "target": "고등학교 또는 전공과에 재학중인 장애학생",
     "summary": "장애학생에게 취업지원 서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258300003"
+  },
+  {
+    "id": 93,
+    "name": "문화체육시설 이용요금 감면(경로우대자)",
+    "category": "혜택",
+    "startDate": "2024-08-02",
+    "endDate": "상시",
+    "location": "광진구시설관리공단",
+    "target": "만 65세이상",
+    "summary": "경로우대자에게 수강료 30%감면(특화강좌 제외)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00022600002"
+  },
+  {
+    "id": 94,
+    "name": "문화체육시설 이용요금 감면(국가유공자)",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "광진구시설관리공단",
+    "target": "국가유공자(본인, 배우자), 국가유공자(상이등급 1~3급, 애국지사)의 활동 보조자",
+    "summary": "국가유공자에게 수강료 50%감면(특화강좌 제외)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00022600003"
   }
 ]
