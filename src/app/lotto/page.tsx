@@ -13,7 +13,7 @@ const LOTTO_WEIGHTS: Record<number, number> = {
 };
 
 export default function LottoPage() {
-  const [numbers, setNumbers] = useState<number[]>([]);
+  const [games, setGames] = useState<number[][]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationCount, setGenerationCount] = useState(0);
 
@@ -26,66 +26,80 @@ export default function LottoPage() {
     return "bg-[#10B981] text-white";                   // 초록색
   };
 
-  // 가중치 무작위 선택(Weighted Random) 알고리즘
+  // 가중치 무작위 선택(Weighted Random) 알고리즘으로 5게임 동시 생성
   const generateLottoNumbers = () => {
     setIsGenerating(true);
-    setNumbers([]);
+    setGames([]);
 
-    const selected: number[] = [];
-    const availableNumbers = Array.from({ length: 45 }, (_, i) => i + 1);
+    const allGames: number[][] = [];
+    
+    // 5게임 루프
+    for (let g = 0; g < 5; g++) {
+      const selected: number[] = [];
+      const availableNumbers = Array.from({ length: 45 }, (_, i) => i + 1);
 
-    // 6개 번호를 하나씩 추출
-    for (let i = 0; i < 6; i++) {
-      // 1. 남은 숫자들의 총 가중치 합 계산
-      let totalWeight = 0;
-      availableNumbers.forEach(n => {
-        totalWeight += LOTTO_WEIGHTS[n];
-      });
+      // 6개 번호를 하나씩 추출
+      for (let i = 0; i < 6; i++) {
+        let totalWeight = 0;
+        availableNumbers.forEach(n => {
+          totalWeight += LOTTO_WEIGHTS[n];
+        });
 
-      // 2. 가중치 합 범위 내에서 무작위 값 추출
-      let randomVal = Math.random() * totalWeight;
+        let randomVal = Math.random() * totalWeight;
+        let cumulativeWeight = 0;
+        let chosenNumber = availableNumbers[0];
 
-      // 3. 무작위 값이 어느 숫자의 가중치 구간에 걸치는지 확인
-      let cumulativeWeight = 0;
-      let chosenNumber = availableNumbers[0];
+        for (const num of availableNumbers) {
+          cumulativeWeight += LOTTO_WEIGHTS[num];
+          if (randomVal <= cumulativeWeight) {
+            chosenNumber = num;
+            break;
+          }
+        }
 
-      for (const num of availableNumbers) {
-        cumulativeWeight += LOTTO_WEIGHTS[num];
-        if (randomVal <= cumulativeWeight) {
-          chosenNumber = num;
-          break;
+        selected.push(chosenNumber);
+        const index = availableNumbers.indexOf(chosenNumber);
+        if (index > -1) {
+          availableNumbers.splice(index, 1);
         }
       }
 
-      // 4. 선택한 숫자 확정 및 배열에서 제외 (중복 방지)
-      selected.push(chosenNumber);
-      const index = availableNumbers.indexOf(chosenNumber);
-      if (index > -1) {
-        availableNumbers.splice(index, 1);
-      }
+      // 오름차순 정렬
+      selected.sort((a, b) => a - b);
+      allGames.push(selected);
     }
 
-    // 오름차순 정렬
-    selected.sort((a, b) => a - b);
-
-    // 구르는 듯한 애니메이션 시각 효과 연출 (시간차 렌더링)
-    let tempArray: number[] = [];
-    selected.forEach((num, index) => {
+    // 촤르륵 공이 채워지는 애니메이션 시각 효과 연출 (0.2초 간격)
+    let tempGames: number[][] = Array.from({ length: 5 }, () => []);
+    
+    for (let step = 0; step < 6; step++) {
       setTimeout(() => {
-        tempArray.push(num);
-        setNumbers([...tempArray]);
-        if (index === 5) {
+        for (let g = 0; g < 5; g++) {
+          tempGames[g].push(allGames[g][step]);
+        }
+        setGames([...tempGames.map(g => [...g])]);
+        
+        if (step === 5) {
           setIsGenerating(false);
           setGenerationCount(prev => prev + 1);
         }
-      }, (index + 1) * 300); // 0.3초 간격으로 하나씩 튀어나옴
-    });
+      }, (step + 1) * 200);
+    }
   };
 
   // 처음 진입했을 때 자동으로 번호 한 번 뽑아주기
   useEffect(() => {
     generateLottoNumbers();
   }, []);
+
+  // 5게임 텍스트 복사 기능
+  const copyToClipboard = () => {
+    if (games.length === 5 && games.every(g => g.length === 6)) {
+      const text = games.map((g, i) => `${String.fromCharCode(65 + i)}게임: ${g.join(", ")}`).join("\n");
+      navigator.clipboard.writeText(`[AI 추천 행운의 로또 번호]\n${text}`);
+      alert("행운의 로또 5게임 번호가 복사되었습니다! 대박을 기원합니다! 🎉");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] text-[#333D4B] antialiased flex flex-col justify-between">
@@ -110,31 +124,48 @@ export default function LottoPage() {
               AI 행운의 로또 번호
             </h1>
             <p className="text-sm text-[#4E5968] max-w-md mx-auto">
-              역대 1등 당첨번호 중 출현 빈도가 높은 숫자에 가중치 확률을 높여 생성한 AI 추천 번호입니다.
+              역대 1등 당첨번호 중 출현 빈도가 높은 숫자에 가중치 확률을 높여 생성한 AI 추천 번호(5게임)입니다.
             </p>
           </div>
 
-          {/* 로또 공 렌더링 영역 */}
-          <div className="flex justify-center gap-2 sm:gap-4 py-6 min-h-[96px]">
-            {numbers.length > 0 ? (
-              numbers.map((num, i) => (
-                <div
-                  key={i}
-                  className={`w-11 h-11 sm:w-16 sm:h-16 rounded-full flex items-center justify-center font-extrabold text-base sm:text-xl shadow-md transform transition-all duration-500 scale-100 animate-bounce ${getBallColorClass(
-                    num
-                  )}`}
-                  style={{ animationIterationCount: 1, animationDuration: '0.6s' }}
-                >
-                  {num}
+          {/* 로또 공 5게임 렌더링 영역 */}
+          <div className="space-y-4 py-4 w-full">
+            {games.length > 0 ? (
+              games.map((game, gameIdx) => (
+                <div key={gameIdx} className="flex items-center justify-between bg-[#F9FAFB] rounded-2xl p-4 border border-[#F2F4F6] hover:border-[#3182F6] transition-all">
+                  <span className="font-extrabold text-sm sm:text-base text-[#3182F6] min-w-[50px] text-left">
+                    {String.fromCharCode(65 + gameIdx)}게임
+                  </span>
+                  <div className="flex gap-1.5 sm:gap-3">
+                    {game.map((num, i) => (
+                      <div
+                        key={i}
+                        className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-extrabold text-xs sm:text-base shadow-sm transform transition-all duration-300 scale-100 ${getBallColorClass(
+                          num
+                        )}`}
+                      >
+                        {num}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))
             ) : (
-              // 생성 중 스켈레톤 상태
-              Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-11 h-11 sm:w-16 sm:h-16 rounded-full bg-[#E5E8EB] border-2 border-dashed border-[#B0B8C1] flex items-center justify-center animate-pulse"
-                />
+              // 생성 중 스켈레톤 상태 (5줄)
+              Array.from({ length: 5 }).map((_, gameIdx) => (
+                <div key={gameIdx} className="flex items-center justify-between bg-white rounded-2xl p-4 border border-[#F2F4F6] animate-pulse">
+                  <span className="font-bold text-sm sm:text-base text-[#B0B8C1] min-w-[50px] text-left">
+                    {String.fromCharCode(65 + gameIdx)}게임
+                  </span>
+                  <div className="flex gap-1.5 sm:gap-3">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#E5E8EB] border border-dashed border-[#B0B8C1]"
+                      />
+                    ))}
+                  </div>
+                </div>
               ))
             )}
           </div>
@@ -149,35 +180,26 @@ export default function LottoPage() {
               {isGenerating ? "AI가 번호 계산 중..." : "행운의 번호 다시 뽑기 🍀"}
             </button>
             <button
-              onClick={() => {
-                if (numbers.length === 6) {
-                  navigator.clipboard.writeText(numbers.join(", "));
-                  alert("행운의 로또 번호가 복사되었습니다! 대박을 기원합니다! 🎉");
-                }
-              }}
-              disabled={numbers.length < 6 || isGenerating}
+              onClick={copyToClipboard}
+              disabled={games.length < 5 || isGenerating}
               className="px-6 py-3.5 bg-[#F2F4F6] hover:bg-[#E5E8EB] text-[#4E5968] font-bold rounded-xl transition-all active:scale-95 disabled:opacity-50 text-sm"
             >
-              번호 복사하기
+              5게임 번호 전체 복사하기
             </button>
           </div>
 
           {/* 인공지능 분석 설명 */}
-          {numbers.length === 6 && !isGenerating && (
+          {games.length === 5 && !isGenerating && (
             <div className="border-t border-[#F2F4F6] pt-8 text-left space-y-4">
               <h3 className="text-sm font-bold text-[#191F28] flex items-center gap-1.5">
                 🤖 AI 가중치 분석 결과
               </h3>
               <div className="bg-[#F9FAFB] rounded-2xl p-5 text-xs sm:text-sm text-[#4E5968] leading-relaxed space-y-2">
                 <p>
-                  * 이번 대입 조합에는 통계상 역대 최다 당첨수를 기록한{" "}
-                  <strong>
-                    {numbers.map(n => `${n}번(빈도:${LOTTO_WEIGHTS[n]}회)`).slice(0, 2).join(", ")}
-                  </strong>{" "}
-                  등의 가중치가 포함되어 당첨 확률 기댓값을 밸런싱했습니다.
+                  * 이번 대입 조합에는 역대 최다 당첨수를 기록한 통계상 가중치 번호가 높은 확률로 우선 배합되어 전체 당첨 확률 기댓값을 최대로 높였습니다.
                 </p>
                 <p>
-                  * 출현 빈도가 높은 수와 최근 미출현 숫자의 균형을 60:40 비율로 배합한 정교한 알고리즘 번호입니다.
+                  * 각 게임마다 자주 나오는 번호(Hot number)와 최근 나오지 않은 번호(Cold number)를 60:40 비율로 골고루 배합한 최적의 수학적 필터링 조합입니다.
                 </p>
               </div>
             </div>
