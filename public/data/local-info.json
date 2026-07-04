@@ -1021,5 +1021,27 @@
     "target": "승강기 수입, 제조, 유지관리 업무 기술자",
     "summary": "승강기 수입, 제조, 유지관리 업무 기술자에게 필수 교육 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55366400004"
+  },
+  {
+    "id": 91,
+    "name": "장애인 취업알선 지원금 지급",
+    "category": "혜택",
+    "startDate": "2023-10-27",
+    "endDate": "상시",
+    "location": "한국장애인고용공단",
+    "target": "「직업안정법」제18조에 따라 무료직업소개사업소로 신고를 완료한 기관",
+    "summary": "무료직업소개소 장애인 취업알선에 대한 지원금 지급(10~30만원)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258300002"
+  },
+  {
+    "id": 92,
+    "name": "장애학생 취업지원",
+    "category": "혜택",
+    "startDate": "2024-07-26",
+    "endDate": "상시",
+    "location": "한국장애인고용공단",
+    "target": "고등학교 또는 전공과에 재학중인 장애학생",
+    "summary": "장애학생에게 취업지원 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258300003"
   }
 ]
