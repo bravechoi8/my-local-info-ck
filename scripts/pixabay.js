@@ -45,3 +45,42 @@ export async function getPixabayImage(query, index = 0) {
     return null;
   }
 }
+
+/**
+ * 픽사베이(Pixabay) API를 사용하여 검색어에 맞는 이미지 여러 장의 URL 목록을 가져옵니다.
+ * 
+ * @param {string} query 검색어 (예: 'saving money', 'elderly care')
+ * @param {number} limit 가져올 이미지 개수 (기본값 5)
+ * @returns {Promise<string[]>} 이미지 URL 배열 (실패 시 빈 배열)
+ */
+export async function getPixabayImages(query, limit = 5) {
+  const apiKey = process.env.PIXABAY_API_KEY;
+
+  if (!apiKey || apiKey.includes('여기에_발급받은_픽사베이_API_키를_입력하세요')) {
+    console.warn("[Pixabay API] API 키가 설정되지 않았습니다.");
+    return [];
+  }
+
+  const url = `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&per_page=${limit}`;
+
+  try {
+    const response = await fetchWithRetry(url);
+
+    if (!response.ok) {
+      throw new Error(`Pixabay API 호출 실패: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    
+    if (data.hits && data.hits.length > 0) {
+      return data.hits.map(hit => hit.largeImageURL || hit.webformatURL);
+    }
+    
+    console.warn(`[Pixabay API] '${query}' 검색 결과에 해당하는 이미지가 없습니다.`);
+    return [];
+  } catch (error) {
+    console.error(`[Pixabay API] 이미지 검색 중 오류 발생:`, error);
+    return [];
+  }
+}
+

@@ -3,8 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import { fetchWithRetry } from './utils.js';
-import { getPexelsImage } from './pexels.js';
-import { getPixabayImage } from './pixabay.js';
+import { getPexelsImage, getPexelsImages } from './pexels.js';
+import { getPixabayImage, getPixabayImages } from './pixabay.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -73,9 +73,44 @@ async function downloadImage(url, filename) {
   return `/images/${filename}`;
 }
 
+/**
+ * 이미지 URL을 받아 다운로드 후 중복 검사를 수행합니다.
+ * 중복이 아니면 파일로 저장하고 true를 반환합니다. 중복이거나 에러 발생 시 false를 반환합니다.
+ */
+async function downloadAndCheckImage(url, filename) {
+  try {
+    const response = await fetchWithRetry(url);
+    if (!response.ok) {
+      console.warn(`[이미지 다운로드 실패] URL: ${url}, 상태: ${response.status}`);
+      return false;
+    }
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // 중복 이미지 체크
+    if (isDuplicateImage(buffer)) {
+      console.warn(`[이미지 다운로드 건너뜀] 중복된 이미지입니다: ${url}`);
+      return false;
+    }
+
+    const publicImagesDir = path.join(__dirname, '..', 'public', 'images');
+    if (!fs.existsSync(publicImagesDir)) {
+      fs.mkdirSync(publicImagesDir, { recursive: true });
+    }
+    const outputPath = path.join(publicImagesDir, filename);
+    fs.writeFileSync(outputPath, buffer);
+    console.log(`[이미지 저장 완료] 성공적으로 저장되었습니다: ${outputPath}`);
+    return true;
+  } catch (err) {
+    console.error(`[이미지 다운로드 및 중복 검사 오류]`, err.message);
+    return false;
+  }
+}
+
 
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict';
+
 
 /**
  * 블로그 포스트의 제목과 요약을 바탕으로 요약 인포그래픽 카드 이미지를 생성하고 로컬에 저장합니다.
@@ -87,15 +122,8 @@ const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models
 export async function generateSummaryImage(title, summary, filenameKey, forceAI = false) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   
-  // 스포츠 관련 글인 경우 Pixabay/Pexels 검색을 우회하고 AI 이미지 생성을 강제합니다.
-  const lowercaseTitle = (title || '').toLowerCase();
-  const lowercaseSummary = (summary || '').toLowerCase();
-  const lowercaseKey = (filenameKey || '').toLowerCase();
-  const isSports = 
-    lowercaseTitle.includes('soccer') || lowercaseTitle.includes('football') || lowercaseTitle.includes('sports') || lowercaseTitle.includes('축구') || lowercaseTitle.includes('야구') || lowercaseTitle.includes('농구') || lowercaseTitle.includes('배구') ||
-    lowercaseSummary.includes('soccer') || lowercaseSummary.includes('football') || lowercaseSummary.includes('sports') || lowercaseSummary.includes('축구') ||
-    lowercaseKey.includes('soccer') || lowercaseKey.includes('football') || lowercaseKey.includes('sports') || lowercaseKey.includes('축구') || lowercaseKey.includes('worldcup') || lowercaseKey.includes('world-cup');
-  const finalForceAI = forceAI || isSports;
+  // 스포츠 관련 글이라도 강제로 AI 생성을 고집하지 않고 우선 무료 이미지 검색을 하도록 변경합니다.
+  const finalForceAI = forceAI;
   try {
     if (!GEMINI_API_KEY) {
       console.warn('[이미지 생성] GEMINI_API_KEY 환경변수가 없어 이미지 생성을 생략합니다.');
@@ -191,15 +219,22 @@ Summary: ${summary}`;
 
     let isPexelsUsed = false;
 
-    // 2단계: Pexels API에서 이미지 검색 먼저 시도
+    // 2단계: Pexels API에서 이미지 검색 먼저 시도 (최대 5개 후보 중 중복되지 않는 첫 이미지 선택)
     if (!finalForceAI) {
       try {
         console.log(`[Pexels 검색 시도] 요약 배경 검색 중...`);
-        const pexelsUrl = await getPexelsImage(pexelsSearchQuery);
-        if (pexelsUrl) {
-          console.log(`[Pexels 이미지 발견] 요약 배경으로 Pexels 이미지를 다운로드합니다: ${pexelsUrl}`);
-          await downloadImage(pexelsUrl, bgFilename);
-          isPexelsUsed = true;
+        const pexelsUrls = await getPexelsImages(pexelsSearchQuery, 5);
+        if (pexelsUrls && pexelsUrls.length > 0) {
+          console.log(`[Pexels 이미지 발견] ${pexelsUrls.length}개의 후보군을 순회하며 중복 검사 및 다운로드를 시도합니다.`);
+          for (let i = 0; i < pexelsUrls.length; i++) {
+            const success = await downloadAndCheckImage(pexelsUrls[i], bgFilename);
+            if (success) {
+              isPexelsUsed = true;
+              break;
+            }
+          }
+        } else {
+          console.warn(`[Pexels 검색 결과] 해당하는 이미지 목록이 비어있습니다.`);
         }
       } catch (pexelsErr) {
         console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
@@ -287,28 +322,34 @@ Summary: ${summary}`;
 export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3', imageIndex = 0, forceAI = false) {
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
   
-  // 스포츠 관련 글인 경우 Pixabay/Pexels 검색을 우회하고 AI 이미지 생성을 강제합니다.
-  const lowercasePrompt = (prompt || '').toLowerCase();
-  const lowercaseFilename = (filename || '').toLowerCase();
-  const isSports = 
-    lowercasePrompt.includes('soccer') || lowercasePrompt.includes('football') || lowercasePrompt.includes('sports') || lowercasePrompt.includes('soccer player') || lowercasePrompt.includes('축구') ||
-    lowercaseFilename.includes('soccer') || lowercaseFilename.includes('football') || lowercaseFilename.includes('sports') || lowercaseFilename.includes('worldcup') || lowercaseFilename.includes('world-cup');
-  const finalForceAI = forceAI || isSports;
+  // 스포츠 관련 글이라도 강제로 AI 생성을 고집하지 않고 우선 무료 이미지 검색을 하도록 변경합니다.
+  const finalForceAI = forceAI;
 
   try {
     // 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
     const pixabaySearchQuery = prompt.split(',')[0].trim();
     let isPixabayUsed = false;
 
-    // 1단계: Pixabay API에서 이미지 검색 시도
+    // 1단계: Pixabay API에서 이미지 검색 시도 (최대 5개 후보 중 중복되지 않는 첫 이미지 선택)
     if (!finalForceAI) {
       try {
-        console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}" (인덱스: ${imageIndex})`);
-        const pixabayUrl = await getPixabayImage(pixabaySearchQuery, imageIndex);
-        if (pixabayUrl) {
-          console.log(`[Pixabay 이미지 발견] 본문 이미지로 Pixabay 이미지를 다운로드합니다: ${pixabayUrl}`);
-          await downloadImage(pixabayUrl, filename);
-          isPixabayUsed = true;
+        console.log(`[Pixabay 검색 시도] 본문 검색 키워드: "${pixabaySearchQuery}" (시작 인덱스: ${imageIndex})`);
+        const pixabayUrls = await getPixabayImages(pixabaySearchQuery, 5);
+        if (pixabayUrls && pixabayUrls.length > 0) {
+          console.log(`[Pixabay 이미지 발견] ${pixabayUrls.length}개의 후보군을 순회하며 중복 검사 및 다운로드를 시도합니다.`);
+          // imageIndex부터 순회하고, 부족하면 처음부터 순회하도록 인덱스 조정
+          const startIndex = imageIndex % pixabayUrls.length;
+          const orderedUrls = [...pixabayUrls.slice(startIndex), ...pixabayUrls.slice(0, startIndex)];
+
+          for (let i = 0; i < orderedUrls.length; i++) {
+            const success = await downloadAndCheckImage(orderedUrls[i], filename);
+            if (success) {
+              isPixabayUsed = true;
+              break;
+            }
+          }
+        } else {
+          console.warn(`[Pixabay 검색 결과] 해당하는 이미지 목록이 비어있습니다.`);
         }
       } catch (pixabayErr) {
         console.warn(`[Pixabay 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pixabayErr.message);
