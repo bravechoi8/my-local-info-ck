@@ -324,7 +324,7 @@ export default function JanggiPage() {
 
             if (!bridgeFound) {
               if (target !== null) {
-                if (target.type === "포") break;
+                if (target.type === "포") break; 
                 bridgeFound = true;
               }
             } else {
@@ -635,6 +635,41 @@ export default function JanggiPage() {
                 if (canCheck) {
                   weight += aiDifficulty === "hard" ? 70 : 30;
                 }
+
+                // --- [HARD] 2단계 시뮬레이션 (Minimax 2-ply) 엔진 작동 ---
+                if (aiDifficulty === "hard") {
+                  let maxEnemyResponse = 0;
+
+                  // tempBoard 상에서 상대(초나라)가 취할 수 있는 최선의 공격 수 탐색
+                  for (let er = 0; er < 10; er++) {
+                    for (let ec = 0; ec < 9; ec++) {
+                      const ep = tempBoard[er][ec];
+                      if (ep && ep.camp === "cho") {
+                        const epMoves = getMoves(er, ec, tempBoard);
+                        for (const [etr, etc] of epMoves) {
+                          // 초나라가 자살 수인지는 가볍게 검사
+                          const enemyTempBoard = tempBoard.map(row => [...row]);
+                          enemyTempBoard[etr][etc] = ep;
+                          enemyTempBoard[er][ec] = null;
+
+                          if (!isUnderCheck("cho", enemyTempBoard)) {
+                            let responseScore = 0;
+                            const targetOfEnemy = tempBoard[etr][etc];
+                            if (targetOfEnemy) {
+                              responseScore += values[targetOfEnemy.type] || 15;
+                            }
+                            if (responseScore > maxEnemyResponse) {
+                              maxEnemyResponse = responseScore;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  
+                  // 내 점수에서 상대의 예측 반격 점수를 차감 (horizon 예측 강화)
+                  weight -= maxEnemyResponse * 0.95;
+                }
               }
             }
 
@@ -697,11 +732,13 @@ export default function JanggiPage() {
     setIsChoCheck(choCheck);
     setIsHanCheck(hanCheck);
 
+    // CRITICAL FIX: 컴퓨터가 장군을 치든 안치든 턴은 무조건 초(플레이어)에게 반환해야 먹통이 안 됨!
+    setCurrentTurn("cho");
+
     if (choCheck) {
       playSound("check");
       setStatusMessage("🚨 장군! 초나라(Blue - 플레이어) 궁이 위협받고 있습니다! 멍군하세요.");
     } else {
-      setCurrentTurn("cho");
       setStatusMessage("초(Blue) 차례입니다. 기물을 선택하세요.");
     }
   };
@@ -1096,7 +1133,7 @@ export default function JanggiPage() {
                             zIndex: isSelected ? 40 : 20,
                           }}
                         >
-                          {/* 이동 힌트 점 - 터치용 보이지 않는 외부 absolute 영역(w-12 h-12) & 실제 시각적 힌트 분리 */}
+                          {/* 이동 힌트 점 - 보이지 않는 외부 absolute 영역(w-12 h-12) & 실제 시각적 힌트 분리 */}
                           {isMoveCandidate && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
@@ -1107,7 +1144,7 @@ export default function JanggiPage() {
                                   : "translate(-50%, -50%)",
                               }}
                             >
-                              {/* 실제 눈에 보이는 다이어그램 형태의 힌트 구체 */}
+                              {/* 실제 눈에 보이는 힌트 원 */}
                               <div
                                 className={`w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-dashed flex items-center justify-center pointer-events-none transition transform hover:scale-110 active:scale-95 ${
                                   board[rIdx][cIdx]
