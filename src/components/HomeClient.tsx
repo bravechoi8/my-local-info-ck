@@ -369,6 +369,29 @@ export default function HomeClient({ posts }: HomeClientProps) {
                 </div>
               </section>
 
+              {/* 클래식 한국 장기 미니게임 배너 */}
+              <section className="group bg-gradient-to-br from-[#FFFBF0] to-[#FCEECC] dark:from-[#2C2218] dark:to-[#1F1710] rounded-2xl p-4 sm:p-4.5 border border-[#eedcbe] dark:border-slate-800/80 border-b-[6px] border-b-[#b87d4b]/50 dark:border-b-[#b87d4b]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(184,125,75,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#b87d4b] border border-[#eedcbe] dark:border-[#b87d4b]/30 transition-colors">
+                    전통 보드게임 ♟️
+                  </span>
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#191F28] dark:text-[#F3F4F6] leading-tight">
+                    클래식 한국 장기 게임
+                  </h2>
+                  <p className="text-[10.5px] text-[#4E5968] dark:text-[#8B95A1] leading-relaxed">
+                    2인용 로컬 대국 및 간단한 컴퓨터 AI 모드 제공! 언제든 전통 한판을 즐겨보세요.
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/janggi"
+                    className="px-3 py-1.5 bg-[#b87d4b] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#976034] transition-all shadow-sm whitespace-nowrap"
+                  >
+                    대국 시작 &rarr;
+                  </Link>
+                </div>
+              </section>
+
               {/* AI STT 받아쓰기 스튜디오 배너 */}
               <section className="group bg-gradient-to-br from-[#FFF5F5] to-[#FFF0F5] dark:from-[#321C20] dark:to-[#2B1B26] rounded-2xl p-4 sm:p-4.5 border border-[#ffdbe3] dark:border-slate-800/80 border-b-[6px] border-b-[#E53E3E]/50 dark:border-b-[#E53E3E]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(229,62,62,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
                 <div className="space-y-1.5">
