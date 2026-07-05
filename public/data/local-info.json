@@ -1065,5 +1065,27 @@
     "target": "국가유공자(본인, 배우자), 국가유공자(상이등급 1~3급, 애국지사)의 활동 보조자",
     "summary": "국가유공자에게 수강료 50%감면(특화강좌 제외)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00022600003"
+  },
+  {
+    "id": 95,
+    "name": "환경오염피해 인과관계 판단 심의 서비스 제공",
+    "category": "혜택",
+    "startDate": "2023-10-27",
+    "endDate": "상시",
+    "location": "한국환경산업기술원 환경오염피해구제실",
+    "target": "환경오염피해의 전부 또는 일부를 배상받지 못한 피해자 또는 그 유족",
+    "summary": "환경오염피해자 및 유족에게 의료비, 요양생활수당, 장의비 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/148000000009"
+  },
+  {
+    "id": 96,
+    "name": "연탄쿠폰",
+    "category": "혜택",
+    "startDate": "2023-07-11",
+    "endDate": "2023-08-25",
+    "location": "산업통상부",
+    "target": "연탄보일러를 가정난방용으로 사용하는 가구",
+    "summary": "연탄보일러 사용 가구에 연탄쿠폰을 지원하는 난방비 사업 (가구당 54.6만원 지급)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000111"
   }
 ]
