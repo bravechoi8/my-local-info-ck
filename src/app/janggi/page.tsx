@@ -110,6 +110,7 @@ export default function JanggiPage() {
   const [aiDifficulty, setAiDifficulty] = useState<AIDifficulty>("normal"); 
   const [isChoCheck, setIsChoCheck] = useState<boolean>(false); 
   const [isHanCheck, setIsHanCheck] = useState<boolean>(false); 
+  const [lastMove, setLastMove] = useState<GameMove | null>(null); // 마지막 이동 잔상 상태 추가
 
   // 보드 초기화 함수
   const initBoard = (choLay: MaSangLayout, hanLay: MaSangLayout) => {
@@ -199,6 +200,7 @@ export default function JanggiPage() {
     setMoveHistory([]);
     setIsChoCheck(false);
     setIsHanCheck(false);
+    setLastMove(null); 
     setStatusMessage("대국이 시작되었습니다. 초(Blue) 차례입니다.");
   };
 
@@ -566,7 +568,6 @@ export default function JanggiPage() {
         if (p && p.camp === camp) {
           const raw = getMoves(r, c, currentBoard);
           for (const [tr, tc] of raw) {
-            // 가상 대입으로 내 궁이 위협받는지 체크
             const temp = currentBoard.map(row => [...row]);
             temp[tr][tc] = p;
             temp[r][c] = null;
@@ -581,7 +582,6 @@ export default function JanggiPage() {
   };
 
   // 통합 정적 판세 평가 함수 (Static Board Evaluator)
-  // 한나라(컴퓨터) 기준 양수(+), 초나라(플레이어) 기준 음수(-)로 리턴
   const evaluateBoard = (currentBoard: Board): number => {
     const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 15, 병: 15 };
     let score = 0;
@@ -594,30 +594,23 @@ export default function JanggiPage() {
         const val = values[p.type] || 15;
         const sign = p.camp === "han" ? 1 : -1;
 
-        // 기물 기본 가치
         score += val * sign;
 
-        // 위치 가치 가감산
         if (p.camp === "han") {
-          // 마(馬)
           if (p.type === "마") {
             if (c === 0 || c === 8) score -= 15;
             else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score += 18;
           }
-          // 상(象)
           if (p.type === "상") {
             if (c === 0 || c === 8) score -= 12;
             else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score += 12;
           }
-          // 포(包)
           if (p.type === "포") {
-            if (r === 2 && c === 4) score += 35; // 면포 명당
+            if (r === 2 && c === 4) score += 35; 
           }
-          // 사(士)
           if (p.type === "사") {
             if (!isWithinPalace(r, c, "han")) score -= 35;
             else {
-              // 한나라 궁 위치 찾아서 밀착도 계산
               let kr = 1, kc = 4;
               for (let row = 0; row < 3; row++) {
                 for (let col = 3; col <= 5; col++) {
@@ -629,33 +622,26 @@ export default function JanggiPage() {
               if (Math.abs(r - kr) + Math.abs(c - kc) <= 1) score += 22;
             }
           }
-          // 졸/병 (전진)
           if (p.type === "졸" || p.type === "병") {
             score += r * 3.5;
-            if (isWithinPalace(r, c, "cho")) score += 15; // 상대 궁성 돌파
+            if (isWithinPalace(r, c, "cho")) score += 15; 
           }
-          // 궁(General)
           if (p.type === "궁") {
             if (r === 0 && c === 4) score += 15;
             if (r === 1 && c === 4) score += 10;
           }
         } else {
-          // 초나라(플레이어) 감산 기법
-          // 마(馬)
           if (p.type === "마") {
             if (c === 0 || c === 8) score += 15;
             else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score -= 18;
           }
-          // 상(象)
           if (p.type === "상") {
             if (c === 0 || c === 8) score += 12;
             else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score -= 12;
           }
-          // 포(包)
           if (p.type === "포") {
             if (r === 7 && c === 4) score -= 35;
           }
-          // 사(士)
           if (p.type === "사") {
             if (!isWithinPalace(r, c, "cho")) score += 35;
             else {
@@ -670,12 +656,10 @@ export default function JanggiPage() {
               if (Math.abs(r - kr) + Math.abs(c - kc) <= 1) score -= 22;
             }
           }
-          // 졸/병 (전진)
           if (p.type === "졸" || p.type === "병") {
             score -= (9 - r) * 3.5;
             if (isWithinPalace(r, c, "han")) score -= 15;
           }
-          // 궁
           if (p.type === "궁") {
             if (r === 9 && c === 4) score -= 15;
             if (r === 8 && c === 4) score -= 10;
@@ -684,7 +668,6 @@ export default function JanggiPage() {
       }
     }
 
-    // 장군 유무 상태 반영
     if (isUnderCheck("han", currentBoard)) score -= 85;
     if (isUnderCheck("cho", currentBoard)) score += 85;
 
@@ -711,10 +694,9 @@ export default function JanggiPage() {
       const moves = getAllLegalMoves("han", boardState);
       
       if (moves.length === 0) {
-        return underCheckHan ? -100000 - depth : 0; // 궁지에 몰려 외통수 패배
+        return underCheckHan ? -100000 - depth : 0; 
       }
 
-      // 기물 획득 가능 수를 우선 정렬하여 가지치기 효율 최대화
       moves.sort((a, b) => {
         const valA = boardState[a.to[0]][a.to[1]] ? 1 : 0;
         const valB = boardState[b.to[0]][b.to[1]] ? 1 : 0;
@@ -730,7 +712,7 @@ export default function JanggiPage() {
         maxEval = Math.max(maxEval, evaluation);
         alpha = Math.max(alpha, evaluation);
         if (beta <= alpha) {
-          break; // 가지치기 발생
+          break; 
         }
       }
       return maxEval;
@@ -739,7 +721,7 @@ export default function JanggiPage() {
       const moves = getAllLegalMoves("cho", boardState);
       
       if (moves.length === 0) {
-        return underCheckCho ? 100000 + depth : 0; // 초나라 외통수 패배
+        return underCheckCho ? 100000 + depth : 0; 
       }
 
       moves.sort((a, b) => {
@@ -776,9 +758,7 @@ export default function JanggiPage() {
       return;
     }
 
-    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 3수 앞 완벽 수읽기)
     const searchDepth = aiDifficulty === "hard" ? 3 : aiDifficulty === "normal" ? 2 : 1;
-
     const scoredMoves: { from: [number, number]; to: [number, number]; score: number }[] = [];
 
     for (const move of legalMoves) {
@@ -786,25 +766,20 @@ export default function JanggiPage() {
       temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
       temp[move.from[0]][move.from[1]] = null;
 
-      // 미니맥스 알고리즘 구동
       const score = minimax(temp, searchDepth - 1, -Infinity, Infinity, false);
       scoredMoves.push({ from: move.from, to: move.to, score });
     }
 
-    // 점수가 높은 순으로 내림차순 정렬
     scoredMoves.sort((a, b) => b.score - a.score);
 
     let selectedMove;
     if (aiDifficulty === "hard") {
-      // 어려움 단계에서는 오차 허용 0.0으로 무조건 최고 점수 1순위(Top 1) 묘수만 실행
       selectedMove = scoredMoves[0];
     } else if (aiDifficulty === "normal") {
-      // 보통 단계에서는 상위 15% 수 중 임의 선택
       const poolSize = Math.max(1, Math.floor(scoredMoves.length * 0.15));
       const bestPool = scoredMoves.slice(0, poolSize);
       selectedMove = bestPool[Math.floor(Math.random() * bestPool.length)];
     } else {
-      // 쉬움 단계에서는 상위 50% 중 임의 선택
       const poolSize = Math.max(1, Math.floor(scoredMoves.length * 0.50));
       const loosePool = scoredMoves.slice(0, poolSize);
       selectedMove = loosePool[Math.floor(Math.random() * loosePool.length)];
@@ -823,6 +798,9 @@ export default function JanggiPage() {
     setBoard(nextBoard);
     playSound(destPiece ? "capture" : "move");
 
+    // 마지막 이동 하이라이트 기록
+    setLastMove({ from: [fr, fc], to: [tr, tc] });
+
     const moveStr = `한: ${movingPiece.type}(${fr},${fc}) → (${tr},${tc})${destPiece ? ` [${destPiece.type} 획득]` : ""}`;
     setMoveHistory(prev => [moveStr, ...prev]);
 
@@ -838,10 +816,7 @@ export default function JanggiPage() {
     setIsChoCheck(choCheck);
     setIsHanCheck(hanCheck);
 
-    // 컴퓨터의 연산 시간 로그 확인용 (디버깅)
     console.log(`AI Search Time: ${Date.now() - startTime}ms (Depth: ${searchDepth})`);
-
-    // 컴퓨터 기동 완료 후 턴을 초나라 플레이어에게 정상 양도
     setCurrentTurn("cho");
 
     if (choCheck) {
@@ -857,6 +832,15 @@ export default function JanggiPage() {
     if (winner) return;
     if (gameMode === "ai" && currentTurn === "han") return;
 
+    // 1) 기물 선택 토글 해제 기능 (한 번 더 누르면 원상복구)
+    const isSelectedSelf = selectedPos && selectedPos[0] === r && selectedPos[1] === c;
+    if (isSelectedSelf) {
+      setSelectedPos(null);
+      setPossibleMoves([]);
+      setStatusMessage(`${currentTurn === "cho" ? "초(Blue)" : "한(Red)"} 차례입니다. 기물을 선택하세요.`);
+      return;
+    }
+
     const isPossible = possibleMoves.some(([pr, pc]) => pr === r && pc === c);
     if (isPossible && selectedPos) {
       const [sr, sc] = selectedPos;
@@ -869,6 +853,9 @@ export default function JanggiPage() {
 
       setBoard(nextBoard);
       playSound(destPiece ? "capture" : "move");
+
+      // 마지막 이동 기록
+      setLastMove({ from: [sr, sc], to: [r, c] });
 
       const moveStr = `${piece.camp === "cho" ? "초" : "한"}: ${piece.type}(${sr},${sc}) → (${r},${c})${destPiece ? ` [${destPiece.type} 획득]` : ""}`;
       setMoveHistory(prev => [moveStr, ...prev]);
@@ -1139,6 +1126,7 @@ export default function JanggiPage() {
                   setPossibleMoves([]);
                   setIsChoCheck(false);
                   setIsHanCheck(false);
+                  setLastMove(null);
                   setStatusMessage("차림새를 설정하고 게임을 시작하세요.");
                 }}
                 className="w-full py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-extrabold text-xs rounded-xl transition"
@@ -1231,6 +1219,10 @@ export default function JanggiPage() {
                       const isSelected = selectedPos && selectedPos[0] === rIdx && selectedPos[1] === cIdx;
                       const isMoveCandidate = possibleMoves.some(([pr, pc]) => pr === rIdx && pc === cIdx);
 
+                      // 마지막 이동 하이라이트 여부 판독
+                      const isLastMoveFrom = lastMove && lastMove.from[0] === rIdx && lastMove.from[1] === cIdx;
+                      const isLastMoveTo = lastMove && lastMove.to[0] === rIdx && lastMove.to[1] === cIdx;
+
                       return (
                         <div
                           key={`piece-cell-${rIdx}-${cIdx}`}
@@ -1242,6 +1234,19 @@ export default function JanggiPage() {
                             zIndex: isSelected ? 40 : 20,
                           }}
                         >
+                          {/* (1) 직전 턴 출발지 잔상 렌더링 */}
+                          {isLastMoveFrom && !piece && (
+                            <div
+                              className="absolute w-8 h-8 rounded-full border-2 border-dashed border-purple-500/60 bg-purple-500/10 flex items-center justify-center animate-pulse"
+                              style={{
+                                transform: is3dMode 
+                                  ? "translate(-50%, -50%) translateZ(4px)" 
+                                  : "translate(-50%, -50%)",
+                                pointerEvents: "none",
+                              }}
+                            />
+                          )}
+
                           {/* 이동 힌트 점 */}
                           {isMoveCandidate && (
                             <div
@@ -1285,11 +1290,19 @@ export default function JanggiPage() {
                                   ? "translate(-50%, -50%) scale(1.1) translateY(-3px)"
                                   : "translate(-50%, -50%)",
                                 boxShadow: is3dMode
-                                  ? piece.camp === "cho"
+                                  ? isLastMoveTo
+                                    ? "0 0 15px rgba(168, 85, 247, 0.9), 0 5px 0 #6d28d9" // 직전 목적지 보라색 광채 및 두꺼운 그림자
+                                    : piece.camp === "cho"
                                     ? "0 5px 0 #1b386a, 0 8px 12px rgba(0,0,0,0.35)"
                                     : "0 5px 0 #6e1c25, 0 8px 12px rgba(0,0,0,0.35)"
+                                  : isLastMoveTo
+                                  ? "0 0 12px rgba(168, 85, 247, 0.9)"
                                   : "0 2px 4px rgba(0,0,0,0.15)",
-                                outline: isSelected ? "3px solid #facc15" : "none",
+                                outline: isSelected 
+                                  ? "3px solid #facc15" 
+                                  : isLastMoveTo
+                                  ? "3px solid #a855f7" // 직전 목적지 기물 테두리 하이라이트
+                                  : "none",
                               }}
                             >
                               {piece.name}
@@ -1335,7 +1348,7 @@ export default function JanggiPage() {
 
           {/* 대국 기보 로그 */}
           {gameStarted && moveHistory.length > 0 && (
-            <div className="w-full mt-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-2.5">
+            <div className="w-full mt-6 bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-2.5">
               <h3 className="text-xs font-bold text-slate-400 block">실시간 대국 기보</h3>
               <div className="max-h-28 overflow-y-auto space-y-1 pr-2 font-mono text-[10px] text-slate-600 dark:text-slate-400 leading-normal">
                 {moveHistory.map((h, i) => (
