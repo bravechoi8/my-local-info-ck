@@ -18,7 +18,7 @@ type MaSangLayout = "왼상" | "오른상" | "안상" | "바깥상";
 type AIDifficulty = "easy" | "normal" | "hard";
 
 // 사운드 피드백을 위한 Web Audio API 헬퍼 함수
-function playSound(type: "select" | "move" | "capture" | "win") {
+function playSound(type: "select" | "move" | "capture" | "win" | "check") {
   if (typeof window === "undefined") return;
   try {
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -65,6 +65,15 @@ function playSound(type: "select" | "move" | "capture" | "win") {
         o.start(ctx.currentTime + i * 0.08);
         o.stop(ctx.currentTime + i * 0.08 + 0.18);
       });
+    } else if (type === "check") {
+      // 긴장감 있는 2단 사이렌 경고음
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(780, ctx.currentTime);
+      osc.frequency.setValueAtTime(630, ctx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.22);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.22);
     }
   } catch (e) {
     console.warn("Web Audio API not supported or blocked", e);
@@ -94,18 +103,18 @@ export default function JanggiPage() {
   const [moveHistory, setMoveHistory] = useState<string[]>([]);
   const [statusMessage, setStatusMessage] = useState<string>("초(Blue) 차례입니다. 기물을 선택하세요.");
   const [is3dMode, setIs3dMode] = useState<boolean>(true); 
-  const [aiDifficulty, setAiDifficulty] = useState<AIDifficulty>("normal"); // AI 난이도 상태 추가
+  const [aiDifficulty, setAiDifficulty] = useState<AIDifficulty>("normal"); 
+  const [isChoCheck, setIsChoCheck] = useState<boolean>(false); // 초나라 장군 상태
+  const [isHanCheck, setIsHanCheck] = useState<boolean>(false); // 한나라 장군 상태
 
   // 보드 초기화 함수
   const initBoard = (choLay: MaSangLayout, hanLay: MaSangLayout) => {
     const tempBoard: Board = Array(10).fill(null).map(() => Array(9).fill(null));
 
     // --- 한 (Red) 기물 배치 (행 0 ~ 3) ---
-    // 차
     tempBoard[0][0] = { type: "차", camp: "han", name: "車" };
     tempBoard[0][8] = { type: "차", camp: "han", name: "車" };
     
-    // 마 & 상 배치 결정
     if (hanLay === "왼상") {
       tempBoard[0][1] = { type: "마", camp: "han", name: "馬" };
       tempBoard[0][2] = { type: "상", camp: "han", name: "象" };
@@ -128,18 +137,12 @@ export default function JanggiPage() {
       tempBoard[0][7] = { type: "상", camp: "han", name: "象" };
     }
 
-    // 사
     tempBoard[0][3] = { type: "사", camp: "han", name: "士" };
     tempBoard[0][5] = { type: "사", camp: "han", name: "士" };
-    
-    // 궁
     tempBoard[1][4] = { type: "궁", camp: "han", name: "漢" };
-
-    // 포
     tempBoard[2][1] = { type: "포", camp: "han", name: "包" };
     tempBoard[2][7] = { type: "포", camp: "han", name: "包" };
 
-    // 병
     tempBoard[3][0] = { type: "병", camp: "han", name: "兵" };
     tempBoard[3][2] = { type: "병", camp: "han", name: "兵" };
     tempBoard[3][4] = { type: "병", camp: "han", name: "兵" };
@@ -147,11 +150,9 @@ export default function JanggiPage() {
     tempBoard[3][8] = { type: "병", camp: "han", name: "兵" };
 
     // --- 초 (Blue) 기물 배치 (행 6 ~ 9) ---
-    // 차
     tempBoard[9][0] = { type: "차", camp: "cho", name: "車" };
     tempBoard[9][8] = { type: "차", camp: "cho", name: "車" };
 
-    // 마 & 상 배치 결정
     if (choLay === "왼상") {
       tempBoard[9][1] = { type: "마", camp: "cho", name: "馬" };
       tempBoard[9][2] = { type: "상", camp: "cho", name: "象" };
@@ -170,22 +171,16 @@ export default function JanggiPage() {
     } else if (choLay === "바깥상") {
       tempBoard[9][1] = { type: "상", camp: "cho", name: "象" };
       tempBoard[9][2] = { type: "마", camp: "cho", name: "馬" };
-      tempBoard[9][6] = { type: "마", camp: "cho", name: "馬" };
+      tempBoard[9][6] = { type: "마", camp: "cho", name: "마" };
       tempBoard[9][7] = { type: "상", camp: "cho", name: "象" };
     }
 
-    // 사
     tempBoard[9][3] = { type: "사", camp: "cho", name: "士" };
     tempBoard[9][5] = { type: "사", camp: "cho", name: "士" };
-
-    // 궁
     tempBoard[8][4] = { type: "궁", camp: "cho", name: "楚" };
-
-    // 포
     tempBoard[7][1] = { type: "포", camp: "cho", name: "包" };
     tempBoard[7][7] = { type: "포", camp: "cho", name: "包" };
 
-    // 졸
     tempBoard[6][0] = { type: "졸", camp: "cho", name: "卒" };
     tempBoard[6][2] = { type: "졸", camp: "cho", name: "卒" };
     tempBoard[6][4] = { type: "졸", camp: "cho", name: "卒" };
@@ -198,12 +193,10 @@ export default function JanggiPage() {
     setPossibleMoves([]);
     setWinner(null);
     setMoveHistory([]);
+    setIsChoCheck(false);
+    setIsHanCheck(false);
     setStatusMessage("대국이 시작되었습니다. 초(Blue) 차례입니다.");
   };
-
-  useEffect(() => {
-    initBoard(choLayout, hanLayout);
-  }, []);
 
   // 장기 기물별 이동 가능 경로 계산
   const getMoves = (r: number, c: number, currentBoard: Board): [number, number][] => {
@@ -508,9 +501,43 @@ export default function JanggiPage() {
     return moves;
   };
 
-  // 인공지능(AI) 고도화 의사결정 함수
+  // 실시간 장군(Check) 판독 함수
+  const isUnderCheck = (camp: "cho" | "han", currentBoard: Board): boolean => {
+    // 1. camp 진영의 궁(King) 위치 검색
+    let kingR = -1;
+    let kingC = -1;
+    for (let r = 0; r < 10; r++) {
+      for (let c = 0; c < 9; c++) {
+        const p = currentBoard[r][c];
+        if (p && p.type === "궁" && p.camp === camp) {
+          kingR = r;
+          kingC = c;
+          break;
+        }
+      }
+      if (kingR !== -1) break;
+    }
+    if (kingR === -1) return false; // 궁이 이미 없음 (게임 종료 상황)
+
+    // 2. 상대 진영의 모든 기물이 다음 턴에 궁을 잡을 수 있는지 스캔
+    const enemyCamp = camp === "cho" ? "han" : "cho";
+    for (let r = 0; r < 10; r++) {
+      for (let c = 0; c < 9; c++) {
+        const p = currentBoard[r][c];
+        if (p && p.camp === enemyCamp) {
+          const moves = getMoves(r, c, currentBoard);
+          const targetsKing = moves.some(([tr, tc]) => tr === kingR && tc === kingC);
+          if (targetsKing) {
+            return true; // 장군 발생!
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  // 인공지능(AI) 자동 대국 실행
   const makeAIMove = (currentBoard: Board) => {
-    // 1. 적(초나라 - 플레이어)의 다음 턴 공격 가능 좌표 목록 취합
     const playerAttackMap = new Set<string>();
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
@@ -527,7 +554,6 @@ export default function JanggiPage() {
     const aiPieces: { from: [number, number]; to: [number, number]; weight: number }[] = [];
     const values = { 궁: 1000, 차: 180, 포: 100, 마: 70, 상: 45, 사: 35, 졸: 20, 병: 20 };
 
-    // 2. 한나라(AI)의 모든 수 수집 및 지능형 가중치(weight) 평가
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
         const piece = currentBoard[r][c];
@@ -537,44 +563,49 @@ export default function JanggiPage() {
             let weight = 0;
             const targetPiece = currentBoard[tr][tc];
 
-            // (1) 적 기물 잡기 가치 합산
+            // 1) 적 기물 잡기 가치
             if (targetPiece) {
               weight += values[targetPiece.type] || 15;
             }
 
-            // 기물 전진성 및 고유 기물 활용 선호도
-            weight += (tr - r) * 0.4; // 전진 유도
+            weight += (tr - r) * 0.4; // 전진성
             if (piece.type === "차") weight += 2.0;
             if (piece.type === "포") weight += 1.5;
 
-            // 난이도가 보통(normal) 또는 어려움(hard)일 때만 정교한 전술 반영
-            if (aiDifficulty !== "easy") {
-              const movingPieceValue = values[piece.type] || 20;
+            // 2) 시뮬레이션: 이 이동을 적용한 가상 보드 생성
+            const tempBoard = currentBoard.map(row => [...row]);
+            tempBoard[tr][tc] = piece;
+            tempBoard[r][c] = null;
 
-              // (2) 자살 수 감지 (이동할 자리가 적의 공격 범위 안인 경우)
-              if (playerAttackMap.has(`${tr},${tc}`)) {
-                const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.2 : movingPieceValue * 0.6;
-                weight -= penalty; // 자살 회피 감점
-              }
+            // CRITICAL: 만약 이 수를 둔 후에도 한나라(AI)가 장군 상태라면 멍군이 안 된 것이므로 수 배제
+            if (isUnderCheck("han", tempBoard)) {
+              weight = -99999; 
+            } else {
+              // 장군이 안 걸린 안전한 수라면 전술 점수 평가
+              if (aiDifficulty !== "easy") {
+                const movingPieceValue = values[piece.type] || 20;
 
-              // (3) 대피 연산 (원래 위험했던 기물이 안전지대로 탈출하는 수)
-              if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
-                const bonus = aiDifficulty === "hard" ? movingPieceValue * 0.9 : movingPieceValue * 0.45;
-                weight += bonus; // 안전 탈출 보너스
-              }
+                // 자살 수 감지
+                if (playerAttackMap.has(`${tr},${tc}`)) {
+                  const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.3 : movingPieceValue * 0.6;
+                  weight -= penalty;
+                }
 
-              // (4) 장군(체크) 가능성 계산
-              // 가상으로 기물을 해당 위치에 두어본 다음, 적의 궁(楚)을 공격할 수 있는지 체크
-              const tempBoard = currentBoard.map(row => [...row]);
-              tempBoard[tr][tc] = piece;
-              tempBoard[r][c] = null;
-              const nextMoves = getMoves(tr, tc, tempBoard);
-              const canCheck = nextMoves.some(([nr, nc]) => {
-                const t = tempBoard[nr][nc];
-                return t && t.type === "궁" && t.camp === "cho";
-              });
-              if (canCheck) {
-                weight += aiDifficulty === "hard" ? 50 : 20;
+                // 대피 연산
+                if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
+                  const bonus = aiDifficulty === "hard" ? movingPieceValue * 1.0 : movingPieceValue * 0.5;
+                  weight += bonus;
+                }
+
+                // 적 궁(楚)에게 장군을 부를 수 있는지 판정
+                const nextMoves = getMoves(tr, tc, tempBoard);
+                const canCheck = nextMoves.some(([nr, nc]) => {
+                  const t = tempBoard[nr][nc];
+                  return t && t.type === "궁" && t.camp === "cho";
+                });
+                if (canCheck) {
+                  weight += aiDifficulty === "hard" ? 60 : 25;
+                }
               }
             }
 
@@ -584,32 +615,30 @@ export default function JanggiPage() {
       }
     }
 
-    if (aiPieces.length === 0) {
+    // 만약 모든 수들의 가중치가 -99999라면 (장군을 해제할 수 없는 '외통수' 상황)
+    const validMoves = aiPieces.filter(m => m.weight > -90000);
+    if (validMoves.length === 0) {
       setWinner("cho");
-      setStatusMessage("한(Red)이 움직일 기물이 없어 초(Blue)가 우승했습니다!");
+      setStatusMessage("한(Red)이 외통수(Checkmate)에 걸려 초(Blue)가 승리하였습니다!");
       playSound("win");
       return;
     }
 
-    // 가중치에 따라 내림차순 정렬
-    aiPieces.sort((a, b) => b.weight - a.weight);
+    // 유효한 수들만 정렬
+    validMoves.sort((a, b) => b.weight - a.weight);
 
-    // 난이도에 따른 무작위 선택 풀(Pool) 조율
     let selectedMove;
     if (aiDifficulty === "hard") {
-      // 어려움: 가장 높은 점수를 가진 수들 중에서만 선택 (동점자 처리)
-      const maxWeight = aiPieces[0].weight;
-      const bestMoves = aiPieces.filter(m => m.weight >= maxWeight - 0.1);
+      const maxWeight = validMoves[0].weight;
+      const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.1);
       selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
     } else if (aiDifficulty === "normal") {
-      // 보통: 상위 25% 풀 내에서 선택하여 적당한 수 유도
-      const poolSize = Math.max(1, Math.floor(aiPieces.length * 0.25));
-      const bestPool = aiPieces.slice(0, poolSize);
+      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.25));
+      const bestPool = validMoves.slice(0, poolSize);
       selectedMove = bestPool[Math.floor(Math.random() * bestPool.length)];
     } else {
-      // 쉬움: 상위 55% 풀 내에서 느슨하게 선택하여 빈틈 유발
-      const poolSize = Math.max(1, Math.floor(aiPieces.length * 0.55));
-      const loosePool = aiPieces.slice(0, poolSize);
+      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.55));
+      const loosePool = validMoves.slice(0, poolSize);
       selectedMove = loosePool[Math.floor(Math.random() * loosePool.length)];
     }
 
@@ -619,7 +648,6 @@ export default function JanggiPage() {
     const movingPiece = currentBoard[fr][fc]!;
     const destPiece = currentBoard[tr][tc];
 
-    // 이동 처리
     const nextBoard = currentBoard.map(row => [...row]);
     nextBoard[tr][tc] = movingPiece;
     nextBoard[fr][fc] = null;
@@ -630,6 +658,7 @@ export default function JanggiPage() {
     const moveStr = `한: ${movingPiece.type}(${fr},${fc}) → (${tr},${tc})${destPiece ? ` [${destPiece.type} 획득]` : ""}`;
     setMoveHistory(prev => [moveStr, ...prev]);
 
+    // 대국 종료 체크 (궁 획득)
     if (destPiece && destPiece.type === "궁") {
       setWinner("han");
       setStatusMessage("한(Red)이 초의 궁을 획득하여 승리하였습니다!");
@@ -637,11 +666,22 @@ export default function JanggiPage() {
       return;
     }
 
-    setCurrentTurn("cho");
-    setStatusMessage("초(Blue) 차례입니다. 기물을 선택하세요.");
+    // 장군 실시간 상태 체크
+    const choCheck = isUnderCheck("cho", nextBoard);
+    const hanCheck = isUnderCheck("han", nextBoard);
+    setIsChoCheck(choCheck);
+    setIsHanCheck(hanCheck);
+
+    if (choCheck) {
+      playSound("check");
+      setStatusMessage("🚨 장군! 초나라(Blue - 플레이어) 궁이 위협받고 있습니다! 멍군하세요.");
+    } else {
+      setCurrentTurn("cho");
+      setStatusMessage("초(Blue) 차례입니다. 기물을 선택하세요.");
+    }
   };
 
-  // 플레이어의 셀 클릭 처리 핸들러
+  // 플레이어의 셀 클릭 처리
   const handleCellClick = (r: number, c: number) => {
     if (winner) return;
     if (gameMode === "ai" && currentTurn === "han") return;
@@ -652,10 +692,19 @@ export default function JanggiPage() {
       const piece = board[sr][sc]!;
       const destPiece = board[r][c];
 
+      // 가상 시뮬레이션: 이 수를 둔 다음 장군이 계속 걸려있는지 검증 (딴짓 금지)
       const nextBoard = board.map(row => [...row]);
       nextBoard[r][c] = piece;
       nextBoard[sr][sc] = null;
 
+      if (isUnderCheck("cho", nextBoard)) {
+        // 장군이 안 풀리는 수라면 차단
+        playSound("select"); // 띡 경고음
+        setStatusMessage("⚠️ 경고: 장군 상태입니다! 궁을 보호하는 수(멍군)를 두어야 합니다.");
+        return;
+      }
+
+      // 검증 통과 후 이동 적용
       setBoard(nextBoard);
       playSound(destPiece ? "capture" : "move");
 
@@ -672,16 +721,32 @@ export default function JanggiPage() {
       setSelectedPos(null);
       setPossibleMoves([]);
 
+      // 장군 상태 감지
+      const choCheck = isUnderCheck("cho", nextBoard);
+      const hanCheck = isUnderCheck("han", nextBoard);
+      setIsChoCheck(choCheck);
+      setIsHanCheck(hanCheck);
+
       const nextTurn = currentTurn === "cho" ? "han" : "cho";
       setCurrentTurn(nextTurn);
 
       if (gameMode === "ai" && nextTurn === "han") {
-        setStatusMessage("한(Red) 컴퓨터가 수 계산 중입니다...");
+        if (hanCheck) {
+          playSound("check");
+          setStatusMessage("🚨 장군! 한나라(Red - 컴퓨터) 컴퓨터가 위협을 수비(멍군)하는 중입니다...");
+        } else {
+          setStatusMessage("한(Red) 컴퓨터가 수 계산 중입니다...");
+        }
         setTimeout(() => {
           makeAIMove(nextBoard);
-        }, 850);
+        }, 900);
       } else {
-        setStatusMessage(`${nextTurn === "cho" ? "초(Blue)" : "한(Red)"} 차례입니다. 기물을 선택하세요.`);
+        if (choCheck) {
+          playSound("check");
+          setStatusMessage("🚨 장군! 초나라(Blue - 플레이어) 궁이 위협받고 있습니다! 멍군하세요.");
+        } else {
+          setStatusMessage(`${nextTurn === "cho" ? "초(Blue)" : "한(Red)"} 차례입니다. 기물을 선택하세요.`);
+        }
       }
       return;
     }
@@ -729,19 +794,27 @@ export default function JanggiPage() {
       </header>
 
       {/* 본문 */}
-      <main className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main className="max-w-6xl mx-auto px-6 py-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* 설정 패널 */}
-        <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between gap-5 h-fit">
-          <div className="space-y-4">
-            <h1 className="text-2xl font-black text-slate-800 dark:text-white leading-tight">
-              3D 클래식 장기
-            </h1>
+        {/* 제어판 */}
+        <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between gap-4.5 h-fit">
+          <div className="space-y-3.5">
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-black text-slate-800 dark:text-white leading-tight">
+                3D 클래식 장기
+              </h1>
+              {/* 장군(Check) 경보 배지 표출 */}
+              {(isChoCheck || isHanCheck) && (
+                <span className="animate-pulse bg-red-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.7)] flex items-center gap-1">
+                  🚨 장군 (Check)
+                </span>
+              )}
+            </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              선의 교차점에 정확하게 놓이는 전통 장기와 CSS 3D 입체 연출이 조화된 프리미엄 보드게임입니다. 
+              교차점 정렬 배치, 3D 입체 뷰 토글 지원 및 장군(Check) 시 다른 동작을 제한하는 멍군 필수 규칙이 완벽 적용된 지능형 대국입니다.
             </p>
 
-            {/* 입체 3D 뷰 토글 */}
+            {/* 3D 뷰 토글 */}
             <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl flex items-center justify-between border border-slate-200/50 dark:border-slate-800/40">
               <span className="text-xs font-bold text-slate-600 dark:text-slate-300">🎮 입체 3D 뷰 모드</span>
               <button
@@ -758,7 +831,7 @@ export default function JanggiPage() {
               </button>
             </div>
 
-            {/* AI 난이도 설정 위젯 추가 */}
+            {/* AI 난이도 위젯 */}
             {gameMode === "ai" && (
               <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl space-y-2 border border-slate-200/50 dark:border-slate-800/40">
                 <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block">🤖 AI 컴퓨터 난이도</label>
@@ -815,7 +888,7 @@ export default function JanggiPage() {
                   </button>
                 </div>
 
-                {/* 차림새 설정 */}
+                {/* 마상 배치 설정 */}
                 <div className="space-y-2 pt-1">
                   <div className="space-y-1">
                     <label className="text-[11px] font-bold text-slate-500 dark:text-slate-400 block">
@@ -852,7 +925,7 @@ export default function JanggiPage() {
               </div>
             )}
 
-            {/* 상태 모니터 */}
+            {/* 상태 판 */}
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/80 space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-slate-400">진행 턴</span>
@@ -889,6 +962,8 @@ export default function JanggiPage() {
                   setWinner(null);
                   setSelectedPos(null);
                   setPossibleMoves([]);
+                  setIsChoCheck(false);
+                  setIsHanCheck(false);
                   setStatusMessage("차림새를 설정하고 게임을 시작하세요.");
                 }}
                 className="w-full py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-extrabold text-xs rounded-xl transition"
@@ -899,7 +974,7 @@ export default function JanggiPage() {
           </div>
         </section>
 
-        {/* 장기판 영역 */}
+        {/* 3D 판 영역 */}
         <section className="col-span-1 lg:col-span-2 flex flex-col items-center justify-center">
           <div
             className="w-full max-w-[500px] flex items-center justify-center"
@@ -908,7 +983,7 @@ export default function JanggiPage() {
               paddingBottom: is3dMode ? "40px" : "0px",
             }}
           >
-            {/* 3D 회전 판 */}
+            {/* 3D 나무판 */}
             <div
               className={`w-full aspect-[9/10] relative bg-[#eed6b0] dark:bg-[#3d2a1b] rounded-3xl p-[7.5%] transition-all duration-500 ease-out border-4 border-[#a67146] dark:border-[#2f2015]`}
               style={{
@@ -928,7 +1003,7 @@ export default function JanggiPage() {
               {/* 격자선 교차점 영역 */}
               <div className="w-full h-full relative" style={{ transformStyle: "preserve-3d" }}>
                 
-                {/* 가로 격자선 (10선) */}
+                {/* 가로선 */}
                 {Array(10).fill(null).map((_, idx) => (
                   <div
                     key={`line-h-${idx}`}
@@ -940,7 +1015,7 @@ export default function JanggiPage() {
                   />
                 ))}
 
-                {/* 세로 격자선 (9선) */}
+                {/* 세로선 */}
                 {Array(9).fill(null).map((_, idx) => (
                   <div
                     key={`line-v-${idx}`}
@@ -952,7 +1027,7 @@ export default function JanggiPage() {
                   />
                 ))}
 
-                {/* 궁성 대각선 (SVG) */}
+                {/* 궁성 대각선 */}
                 <svg
                   className="absolute inset-0 w-full h-full pointer-events-none"
                   style={{ transformStyle: "preserve-3d" }}
@@ -975,7 +1050,7 @@ export default function JanggiPage() {
                   />
                 </svg>
 
-                {/* 기물 및 힌트 렌더링 (교차점 absolute 정렬) */}
+                {/* 기물 및 힌트 점 */}
                 {gameStarted &&
                   board.map((row, rIdx) =>
                     row.map((piece, cIdx) => {
@@ -1009,7 +1084,7 @@ export default function JanggiPage() {
                             />
                           )}
 
-                          {/* 실제 장기 알 */}
+                          {/* 실제 기물 알 */}
                           {piece && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
@@ -1049,7 +1124,7 @@ export default function JanggiPage() {
             </div>
           </div>
 
-          {/* 승리 팝업 */}
+          {/* 우승 팝업 */}
           {winner && (
             <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn">
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl">
