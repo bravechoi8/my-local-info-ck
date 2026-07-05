@@ -17,6 +17,11 @@ type MaSangLayout = "왼상" | "오른상" | "안상" | "바깥상";
 
 type AIDifficulty = "easy" | "normal" | "hard";
 
+interface GameMove {
+  from: [number, number];
+  to: [number, number];
+}
+
 // 사운드 피드백을 위한 Web Audio API 헬퍼 함수
 function playSound(type: "select" | "move" | "capture" | "win" | "check") {
   if (typeof window === "undefined") return;
@@ -552,249 +557,256 @@ export default function JanggiPage() {
     return false;
   };
 
-  // 인공지능(AI) 자동 대국 실행
-  const makeAIMove = (currentBoard: Board) => {
-    const playerAttackMap = new Set<string>();
+  // 특정 진영의 모든 합법적인 수 리스트 계산 (자살 수 필터링 포함)
+  const getAllLegalMoves = (camp: "cho" | "han", currentBoard: Board): { from: [number, number]; to: [number, number] }[] => {
+    const list: { from: [number, number]; to: [number, number] }[] = [];
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
         const p = currentBoard[r][c];
-        if (p && p.camp === "cho") {
-          const pMoves = getMoves(r, c, currentBoard);
-          for (const [tr, tc] of pMoves) {
-            playerAttackMap.add(`${tr},${tc}`);
+        if (p && p.camp === camp) {
+          const raw = getMoves(r, c, currentBoard);
+          for (const [tr, tc] of raw) {
+            // 가상 대입으로 내 궁이 위협받는지 체크
+            const temp = currentBoard.map(row => [...row]);
+            temp[tr][tc] = p;
+            temp[r][c] = null;
+            if (!isUnderCheck(camp, temp)) {
+              list.push({ from: [r, c], to: [tr, tc] });
+            }
           }
         }
       }
     }
+    return list;
+  };
 
-    const aiPieces: { from: [number, number]; to: [number, number]; weight: number }[] = [];
-    const values = { 궁: 1000, 차: 220, 포: 110, 마: 85, 상: 55, 사: 45, 졸: 25, 병: 25 }; 
+  // 통합 정적 판세 평가 함수 (Static Board Evaluator)
+  // 한나라(컴퓨터) 기준 양수(+), 초나라(플레이어) 기준 음수(-)로 리턴
+  const evaluateBoard = (currentBoard: Board): number => {
+    const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 15, 병: 15 };
+    let score = 0;
 
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
-        const piece = currentBoard[r][c];
-        if (piece && piece.camp === "han") {
-          const pieceMoves = getMoves(r, c, currentBoard);
-          for (const [tr, tc] of pieceMoves) {
-            let weight = 0;
-            const targetPiece = currentBoard[tr][tc];
+        const p = currentBoard[r][c];
+        if (!p) continue;
 
-            // 1) 기물 획득 가치 가산
-            if (targetPiece) {
-              weight += values[targetPiece.type] || 15;
-            }
+        const val = values[p.type] || 15;
+        const sign = p.camp === "han" ? 1 : -1;
 
-            // 기물 기본 전진성 및 고유 선호도
-            weight += (tr - r) * 0.5; 
-            if (piece.type === "차") weight += 3.5;
-            if (piece.type === "포") weight += 2.0;
+        // 기물 기본 가치
+        score += val * sign;
 
-            const tempBoard = currentBoard.map(row => [...row]);
-            tempBoard[tr][tc] = piece;
-            tempBoard[r][c] = null;
-
-            if (isUnderCheck("han", tempBoard)) {
-              weight = -99999; 
-            } else {
-              if (aiDifficulty !== "easy") {
-                const movingPieceValue = values[piece.type] || 25;
-
-                // (2) 아군 엄호(Support) 가점
-                const hasSupport = isPieceSupported(tr, tc, "han", tempBoard);
-                if (hasSupport) {
-                  weight += aiDifficulty === "hard" ? 35 : 15; 
-                }
-
-                // (3) 위험 노출/자살 수 감점
-                if (playerAttackMap.has(`${tr},${tc}`)) {
-                  if (hasSupport) {
-                    weight -= movingPieceValue * 0.45;
-                  } else {
-                    const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.5 : movingPieceValue * 0.8;
-                    weight -= penalty;
+        // 위치 가치 가감산
+        if (p.camp === "han") {
+          // 마(馬)
+          if (p.type === "마") {
+            if (c === 0 || c === 8) score -= 15;
+            else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score += 18;
+          }
+          // 상(象)
+          if (p.type === "상") {
+            if (c === 0 || c === 8) score -= 12;
+            else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score += 12;
+          }
+          // 포(包)
+          if (p.type === "포") {
+            if (r === 2 && c === 4) score += 35; // 면포 명당
+          }
+          // 사(士)
+          if (p.type === "사") {
+            if (!isWithinPalace(r, c, "han")) score -= 35;
+            else {
+              // 한나라 궁 위치 찾아서 밀착도 계산
+              let kr = 1, kc = 4;
+              for (let row = 0; row < 3; row++) {
+                for (let col = 3; col <= 5; col++) {
+                  if (currentBoard[row][col]?.type === "궁" && currentBoard[row][col]?.camp === "han") {
+                    kr = row; kc = col; break;
                   }
-                }
-
-                // (4) 위험 대피 보너스
-                if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
-                  const escapeBonus = aiDifficulty === "hard" ? movingPieceValue * 1.2 : movingPieceValue * 0.6;
-                  weight += escapeBonus;
-                }
-
-                // (5) 적 궁성(행 7~9) 침투 가점
-                if (tr >= 7) {
-                  weight += (tr - 6) * 5.0; 
-                  if (piece.type === "졸" || piece.type === "병") {
-                    weight += 12.0; 
-                  }
-                }
-
-                // (6) 적 기물 직접 조준(Threat) 가점
-                const nextMoves = getMoves(tr, tc, tempBoard);
-                let targetPieceCount = 0; 
-                for (const [ntr, ntc] of nextMoves) {
-                  const threatenedPiece = tempBoard[ntr][ntc];
-                  if (threatenedPiece && threatenedPiece.camp === "cho") {
-                    weight += (values[threatenedPiece.type] || 15) * 0.12;
-                    if (["궁", "차", "포", "마"].includes(threatenedPiece.type)) {
-                      targetPieceCount++;
-                    }
-                  }
-                }
-
-                // --- [HARD] 양수겸장 포크(Double Threat) 가점 추가 ---
-                if (aiDifficulty === "hard" && targetPieceCount >= 2) {
-                  weight += 85.0; // 한 수로 2개 이상의 중요 기물을 엮어 거는 포크 전술
-                }
-
-                // (7) 장군 부르기 보너스
-                const canCheck = nextMoves.some(([nr, nc]) => {
-                  const t = tempBoard[nr][nc];
-                  return t && t.type === "궁" && t.camp === "cho";
-                });
-                if (canCheck) {
-                  weight += aiDifficulty === "hard" ? 110 : 30; // 어려움 시 대폭 가산
-                }
-
-                // --- [HARD 난이도] 전술 배치 테이블 & 이동성 & 2단계 미니맥스 고도화 ---
-                if (aiDifficulty === "hard") {
-                  // (A) 위치 가치 평가 (Positional Evaluation)
-                  // 마(馬) 중앙 지배력
-                  if (piece.type === "마") {
-                    if (tc === 0 || tc === 8) {
-                      weight -= 15.0; 
-                    } else if (tr >= 3 && tr <= 7 && tc >= 2 && tc <= 6) {
-                      weight += 20.0; 
-                    }
-                  }
-                  // 상(象) 중앙 지배력
-                  if (piece.type === "상") {
-                    if (tc === 0 || tc === 8) {
-                      weight -= 12.0;
-                    } else if (tr >= 3 && tr <= 7 && tc >= 2 && tc <= 6) {
-                      weight += 14.0;
-                    }
-                  }
-                  // 포(포) 면포(중앙 배치) 전술 가점 추가
-                  if (piece.type === "포") {
-                    if (tr === 2 && tc === 4) {
-                      weight += 35.0; // 중앙 면포 명당자리 정렬 보너스
-                    }
-                  }
-                  // 사(士) 수비 밀착
-                  if (piece.type === "사") {
-                    if (!isWithinPalace(tr, tc, "han")) {
-                      weight -= 35.0; 
-                    } else {
-                      let kingR = 1, kingC = 4;
-                      for (let kr = 0; kr < 3; kr++) {
-                        for (let kc = 3; kc <= 5; kc++) {
-                          const kp = tempBoard[kr][kc];
-                          if (kp && kp.type === "궁" && kp.camp === "han") {
-                            kingR = kr;
-                            kingC = kc;
-                            break;
-                          }
-                        }
-                      }
-                      const distToKing = Math.abs(tr - kingR) + Math.abs(tc - kingC);
-                      if (distToKing <= 1) {
-                        weight += 25.0; 
-                      }
-                    }
-                  }
-                  // 궁(General) 안전 구역 잔류
-                  if (piece.type === "궁") {
-                    if (tr === 0 && tc === 4) weight += 15.0;
-                    if (tr === 1 && tc === 4) weight += 10.0;
-                  }
-
-                  // (B) 전체 이동성(Mobility) 계산
-                  let totalMobility = 0;
-                  for (let mr = 0; mr < 10; mr++) {
-                    for (let mc = 0; mc < 9; mc++) {
-                      const mp = tempBoard[mr][mc];
-                      if (mp && mp.camp === "han") {
-                        totalMobility += getMoves(mr, mc, tempBoard).length;
-                      }
-                    }
-                  }
-                  weight += totalMobility * 0.35; 
-
-                  // (C) 2단계 반격 탐색 (Minimax 2-ply) + 엄호하 동등 교환(Trade) 필터링
-                  let maxEnemyResponse = 0;
-                  for (let er = 0; er < 10; er++) {
-                    for (let ec = 0; ec < 9; ec++) {
-                      const ep = tempBoard[er][ec];
-                      if (ep && ep.camp === "cho") {
-                        const epMoves = getMoves(er, ec, tempBoard);
-                        for (const [etr, etc] of epMoves) {
-                          const enemyTempBoard = tempBoard.map(row => [...row]);
-                          enemyTempBoard[etr][etc] = ep;
-                          enemyTempBoard[er][ec] = null;
-
-                          if (!isUnderCheck("cho", enemyTempBoard)) {
-                            let responseScore = 0;
-                            const targetOfEnemy = tempBoard[etr][etc];
-                            if (targetOfEnemy) {
-                              const enemyTargetValue = values[targetOfEnemy.type] || 15;
-                              // CRITICAL: 잡히는 기물이 아군의 엄호를 받고 있다면, 동등 교환(Trade)이 성립하므로 손실 배율을 대폭 경감
-                              if (isPieceSupported(etr, etc, "han", tempBoard)) {
-                                responseScore += enemyTargetValue * 0.12; 
-                              } else {
-                                responseScore += enemyTargetValue; // 엄호가 없으면 쌩으로 기물을 잃는 최악의 손실
-                              }
-                            }
-                            
-                            const nextEnemyMoves = getMoves(etr, etc, enemyTempBoard);
-                            const threatensAI = nextEnemyMoves.some(([nair, naic]) => {
-                              const aip = enemyTempBoard[nair][naic];
-                              return aip && aip.camp === "han" && aip.type !== "졸" && aip.type !== "병";
-                            });
-                            if (threatensAI) responseScore += 12.0;
-
-                            if (responseScore > maxEnemyResponse) {
-                              maxEnemyResponse = responseScore;
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                  weight -= maxEnemyResponse * 0.95; 
                 }
               }
+              if (Math.abs(r - kr) + Math.abs(c - kc) <= 1) score += 22;
             }
-
-            aiPieces.push({ from: [r, c], to: [tr, tc], weight });
+          }
+          // 졸/병 (전진)
+          if (p.type === "졸" || p.type === "병") {
+            score += r * 3.5;
+            if (isWithinPalace(r, c, "cho")) score += 15; // 상대 궁성 돌파
+          }
+          // 궁(General)
+          if (p.type === "궁") {
+            if (r === 0 && c === 4) score += 15;
+            if (r === 1 && c === 4) score += 10;
+          }
+        } else {
+          // 초나라(플레이어) 감산 기법
+          // 마(馬)
+          if (p.type === "마") {
+            if (c === 0 || c === 8) score += 15;
+            else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score -= 18;
+          }
+          // 상(象)
+          if (p.type === "상") {
+            if (c === 0 || c === 8) score += 12;
+            else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score -= 12;
+          }
+          // 포(包)
+          if (p.type === "포") {
+            if (r === 7 && c === 4) score -= 35;
+          }
+          // 사(士)
+          if (p.type === "사") {
+            if (!isWithinPalace(r, c, "cho")) score += 35;
+            else {
+              let kr = 8, kc = 4;
+              for (let row = 7; row < 10; row++) {
+                for (let col = 3; col <= 5; col++) {
+                  if (currentBoard[row][col]?.type === "궁" && currentBoard[row][col]?.camp === "cho") {
+                    kr = row; kc = col; break;
+                  }
+                }
+              }
+              if (Math.abs(r - kr) + Math.abs(c - kc) <= 1) score -= 22;
+            }
+          }
+          // 졸/병 (전진)
+          if (p.type === "졸" || p.type === "병") {
+            score -= (9 - r) * 3.5;
+            if (isWithinPalace(r, c, "han")) score -= 15;
+          }
+          // 궁
+          if (p.type === "궁") {
+            if (r === 9 && c === 4) score -= 15;
+            if (r === 8 && c === 4) score -= 10;
           }
         }
       }
     }
 
-    const validMoves = aiPieces.filter(m => m.weight > -90000);
-    if (validMoves.length === 0) {
+    // 장군 유무 상태 반영
+    if (isUnderCheck("han", currentBoard)) score -= 85;
+    if (isUnderCheck("cho", currentBoard)) score += 85;
+
+    return score;
+  };
+
+  // 알파-베타 가지치기 기반 3-ply Minimax 알고리즘 구현
+  const minimax = (
+    boardState: Board,
+    depth: number,
+    alpha: number,
+    beta: number,
+    isMaximizing: boolean
+  ): number => {
+    if (depth === 0) {
+      return evaluateBoard(boardState);
+    }
+
+    const underCheckHan = isUnderCheck("han", boardState);
+    const underCheckCho = isUnderCheck("cho", boardState);
+
+    if (isMaximizing) {
+      let maxEval = -Infinity;
+      const moves = getAllLegalMoves("han", boardState);
+      
+      if (moves.length === 0) {
+        return underCheckHan ? -100000 - depth : 0; // 궁지에 몰려 외통수 패배
+      }
+
+      // 기물 획득 가능 수를 우선 정렬하여 가지치기 효율 최대화
+      moves.sort((a, b) => {
+        const valA = boardState[a.to[0]][a.to[1]] ? 1 : 0;
+        const valB = boardState[b.to[0]][b.to[1]] ? 1 : 0;
+        return valB - valA;
+      });
+
+      for (const move of moves) {
+        const temp = boardState.map(row => [...row]);
+        temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
+        temp[move.from[0]][move.from[1]] = null;
+
+        const evaluation = minimax(temp, depth - 1, alpha, beta, false);
+        maxEval = Math.max(maxEval, evaluation);
+        alpha = Math.max(alpha, evaluation);
+        if (beta <= alpha) {
+          break; // 가지치기 발생
+        }
+      }
+      return maxEval;
+    } else {
+      let minEval = Infinity;
+      const moves = getAllLegalMoves("cho", boardState);
+      
+      if (moves.length === 0) {
+        return underCheckCho ? 100000 + depth : 0; // 초나라 외통수 패배
+      }
+
+      moves.sort((a, b) => {
+        const valA = boardState[a.to[0]][a.to[1]] ? 1 : 0;
+        const valB = boardState[b.to[0]][b.to[1]] ? 1 : 0;
+        return valB - valA;
+      });
+
+      for (const move of moves) {
+        const temp = boardState.map(row => [...row]);
+        temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
+        temp[move.from[0]][move.from[1]] = null;
+
+        const evaluation = minimax(temp, depth - 1, alpha, beta, true);
+        minEval = Math.min(minEval, evaluation);
+        beta = Math.min(beta, evaluation);
+        if (beta <= alpha) {
+          break;
+        }
+      }
+      return minEval;
+    }
+  };
+
+  // 인공지능(AI) 자동 대국 실행
+  const makeAIMove = (currentBoard: Board) => {
+    const startTime = Date.now();
+    const legalMoves = getAllLegalMoves("han", currentBoard);
+
+    if (legalMoves.length === 0) {
       setWinner("cho");
       setStatusMessage("한(Red)이 외통수(Checkmate)에 걸려 초(Blue)가 승리하였습니다!");
       playSound("win");
       return;
     }
 
-    validMoves.sort((a, b) => b.weight - a.weight);
+    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 3수 앞 완벽 수읽기)
+    const searchDepth = aiDifficulty === "hard" ? 3 : aiDifficulty === "normal" ? 2 : 1;
+
+    const scoredMoves: { from: [number, number]; to: [number, number]; score: number }[] = [];
+
+    for (const move of legalMoves) {
+      const temp = currentBoard.map(row => [...row]);
+      temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
+      temp[move.from[0]][move.from[1]] = null;
+
+      // 미니맥스 알고리즘 구동
+      const score = minimax(temp, searchDepth - 1, -Infinity, Infinity, false);
+      scoredMoves.push({ from: move.from, to: move.to, score });
+    }
+
+    // 점수가 높은 순으로 내림차순 정렬
+    scoredMoves.sort((a, b) => b.score - a.score);
 
     let selectedMove;
     if (aiDifficulty === "hard") {
-      const maxWeight = validMoves[0].weight;
-      // CRITICAL: 오차 허용 폭을 0.0으로 셋팅하여, 100% 가장 높은 최선의 신의 한 수(Top 1)만 고집하게 함!
-      const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.0);
-      selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+      // 어려움 단계에서는 오차 허용 0.0으로 무조건 최고 점수 1순위(Top 1) 묘수만 실행
+      selectedMove = scoredMoves[0];
     } else if (aiDifficulty === "normal") {
-      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.20));
-      const bestPool = validMoves.slice(0, poolSize);
+      // 보통 단계에서는 상위 15% 수 중 임의 선택
+      const poolSize = Math.max(1, Math.floor(scoredMoves.length * 0.15));
+      const bestPool = scoredMoves.slice(0, poolSize);
       selectedMove = bestPool[Math.floor(Math.random() * bestPool.length)];
     } else {
-      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.50));
-      const loosePool = validMoves.slice(0, poolSize);
+      // 쉬움 단계에서는 상위 50% 중 임의 선택
+      const poolSize = Math.max(1, Math.floor(scoredMoves.length * 0.50));
+      const loosePool = scoredMoves.slice(0, poolSize);
       selectedMove = loosePool[Math.floor(Math.random() * loosePool.length)];
     }
 
@@ -826,6 +838,10 @@ export default function JanggiPage() {
     setIsChoCheck(choCheck);
     setIsHanCheck(hanCheck);
 
+    // 컴퓨터의 연산 시간 로그 확인용 (디버깅)
+    console.log(`AI Search Time: ${Date.now() - startTime}ms (Depth: ${searchDepth})`);
+
+    // 컴퓨터 기동 완료 후 턴을 초나라 플레이어에게 정상 양도
     setCurrentTurn("cho");
 
     if (choCheck) {
