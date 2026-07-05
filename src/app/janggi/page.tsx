@@ -568,7 +568,7 @@ export default function JanggiPage() {
     }
 
     const aiPieces: { from: [number, number]; to: [number, number]; weight: number }[] = [];
-    const values = { 궁: 1000, 차: 190, 포: 100, 마: 75, 상: 50, 사: 40, 졸: 22, 병: 22 };
+    const values = { 궁: 1000, 차: 220, 포: 110, 마: 85, 상: 55, 사: 45, 졸: 25, 병: 25 }; // 기물가치 정밀 밸런스 조정
 
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
@@ -579,12 +579,14 @@ export default function JanggiPage() {
             let weight = 0;
             const targetPiece = currentBoard[tr][tc];
 
+            // 1) 기물 잡기 가치
             if (targetPiece) {
               weight += values[targetPiece.type] || 15;
             }
 
+            // 기물 전진성
             weight += (tr - r) * 0.5; 
-            if (piece.type === "차") weight += 3.0;
+            if (piece.type === "차") weight += 3.5;
             if (piece.type === "포") weight += 2.0;
 
             const tempBoard = currentBoard.map(row => [...row]);
@@ -595,13 +597,15 @@ export default function JanggiPage() {
               weight = -99999; 
             } else {
               if (aiDifficulty !== "easy") {
-                const movingPieceValue = values[piece.type] || 22;
+                const movingPieceValue = values[piece.type] || 25;
 
+                // (2) 아군 엄호(Support) 보너스
                 const hasSupport = isPieceSupported(tr, tc, "han", tempBoard);
                 if (hasSupport) {
-                  weight += aiDifficulty === "hard" ? 30 : 15; 
+                  weight += aiDifficulty === "hard" ? 35 : 15; 
                 }
 
+                // (3) 위험 노출/자살 수 감점
                 if (playerAttackMap.has(`${tr},${tc}`)) {
                   if (hasSupport) {
                     weight -= movingPieceValue * 0.45;
@@ -611,43 +615,107 @@ export default function JanggiPage() {
                   }
                 }
 
+                // (4) 위험 대피 보너스
                 if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
-                  const escapeBonus = aiDifficulty === "hard" ? movingPieceValue * 1.0 : movingPieceValue * 0.5;
+                  const escapeBonus = aiDifficulty === "hard" ? movingPieceValue * 1.2 : movingPieceValue * 0.6;
                   weight += escapeBonus;
                 }
 
+                // (5) 적 궁성(행 7~9) 침투 가점
                 if (tr >= 7) {
                   weight += (tr - 6) * 5.0; 
                   if (piece.type === "졸" || piece.type === "병") {
-                    weight += 8.0; 
+                    weight += 12.0; 
                   }
                 }
 
-                if (piece.type === "사" && isWithinPalace(tr, tc, "han")) {
-                  weight += 10.0; 
+                // (6) 적 중요 기물 직접 조준(Threat) 가점 추가
+                const nextMoves = getMoves(tr, tc, tempBoard);
+                for (const [ntr, ntc] of nextMoves) {
+                  const threatenedPiece = tempBoard[ntr][ntc];
+                  if (threatenedPiece && threatenedPiece.camp === "cho") {
+                    // 적 기물을 노릴 때 조준 가중치 추가
+                    weight += (values[threatenedPiece.type] || 15) * 0.12;
+                  }
                 }
 
-                const nextMoves = getMoves(tr, tc, tempBoard);
+                // (7) 장군 부르기 보너스
                 const canCheck = nextMoves.some(([nr, nc]) => {
                   const t = tempBoard[nr][nc];
                   return t && t.type === "궁" && t.camp === "cho";
                 });
                 if (canCheck) {
-                  weight += aiDifficulty === "hard" ? 70 : 30;
+                  weight += aiDifficulty === "hard" ? 80 : 30;
                 }
 
-                // --- [HARD] 2단계 시뮬레이션 (Minimax 2-ply) 엔진 작동 ---
+                // --- [HARD 난이도] 전술 배치 테이블 & 이동성 & 2단계 미니맥스 고도화 ---
                 if (aiDifficulty === "hard") {
-                  let maxEnemyResponse = 0;
+                  // (A) 위치 가치 평가 (Positional Evaluation)
+                  // 마(馬) 위치 보정
+                  if (piece.type === "마") {
+                    if (tc === 0 || tc === 8) {
+                      weight -= 15.0; // 마가 구석에 처박히는 것을 방지
+                    } else if (tr >= 3 && tr <= 7 && tc >= 2 && tc <= 6) {
+                      weight += 20.0; // 마의 중앙 지배력 보너스
+                    }
+                  }
+                  // 상(象) 위치 보정
+                  if (piece.type === "상") {
+                    if (tc === 0 || tc === 8) {
+                      weight -= 12.0;
+                    } else if (tr >= 3 && tr <= 7 && tc >= 2 && tc <= 6) {
+                      weight += 14.0;
+                    }
+                  }
+                  // 사(士) 수비 밀착 보정
+                  if (piece.type === "사") {
+                    if (!isWithinPalace(tr, tc, "han")) {
+                      weight -= 35.0; // 사는 궁성을 탈출하면 대폭 감점
+                    } else {
+                      // 궁(漢)의 좌표 탐색
+                      let kingR = 1, kingC = 4;
+                      for (let kr = 0; kr < 3; kr++) {
+                        for (let kc = 3; kc <= 5; kc++) {
+                          const kp = tempBoard[kr][kc];
+                          if (kp && kp.type === "궁" && kp.camp === "han") {
+                            kingR = kr;
+                            kingC = kc;
+                            break;
+                          }
+                        }
+                      }
+                      const distToKing = Math.abs(tr - kingR) + Math.abs(tc - kingC);
+                      if (distToKing <= 1) {
+                        weight += 25.0; // 궁 바로 근처에서 호위 시 큰 보너스
+                      }
+                    }
+                  }
+                  // 궁(General) 안전 구역 잔류 보충
+                  if (piece.type === "궁") {
+                    if (tr === 0 && tc === 4) weight += 15.0;
+                    if (tr === 1 && tc === 4) weight += 10.0;
+                  }
 
-                  // tempBoard 상에서 상대(초나라)가 취할 수 있는 최선의 공격 수 탐색
+                  // (B) 전체 이동성(Mobility) 계산
+                  let totalMobility = 0;
+                  for (let mr = 0; mr < 10; mr++) {
+                    for (let mc = 0; mc < 9; mc++) {
+                      const mp = tempBoard[mr][mc];
+                      if (mp && mp.camp === "han") {
+                        totalMobility += getMoves(mr, mc, tempBoard).length;
+                      }
+                    }
+                  }
+                  weight += totalMobility * 0.35; // 기물들이 유기적으로 활로를 여는 수 선호
+
+                  // (C) 2단계 반격 탐색 (Minimax 2-ply)
+                  let maxEnemyResponse = 0;
                   for (let er = 0; er < 10; er++) {
                     for (let ec = 0; ec < 9; ec++) {
                       const ep = tempBoard[er][ec];
                       if (ep && ep.camp === "cho") {
                         const epMoves = getMoves(er, ec, tempBoard);
                         for (const [etr, etc] of epMoves) {
-                          // 초나라가 자살 수인지는 가볍게 검사
                           const enemyTempBoard = tempBoard.map(row => [...row]);
                           enemyTempBoard[etr][etc] = ep;
                           enemyTempBoard[er][ec] = null;
@@ -658,6 +726,14 @@ export default function JanggiPage() {
                             if (targetOfEnemy) {
                               responseScore += values[targetOfEnemy.type] || 15;
                             }
+                            // 적이 내 기물을 압박/조준하는 경우 가산
+                            const nextEnemyMoves = getMoves(etr, etc, enemyTempBoard);
+                            const threatensAI = nextEnemyMoves.some(([nair, naic]) => {
+                              const aip = enemyTempBoard[nair][naic];
+                              return aip && aip.camp === "han" && aip.type !== "졸" && aip.type !== "병";
+                            });
+                            if (threatensAI) responseScore += 12.0;
+
                             if (responseScore > maxEnemyResponse) {
                               maxEnemyResponse = responseScore;
                             }
@@ -666,9 +742,7 @@ export default function JanggiPage() {
                       }
                     }
                   }
-                  
-                  // 내 점수에서 상대의 예측 반격 점수를 차감 (horizon 예측 강화)
-                  weight -= maxEnemyResponse * 0.95;
+                  weight -= maxEnemyResponse * 0.95; // 미래의 역습 피해량 차감
                 }
               }
             }
@@ -692,7 +766,8 @@ export default function JanggiPage() {
     let selectedMove;
     if (aiDifficulty === "hard") {
       const maxWeight = validMoves[0].weight;
-      const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.05);
+      // 최선의 가치 범위만 필터링하여 엄격하게 선택
+      const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.01);
       selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
     } else if (aiDifficulty === "normal") {
       const poolSize = Math.max(1, Math.floor(validMoves.length * 0.20));
@@ -732,7 +807,6 @@ export default function JanggiPage() {
     setIsChoCheck(choCheck);
     setIsHanCheck(hanCheck);
 
-    // CRITICAL FIX: 컴퓨터가 장군을 치든 안치든 턴은 무조건 초(플레이어)에게 반환해야 먹통이 안 됨!
     setCurrentTurn("cho");
 
     if (choCheck) {
@@ -1133,7 +1207,7 @@ export default function JanggiPage() {
                             zIndex: isSelected ? 40 : 20,
                           }}
                         >
-                          {/* 이동 힌트 점 - 보이지 않는 외부 absolute 영역(w-12 h-12) & 실제 시각적 힌트 분리 */}
+                          {/* 이동 힌트 점 - 터치용 보이지 않는 외부 absolute 영역(w-12 h-12) & 실제 시각적 힌트 분리 */}
                           {isMoveCandidate && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
@@ -1144,7 +1218,7 @@ export default function JanggiPage() {
                                   : "translate(-50%, -50%)",
                               }}
                             >
-                              {/* 실제 눈에 보이는 힌트 원 */}
+                              {/* 실제 힌트 원 */}
                               <div
                                 className={`w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-dashed flex items-center justify-center pointer-events-none transition transform hover:scale-110 active:scale-95 ${
                                   board[rIdx][cIdx]
@@ -1155,7 +1229,7 @@ export default function JanggiPage() {
                             </div>
                           )}
 
-                          {/* 실제 기물 알 - absolute 및 translate 개별 독립 처리 */}
+                          {/* 실제 기물 알 */}
                           {piece && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
@@ -1198,7 +1272,7 @@ export default function JanggiPage() {
           {/* 승리 팝업 */}
           {winner && (
             <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 max-w-sm w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl">
                 <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 rounded-full flex items-center justify-center mx-auto text-3xl">
                   🏆
                 </div>
