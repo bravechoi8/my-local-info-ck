@@ -1078,7 +1078,7 @@ export default function JanggiPage() {
                   />
                 </svg>
 
-                {/* 기물 및 힌트 렌더링 - 부모는 w-0 h-0으로 크기 제거하여 좌표 충돌 완전 해결 */}
+                {/* 기물 및 힌트 렌더링 */}
                 {gameStarted &&
                   board.map((row, rIdx) =>
                     row.map((piece, cIdx) => {
@@ -1096,21 +1096,26 @@ export default function JanggiPage() {
                             zIndex: isSelected ? 40 : 20,
                           }}
                         >
-                          {/* 이동 힌트 점 - absolute 및 translate 개별 독립 처리 */}
+                          {/* 이동 힌트 점 - 터치용 보이지 않는 외부 absolute 영역(w-12 h-12) & 실제 시각적 힌트 분리 */}
                           {isMoveCandidate && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
-                              className={`absolute w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-dashed flex items-center justify-center cursor-pointer transition z-30 transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 active:scale-95 ${
-                                board[rIdx][cIdx]
-                                  ? "bg-red-500/80 border-white shadow-[0_0_12px_#ef4444] animate-pulse"
-                                  : "bg-emerald-500/70 border-white shadow-[0_0_12px_#10b981]"
-                              }`}
+                              className="absolute w-12 h-12 flex items-center justify-center cursor-pointer z-30"
                               style={{
                                 transform: is3dMode 
                                   ? "translate(-50%, -50%) translateZ(14px)" 
                                   : "translate(-50%, -50%)",
                               }}
-                            />
+                            >
+                              {/* 실제 눈에 보이는 다이어그램 형태의 힌트 구체 */}
+                              <div
+                                className={`w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-dashed flex items-center justify-center pointer-events-none transition transform hover:scale-110 active:scale-95 ${
+                                  board[rIdx][cIdx]
+                                    ? "bg-red-500/80 border-white shadow-[0_0_12px_#ef4444] animate-pulse"
+                                    : "bg-emerald-500/70 border-white shadow-[0_0_12px_#10b981]"
+                                }`}
+                              />
+                            </div>
                           )}
 
                           {/* 실제 기물 알 - absolute 및 translate 개별 독립 처리 */}
