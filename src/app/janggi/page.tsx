@@ -66,7 +66,6 @@ function playSound(type: "select" | "move" | "capture" | "win" | "check") {
         o.stop(ctx.currentTime + i * 0.08 + 0.18);
       });
     } else if (type === "check") {
-      // 긴장감 있는 2단 사이렌 경고음
       osc.type = "sine";
       osc.frequency.setValueAtTime(780, ctx.currentTime);
       osc.frequency.setValueAtTime(630, ctx.currentTime + 0.08);
@@ -104,8 +103,8 @@ export default function JanggiPage() {
   const [statusMessage, setStatusMessage] = useState<string>("초(Blue) 차례입니다. 기물을 선택하세요.");
   const [is3dMode, setIs3dMode] = useState<boolean>(true); 
   const [aiDifficulty, setAiDifficulty] = useState<AIDifficulty>("normal"); 
-  const [isChoCheck, setIsChoCheck] = useState<boolean>(false); // 초나라 장군 상태
-  const [isHanCheck, setIsHanCheck] = useState<boolean>(false); // 한나라 장군 상태
+  const [isChoCheck, setIsChoCheck] = useState<boolean>(false); 
+  const [isHanCheck, setIsHanCheck] = useState<boolean>(false); 
 
   // 보드 초기화 함수
   const initBoard = (choLay: MaSangLayout, hanLay: MaSangLayout) => {
@@ -171,7 +170,7 @@ export default function JanggiPage() {
     } else if (choLay === "바깥상") {
       tempBoard[9][1] = { type: "상", camp: "cho", name: "象" };
       tempBoard[9][2] = { type: "마", camp: "cho", name: "馬" };
-      tempBoard[9][6] = { type: "마", camp: "cho", name: "마" };
+      tempBoard[9][6] = { type: "마", camp: "cho", name: "馬" };
       tempBoard[9][7] = { type: "상", camp: "cho", name: "象" };
     }
 
@@ -503,7 +502,6 @@ export default function JanggiPage() {
 
   // 실시간 장군(Check) 판독 함수
   const isUnderCheck = (camp: "cho" | "han", currentBoard: Board): boolean => {
-    // 1. camp 진영의 궁(King) 위치 검색
     let kingR = -1;
     let kingC = -1;
     for (let r = 0; r < 10; r++) {
@@ -517,9 +515,8 @@ export default function JanggiPage() {
       }
       if (kingR !== -1) break;
     }
-    if (kingR === -1) return false; // 궁이 이미 없음 (게임 종료 상황)
+    if (kingR === -1) return false; 
 
-    // 2. 상대 진영의 모든 기물이 다음 턴에 궁을 잡을 수 있는지 스캔
     const enemyCamp = camp === "cho" ? "han" : "cho";
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
@@ -528,7 +525,27 @@ export default function JanggiPage() {
           const moves = getMoves(r, c, currentBoard);
           const targetsKing = moves.some(([tr, tc]) => tr === kingR && tc === kingC);
           if (targetsKing) {
-            return true; // 장군 발생!
+            return true; 
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  // 아군 기물이 (tr, tc) 위치를 지원/엄호(Support)하는지 판별
+  const isPieceSupported = (row: number, col: number, camp: "cho" | "han", boardState: Board): boolean => {
+    // 엄호 연산을 위해 목적지 좌표를 임시로 적으로 셋팅해 아군 공격선을 구함
+    const tempBoard = boardState.map(r => [...r]);
+    tempBoard[row][col] = { type: "졸", camp: camp === "cho" ? "han" : "cho", name: "卒" };
+
+    for (let r = 0; r < 10; r++) {
+      for (let c = 0; c < 9; c++) {
+        const p = tempBoard[r][c];
+        if (p && p.camp === camp && (r !== row || c !== col)) {
+          const moves = getMoves(r, c, tempBoard);
+          if (moves.some(([tr, tc]) => tr === row && tc === col)) {
+            return true; // 아군 엄호선 존재
           }
         }
       }
@@ -552,7 +569,7 @@ export default function JanggiPage() {
     }
 
     const aiPieces: { from: [number, number]; to: [number, number]; weight: number }[] = [];
-    const values = { 궁: 1000, 차: 180, 포: 100, 마: 70, 상: 45, 사: 35, 졸: 20, 병: 20 };
+    const values = { 궁: 1000, 차: 190, 포: 100, 마: 75, 상: 50, 사: 40, 졸: 22, 병: 22 };
 
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
@@ -568,43 +585,69 @@ export default function JanggiPage() {
               weight += values[targetPiece.type] || 15;
             }
 
-            weight += (tr - r) * 0.4; // 전진성
-            if (piece.type === "차") weight += 2.0;
-            if (piece.type === "포") weight += 1.5;
+            // 기물 전진성 및 선호도
+            weight += (tr - r) * 0.5; // 전진성 상향
+            if (piece.type === "차") weight += 3.0;
+            if (piece.type === "포") weight += 2.0;
 
-            // 2) 시뮬레이션: 이 이동을 적용한 가상 보드 생성
+            // 시뮬레이션: 이 이동을 적용한 가상 보드 생성
             const tempBoard = currentBoard.map(row => [...row]);
             tempBoard[tr][tc] = piece;
             tempBoard[r][c] = null;
 
-            // CRITICAL: 만약 이 수를 둔 후에도 한나라(AI)가 장군 상태라면 멍군이 안 된 것이므로 수 배제
+            // 장군 상태 해결 검사 (멍군 강제)
             if (isUnderCheck("han", tempBoard)) {
               weight = -99999; 
             } else {
-              // 장군이 안 걸린 안전한 수라면 전술 점수 평가
+              // 3D 지능형 알고리즘 적용 (보통/어려움)
               if (aiDifficulty !== "easy") {
-                const movingPieceValue = values[piece.type] || 20;
+                const movingPieceValue = values[piece.type] || 22;
 
-                // 자살 수 감지
+                // (2) 아군 엄호(Support) 보너스 부여
+                const hasSupport = isPieceSupported(tr, tc, "han", tempBoard);
+                if (hasSupport) {
+                  weight += aiDifficulty === "hard" ? 30 : 15; // 아군 백업 보너스
+                }
+
+                // (3) 자살 및 위험 노출 감점
                 if (playerAttackMap.has(`${tr},${tc}`)) {
-                  const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.3 : movingPieceValue * 0.6;
-                  weight -= penalty;
+                  if (hasSupport) {
+                    // 엄호가 있어도 적 영역이면 기물 교환 가치 평가 (손해인지 아닌지)
+                    weight -= movingPieceValue * 0.45;
+                  } else {
+                    // 무방비 노출 시 대폭 감점 (공짜 헌납 방지)
+                    const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.5 : movingPieceValue * 0.8;
+                    weight -= penalty;
+                  }
                 }
 
-                // 대피 연산
+                // (4) 위험 대피 보너스
                 if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
-                  const bonus = aiDifficulty === "hard" ? movingPieceValue * 1.0 : movingPieceValue * 0.5;
-                  weight += bonus;
+                  const escapeBonus = aiDifficulty === "hard" ? movingPieceValue * 1.0 : movingPieceValue * 0.5;
+                  weight += escapeBonus;
                 }
 
-                // 적 궁(楚)에게 장군을 부를 수 있는지 판정
+                // (5) 적 궁성(행 7~9) 침투 시 보너스 가점 (협공 활성화)
+                if (tr >= 7) {
+                  weight += (tr - 6) * 5.0; // 밑으로 침투할수록 추가 가점
+                  if (piece.type === "졸" || piece.type === "병") {
+                    weight += 8.0; // 졸/병 침투 가점
+                  }
+                }
+
+                // (6) 수비 안정성 보너스 (궁 근처에 사가 있을 때 보너스)
+                if (piece.type === "사" && isWithinPalace(tr, tc, "han")) {
+                  weight += 10.0; // 사의 궁성 이탈 방지
+                }
+
+                // (7) 적 궁(楚)에게 장군을 부를 수 있는지 판정
                 const nextMoves = getMoves(tr, tc, tempBoard);
                 const canCheck = nextMoves.some(([nr, nc]) => {
                   const t = tempBoard[nr][nc];
                   return t && t.type === "궁" && t.camp === "cho";
                 });
                 if (canCheck) {
-                  weight += aiDifficulty === "hard" ? 60 : 25;
+                  weight += aiDifficulty === "hard" ? 70 : 30;
                 }
               }
             }
@@ -615,7 +658,6 @@ export default function JanggiPage() {
       }
     }
 
-    // 만약 모든 수들의 가중치가 -99999라면 (장군을 해제할 수 없는 '외통수' 상황)
     const validMoves = aiPieces.filter(m => m.weight > -90000);
     if (validMoves.length === 0) {
       setWinner("cho");
@@ -624,20 +666,20 @@ export default function JanggiPage() {
       return;
     }
 
-    // 유효한 수들만 정렬
     validMoves.sort((a, b) => b.weight - a.weight);
 
     let selectedMove;
     if (aiDifficulty === "hard") {
       const maxWeight = validMoves[0].weight;
-      const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.1);
+      // 점수가 가장 높은 최고의 한 수 풀에서 무작위
+      const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.05);
       selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
     } else if (aiDifficulty === "normal") {
-      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.25));
+      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.20));
       const bestPool = validMoves.slice(0, poolSize);
       selectedMove = bestPool[Math.floor(Math.random() * bestPool.length)];
     } else {
-      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.55));
+      const poolSize = Math.max(1, Math.floor(validMoves.length * 0.50));
       const loosePool = validMoves.slice(0, poolSize);
       selectedMove = loosePool[Math.floor(Math.random() * loosePool.length)];
     }
@@ -658,7 +700,6 @@ export default function JanggiPage() {
     const moveStr = `한: ${movingPiece.type}(${fr},${fc}) → (${tr},${tc})${destPiece ? ` [${destPiece.type} 획득]` : ""}`;
     setMoveHistory(prev => [moveStr, ...prev]);
 
-    // 대국 종료 체크 (궁 획득)
     if (destPiece && destPiece.type === "궁") {
       setWinner("han");
       setStatusMessage("한(Red)이 초의 궁을 획득하여 승리하였습니다!");
@@ -666,7 +707,6 @@ export default function JanggiPage() {
       return;
     }
 
-    // 장군 실시간 상태 체크
     const choCheck = isUnderCheck("cho", nextBoard);
     const hanCheck = isUnderCheck("han", nextBoard);
     setIsChoCheck(choCheck);
@@ -692,19 +732,11 @@ export default function JanggiPage() {
       const piece = board[sr][sc]!;
       const destPiece = board[r][c];
 
-      // 가상 시뮬레이션: 이 수를 둔 다음 장군이 계속 걸려있는지 검증 (딴짓 금지)
       const nextBoard = board.map(row => [...row]);
       nextBoard[r][c] = piece;
       nextBoard[sr][sc] = null;
 
-      if (isUnderCheck("cho", nextBoard)) {
-        // 장군이 안 풀리는 수라면 차단
-        playSound("select"); // 띡 경고음
-        setStatusMessage("⚠️ 경고: 장군 상태입니다! 궁을 보호하는 수(멍군)를 두어야 합니다.");
-        return;
-      }
-
-      // 검증 통과 후 이동 적용
+      // 이미 필터링을 거쳐 possibleMoves에 셋팅되었으므로, 여기서는 다이렉트 이동 적용이 안전
       setBoard(nextBoard);
       playSound(destPiece ? "capture" : "move");
 
@@ -721,7 +753,6 @@ export default function JanggiPage() {
       setSelectedPos(null);
       setPossibleMoves([]);
 
-      // 장군 상태 감지
       const choCheck = isUnderCheck("cho", nextBoard);
       const hanCheck = isUnderCheck("han", nextBoard);
       setIsChoCheck(choCheck);
@@ -755,9 +786,25 @@ export default function JanggiPage() {
     if (clickedPiece && clickedPiece.camp === currentTurn) {
       playSound("select");
       setSelectedPos([r, c]);
-      const moves = getMoves(r, c, board);
-      setPossibleMoves(moves);
-      setStatusMessage(`${clickedPiece.type}을(를) 선택함. 이동할 위치를 클릭하세요.`);
+
+      // 1. 일단 이 기물이 갈 수 있는 기본 이동 탐색
+      const rawMoves = getMoves(r, c, board);
+
+      // 2. 중요: 이 수들 중 "이 수를 두었을 때 내 궁이 안전해지는(장군이 안 걸리는) 진짜 멍군 수"만 필터링
+      const filteredMoves = rawMoves.filter(([tr, tc]) => {
+        const tempBoard = board.map(row => [...row]);
+        tempBoard[tr][tc] = clickedPiece;
+        tempBoard[r][c] = null;
+        return !isUnderCheck(clickedPiece.camp, tempBoard);
+      });
+
+      setPossibleMoves(filteredMoves);
+
+      if (filteredMoves.length === 0) {
+        setStatusMessage(`${clickedPiece.type}은(는) 장군을 피할 수 없어 현재 움직일 수 없습니다.`);
+      } else {
+        setStatusMessage(`${clickedPiece.type}을(를) 선택함. 이동할 위치를 클릭하세요.`);
+      }
     } else {
       setSelectedPos(null);
       setPossibleMoves([]);
@@ -803,7 +850,7 @@ export default function JanggiPage() {
               <h1 className="text-2xl font-black text-slate-800 dark:text-white leading-tight">
                 3D 클래식 장기
               </h1>
-              {/* 장군(Check) 경보 배지 표출 */}
+              {/* 장군 감지 배지 */}
               {(isChoCheck || isHanCheck) && (
                 <span className="animate-pulse bg-red-600 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.7)] flex items-center gap-1">
                   🚨 장군 (Check)
@@ -974,7 +1021,7 @@ export default function JanggiPage() {
           </div>
         </section>
 
-        {/* 3D 판 영역 */}
+        {/* 3D 판 */}
         <section className="col-span-1 lg:col-span-2 flex flex-col items-center justify-center">
           <div
             className="w-full max-w-[500px] flex items-center justify-center"
@@ -983,7 +1030,6 @@ export default function JanggiPage() {
               paddingBottom: is3dMode ? "40px" : "0px",
             }}
           >
-            {/* 3D 나무판 */}
             <div
               className={`w-full aspect-[9/10] relative bg-[#eed6b0] dark:bg-[#3d2a1b] rounded-3xl p-[7.5%] transition-all duration-500 ease-out border-4 border-[#a67146] dark:border-[#2f2015]`}
               style={{
@@ -1000,7 +1046,7 @@ export default function JanggiPage() {
             >
               <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none rounded-2xl" />
 
-              {/* 격자선 교차점 영역 */}
+              {/* 격자선 영역 */}
               <div className="w-full h-full relative" style={{ transformStyle: "preserve-3d" }}>
                 
                 {/* 가로선 */}
@@ -1050,7 +1096,7 @@ export default function JanggiPage() {
                   />
                 </svg>
 
-                {/* 기물 및 힌트 점 */}
+                {/* 기물 및 힌트 렌더링 */}
                 {gameStarted &&
                   board.map((row, rIdx) =>
                     row.map((piece, cIdx) => {
@@ -1124,7 +1170,7 @@ export default function JanggiPage() {
             </div>
           </div>
 
-          {/* 우승 팝업 */}
+          {/* 승리 팝업 */}
           {winner && (
             <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn">
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl">
