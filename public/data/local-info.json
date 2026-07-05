@@ -1087,5 +1087,27 @@
     "target": "연탄보일러를 가정난방용으로 사용하는 가구",
     "summary": "연탄보일러 사용 가구에 연탄쿠폰을 지원하는 난방비 사업 (가구당 54.6만원 지급)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000111"
+  },
+  {
+    "id": 97,
+    "name": "장병 인권상담 지원",
+    "category": "혜택",
+    "startDate": "2024-05-15",
+    "endDate": "상시",
+    "location": "국방부 인권담당관",
+    "target": "장병, 군무원, 일반 국민",
+    "summary": "군 인권 관련 진정 및 상담",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000009"
+  },
+  {
+    "id": 98,
+    "name": "전역예정군인 재취업 지원",
+    "category": "혜택",
+    "startDate": "2023-10-27",
+    "endDate": "상시",
+    "location": "국방전직교육원 각 사업부서",
+    "target": "전역예정장병",
+    "summary": "전역예정장병에게 전직상담 및 교육, 취업 등에 대한 서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000013"
   }
 ]
