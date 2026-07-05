@@ -535,7 +535,6 @@ export default function JanggiPage() {
 
   // 아군 기물이 (tr, tc) 위치를 지원/엄호(Support)하는지 판별
   const isPieceSupported = (row: number, col: number, camp: "cho" | "han", boardState: Board): boolean => {
-    // 엄호 연산을 위해 목적지 좌표를 임시로 적으로 셋팅해 아군 공격선을 구함
     const tempBoard = boardState.map(r => [...r]);
     tempBoard[row][col] = { type: "졸", camp: camp === "cho" ? "han" : "cho", name: "卒" };
 
@@ -545,7 +544,7 @@ export default function JanggiPage() {
         if (p && p.camp === camp && (r !== row || c !== col)) {
           const moves = getMoves(r, c, tempBoard);
           if (moves.some(([tr, tc]) => tr === row && tc === col)) {
-            return true; // 아군 엄호선 존재
+            return true; 
           }
         }
       }
@@ -580,67 +579,54 @@ export default function JanggiPage() {
             let weight = 0;
             const targetPiece = currentBoard[tr][tc];
 
-            // 1) 적 기물 잡기 가치
             if (targetPiece) {
               weight += values[targetPiece.type] || 15;
             }
 
-            // 기물 전진성 및 선호도
-            weight += (tr - r) * 0.5; // 전진성 상향
+            weight += (tr - r) * 0.5; 
             if (piece.type === "차") weight += 3.0;
             if (piece.type === "포") weight += 2.0;
 
-            // 시뮬레이션: 이 이동을 적용한 가상 보드 생성
             const tempBoard = currentBoard.map(row => [...row]);
             tempBoard[tr][tc] = piece;
             tempBoard[r][c] = null;
 
-            // 장군 상태 해결 검사 (멍군 강제)
             if (isUnderCheck("han", tempBoard)) {
               weight = -99999; 
             } else {
-              // 3D 지능형 알고리즘 적용 (보통/어려움)
               if (aiDifficulty !== "easy") {
                 const movingPieceValue = values[piece.type] || 22;
 
-                // (2) 아군 엄호(Support) 보너스 부여
                 const hasSupport = isPieceSupported(tr, tc, "han", tempBoard);
                 if (hasSupport) {
-                  weight += aiDifficulty === "hard" ? 30 : 15; // 아군 백업 보너스
+                  weight += aiDifficulty === "hard" ? 30 : 15; 
                 }
 
-                // (3) 자살 및 위험 노출 감점
                 if (playerAttackMap.has(`${tr},${tc}`)) {
                   if (hasSupport) {
-                    // 엄호가 있어도 적 영역이면 기물 교환 가치 평가 (손해인지 아닌지)
                     weight -= movingPieceValue * 0.45;
                   } else {
-                    // 무방비 노출 시 대폭 감점 (공짜 헌납 방지)
                     const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.5 : movingPieceValue * 0.8;
                     weight -= penalty;
                   }
                 }
 
-                // (4) 위험 대피 보너스
                 if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
                   const escapeBonus = aiDifficulty === "hard" ? movingPieceValue * 1.0 : movingPieceValue * 0.5;
                   weight += escapeBonus;
                 }
 
-                // (5) 적 궁성(행 7~9) 침투 시 보너스 가점 (협공 활성화)
                 if (tr >= 7) {
-                  weight += (tr - 6) * 5.0; // 밑으로 침투할수록 추가 가점
+                  weight += (tr - 6) * 5.0; 
                   if (piece.type === "졸" || piece.type === "병") {
-                    weight += 8.0; // 졸/병 침투 가점
+                    weight += 8.0; 
                   }
                 }
 
-                // (6) 수비 안정성 보너스 (궁 근처에 사가 있을 때 보너스)
                 if (piece.type === "사" && isWithinPalace(tr, tc, "han")) {
-                  weight += 10.0; // 사의 궁성 이탈 방지
+                  weight += 10.0; 
                 }
 
-                // (7) 적 궁(楚)에게 장군을 부를 수 있는지 판정
                 const nextMoves = getMoves(tr, tc, tempBoard);
                 const canCheck = nextMoves.some(([nr, nc]) => {
                   const t = tempBoard[nr][nc];
@@ -671,7 +657,6 @@ export default function JanggiPage() {
     let selectedMove;
     if (aiDifficulty === "hard") {
       const maxWeight = validMoves[0].weight;
-      // 점수가 가장 높은 최고의 한 수 풀에서 무작위
       const bestMoves = validMoves.filter(m => m.weight >= maxWeight - 0.05);
       selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
     } else if (aiDifficulty === "normal") {
@@ -736,7 +721,6 @@ export default function JanggiPage() {
       nextBoard[r][c] = piece;
       nextBoard[sr][sc] = null;
 
-      // 이미 필터링을 거쳐 possibleMoves에 셋팅되었으므로, 여기서는 다이렉트 이동 적용이 안전
       setBoard(nextBoard);
       playSound(destPiece ? "capture" : "move");
 
@@ -787,10 +771,8 @@ export default function JanggiPage() {
       playSound("select");
       setSelectedPos([r, c]);
 
-      // 1. 일단 이 기물이 갈 수 있는 기본 이동 탐색
       const rawMoves = getMoves(r, c, board);
 
-      // 2. 중요: 이 수들 중 "이 수를 두었을 때 내 궁이 안전해지는(장군이 안 걸리는) 진짜 멍군 수"만 필터링
       const filteredMoves = rawMoves.filter(([tr, tc]) => {
         const tempBoard = board.map(row => [...row]);
         tempBoard[tr][tc] = clickedPiece;
@@ -1096,7 +1078,7 @@ export default function JanggiPage() {
                   />
                 </svg>
 
-                {/* 기물 및 힌트 렌더링 */}
+                {/* 기물 및 힌트 렌더링 - 부모는 w-0 h-0으로 크기 제거하여 좌표 충돌 완전 해결 */}
                 {gameStarted &&
                   board.map((row, rIdx) =>
                     row.map((piece, cIdx) => {
@@ -1106,35 +1088,36 @@ export default function JanggiPage() {
                       return (
                         <div
                           key={`piece-cell-${rIdx}-${cIdx}`}
-                          className="absolute"
+                          className="absolute w-0 h-0"
                           style={{
                             top: `${(rIdx / 9) * 100}%`,
                             left: `${(cIdx / 8) * 100}%`,
-                            transform: "translate(-50%, -50%)",
                             transformStyle: "preserve-3d",
                             zIndex: isSelected ? 40 : 20,
                           }}
                         >
-                          {/* 이동 힌트 점 */}
+                          {/* 이동 힌트 점 - absolute 및 translate 개별 독립 처리 */}
                           {isMoveCandidate && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
-                              className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-dashed flex items-center justify-center cursor-pointer transition z-30 transform hover:scale-110 active:scale-95 ${
+                              className={`absolute w-7 h-7 sm:w-10 sm:h-10 rounded-full border-2 border-dashed flex items-center justify-center cursor-pointer transition z-30 transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 active:scale-95 ${
                                 board[rIdx][cIdx]
-                                  ? "bg-red-500/80 border-white shadow-[0_0_8px_#ef4444] animate-pulse"
-                                  : "bg-emerald-500/70 border-white shadow-[0_0_8px_#10b981]"
+                                  ? "bg-red-500/80 border-white shadow-[0_0_12px_#ef4444] animate-pulse"
+                                  : "bg-emerald-500/70 border-white shadow-[0_0_12px_#10b981]"
                               }`}
                               style={{
-                                transform: is3dMode ? "translateZ(14px)" : "none",
+                                transform: is3dMode 
+                                  ? "translate(-50%, -50%) translateZ(14px)" 
+                                  : "translate(-50%, -50%)",
                               }}
                             />
                           )}
 
-                          {/* 실제 기물 알 */}
+                          {/* 실제 기물 알 - absolute 및 translate 개별 독립 처리 */}
                           {piece && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
-                              className={`w-8 h-8 sm:w-11 sm:h-11 rounded-full flex items-center justify-center font-black select-none cursor-pointer transition-transform border border-slate-800/20 ${
+                              className={`absolute flex items-center justify-center font-black select-none cursor-pointer transition-transform border border-slate-800/20 rounded-full ${
                                 piece.camp === "cho"
                                   ? "bg-[#e2f0ff] border-blue-500 text-blue-700 dark:bg-slate-800 dark:border-blue-400 dark:text-blue-400"
                                   : "bg-[#ffe3e7] border-red-500 text-red-700 dark:bg-slate-800 dark:border-red-400 dark:text-red-400"
@@ -1147,10 +1130,10 @@ export default function JanggiPage() {
                               }`}
                               style={{
                                 transform: is3dMode
-                                  ? `translateZ(10px) ${isSelected ? "scale(1.15) translateY(-8px)" : ""}`
+                                  ? `translate(-50%, -50%) translateZ(10px) ${isSelected ? "scale(1.15) translateY(-8px)" : ""}`
                                   : isSelected
-                                  ? "scale(1.1) translateY(-3px)"
-                                  : "none",
+                                  ? "translate(-50%, -50%) scale(1.1) translateY(-3px)"
+                                  : "translate(-50%, -50%)",
                                 boxShadow: is3dMode
                                   ? piece.camp === "cho"
                                     ? "0 5px 0 #1b386a, 0 8px 12px rgba(0,0,0,0.35)"
