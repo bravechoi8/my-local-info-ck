@@ -94,6 +94,11 @@ function isWithinPalace(r: number, c: number, camp: "cho" | "han"): boolean {
   }
 }
 
+// 보드 객체 완전 복제 함수 (참조 오염 완벽 복구 - Deep Copy)
+function cloneBoard(b: Board): Board {
+  return b.map(row => row.map(cell => cell ? { ...cell } : null));
+}
+
 export default function JanggiPage() {
   const [board, setBoard] = useState<Board>([]);
   const [currentTurn, setCurrentTurn] = useState<"cho" | "han">("cho");
@@ -542,7 +547,7 @@ export default function JanggiPage() {
 
   // 아군 기물이 (tr, tc) 위치를 지원/엄호(Support)하는지 판별
   const isPieceSupported = (row: number, col: number, camp: "cho" | "han", boardState: Board): boolean => {
-    const tempBoard = boardState.map(r => [...r]);
+    const tempBoard = cloneBoard(boardState); // 딥 카피 오염 복구
     tempBoard[row][col] = { type: "졸", camp: camp === "cho" ? "han" : "cho", name: "卒" };
 
     for (let r = 0; r < 10; r++) {
@@ -568,7 +573,7 @@ export default function JanggiPage() {
         if (p && p.camp === camp) {
           const raw = getMoves(r, c, currentBoard);
           for (const [tr, tc] of raw) {
-            const temp = currentBoard.map(row => [...row]);
+            const temp = cloneBoard(currentBoard); // 딥 카피 오염 복구
             temp[tr][tc] = p;
             temp[r][c] = null;
             if (!isUnderCheck(camp, temp)) {
@@ -593,14 +598,13 @@ export default function JanggiPage() {
     const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 15, 병: 15 };
 
     if (!victim) {
-      // 기물을 잡지 않는 수 중, 중앙 진출 또는 전진성을 정렬 순위에 반영
       const forward = (move.to[0] - move.from[0]) * (assailant.camp === "han" ? 1 : -1);
       return forward * 2;
     }
 
     const victimValue = values[victim.type] || 15;
     const assailantValue = values[assailant.type] || 15;
-    // MVV-LVA 공식: (피해자 가치 * 10) - (가해자 가치)
+    // MVV-LVA 공식
     return victimValue * 10 - assailantValue;
   };
 
@@ -621,7 +625,7 @@ export default function JanggiPage() {
 
         if (p.camp === "han") {
           if (p.type === "차") {
-            if (c === 4) score += 15; // 중앙 기둥 세로선 지배 가점
+            if (c === 4) score += 15; 
           }
           if (p.type === "마") {
             if (c === 0 || c === 8) score -= 15;
@@ -632,7 +636,7 @@ export default function JanggiPage() {
             else if (r >= 3 && r <= 7 && c >= 2 && c <= 6) score += 12;
           }
           if (p.type === "포") {
-            if (r === 2 && c === 4) score += 35; // 면포 명당
+            if (r === 2 && c === 4) score += 35; 
           }
           if (p.type === "사") {
             if (!isWithinPalace(r, c, "han")) score -= 35;
@@ -703,7 +707,7 @@ export default function JanggiPage() {
     return score;
   };
 
-  // 알파-베타 가지치기 기반 4-ply Minimax 알고리즘 구현
+  // 알파-베타 가지치기 기반 Minimax 알고리즘 구현 (5-ply까지 고속 탐색)
   const minimax = (
     boardState: Board,
     depth: number,
@@ -726,11 +730,10 @@ export default function JanggiPage() {
         return underCheckHan ? -100000 - depth : 0; 
       }
 
-      // MVV-LVA 우선순위 정렬 적용으로 탐색 시간 99% 단축 및 효율 극대화
       moves.sort((a, b) => getMoveScore(b, boardState) - getMoveScore(a, boardState));
 
       for (const move of moves) {
-        const temp = boardState.map(row => [...row]);
+        const temp = cloneBoard(boardState); // 딥 카피 오염 복구
         temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
         temp[move.from[0]][move.from[1]] = null;
 
@@ -750,11 +753,10 @@ export default function JanggiPage() {
         return underCheckCho ? 100000 + depth : 0; 
       }
 
-      // 상대방의 최선 반격 정렬
       moves.sort((a, b) => getMoveScore(b, boardState) - getMoveScore(a, boardState));
 
       for (const move of moves) {
-        const temp = boardState.map(row => [...row]);
+        const temp = cloneBoard(boardState); // 딥 카피 오염 복구
         temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
         temp[move.from[0]][move.from[1]] = null;
 
@@ -781,12 +783,12 @@ export default function JanggiPage() {
       return;
     }
 
-    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 4수 앞 완전 수읽기)
-    const searchDepth = aiDifficulty === "hard" ? 4 : aiDifficulty === "normal" ? 2 : 1;
+    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 5수 앞 알파고급 수읽기)
+    const searchDepth = aiDifficulty === "hard" ? 5 : aiDifficulty === "normal" ? 2 : 1;
     const scoredMoves: { from: [number, number]; to: [number, number]; score: number }[] = [];
 
     for (const move of legalMoves) {
-      const temp = currentBoard.map(row => [...row]);
+      const temp = cloneBoard(currentBoard); // 딥 카피 오염 복구
       temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
       temp[move.from[0]][move.from[1]] = null;
 
@@ -815,7 +817,7 @@ export default function JanggiPage() {
     const movingPiece = currentBoard[fr][fc]!;
     const destPiece = currentBoard[tr][tc];
 
-    const nextBoard = currentBoard.map(row => [...row]);
+    const nextBoard = cloneBoard(currentBoard); // 딥 카피 오염 복구
     nextBoard[tr][tc] = movingPiece;
     nextBoard[fr][fc] = null;
 
@@ -869,7 +871,7 @@ export default function JanggiPage() {
       const piece = board[sr][sc]!;
       const destPiece = board[r][c];
 
-      const nextBoard = board.map(row => [...row]);
+      const nextBoard = cloneBoard(board); // 딥 카피 오염 복구
       nextBoard[r][c] = piece;
       nextBoard[sr][sc] = null;
 
@@ -928,7 +930,7 @@ export default function JanggiPage() {
       const rawMoves = getMoves(r, c, board);
 
       const filteredMoves = rawMoves.filter(([tr, tc]) => {
-        const tempBoard = board.map(row => [...row]);
+        const tempBoard = cloneBoard(board); // 딥 카피 오염 복구
         tempBoard[tr][tc] = clickedPiece;
         tempBoard[r][c] = null;
         return !isUnderCheck(clickedPiece.camp, tempBoard);
