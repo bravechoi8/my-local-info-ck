@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import DarkModeToggle from "@/components/DarkModeToggle";
 
@@ -14,6 +14,8 @@ interface Piece {
 type Board = (Piece | null)[][];
 
 type MaSangLayout = "왼상" | "오른상" | "안상" | "바깥상";
+
+type AIDifficulty = "easy" | "normal" | "hard";
 
 // 사운드 피드백을 위한 Web Audio API 헬퍼 함수
 function playSound(type: "select" | "move" | "capture" | "win") {
@@ -91,7 +93,8 @@ export default function JanggiPage() {
   const [winner, setWinner] = useState<"cho" | "han" | null>(null);
   const [moveHistory, setMoveHistory] = useState<string[]>([]);
   const [statusMessage, setStatusMessage] = useState<string>("초(Blue) 차례입니다. 기물을 선택하세요.");
-  const [is3dMode, setIs3dMode] = useState<boolean>(true); // 기본 3D 모드 탑재
+  const [is3dMode, setIs3dMode] = useState<boolean>(true); 
+  const [aiDifficulty, setAiDifficulty] = useState<AIDifficulty>("normal"); // AI 난이도 상태 추가
 
   // 보드 초기화 함수
   const initBoard = (choLay: MaSangLayout, hanLay: MaSangLayout) => {
@@ -505,10 +508,26 @@ export default function JanggiPage() {
     return moves;
   };
 
-  // 인공지능(AI) 자동 계산 및 수 행하기
+  // 인공지능(AI) 고도화 의사결정 함수
   const makeAIMove = (currentBoard: Board) => {
-    const aiPieces: { from: [number, number]; to: [number, number]; weight: number }[] = [];
+    // 1. 적(초나라 - 플레이어)의 다음 턴 공격 가능 좌표 목록 취합
+    const playerAttackMap = new Set<string>();
+    for (let r = 0; r < 10; r++) {
+      for (let c = 0; c < 9; c++) {
+        const p = currentBoard[r][c];
+        if (p && p.camp === "cho") {
+          const pMoves = getMoves(r, c, currentBoard);
+          for (const [tr, tc] of pMoves) {
+            playerAttackMap.add(`${tr},${tc}`);
+          }
+        }
+      }
+    }
 
+    const aiPieces: { from: [number, number]; to: [number, number]; weight: number }[] = [];
+    const values = { 궁: 1000, 차: 180, 포: 100, 마: 70, 상: 45, 사: 35, 졸: 20, 병: 20 };
+
+    // 2. 한나라(AI)의 모든 수 수집 및 지능형 가중치(weight) 평가
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
         const piece = currentBoard[r][c];
@@ -517,11 +536,47 @@ export default function JanggiPage() {
           for (const [tr, tc] of pieceMoves) {
             let weight = 0;
             const targetPiece = currentBoard[tr][tc];
+
+            // (1) 적 기물 잡기 가치 합산
             if (targetPiece) {
-              const values = { 궁: 1000, 차: 80, 포: 50, 마: 35, 상: 20, 사: 15, 졸: 10, 병: 10 };
-              weight = values[targetPiece.type] || 10;
+              weight += values[targetPiece.type] || 15;
             }
-            weight += (tr - r) * 0.5;
+
+            // 기물 전진성 및 고유 기물 활용 선호도
+            weight += (tr - r) * 0.4; // 전진 유도
+            if (piece.type === "차") weight += 2.0;
+            if (piece.type === "포") weight += 1.5;
+
+            // 난이도가 보통(normal) 또는 어려움(hard)일 때만 정교한 전술 반영
+            if (aiDifficulty !== "easy") {
+              const movingPieceValue = values[piece.type] || 20;
+
+              // (2) 자살 수 감지 (이동할 자리가 적의 공격 범위 안인 경우)
+              if (playerAttackMap.has(`${tr},${tc}`)) {
+                const penalty = aiDifficulty === "hard" ? movingPieceValue * 1.2 : movingPieceValue * 0.6;
+                weight -= penalty; // 자살 회피 감점
+              }
+
+              // (3) 대피 연산 (원래 위험했던 기물이 안전지대로 탈출하는 수)
+              if (playerAttackMap.has(`${r},${c}`) && !playerAttackMap.has(`${tr},${tc}`)) {
+                const bonus = aiDifficulty === "hard" ? movingPieceValue * 0.9 : movingPieceValue * 0.45;
+                weight += bonus; // 안전 탈출 보너스
+              }
+
+              // (4) 장군(체크) 가능성 계산
+              // 가상으로 기물을 해당 위치에 두어본 다음, 적의 궁(楚)을 공격할 수 있는지 체크
+              const tempBoard = currentBoard.map(row => [...row]);
+              tempBoard[tr][tc] = piece;
+              tempBoard[r][c] = null;
+              const nextMoves = getMoves(tr, tc, tempBoard);
+              const canCheck = nextMoves.some(([nr, nc]) => {
+                const t = tempBoard[nr][nc];
+                return t && t.type === "궁" && t.camp === "cho";
+              });
+              if (canCheck) {
+                weight += aiDifficulty === "hard" ? 50 : 20;
+              }
+            }
 
             aiPieces.push({ from: [r, c], to: [tr, tc], weight });
           }
@@ -536,9 +591,27 @@ export default function JanggiPage() {
       return;
     }
 
+    // 가중치에 따라 내림차순 정렬
     aiPieces.sort((a, b) => b.weight - a.weight);
-    const bestPool = aiPieces.slice(0, Math.max(1, Math.floor(aiPieces.length * 0.25)));
-    const selectedMove = bestPool[Math.floor(Math.random() * bestPool.length)];
+
+    // 난이도에 따른 무작위 선택 풀(Pool) 조율
+    let selectedMove;
+    if (aiDifficulty === "hard") {
+      // 어려움: 가장 높은 점수를 가진 수들 중에서만 선택 (동점자 처리)
+      const maxWeight = aiPieces[0].weight;
+      const bestMoves = aiPieces.filter(m => m.weight >= maxWeight - 0.1);
+      selectedMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
+    } else if (aiDifficulty === "normal") {
+      // 보통: 상위 25% 풀 내에서 선택하여 적당한 수 유도
+      const poolSize = Math.max(1, Math.floor(aiPieces.length * 0.25));
+      const bestPool = aiPieces.slice(0, poolSize);
+      selectedMove = bestPool[Math.floor(Math.random() * bestPool.length)];
+    } else {
+      // 쉬움: 상위 55% 풀 내에서 느슨하게 선택하여 빈틈 유발
+      const poolSize = Math.max(1, Math.floor(aiPieces.length * 0.55));
+      const loosePool = aiPieces.slice(0, poolSize);
+      selectedMove = loosePool[Math.floor(Math.random() * loosePool.length)];
+    }
 
     const [fr, fc] = selectedMove.from;
     const [tr, tc] = selectedMove.to;
@@ -546,6 +619,7 @@ export default function JanggiPage() {
     const movingPiece = currentBoard[fr][fc]!;
     const destPiece = currentBoard[tr][tc];
 
+    // 이동 처리
     const nextBoard = currentBoard.map(row => [...row]);
     nextBoard[tr][tc] = movingPiece;
     nextBoard[fr][fc] = null;
@@ -567,7 +641,7 @@ export default function JanggiPage() {
     setStatusMessage("초(Blue) 차례입니다. 기물을 선택하세요.");
   };
 
-  // 플레이어 셀 클릭 처리 핸들러
+  // 플레이어의 셀 클릭 처리 핸들러
   const handleCellClick = (r: number, c: number) => {
     if (winner) return;
     if (gameMode === "ai" && currentTurn === "han") return;
@@ -605,7 +679,7 @@ export default function JanggiPage() {
         setStatusMessage("한(Red) 컴퓨터가 수 계산 중입니다...");
         setTimeout(() => {
           makeAIMove(nextBoard);
-        }, 800);
+        }, 850);
       } else {
         setStatusMessage(`${nextTurn === "cho" ? "초(Blue)" : "한(Red)"} 차례입니다. 기물을 선택하세요.`);
       }
@@ -654,20 +728,20 @@ export default function JanggiPage() {
         </div>
       </header>
 
-      {/* 본문 영역 */}
+      {/* 본문 */}
       <main className="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* 컨트롤 보드 */}
+        {/* 설정 패널 */}
         <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm flex flex-col justify-between gap-5 h-fit">
           <div className="space-y-4">
             <h1 className="text-2xl font-black text-slate-800 dark:text-white leading-tight">
               3D 클래식 장기
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              기물이 격자선 교차점 위에 정확하게 놓이며, 비스듬하게 눕혀져 실물 느낌을 주는 3D 입체 뷰와 평면 2D 뷰를 완벽하게 지원합니다.
+              선의 교차점에 정확하게 놓이는 전통 장기와 CSS 3D 입체 연출이 조화된 프리미엄 보드게임입니다. 
             </p>
 
-            {/* 3D 뷰 전환 스위치 추가 */}
+            {/* 입체 3D 뷰 토글 */}
             <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl flex items-center justify-between border border-slate-200/50 dark:border-slate-800/40">
               <span className="text-xs font-bold text-slate-600 dark:text-slate-300">🎮 입체 3D 뷰 모드</span>
               <button
@@ -683,6 +757,36 @@ export default function JanggiPage() {
                 />
               </button>
             </div>
+
+            {/* AI 난이도 설정 위젯 추가 */}
+            {gameMode === "ai" && (
+              <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl space-y-2 border border-slate-200/50 dark:border-slate-800/40">
+                <label className="text-xs font-bold text-slate-500 dark:text-slate-400 block">🤖 AI 컴퓨터 난이도</label>
+                <div className="grid grid-cols-3 gap-1">
+                  {(["easy", "normal", "hard"] as AIDifficulty[]).map((level) => {
+                    const labels = { easy: "쉬움", normal: "보통", hard: "어려움" };
+                    const activeStyles = {
+                      easy: "bg-emerald-500 text-white shadow-sm",
+                      normal: "bg-blue-600 text-white shadow-sm",
+                      hard: "bg-red-500 text-white shadow-sm",
+                    };
+                    return (
+                      <button
+                        key={level}
+                        onClick={() => setAiDifficulty(level)}
+                        className={`py-1.5 text-[11px] font-bold rounded-lg transition ${
+                          aiDifficulty === level
+                            ? activeStyles[level]
+                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+                        }`}
+                      >
+                        {labels[level]}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* 모드 선택 */}
             {!gameStarted && (
@@ -748,7 +852,7 @@ export default function JanggiPage() {
               </div>
             )}
 
-            {/* 상태 창 */}
+            {/* 상태 모니터 */}
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-800/80 space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-slate-400">진행 턴</span>
@@ -795,7 +899,7 @@ export default function JanggiPage() {
           </div>
         </section>
 
-        {/* 3D 원근감 래퍼 및 장기판 */}
+        {/* 장기판 영역 */}
         <section className="col-span-1 lg:col-span-2 flex flex-col items-center justify-center">
           <div
             className="w-full max-w-[500px] flex items-center justify-center"
@@ -804,7 +908,7 @@ export default function JanggiPage() {
               paddingBottom: is3dMode ? "40px" : "0px",
             }}
           >
-            {/* 장기판 컨테이너 */}
+            {/* 3D 회전 판 */}
             <div
               className={`w-full aspect-[9/10] relative bg-[#eed6b0] dark:bg-[#3d2a1b] rounded-3xl p-[7.5%] transition-all duration-500 ease-out border-4 border-[#a67146] dark:border-[#2f2015]`}
               style={{
@@ -819,13 +923,12 @@ export default function JanggiPage() {
                 borderRightWidth: is3dMode ? "5px" : "4px",
               }}
             >
-              {/* 바둑판 무늬 배경 무늬 */}
               <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none rounded-2xl" />
 
-              {/* 격자선 영역 (기물이 이 격자선 교차점 위에 얹힘) */}
+              {/* 격자선 교차점 영역 */}
               <div className="w-full h-full relative" style={{ transformStyle: "preserve-3d" }}>
                 
-                {/* 1. 가로 격자선 그리기 (10선) */}
+                {/* 가로 격자선 (10선) */}
                 {Array(10).fill(null).map((_, idx) => (
                   <div
                     key={`line-h-${idx}`}
@@ -837,7 +940,7 @@ export default function JanggiPage() {
                   />
                 ))}
 
-                {/* 2. 세로 격자선 그리기 (9선) */}
+                {/* 세로 격자선 (9선) */}
                 {Array(9).fill(null).map((_, idx) => (
                   <div
                     key={`line-v-${idx}`}
@@ -849,12 +952,11 @@ export default function JanggiPage() {
                   />
                 ))}
 
-                {/* 3. 궁성 대각선 그리기 (SVG) */}
+                {/* 궁성 대각선 (SVG) */}
                 <svg
                   className="absolute inset-0 w-full h-full pointer-events-none"
                   style={{ transformStyle: "preserve-3d" }}
                 >
-                  {/* 한 궁성 대각선 (0,3)~(2,5) / (0,5)~(2,3) */}
                   <line
                     x1="37.5%" y1="0%" x2="62.5%" y2="22.22%"
                     stroke="#b68259" strokeWidth="1" className="dark:stroke-[#5a4230]"
@@ -863,7 +965,6 @@ export default function JanggiPage() {
                     x1="62.5%" y1="0%" x2="37.5%" y2="22.22%"
                     stroke="#b68259" strokeWidth="1" className="dark:stroke-[#5a4230]"
                   />
-                  {/* 초 궁성 대각선 (7,3)~(9,5) / (7,5)~(9,3) */}
                   <line
                     x1="37.5%" y1="77.78%" x2="62.5%" y2="100%"
                     stroke="#b68259" strokeWidth="1" className="dark:stroke-[#5a4230]"
@@ -874,7 +975,7 @@ export default function JanggiPage() {
                   />
                 </svg>
 
-                {/* 4. 장기 기물 및 힌트 렌더링 (교차점 absolute 정렬) */}
+                {/* 기물 및 힌트 렌더링 (교차점 absolute 정렬) */}
                 {gameStarted &&
                   board.map((row, rIdx) =>
                     row.map((piece, cIdx) => {
@@ -893,7 +994,7 @@ export default function JanggiPage() {
                             zIndex: isSelected ? 40 : 20,
                           }}
                         >
-                          {/* 이동 힌트 점 (교차점 중앙) */}
+                          {/* 이동 힌트 점 */}
                           {isMoveCandidate && (
                             <div
                               onClick={() => handleCellClick(rIdx, cIdx)}
@@ -948,7 +1049,7 @@ export default function JanggiPage() {
             </div>
           </div>
 
-          {/* 승리 팝업 모달 */}
+          {/* 승리 팝업 */}
           {winner && (
             <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn">
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-sm w-full p-8 rounded-3xl text-center space-y-6 shadow-2xl">
