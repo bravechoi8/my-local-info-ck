@@ -783,8 +783,8 @@ export default function JanggiPage() {
       return;
     }
 
-    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 5수 앞 알파고급 수읽기)
-    const searchDepth = aiDifficulty === "hard" ? 5 : aiDifficulty === "normal" ? 2 : 1;
+    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 4수 앞 완벽한 수읽기)
+    const searchDepth = aiDifficulty === "hard" ? 4 : aiDifficulty === "normal" ? 2 : 1;
     const scoredMoves: { from: [number, number]; to: [number, number]; score: number }[] = [];
 
     for (const move of legalMoves) {
@@ -910,7 +910,7 @@ export default function JanggiPage() {
         }
         setTimeout(() => {
           makeAIMove(nextBoard);
-        }, 900);
+        }, 200);
       } else {
         if (choCheck) {
           playSound("check");
