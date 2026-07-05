@@ -577,9 +577,36 @@ naver_link: "${escapedLink}"
         // 로또 글일 때 여러 뉴스의 텍스트를 모아서 풍부한 정보를 제공하도록 개선
         let lottoContext = '';
         if (selectedKeyword.includes('로또')) {
+          // 로또 1등 판매점 상세 주소 수집을 위한 추가 뉴스 검색 수행
+          let lottoStoreItems = [];
+          try {
+            console.log(`[로또 당첨 상세 정보 추가 수집] '로또 1등 판매점 주소' 키워드로 뉴스 검색 중...`);
+            const lottoStoreParams = new URLSearchParams({
+              query: '로또 1등 판매점 주소',
+              display: '15',
+              sort: 'date'
+            });
+            const storeRes = await fetchWithRetry(`${NAVER_ENDPOINT}?${lottoStoreParams.toString()}`, {
+              headers: {
+                'X-Naver-Client-Id': NAVER_CLIENT_ID,
+                'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+              }
+            });
+            if (storeRes.ok) {
+              const storeData = await storeRes.json();
+              if (storeData && storeData.items) {
+                lottoStoreItems = storeData.items;
+              }
+            }
+          } catch (err) {
+            console.warn('[로또 추가 정보 수집 실패]', err.message);
+          }
+
+          const combinedItems = [...items.slice(0, 8), ...lottoStoreItems];
+
           lottoContext = `\n\n[로또 최신 보도 참고 정보]\n` + 
-            items.slice(0, 8).map((it, idx) => `기사 ${idx + 1}: [제목] ${cleanText(it.title)} / [요약] ${cleanText(it.description)}`).join('\n') +
-            `\n(위 여러 기사 요약들에 적힌 1등 당첨번호, 보너스 번호, 당첨 게임 수, 자동/수동 수량, 그리고 전국 1등 당첨 판매점(명당) 상호명과 지역명(예: 서울 강남구, 경기 안양시 등)을 최대한 꼼꼼하게 추출하여 가독성 좋은 표(Table) 형태로 글 본문에 반드시 포함해줘. 기사마다 숫자가 조금씩 어긋나 있다면 가장 다수 기사에서 중복 검증된 숫자를 사용해줘.)`;
+            combinedItems.map((it, idx) => `기사 ${idx + 1}: [제목] ${cleanText(it.title)} / [요약] ${cleanText(it.description)}`).join('\n') +
+            `\n(위 여러 기사 요약들에 적힌 1등 당첨번호, 보너스 번호, 당첨 게임 수, 자동/수동 수량, 그리고 전국 1등 당첨 판매점(명당) 상호명과 상세한 도로명 주소, 선택 방식(자동/수동)을 최대한 꼼꼼하게 추출하여 가독성 좋은 표(Table) 형태로 글 본문에 반드시 포함해줘. 기사마다 숫자가 조금씩 어긋나 있다면 가장 다수 기사에서 중복 검증된 숫자를 사용해줘.)`;
         }
 
         prompt = `아래 뉴스를 분석해서 블로그 정보 글을 작성해줘.
@@ -627,7 +654,7 @@ CRITICAL: 지원금, 혜택, 행사 관련 정보성 글인 경우, 독자들이
 4. CRITICAL FOR IMAGE SAFETY: To prevent safety policy blocks from the image generator, you must NOT include any specific celebrity names (like Lee Kang-in), player names, politician names, or specific trademarked team/brand names (like PSG, Apple) inside the English description of the IMAGE_PROMPT. Instead, use generic and descriptive terms (e.g., 'a professional soccer player in a blue jersey on a field', 'a gold cup trophy on a pedestal', 'a futuristic computer desk').
 )
 
-만약 키워드가 '로또 당첨번호'인 경우, 사람들의 큰 관심을 끌 수 있는 로또 당첨번호 안내 포스팅(예: '1120회 로또 1등 당첨번호 명당 어디? 실수령액까지 완벽 요약')으로 친근하고 호기심 있게 작성해줘. 1등 번호, 보너스 번호뿐만 아니라, 특히 **전국의 1등 당첨 판매점(상호명과 구체적인 지역/주소 위치) 목록**을 제공된 뉴스 정보에서 최대한 모두 찾아서 깔끔한 표(Table)나 목록 형태로 하나도 빠짐없이 꼼꼼하게 정리해서 안내해줘야 해.
+만약 키워드가 '로또 당첨번호'인 경우, 사람들의 큰 관심을 끌 수 있는 로또 당첨번호 안내 포스팅(예: '1120회 로또 1등 당첨번호 명당 어디? 실수령액까지 완벽 요약')으로 친근하고 호기심 있게 작성해줘. 1등 번호, 보너스 번호뿐만 아니라, 특히 **전국의 모든 1등 당첨 판매점의 [상호명, 상세 도로명 주소, 선택 방식(자동/수동/반자동)] 목록**을 참고 기사 정보에서 상세하게 수집하여 깔끔하고 가독성 높은 표(Table) 형식으로 하나도 빠짐없이 꼼꼼하게 정리해서 안내해줘야 해. 또한, 1등 당첨금(세전)에 대한 예상 세금(3억 이하 22%, 3억 초과 33% 원천징수 세율 적용) 계산법과 당첨 게임수 등을 바탕으로 **실수령액(세후) 예상 금액을 표로 함께 제공**해줘야 해.
 
 만약 키워드에 '손없는날'이 포함되어 있는 경우, 이번 달과 다음 달의 이사/개업/결혼하기 좋은 '손없는날' 달력을 일목요연하게 안내하는 정보성 포스팅(예: '2026년 5월 6월 이사하기 좋은 손없는날 달력 및 꿀팁 정리')으로 친근하고 상세하게 작성해줘. 음력 9일, 10일, 19일, 20일, 29일, 30일에 해당하는 양력 날짜들을 정확하게 매칭하여 표(Table)나 깔끔한 리스트로 정리해 주고, 이사할 때 체크해야 할 필수 정보나 팁 3가지도 본문에 함께 담아줘.
 
