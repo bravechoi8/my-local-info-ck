@@ -1109,5 +1109,27 @@
     "target": "전역예정장병",
     "summary": "전역예정장병에게 전직상담 및 교육, 취업 등에 대한 서비스 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000013"
+  },
+  {
+    "id": 99,
+    "name": "한식진흥 및 음식관광활성화",
+    "category": "혜택",
+    "startDate": "2024-01-29",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "한식관련 전문 교육기관, 한식을 전공하는 학생 및 예비 종사자, 셰프 등 한식 종사자, 기타 한식에 관심있는 국민 등",
+    "summary": "국내외 한식 확산 및 경쟁력 제고를 위한 홍보 교육 및 프로그램 개발 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005020"
+  },
+  {
+    "id": 100,
+    "name": "민간투자기반 스케일업 지원",
+    "category": "혜택",
+    "startDate": "2024-05-16",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "농식품 전 분야 벤처기업 및 창업 7년이내 기업",
+    "summary": "민간이 투자·추천한 농식품 분야 유망기업을 대상으로 사업화자금, 판로확대, 후속투자 등 스",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005022"
   }
 ]
