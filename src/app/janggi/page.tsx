@@ -600,7 +600,7 @@ export default function JanggiPage() {
     return list;
   };
 
-  // 기물 사냥 우선 가치 분석기 (MVV-LVA 정렬 도우미)
+  // 기물 사냥 우선 가치 분석기 (MVV-LVA 정렬 도우미 - 알파베타 효율 극대화)
   const getMoveScore = (
     move: { from: [number, number]; to: [number, number] },
     currentBoard: Board
@@ -609,29 +609,41 @@ export default function JanggiPage() {
     const victim = currentBoard[move.to[0]][move.to[1]];
     if (!assailant) return 0;
 
-    const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 15, 병: 15 };
+    const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 20, 병: 20 };
 
-    if (!victim) {
-      const forward = (move.to[0] - move.from[0]) * (assailant.camp === "han" ? 1 : -1);
-      return forward * 2;
+    // 1단계: 멍군(장군 대피) 행마를 최우선 순위로 배치하여 불필요한 자살 수 조기 차단
+    if (assailant.type === "궁" || assailant.type === "사") {
+      return 2000; 
     }
 
-    const victimValue = values[victim.type] || 15;
-    const assailantValue = values[assailant.type] || 15;
-    // MVV-LVA 공식
-    return victimValue * 10 - assailantValue;
+    if (!victim) {
+      // 기물을 잡지 않는 수 중, 적 궁성(cho 궁성: r=7~9, c=3~5)으로 침공하는 수 가산점
+      const isAttackingKing = move.to[0] >= 7 && move.to[1] >= 3 && move.to[1] <= 5;
+      const forward = (move.to[0] - move.from[0]) * (assailant.camp === "han" ? 1 : -1);
+      return (forward * 5) + (isAttackingKing ? 80 : 0);
+    }
+
+    const victimValue = values[victim.type] || 20;
+    const assailantValue = values[assailant.type] || 20;
+    
+    // 2단계: 약한 기물(졸, 상)로 상대방 큰 기물(차, 포)을 잡는 가치 우선 정렬 (MVV-LVA)
+    return victimValue * 100 - assailantValue;
   };
 
-  // 통합 정적 판세 평가 함수 (Static Board Evaluator - 정밀한 위치 가중치 모델 탑재)
+  // 통합 정적 판세 평가 함수 (Static Board Evaluator - 프로선수급 포진 시너지 탑재)
   const evaluateBoard = (currentBoard: Board): number => {
-    // 기물의 기본 수치 가치 (한국장기협회 공식 비율 준수하여 10배 적용)
-    // 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸/병: 20
     const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 20, 병: 20 };
     let score = 0;
 
-    // 아군(han)과 적군(cho)의 궁(왕) 위치를 찾아 사(士)의 궁 호위 보너스 계산에 활용
+    // 아군(han)과 적군(cho)의 궁(왕) 위치 검사
     let hanKingPos = { r: 1, c: 4 };
     let choKingPos = { r: 8, c: 4 };
+
+    // 가로줄/세로줄 포 포진 분석용 카운터
+    const hanCannonsInRow = Array(10).fill(0);
+    const hanCannonsInCol = Array(9).fill(0);
+    const choCannonsInRow = Array(10).fill(0);
+    const choCannonsInCol = Array(9).fill(0);
 
     for (let r = 0; r < 10; r++) {
       for (let c = 0; c < 9; c++) {
@@ -640,6 +652,15 @@ export default function JanggiPage() {
           if (p.type === "궁") {
             if (p.camp === "han") { hanKingPos = { r, c }; }
             else { choKingPos = { r, c }; }
+          }
+          if (p.type === "포") {
+            if (p.camp === "han") {
+              hanCannonsInRow[r]++;
+              hanCannonsInCol[c]++;
+            } else {
+              choCannonsInRow[r]++;
+              choCannonsInCol[c]++;
+            }
           }
         }
       }
@@ -653,51 +674,61 @@ export default function JanggiPage() {
         const val = values[p.type] || 20;
         const sign = p.camp === "han" ? 1 : -1;
 
-        // 1. 기본 기물 점수 합산
+        // 1. 기본 기물 수치 합산
         score += val * sign;
 
-        // 2. 기물별 정밀 위치 가중치 (PST) 부여
+        // 2. 기물별 정밀 위치(PST) 및 지능 시너지 보정
         if (p.camp === "han") {
-          // AI 진영 (한 - 위쪽 r=0에서 시작)
+          // --- AI 진영 (한나라) ---
           switch (p.type) {
             case "차":
-              // 적진 깊숙이 침투한 차에 큰 가산점
               if (r >= 6) score += 25;
-              // 중앙 세로열 장악 보너스
               if (c >= 3 && c <= 5) score += 8;
-              // 자기 구석에 갇혀 움직이지 못하는 차 감점
               if (r === 0 && (c === 0 || c === 8)) score -= 15;
+              // 차가 상대편 왕과 세로열(col)을 정조준하면 압박 보너스
+              if (c === choKingPos.c) score += 30;
               break;
 
             case "포":
-              // 면포 배치 (궁성 정중앙 위인 2행 4열) 극대 가산점
-              if (r === 2 && c === 4) score += 45;
-              // 적 궁성 근처 위협 보너스
+              if (r === 2 && c === 4) score += 45; // 면포
               if (r >= 7 && c >= 3 && c <= 5) score += 20;
-              // 다리가 없어 1선에 갇힌 포 감점
               if (r === 0) score -= 18;
+              // 쌍포 중복 벌점 (포끼리 같은 줄에 나란히 서면 비효율)
+              if (hanCannonsInRow[r] >= 2 || hanCannonsInCol[c] >= 2) score -= 45;
               break;
 
             case "마":
-              // 가장자리 쏠림(행마 제약) 감점
               if (c === 0 || c === 8) score -= 25;
-              // 중앙 진출 보너스 (활동 반경 극대화)
               if (r >= 3 && r <= 6 && c >= 2 && c <= 6) score += 28;
+              // 마의 멱(목) 막힘 검사 (이동로 1칸 앞 장애물 감지하여 활동성 반영)
+              const horseDirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+              for (const [dr, dc] of horseDirs) {
+                const mr = r + dr;
+                const mc = c + dc;
+                if (mr >= 0 && mr < 10 && mc >= 0 && mc < 9 && currentBoard[mr][mc]) {
+                  score -= 12; // 멱이 막힌 방향당 패널티
+                }
+              }
               break;
 
             case "상":
-              // 가장자리 쏠림 감점
               if (c === 0 || c === 8) score -= 15;
-              // 중앙 활동 보너스
               if (r >= 2 && r <= 7 && c >= 2 && c <= 6) score += 15;
+              // 상의 멱(목) 막힘 검사 (1선 장애물 감지)
+              const elephantDirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+              for (const [dr, dc] of elephantDirs) {
+                const er = r + dr;
+                const ec = c + dc;
+                if (er >= 0 && er < 10 && ec >= 0 && ec < 9 && currentBoard[er][ec]) {
+                  score -= 8; // 멱이 막힌 상길 감점
+                }
+              }
               break;
 
             case "사":
-              // 궁성 바깥 탈출 시 가치 상실 감점
               if (!isWithinPalace(r, c, "han")) {
                 score -= 50;
               } else {
-                // 궁(왕)을 밀착 수비(거리 1이하)할 때 엄호 보너스
                 const dist = Math.abs(r - hanKingPos.r) + Math.abs(c - hanKingPos.c);
                 if (dist <= 1) score += 25;
               }
@@ -705,43 +736,65 @@ export default function JanggiPage() {
 
             case "졸":
             case "병":
-              // 아래로 전진할수록 보너스 점수 상승
               score += r * 3.8;
-              // 적 궁성 내 진입 시 엄청난 가산점 (외통수 유도)
               if (isWithinPalace(r, c, "cho")) {
                 score += 35;
+              }
+              // 졸 가로 연대 보너스 (좌우에 아군 졸이 밀착해 지탱해 주면 철벽 수비 형성)
+              if ((c > 0 && currentBoard[r][c-1]?.type === p.type && currentBoard[r][c-1]?.camp === "han") ||
+                  (c < 8 && currentBoard[r][c+1]?.type === p.type && currentBoard[r][c+1]?.camp === "han")) {
+                score += 15;
               }
               break;
 
             case "궁":
-              // 궁성에 안전하게 박혀있을 때 보너스
               if (r === 0 && c === 4) score += 15;
               if (r === 1 && c === 4) score += 8;
               break;
           }
         } else {
-          // 플레이어 진영 (초 - 아래쪽 r=9에서 시작)
+          // --- 플레이어 진영 (초나라) ---
           switch (p.type) {
             case "차":
               if (r <= 3) score -= 25;
               if (c >= 3 && c <= 5) score -= 8;
               if (r === 9 && (c === 0 || c === 8)) score += 15;
+              if (c === hanKingPos.c) score -= 30;
               break;
 
             case "포":
               if (r === 7 && c === 4) score -= 45;
               if (r <= 2 && c >= 3 && c <= 5) score -= 20;
               if (r === 9) score += 18;
+              if (choCannonsInRow[r] >= 2 || choCannonsInCol[c] >= 2) score += 45;
               break;
 
             case "마":
               if (c === 0 || c === 8) score += 25;
               if (r >= 3 && r <= 6 && c >= 2 && c <= 6) score -= 28;
+              // 멱 감점 반영
+              const horseDirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+              for (const [dr, dc] of horseDirs) {
+                const mr = r + dr;
+                const mc = c + dc;
+                if (mr >= 0 && mr < 10 && mc >= 0 && mc < 9 && currentBoard[mr][mc]) {
+                  score += 12;
+                }
+              }
               break;
 
             case "상":
               if (c === 0 || c === 8) score += 15;
               if (r >= 2 && r <= 7 && c >= 2 && c <= 6) score -= 15;
+              // 멱 감점 반영
+              const elephantDirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+              for (const [dr, dc] of elephantDirs) {
+                const er = r + dr;
+                const ec = c + dc;
+                if (er >= 0 && er < 10 && ec >= 0 && ec < 9 && currentBoard[er][ec]) {
+                  score += 8;
+                }
+              }
               break;
 
             case "사":
@@ -758,6 +811,11 @@ export default function JanggiPage() {
               score -= (9 - r) * 3.8;
               if (isWithinPalace(r, c, "han")) {
                 score -= 35;
+              }
+              // 졸 연대
+              if ((c > 0 && currentBoard[r][c-1]?.type === p.type && currentBoard[r][c-1]?.camp === "cho") ||
+                  (c < 8 && currentBoard[r][c+1]?.type === p.type && currentBoard[r][c+1]?.camp === "cho")) {
+                score -= 15;
               }
               break;
 
