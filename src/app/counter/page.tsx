@@ -149,33 +149,14 @@ export default function CounterPage() {
           </div>
         </section>
 
-        {/* 골드 프리미엄 배너 위젯 */}
-        <section className="border border-[#d4af37]/30 bg-gradient-to-r from-[#1c170d] to-[#0f0e0a] rounded-2xl p-4 flex items-center justify-between shadow-lg">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#d4af37]/10 flex items-center justify-center border border-[#d4af37]/30 text-[#e5c158] text-lg">
-              👑
-            </div>
-            <div>
-              <h2 className="text-xs font-bold text-[#e5c158]">프리미엄 버전</h2>
-              <p className="text-[9.5px] text-slate-400 leading-tight">위젯 • 자동화 • 광고 없음 평생 무료</p>
-            </div>
-          </div>
-          <button
-            onClick={() => alert("리얼인포 3D 장기 및 도구 모음은 모두 100% 무료 프리미엄 버전으로 서비스됩니다!")}
-            className="px-4 py-1.5 bg-[#e5c158] hover:bg-[#ebd079] active:scale-95 text-black font-extrabold text-[10px] rounded-xl transition shadow-md"
-          >
-            자세히
-          </button>
-        </section>
-
-        {/* 메인 초록색 카운터 카드 */}
-        <section className="relative my-6 flex-1 flex flex-col justify-between select-none">
+        {/* 메인 초록색 카운터 카드 (배너 제거 후 위아래 확장) */}
+        <section className="relative flex-1 flex flex-col select-none w-full h-full min-h-[480px]">
           
-          {/* 초록색 메인 터치 보드 */}
+          {/* 초록색 메인 터치 보드 (상하 꽉 차게 확장) */}
           <div
             onMouseDown={handleBoardClick}
             onContextMenu={(e) => e.preventDefault()}
-            className="w-full aspect-[9/11] bg-[#10b981] text-white rounded-[2.5rem] p-6 shadow-2xl relative flex flex-col justify-between overflow-hidden cursor-pointer hover:brightness-105 active:scale-[0.99] transition duration-200"
+            className="w-full flex-1 bg-[#10b981] text-white rounded-[2.5rem] p-6 shadow-2xl relative flex flex-col justify-between overflow-hidden cursor-pointer hover:brightness-105 active:scale-[0.99] transition duration-200"
             style={{ touchAction: "none" }}
           >
             {/* 좌상단 공유 아이콘 */}
@@ -204,7 +185,7 @@ export default function CounterPage() {
 
             {/* 메인 숫자 표시 (중앙 정렬) */}
             <div className="flex-1 flex flex-col items-center justify-center gap-1">
-              <span className="text-[120px] font-black leading-none drop-shadow-md tracking-tighter">
+              <span className="text-[140px] sm:text-[160px] font-black leading-none drop-shadow-md tracking-tighter">
                 {count}
               </span>
               <span className="text-2xl font-black opacity-80 select-none">
@@ -327,25 +308,6 @@ export default function CounterPage() {
               </div>
             </div>
           )}
-        </section>
-
-        {/* 하단 틱톡 스타일 모방 광고 배너 위젯 */}
-        <section className="bg-slate-900 border border-slate-800 rounded-2xl p-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center font-bold text-lg text-white border border-slate-800">
-              🎵
-            </div>
-            <div>
-              <h3 className="text-xs font-bold text-white">틱톡 TikTok</h3>
-              <p className="text-[10px] text-slate-500">🔥 쇼트폼의 최강자 • 설치됨</p>
-            </div>
-          </div>
-          <button
-            onClick={() => alert("스폰서십 애드 배너 광고 예시입니다.")}
-            className="px-4 py-1.5 bg-blue-500 hover:bg-blue-600 text-white font-extrabold text-[10px] rounded-xl transition active:scale-95"
-          >
-            열기
-          </button>
         </section>
       </main>
 
