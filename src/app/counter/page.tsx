@@ -134,7 +134,7 @@ export default function CounterPage() {
       </header>
 
       {/* 스마트폰 뷰포트 레이아웃 모방 */}
-      <main className="max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-[calc(100vh-3.5rem)] animate-fadeIn">
+      <main className="max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-[calc(100vh-3.5rem)] pb-24 animate-fadeIn">
         
         {/* 상단 액션 바 (카운터 타이틀 및 햄버거 메뉴) */}
         <section className="flex items-center justify-between pb-4">
@@ -149,15 +149,15 @@ export default function CounterPage() {
           </div>
         </section>
 
-        {/* 메인 초록색 카운터 카드 (배너 제거 후 위아래 확장) */}
-        <section className="relative flex-1 flex flex-col select-none w-full h-full min-h-[480px]">
+        {/* 메인 초록색 카운터 카드 (배너 제거 후 위아래 확장 및 모바일 높이 반응성 보강) */}
+        <section className="relative flex-1 flex flex-col select-none w-full h-full min-h-[380px] sm:min-h-[460px] mb-8">
           
-          {/* 초록색 메인 터치 보드 (상하 꽉 차게 확장) */}
+          {/* 초록색 메인 터치 보드 (상하 꽉 차게 확장 및 터치 스크롤 허용) */}
           <div
             onMouseDown={handleBoardClick}
             onContextMenu={(e) => e.preventDefault()}
-            className="w-full flex-1 bg-[#10b981] text-white rounded-[2.5rem] p-6 shadow-2xl relative flex flex-col justify-between overflow-hidden cursor-pointer hover:brightness-105 active:scale-[0.99] transition duration-200"
-            style={{ touchAction: "none" }}
+            className="w-full flex-1 bg-[#10b981] text-white rounded-[2.5rem] p-5 sm:p-6 shadow-2xl relative flex flex-col justify-between overflow-hidden cursor-pointer hover:brightness-105 active:scale-[0.99] transition duration-200"
+            style={{ touchAction: "manipulation" }}
           >
             {/* 좌상단 공유 아이콘 */}
             <div
@@ -165,7 +165,7 @@ export default function CounterPage() {
                 e.stopPropagation();
                 handleShare();
               }}
-              className="absolute left-6 top-6 w-10 h-10 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-xl active:scale-90 transition z-20"
+              className="absolute left-5 top-5 w-9 h-9 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-lg active:scale-90 transition z-20"
               title="카운터 값 복사"
             >
               🔗
@@ -177,24 +177,24 @@ export default function CounterPage() {
                 e.stopPropagation();
                 setShowSettings(!showSettings);
               }}
-              className="absolute right-6 top-6 w-10 h-10 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-xl active:scale-90 transition z-20"
+              className="absolute right-5 top-5 w-9 h-9 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-lg active:scale-90 transition z-20"
               title="설정 열기"
             >
               ⚙️
             </div>
 
-            {/* 메인 숫자 표시 (중앙 정렬) */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-1">
-              <span className="text-[140px] sm:text-[160px] font-black leading-none drop-shadow-md tracking-tighter">
+            {/* 메인 숫자 표시 (중앙 정렬 및 짤림 방지 크기 조정) */}
+            <div className="flex-1 flex flex-col items-center justify-center gap-1 py-8">
+              <span className="text-[100px] sm:text-[140px] font-black leading-none drop-shadow-md tracking-tighter">
                 {count}
               </span>
-              <span className="text-2xl font-black opacity-80 select-none">
+              <span className="text-xl font-black opacity-80 select-none">
                 {mode === "inc" ? "+1" : "-1"}
               </span>
             </div>
 
             {/* 하단 제어부 (감소 버튼, 증가 버튼, 리셋 버튼) */}
-            <div className="flex items-center justify-between pt-4 relative z-10">
+            <div className="flex items-center justify-between pt-2 relative z-10">
               
               {/* -1 버튼: 감소 모드로 토글하고 1을 직접 뺌 */}
               <button
@@ -203,7 +203,7 @@ export default function CounterPage() {
                   setMode("dec");
                   handleDecrement();
                 }}
-                className={`px-5 py-2.5 rounded-2xl text-base font-extrabold transition-all border ${
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-2xl text-sm sm:text-base font-extrabold transition-all border ${
                   mode === "dec"
                     ? "bg-white text-[#10b981] border-white shadow-lg"
                     : "bg-black/15 text-white/90 border-transparent hover:bg-black/25"
@@ -219,7 +219,7 @@ export default function CounterPage() {
                   setMode("inc");
                   handleIncrement();
                 }}
-                className={`px-5 py-2.5 rounded-2xl text-base font-extrabold transition-all border ${
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-2xl text-sm sm:text-base font-extrabold transition-all border ${
                   mode === "inc"
                     ? "bg-white text-[#10b981] border-white shadow-lg"
                     : "bg-black/15 text-white/90 border-transparent hover:bg-black/25"
@@ -234,7 +234,7 @@ export default function CounterPage() {
                   e.stopPropagation();
                   handleReset();
                 }}
-                className="w-11 h-11 rounded-2xl bg-black/15 hover:bg-black/25 flex items-center justify-center text-xl text-white font-extrabold transition"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-black/15 hover:bg-black/25 flex items-center justify-center text-lg sm:text-xl text-white font-extrabold transition"
                 title="초기화"
               >
                 🔄
