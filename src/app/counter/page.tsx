@@ -87,16 +87,16 @@ export default function CounterPage() {
     }
   };
 
-  // 넓은 초록색 바탕 클릭/터치 이벤트 핸들러
-  // PC의 왼쪽 클릭(증가)/오른쪽 클릭(감소)을 모두 지원
-  const handleBoardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  // 넓은 초록색 바탕 클릭/터치 통합 포인터 핸들러
+  // PC의 왼쪽 클릭(증가)/오른쪽 클릭(감소) 및 모바일 터치 즉각 반응을 모두 구현
+  const handleBoardPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     e.preventDefault();
     
     // 마우스 오른쪽 클릭 (Button: 2) -> 1 감소
     if (e.button === 2) {
       handleDecrement();
     } else {
-      // 마우스 왼쪽 클릭 (Button: 0) 혹은 터치 -> 설정된 모드에 따라 작동
+      // 마우스 왼쪽 클릭 (Button: 0) 혹은 모바일 터치 -> 설정된 모드에 따라 작동
       if (mode === "inc") {
         handleIncrement();
       } else {
@@ -106,7 +106,7 @@ export default function CounterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-slate-100 font-sans transition-colors duration-300">
+    <div className="h-screen overflow-hidden bg-[#000000] text-slate-100 font-sans transition-colors duration-300">
       {/* 헤더 */}
       <header className="border-b border-slate-900 bg-[#0A0A0A]/90 backdrop-blur sticky top-0 z-50">
         <div className="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
@@ -133,11 +133,11 @@ export default function CounterPage() {
         </div>
       </header>
 
-      {/* 스마트폰 뷰포트 레이아웃 모방 */}
-      <main className="max-w-md mx-auto px-4 py-6 flex flex-col justify-between min-h-[calc(100vh-3.5rem)] pb-24 animate-fadeIn">
+      {/* 스마트폰 뷰포트 레이아웃 모방 (화면 크기 강제 고정 및 꿀렁거림 방지) */}
+      <main className="max-w-md mx-auto px-4 py-4 flex flex-col justify-between h-[calc(100dvh-3.5rem)] overflow-hidden animate-fadeIn">
         
         {/* 상단 액션 바 (카운터 타이틀 및 햄버거 메뉴) */}
-        <section className="flex items-center justify-between pb-4">
+        <section className="flex items-center justify-between pb-3 shrink-0">
           <div className="flex flex-col gap-0.5">
             <div className="flex items-center gap-1.5">
               <span className="text-lg">☰</span>
@@ -150,18 +150,18 @@ export default function CounterPage() {
         </section>
 
         {/* 메인 초록색 카운터 카드 (배너 제거 후 위아래 확장 및 모바일 높이 반응성 보강) */}
-        <section className="relative flex-1 flex flex-col select-none w-full h-full min-h-[380px] sm:min-h-[460px] mb-8">
+        <section className="relative flex-1 flex flex-col select-none w-full h-full min-h-[340px] mb-4">
           
-          {/* 초록색 메인 터치 보드 (상하 꽉 차게 확장 및 터치 스크롤 허용) */}
+          {/* 초록색 메인 터치 보드 (PointerDown 즉각 반응형 보드) */}
           <div
-            onMouseDown={handleBoardClick}
+            onPointerDown={handleBoardPointerDown}
             onContextMenu={(e) => e.preventDefault()}
             className="w-full flex-1 bg-[#10b981] text-white rounded-[2.5rem] p-5 sm:p-6 shadow-2xl relative flex flex-col justify-between overflow-hidden cursor-pointer hover:brightness-105 active:scale-[0.99] transition duration-200"
-            style={{ touchAction: "manipulation" }}
+            style={{ touchAction: "none" }}
           >
             {/* 좌상단 공유 아이콘 */}
             <div
-              onClick={(e) => {
+              onPointerDown={(e) => {
                 e.stopPropagation();
                 handleShare();
               }}
@@ -173,7 +173,7 @@ export default function CounterPage() {
 
             {/* 우상단 옵션 조절 슬라이더 아이콘 */}
             <div
-              onClick={(e) => {
+              onPointerDown={(e) => {
                 e.stopPropagation();
                 setShowSettings(!showSettings);
               }}
@@ -184,8 +184,8 @@ export default function CounterPage() {
             </div>
 
             {/* 메인 숫자 표시 (중앙 정렬 및 짤림 방지 크기 조정) */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-1 py-8">
-              <span className="text-[100px] sm:text-[140px] font-black leading-none drop-shadow-md tracking-tighter">
+            <div className="flex-1 flex flex-col items-center justify-center gap-1 py-4">
+              <span className="text-[100px] sm:text-[130px] font-black leading-none drop-shadow-md tracking-tighter">
                 {count}
               </span>
               <span className="text-xl font-black opacity-80 select-none">
@@ -198,7 +198,7 @@ export default function CounterPage() {
               
               {/* -1 버튼: 감소 모드로 토글하고 1을 직접 뺌 */}
               <button
-                onMouseDown={(e) => {
+                onPointerDown={(e) => {
                   e.stopPropagation();
                   setMode("dec");
                   handleDecrement();
@@ -214,7 +214,7 @@ export default function CounterPage() {
 
               {/* +1 버튼: 증가 모드로 토글하고 1을 직접 더함 */}
               <button
-                onMouseDown={(e) => {
+                onPointerDown={(e) => {
                   e.stopPropagation();
                   setMode("inc");
                   handleIncrement();
@@ -230,7 +230,7 @@ export default function CounterPage() {
 
               {/* 리셋 버튼: 0으로 초기화 */}
               <button
-                onMouseDown={(e) => {
+                onPointerDown={(e) => {
                   e.stopPropagation();
                   handleReset();
                 }}
