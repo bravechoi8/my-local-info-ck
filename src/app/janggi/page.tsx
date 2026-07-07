@@ -835,14 +835,20 @@ export default function JanggiPage() {
     return score;
   };
 
-  // 알파-베타 가지치기 기반 Minimax 알고리즘 구현 (5-ply까지 고속 탐색)
+  // 알파-베타 가지치기 기반 Minimax 알고리즘 구현 (시간 제한 조기 중단 기능 탑재)
   const minimax = (
     boardState: Board,
     depth: number,
     alpha: number,
     beta: number,
-    isMaximizing: boolean
+    isMaximizing: boolean,
+    deadline: number
   ): number => {
+    // 1. 시간 초과 조기 컷오프 (브라우저 마비 방지)
+    if (Date.now() > deadline) {
+      return evaluateBoard(boardState);
+    }
+
     if (depth === 0) {
       return evaluateBoard(boardState);
     }
@@ -865,7 +871,7 @@ export default function JanggiPage() {
         temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
         temp[move.from[0]][move.from[1]] = null;
 
-        const evaluation = minimax(temp, depth - 1, alpha, beta, false);
+        const evaluation = minimax(temp, depth - 1, alpha, beta, false, deadline);
         maxEval = Math.max(maxEval, evaluation);
         alpha = Math.max(alpha, evaluation);
         if (beta <= alpha) {
@@ -888,7 +894,7 @@ export default function JanggiPage() {
         temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
         temp[move.from[0]][move.from[1]] = null;
 
-        const evaluation = minimax(temp, depth - 1, alpha, beta, true);
+        const evaluation = minimax(temp, depth - 1, alpha, beta, true, deadline);
         minEval = Math.min(minEval, evaluation);
         beta = Math.min(beta, evaluation);
         if (beta <= alpha) {
@@ -911,8 +917,11 @@ export default function JanggiPage() {
       return;
     }
 
-    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 4수 앞 완벽한 수읽기)
-    const searchDepth = aiDifficulty === "hard" ? 4 : aiDifficulty === "normal" ? 2 : 1;
+    // 최대 연산 마감 타임아웃 지정 (1.2초 후 무조건 계산 강제 중단하여 굳음 현상 완전 원천 차단)
+    const deadline = Date.now() + 1200;
+
+    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 5수 앞 프로급 수읽기)
+    const searchDepth = aiDifficulty === "hard" ? 5 : aiDifficulty === "normal" ? 2 : 1;
     const scoredMoves: { from: [number, number]; to: [number, number]; score: number }[] = [];
 
     for (const move of legalMoves) {
@@ -920,7 +929,7 @@ export default function JanggiPage() {
       temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
       temp[move.from[0]][move.from[1]] = null;
 
-      const score = minimax(temp, searchDepth - 1, -Infinity, Infinity, false);
+      const score = minimax(temp, searchDepth - 1, -Infinity, Infinity, false, deadline);
       scoredMoves.push({ from: move.from, to: move.to, score });
     }
 
