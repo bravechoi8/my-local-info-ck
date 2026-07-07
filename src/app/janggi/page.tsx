@@ -609,7 +609,7 @@ export default function JanggiPage() {
     const victim = currentBoard[move.to[0]][move.to[1]];
     if (!assailant) return 0;
 
-    const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 20, 병: 20 };
+    const values = { 궁: 15000, 차: 200, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 20, 병: 20 };
 
     // 1단계: 멍군(장군 대피) 행마를 최우선 순위로 배치하여 불필요한 자살 수 조기 차단
     if (assailant.type === "궁" || assailant.type === "사") {
@@ -632,7 +632,7 @@ export default function JanggiPage() {
 
   // 통합 정적 판세 평가 함수 (Static Board Evaluator - 프로선수급 포진 시너지 탑재)
   const evaluateBoard = (currentBoard: Board): number => {
-    const values = { 궁: 15000, 차: 130, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 20, 병: 20 };
+    const values = { 궁: 15000, 차: 200, 포: 70, 마: 50, 상: 30, 사: 30, 졸: 20, 병: 20 };
     let score = 0;
 
     // 아군(han)과 적군(cho)의 궁(왕) 위치 검사
@@ -823,6 +823,44 @@ export default function JanggiPage() {
               if (r === 9 && c === 4) score -= 15;
               if (r === 8 && c === 4) score -= 8;
               break;
+          }
+        }
+      }
+    }
+
+    // 차(車)와 포(包)의 위협 감지 보정 (호위 없이 공격당하고 있을 때 강력한 위험 페널티 부과)
+    for (let r = 0; r < 10; r++) {
+      for (let c = 0; c < 9; c++) {
+        const p = currentBoard[r][c];
+        if (p && (p.type === "차" || p.type === "포")) {
+          // 아군 기물이 호위(Support)를 못 받고 있다면 위험 분석 구동
+          if (!isPieceSupported(r, c, p.camp, currentBoard)) {
+            const enemyCamp = p.camp === "cho" ? "han" : "cho";
+            let underThreat = false;
+            
+            for (let er = 0; er < 10; er++) {
+              for (let ec = 0; ec < 9; ec++) {
+                const ep = currentBoard[er][ec];
+                if (ep && ep.camp === enemyCamp) {
+                  const dr = Math.abs(er - r);
+                  const dc = Math.abs(ec - c);
+                  if (dr === 0 || dc === 0 || dr === dc || (ep.type === "마" && dr + dc === 3) || (ep.type === "상" && dr + dc === 5)) {
+                    const emoves = getMoves(er, ec, currentBoard);
+                    if (emoves.some(([tr, tc]) => tr === r && tc === c)) {
+                      underThreat = true;
+                      break;
+                    }
+                  }
+                }
+              }
+              if (underThreat) break;
+            }
+
+            if (underThreat) {
+              const penalty = p.type === "차" ? 120 : 45; // 무방비 상태의 차 노출 시 치명적 감점
+              if (p.camp === "han") score -= penalty;
+              else score += penalty;
+            }
           }
         }
       }
