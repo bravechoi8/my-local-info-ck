@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import DarkModeToggle from "@/components/DarkModeToggle";
 
@@ -12,11 +12,32 @@ export default function CounterPage() {
   const [clickVolume, setClickVolume] = useState<number>(0.1);
   const [showSettings, setShowSettings] = useState<boolean>(false);
 
-  // 사운드 피드백을 위한 Web Audio API 헬퍼 함수
-  const playClickSound = (isIncrement: boolean) => {
-    if (!soundEnabled || typeof window === "undefined") return;
+  // AudioContext 싱글톤 저장을 위한 Ref
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  // 필요할 때만 단일 AudioContext 인스턴스를 안전하게 생성/재개
+  const getAudioContext = (): AudioContext | null => {
+    if (typeof window === "undefined") return null;
     try {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      if (audioCtxRef.current.state === "suspended") {
+        audioCtxRef.current.resume();
+      }
+      return audioCtxRef.current;
+    } catch (e) {
+      console.warn("Failed to initialize AudioContext:", e);
+      return null;
+    }
+  };
+
+  // 사운드 피드백을 위한 Web Audio API 헬퍼 함수 (싱글톤 재사용)
+  const playClickSound = (isIncrement: boolean) => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
@@ -32,7 +53,7 @@ export default function CounterPage() {
       osc.start();
       osc.stop(ctx.currentTime + 0.08);
     } catch (e) {
-      console.warn("Web Audio API blocked or not supported", e);
+      console.warn("Web Audio API play error:", e);
     }
   };
 
@@ -60,9 +81,9 @@ export default function CounterPage() {
   // 리셋 연산
   const handleReset = () => {
     setCount(0);
-    if (soundEnabled && typeof window !== "undefined") {
+    const ctx = getAudioContext();
+    if (soundEnabled && ctx) {
       try {
-        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         osc.connect(gain);
@@ -74,7 +95,9 @@ export default function CounterPage() {
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
         osc.start();
         osc.stop(ctx.currentTime + 0.15);
-      } catch {}
+      } catch (e) {
+        console.warn("Reset sound play error:", e);
+      }
     }
     triggerHaptic();
   };
@@ -159,25 +182,27 @@ export default function CounterPage() {
             className="w-full flex-1 bg-[#10b981] text-white rounded-[2.5rem] p-5 sm:p-6 shadow-2xl relative flex flex-col justify-between overflow-hidden cursor-pointer hover:brightness-105 active:scale-[0.99] transition duration-200"
             style={{ touchAction: "none" }}
           >
-            {/* 좌상단 공유 아이콘 */}
+            {/* 좌상단 공유 아이콘 (터치 영역을 48px 크기인 w-12 h-12로 확장) */}
             <div
               onPointerDown={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 handleShare();
               }}
-              className="absolute left-5 top-5 w-9 h-9 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-lg active:scale-90 transition z-20"
+              className="absolute left-4 top-4 w-12 h-12 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-xl active:scale-90 transition z-20"
               title="카운터 값 복사"
             >
               🔗
             </div>
 
-            {/* 우상단 옵션 조절 슬라이더 아이콘 */}
+            {/* 우상단 옵션 조절 슬라이더 아이콘 (터치 영역을 48px 크기인 w-12 h-12로 확장하여 오동작 제거) */}
             <div
               onPointerDown={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 setShowSettings(!showSettings);
               }}
-              className="absolute right-5 top-5 w-9 h-9 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-lg active:scale-90 transition z-20"
+              className="absolute right-4 top-4 w-12 h-12 rounded-full bg-black/10 hover:bg-black/20 flex items-center justify-center text-xl active:scale-90 transition z-20"
               title="설정 열기"
             >
               ⚙️
@@ -242,15 +267,21 @@ export default function CounterPage() {
             </div>
           </div>
 
-          {/* 설정 팝오버 슬라이드 */}
+          {/* 설정 팝오버 슬라이드 (설정창 내부 터치 시 이벤트가 뒷배경으로 버블링되는 것을 stopPropagation으로 차단) */}
           {showSettings && (
-            <div className="absolute inset-0 bg-[#0A0A0A]/95 rounded-[2.5rem] p-6 flex flex-col justify-between border border-slate-800 animate-fadeIn z-30">
+            <div 
+              onPointerDown={(e) => e.stopPropagation()}
+              className="absolute inset-0 bg-[#0A0A0A]/95 rounded-[2.5rem] p-6 flex flex-col justify-between border border-slate-800 animate-fadeIn z-30"
+            >
               <div className="space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-2">
                   <h3 className="text-sm font-bold text-white">🎛️ 카운터 피드백 설정</h3>
                   <button
-                    onClick={() => setShowSettings(false)}
-                    className="text-xs text-slate-400 hover:text-white"
+                    onPointerDown={(e) => {
+                      e.stopPropagation();
+                      setShowSettings(false);
+                    }}
+                    className="text-xs text-slate-400 hover:text-white p-2"
                   >
                     닫기 ✕
                   </button>
@@ -260,7 +291,10 @@ export default function CounterPage() {
                 <div className="flex items-center justify-between text-xs py-1">
                   <span>진동 피드백 (모바일 전용)</span>
                   <button
-                    onClick={() => setHapticEnabled(!hapticEnabled)}
+                    onPointerDown={(e) => {
+                      e.stopPropagation();
+                      setHapticEnabled(!hapticEnabled);
+                    }}
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-bold ${
                       hapticEnabled ? "bg-[#10b981] text-white" : "bg-slate-800 text-slate-400"
                     }`}
@@ -273,7 +307,10 @@ export default function CounterPage() {
                 <div className="flex items-center justify-between text-xs py-1">
                   <span>클릭 사운드 효과음</span>
                   <button
-                    onClick={() => setSoundEnabled(!soundEnabled)}
+                    onPointerDown={(e) => {
+                      e.stopPropagation();
+                      setSoundEnabled(!soundEnabled);
+                    }}
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-bold ${
                       soundEnabled ? "bg-[#10b981] text-white" : "bg-slate-800 text-slate-400"
                     }`}
