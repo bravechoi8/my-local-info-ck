@@ -116,6 +116,20 @@ export default function JanggiPage() {
   const [isChoCheck, setIsChoCheck] = useState<boolean>(false); 
   const [isHanCheck, setIsHanCheck] = useState<boolean>(false); 
   const [lastMove, setLastMove] = useState<GameMove | null>(null); 
+  const [showCheckOverlay, setShowCheckOverlay] = useState<boolean>(false);
+
+  // 장군 발생 시 1.8초 동안만 화면 중앙에 오버레이 배너를 띄우는 이펙트
+  useEffect(() => {
+    if (isChoCheck || isHanCheck) {
+      setShowCheckOverlay(true);
+      const timer = setTimeout(() => {
+        setShowCheckOverlay(false);
+      }, 1800);
+      return () => clearTimeout(timer);
+    } else {
+      setShowCheckOverlay(false);
+    }
+  }, [isChoCheck, isHanCheck]);
 
   // 보드 초기화 함수
   const initBoard = (choLay: MaSangLayout, hanLay: MaSangLayout) => {
@@ -756,9 +770,9 @@ export default function JanggiPage() {
       }
     }
 
-    // 장군 위협 발생 시 보너스/감점 강하게 부과 (수읽기 회피 최우선)
-    if (isUnderCheck("han", currentBoard)) score -= 150;
-    if (isUnderCheck("cho", currentBoard)) score += 150;
+    // 장군 위협 발생 시 보너스/감점 강하게 부과 (수읽기 회피 최우선 - 외통수 방지)
+    if (isUnderCheck("han", currentBoard)) score -= 25000;
+    if (isUnderCheck("cho", currentBoard)) score += 20000;
 
     return score;
   };
@@ -1239,9 +1253,9 @@ export default function JanggiPage() {
                 borderRightWidth: is3dMode ? "5px" : "4px",
               }}
             >
-              {/* 장군 감지 시 화면 중앙에 거대 경고 배너 팝업 */}
-              {(isChoCheck || isHanCheck) && (
-                <div className="absolute inset-0 flex items-center justify-center bg-red-900/10 backdrop-blur-[0.5px] pointer-events-none rounded-[22px] z-30">
+              {/* 장군 감지 시 화면 중앙에 거대 경고 배너 팝업 (일시 노출) */}
+              {showCheckOverlay && (isChoCheck || isHanCheck) && (
+                <div className="absolute inset-0 flex items-center justify-center bg-red-900/10 backdrop-blur-[0.5px] pointer-events-none rounded-[22px] z-30 animate-fadeInOut">
                   <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-600 border-2 border-red-400 text-white font-black text-xl sm:text-2xl px-6 py-3 rounded-2xl shadow-[0_10px_25px_rgba(220,38,38,0.5)] flex flex-col items-center gap-1.5 animate-bounce">
                     <span className="text-2xl sm:text-3xl tracking-wide">🚨 장군! 🚨</span>
                     <span className="text-[10px] sm:text-xs font-bold opacity-90">궁(왕)을 안전하게 대피시켜야 합니다!</span>
