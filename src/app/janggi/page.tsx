@@ -835,20 +835,14 @@ export default function JanggiPage() {
     return score;
   };
 
-  // 알파-베타 가지치기 기반 Minimax 알고리즘 구현 (시간 제한 조기 중단 기능 탑재)
+  // 알파-베타 가지치기 기반 Minimax 알고리즘 구현 (완전 탐색 수읽기 보장)
   const minimax = (
     boardState: Board,
     depth: number,
     alpha: number,
     beta: number,
-    isMaximizing: boolean,
-    deadline: number
+    isMaximizing: boolean
   ): number => {
-    // 1. 시간 초과 조기 컷오프 (브라우저 마비 방지)
-    if (Date.now() > deadline) {
-      return evaluateBoard(boardState);
-    }
-
     if (depth === 0) {
       return evaluateBoard(boardState);
     }
@@ -871,7 +865,7 @@ export default function JanggiPage() {
         temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
         temp[move.from[0]][move.from[1]] = null;
 
-        const evaluation = minimax(temp, depth - 1, alpha, beta, false, deadline);
+        const evaluation = minimax(temp, depth - 1, alpha, beta, false);
         maxEval = Math.max(maxEval, evaluation);
         alpha = Math.max(alpha, evaluation);
         if (beta <= alpha) {
@@ -894,7 +888,7 @@ export default function JanggiPage() {
         temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
         temp[move.from[0]][move.from[1]] = null;
 
-        const evaluation = minimax(temp, depth - 1, alpha, beta, true, deadline);
+        const evaluation = minimax(temp, depth - 1, alpha, beta, true);
         minEval = Math.min(minEval, evaluation);
         beta = Math.min(beta, evaluation);
         if (beta <= alpha) {
@@ -917,11 +911,8 @@ export default function JanggiPage() {
       return;
     }
 
-    // 개별 기물 행마 후보별 공평한 탐색 시간 예산 분배 (기존에 첫 몇 개 후보가 시간을 다 써서 뒤 후보들이 바보가 되던 치명적 버그 수정)
-    const timeBudgetPerMove = Math.floor(1200 / legalMoves.length);
-
-    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 5수 앞 프로급 수읽기)
-    const searchDepth = aiDifficulty === "hard" ? 5 : aiDifficulty === "normal" ? 2 : 1;
+    // 난이도별 탐색 수읽기 깊이 지정 (쉬움: 1수 앞, 보통: 2수 앞, 어려움: 4수 앞 프로급 수읽기)
+    const searchDepth = aiDifficulty === "hard" ? 4 : aiDifficulty === "normal" ? 2 : 1;
     const scoredMoves: { from: [number, number]; to: [number, number]; score: number }[] = [];
 
     for (const move of legalMoves) {
@@ -929,9 +920,7 @@ export default function JanggiPage() {
       temp[move.to[0]][move.to[1]] = temp[move.from[0]][move.from[1]];
       temp[move.from[0]][move.from[1]] = null;
 
-      // 각 후보 수마다 최소 30ms에서 공평하게 분할된 마감 시간 부여
-      const moveDeadline = Date.now() + Math.max(30, timeBudgetPerMove);
-      const score = minimax(temp, searchDepth - 1, -Infinity, Infinity, false, moveDeadline);
+      const score = minimax(temp, searchDepth - 1, -Infinity, Infinity, false);
       scoredMoves.push({ from: move.from, to: move.to, score });
     }
 
