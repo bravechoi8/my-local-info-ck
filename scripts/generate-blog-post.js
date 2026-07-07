@@ -35,6 +35,7 @@ const BLOCK_KEYWORDS = [
   '환경오염', '배출시설', '오염물질', '환경오염물질', '대기오염', '수질오염', '폐기물',
   '인권침해', '권리구제', '군인', '장병', '전역예정', '군 생활', '입대', '군 복무', '병역',
   '원정출산', '국적', '원정 출산',
+  '농식품', '스케일업', '민간투자', '벤처투자', '창업기업', '기술창업', '창업도약',
   // 서울 25개 구청 명칭 추가 (구 단위 소식 전면 차단)
   '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구',
   '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구', '구로구', '금천구',
@@ -42,7 +43,14 @@ const BLOCK_KEYWORDS = [
 ];
 
 function isBlocked(item) {
-  const text = ((item.name || '') + ' ' + (item.title || '') + ' ' + (item.summary || '') + ' ' + (item.target || '')).toLowerCase();
+  const text = (
+    (item.name || '') + ' ' + 
+    (item.title || '') + ' ' + 
+    (item.summary || '') + ' ' + 
+    (item.target || '') + ' ' + 
+    (item.agency || '') + ' ' + 
+    (item.소관기관명 || '')
+  ).toLowerCase();
   return BLOCK_KEYWORDS.some(kw => text.includes(kw));
 }
 
