@@ -323,6 +323,29 @@ export default function HomeClient({ posts }: HomeClientProps) {
                 </div>
               </section>
 
+              {/* 초록 클래식 수동 카운터 배너 */}
+              <section className="group bg-gradient-to-br from-[#E8F8F2] to-[#E3F4ED] dark:from-[#112F24] dark:to-[#0A2219] rounded-2xl p-4 sm:p-4.5 border border-[#c3edd9] dark:border-slate-800/80 border-b-[6px] border-b-[#10b981]/50 dark:border-b-[#10b981]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(16,185,129,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
+                <div className="space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 text-[9px] font-bold rounded bg-white dark:bg-slate-800 text-[#10b981] border border-[#a2e6c5] dark:border-[#10b981]/30 transition-colors">
+                    PC·모바일 완벽 대응
+                  </span>
+                  <h2 className="text-sm sm:text-base font-extrabold text-[#112F24] dark:text-[#F3F4F6] leading-tight">
+                    초록 클래식 수동 카운터
+                  </h2>
+                  <p className="text-[10.5px] text-[#2c5344] dark:text-[#8B95A1] leading-relaxed">
+                    PC에서는 우클릭으로 마이너스 카운팅이 가능하며, 터치 전환 모드로 숫자를 편리하게 셉니다.
+                  </p>
+                </div>
+                <div className="flex justify-end pt-1">
+                  <Link
+                    href="/counter"
+                    className="px-3 py-1.5 bg-[#10b981] text-white text-[10px] font-bold rounded-lg group-hover:scale-[1.02] hover:bg-[#0d9668] transition-all shadow-sm whitespace-nowrap"
+                  >
+                    카운터 열기 &rarr;
+                  </Link>
+                </div>
+              </section>
+
               {/* 쿠키 플래너 & 챗봇 배너 */}
               <section className="group bg-gradient-to-br from-[#FFF3E2] to-[#FFE8CC] dark:from-[#3A2A1A] dark:to-[#2B1B0F] rounded-2xl p-4 sm:p-4.5 border border-[#EFE3D0] dark:border-slate-800/80 border-b-[6px] border-b-[#F4A55F]/50 dark:border-b-[#F4A55F]/30 flex flex-col justify-between gap-3 h-full hover:-translate-y-1 hover:border-b-[7px] hover:shadow-[0_8px_20px_rgba(244,165,95,0.15)] dark:hover:shadow-[0_8px_20px_rgba(0,0,0,0.6)] active:translate-y-0.5 active:border-b-[2px] transition-all duration-200">
                 <div className="space-y-1.5">
