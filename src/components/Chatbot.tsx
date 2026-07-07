@@ -283,6 +283,17 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  // 게임 및 도구 전용 페이지에서는 챗봇 플로팅 UI 및 채팅창 전체를 렌더링하지 않음
+  const isGamePage = pathname && (
+    pathname.includes("/tetris") || 
+    pathname.includes("/counter") || 
+    pathname.includes("/janggi")
+  );
+
+  if (isGamePage) {
+    return null;
+  }
+
   return (
     <>
       {/* 1. 플로팅 챗봇 버튼 (귀여운 강아지 이미지와 챗봇 텍스트 말풍선 라벨) */}
