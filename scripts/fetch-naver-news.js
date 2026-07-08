@@ -92,7 +92,29 @@ function isBlocked(item) {
     return false;
   }
 
-  // 3. 타 지역 지자체 복지/행사 정보 필터링 (지방글 차단)
+  // 3. 서울 구 단위 및 경기도 소도시 정보 원천 차단 (네이버 뉴스 전용 차단)
+  const localGuList = [
+    '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구',
+    '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구', '구로구', '금천구',
+    '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구'
+  ];
+  if (localGuList.some(gu => text.includes(gu))) {
+    console.log(`[네이버뉴스 차단] 서울 구 단위 뉴스 제외: ${item.title}`);
+    return true;
+  }
+
+  const ggCities = [
+    '수원시', '고양시', '성남시', '부천시', '안산시', '남양주시', '안양시', '화성시',
+    '평택시', '의정부시', '파주시', '시흥시', '김포시', '광명시', '광주시', '군포시',
+    '오산시', '이천시', '양주시', '안성시', '구리시', '포천시', '의왕시', '하남시',
+    '여주시', '양평군', '동두천시', '과천시', '가평군', '연천군'
+  ];
+  if (ggCities.some(city => text.includes(city))) {
+    console.log(`[네이버뉴스 차단] 경기도 소도시 뉴스 제외: ${item.title}`);
+    return true;
+  }
+
+  // 4. 타 지역 지자체 복지/행사 정보 필터링 (지방글 차단)
   const hasOtherRegion = OTHER_REGIONS.some(reg => text.includes(reg));
   const hasLocalInfoKeyword = LOCAL_INFO_KEYWORDS.some(kw => text.includes(kw));
   if (hasOtherRegion && hasLocalInfoKeyword) {
