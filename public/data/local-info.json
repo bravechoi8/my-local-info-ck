@@ -1175,5 +1175,27 @@
     "target": "도내 19~39세 청년",
     "summary": "해외대학 연수 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000668"
+  },
+  {
+    "id": 107,
+    "name": "긴급복지 연료비 및 전기요금 지원",
+    "category": "혜택",
+    "startDate": "2023-10-27",
+    "endDate": "상시",
+    "location": "시·군·구청",
+    "target": "○ 긴급복지 주지원(생계, 주거지원) 을 받는 가구 중 연료비, 전기요금이 필요하다고 인정되는 가구\r\n   * 전기요금 : 주택용 전기가 단전(전류 제한기 부설 포함)된 가구",
+    "summary": "긴급지원 주지원 가구 중 연료비, 전기요금이 필요한 경우 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005004"
+  },
+  {
+    "id": 108,
+    "name": "자산형성지원사업(희망저축Ⅰ)",
+    "category": "혜택",
+    "startDate": "2024-05-14",
+    "endDate": "상시",
+    "location": "주민센터",
+    "target": "생계․의료수급가구(중위 40% 이하) 중, 일하는 사람이 있어야 하며, 가구 전체의 총 근로․사업소득이 기준중위소득 40%의 60% 이상",
+    "summary": "일하는 생계‧의료 수급자를 대상으로 본인적립금(10만 원)에 정부지원금(30만 원) 매칭",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005010"
   }
 ]
