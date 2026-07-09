@@ -1219,5 +1219,27 @@
     "target": "중소기업퇴직연금기금제도에 가입한 상시근로자수 30명 이하 사업주 및 근로자",
     "summary": "수수료 면제 및 사업주 및 근로자에 지원금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100215"
+  },
+  {
+    "id": 111,
+    "name": "온가족보듬사업",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "시·군·구 가족센터",
+    "target": "다문화가족, 1인가구, 맞벌이가족, 한부모, 조손가족 등 다양한 모든 가족",
+    "summary": "취약·위기가족을 위한 가족상담, 사례관리, 부모 및 자녀양육 교육 프로그램 제공 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003474"
+  },
+  {
+    "id": 112,
+    "name": "북한이탈주민 주거지원금 지급",
+    "category": "혜택",
+    "startDate": "2023-10-27",
+    "endDate": "상시",
+    "location": "북한이탈주민정착지원사무소(하나원)",
+    "target": "북한이탈주민(보호 및 비보호 대상자)",
+    "summary": "북한이탈주민에게 임대주택 알선 및 임대보증금 지원(세대별 차등지급)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003310"
   }
 ]
