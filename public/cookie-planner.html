@@ -1256,6 +1256,23 @@ async function askCookie(messages){
   
   if (model === 'gemini') {
     const key = getGeminiKey();
+    if (useKey && !key) {
+      try {
+        const res = await fetch("/api/cookie-chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.response) {
+            return data.response;
+          }
+        }
+      } catch (err) {
+        console.warn("로컬 API 우회 호출 실패, 직접 API 호출 방식으로 계속 진행:", err);
+      }
+    }
     return await callGeminiAPI(key, messages, useKey);
   } else {
     const key = getClaudeKey();
@@ -1267,7 +1284,7 @@ async function callGeminiAPI(key, messages, useKey) {
   if (useKey && !key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
   
   const headers = { "Content-Type": "application/json" };
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${key}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${key}`;
   
   // Claude의 메시지 형태 [{role: "user", content: "..."}]를 Gemini 형태 [{role: "user", parts: [{text: "..."}]}]로 변환
   const contents = messages.map(m => ({
