@@ -1,3 +1,12 @@
+function needsWebSearch(text) {
+  if (!text) return false;
+  const clean = text.toLowerCase();
+  const searchKeywords = [
+    '날씨', '온도', '기온', '뉴스', '실시간', '검색', '오늘 일어난 일', '주식', '환율', '경기 결과', '스코어'
+  ];
+  return searchKeywords.some(kw => clean.includes(kw));
+}
+
 export async function onRequestPost(context) {
   try {
     const { messages } = await context.request.json();
@@ -32,17 +41,26 @@ export async function onRequestPost(context) {
       parts: [{ text: m.content || "" }]
     }));
 
+    const lastUserMessage = messages.filter(m => m.role === 'user').slice(-1)[0]?.content || '';
+    const useSearch = needsWebSearch(lastUserMessage);
+
+    const bodyPayload = {
+      contents: contents,
+      systemInstruction: {
+        parts: [{ text: SYSTEM }]
+      }
+    };
+
+    if (useSearch) {
+      bodyPayload.tools = [{ google_search: {} }];
+    }
+
     const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
 
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: contents,
-        systemInstruction: {
-          parts: [{ text: SYSTEM }]
-        }
-      })
+      body: JSON.stringify(bodyPayload)
     });
 
     if (!res.ok) {

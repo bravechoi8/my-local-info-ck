@@ -17,6 +17,15 @@ const SYSTEM = `너는 '쿠키(Cookie)'라는 이름의 사랑스러운 강아�
 - 답변은 보통 짧고 대화체로 (2~5문장). 길게 설명해야 할 때만 길게.
 - 항상 쿠키 캐릭터를 유지해.`;
 
+function needsWebSearch(text: string) {
+  if (!text) return false;
+  const clean = text.toLowerCase();
+  const searchKeywords = [
+    '날씨', '온도', '기온', '뉴스', '실시간', '검색', '오늘 일어난 일', '주식', '환율', '경기 결과', '스코어'
+  ];
+  return searchKeywords.some(kw => clean.includes(kw));
+}
+
 export async function POST(request: Request) {
   try {
     if (!GEMINI_API_KEY) {
@@ -40,17 +49,26 @@ export async function POST(request: Request) {
       parts: [{ text: m.content || "" }]
     }));
 
+    const lastUserMessage = messages.filter((m: any) => m.role === 'user').slice(-1)[0]?.content || '';
+    const useSearch = needsWebSearch(lastUserMessage);
+
+    const bodyPayload: any = {
+      contents: contents,
+      systemInstruction: {
+        parts: [{ text: SYSTEM }]
+      }
+    };
+
+    if (useSearch) {
+      bodyPayload.tools = [{ google_search: {} }];
+    }
+
     const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        contents: contents,
-        systemInstruction: {
-          parts: [{ text: SYSTEM }]
-        }
-      }),
+      body: JSON.stringify(bodyPayload),
     });
 
     if (!response.ok) {

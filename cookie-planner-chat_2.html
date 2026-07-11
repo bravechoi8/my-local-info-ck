@@ -1280,6 +1280,15 @@ async function askCookie(messages){
   }
 }
 
+function needsWebSearch(text) {
+  if (!text) return false;
+  const clean = text.toLowerCase();
+  const searchKeywords = [
+    '날씨', '온도', '기온', '뉴스', '실시간', '검색', '오늘 일어난 일', '주식', '환율', '경기 결과', '스코어'
+  ];
+  return searchKeywords.some(kw => clean.includes(kw));
+}
+
 async function callGeminiAPI(key, messages, useKey) {
   if (useKey && !key) { const e = new Error('NO_KEY'); e.code = 'NO_KEY'; throw e; }
   
@@ -1290,6 +1299,9 @@ async function callGeminiAPI(key, messages, useKey) {
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }]
   }));
+
+  const lastUserMessage = messages.filter(m => m.role === 'user').slice(-1)[0]?.content || '';
+  const useSearch = needsWebSearch(lastUserMessage);
   
   const requestBody = {
     contents: contents,
@@ -1303,6 +1315,10 @@ async function callGeminiAPI(key, messages, useKey) {
       { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
     ]
   };
+
+  if (useSearch) {
+    requestBody.tools = [{ google_search: {} }];
+  }
   
   const res = await fetch(url, {
     method: "POST",
