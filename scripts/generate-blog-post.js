@@ -14,7 +14,7 @@ import { generateSummaryImage, generateAndSaveImage } from './image-generator.js
 import { fetchWithRetry } from './utils.js';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
 const DATA_FILE_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info.json');
 const POSTS_DIR_PATH = path.join(__dirname, '..', 'src', 'content', 'posts');
 

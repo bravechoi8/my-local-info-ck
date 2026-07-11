@@ -19,7 +19,7 @@ const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 const NAVER_ENDPOINT = 'https://openapi.naver.com/v1/search/news.json';
-const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
 const POSTS_DIR_PATH = filePath.join(__dirname, '..', 'src', 'content', 'posts');
 
 const BLOCK_KEYWORDS = [
