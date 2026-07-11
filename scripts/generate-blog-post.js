@@ -380,6 +380,10 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
       } catch (err) {
         console.error(`글 생성 중 오류 발생 (${itemName}):`, err.message);
       }
+      
+      // 구글 API 분당 요청 한도(RPM) 초과 예방을 위한 12초 안전 대기 시간 추가
+      console.log(`[API 한도 방어] 다음 글 요청까지 12초간 대기합니다...`);
+      await new Promise(resolve => setTimeout(resolve, 12000));
     }
 
   } catch (error) {
