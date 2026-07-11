@@ -49,8 +49,7 @@ export async function POST(request: Request) {
         contents: contents,
         systemInstruction: {
           parts: [{ text: SYSTEM }]
-        },
-        tools: [{ google_search: {} }]
+        }
       }),
     });
 

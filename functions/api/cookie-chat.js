@@ -41,8 +41,7 @@ export async function onRequestPost(context) {
         contents: contents,
         systemInstruction: {
           parts: [{ text: SYSTEM }]
-        },
-        tools: [{ google_search: {} }]
+        }
       })
     });
 
