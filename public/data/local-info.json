@@ -1351,5 +1351,27 @@
     "target": "위기상황이 발생한 1년 이내의 가정으로 소득, 재산, 금융재산 기준을 충족하는 가구",
     "summary": "1년 이내 위기상황이 발생한 경기도 가구에 대한 단기·신속 안전장치",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000164"
+  },
+  {
+    "id": 123,
+    "name": "귀농·귀촌인귀농귀촌교육",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "귀농귀촌에 관심을 가지고 준비 중인 예비 귀농귀촌인",
+    "summary": "예비 귀농귀촌인을 대상으로 귀농귀촌 관련 교육 운영비 중 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000138"
+  },
+  {
+    "id": 124,
+    "name": "공영도매시장 시설현대화 지원",
+    "category": "혜택",
+    "startDate": "2024-05-14",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "공영도매시장 개설자(지방자치단체)",
+    "summary": "공영도매시장 개설자에게 공영시장 시설현대화 비용(공사비, 설계비 등)을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000139"
   }
 ]
