@@ -1373,5 +1373,27 @@
     "target": "공영도매시장 개설자(지방자치단체)",
     "summary": "공영도매시장 개설자에게 공영시장 시설현대화 비용(공사비, 설계비 등)을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000139"
+  },
+  {
+    "id": 125,
+    "name": "경기도산후조리비지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "출생일 및 신청일 현재 경기도에 주민등록을 두고 실제 거주하는 출산가정 (영아 출생 후 12개월 이내)",
+    "summary": "경기도 거주 출산가정에 출생아 1인당 50만원의 지역화폐를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000137"
+  },
+  {
+    "id": 126,
+    "name": "경기도청년기본소득",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경기도 거주 만 24세 청년(최근 3년 이상 계속 또는 합산 10년 이상 거주)",
+    "summary": "만 24세 청년에게 분기별 25만 원(최대 100만 원)의 지역화폐를 기본소득으로 지급합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000138"
   }
 ]
