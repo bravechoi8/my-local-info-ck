@@ -75,7 +75,7 @@ Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 Answer the user's question accurately using Google Search grounding.`;
-      prefix = "이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ";
+      prefix = "블로그에 관련 소식이 없어서 실시간 인터넷 검색 결과로 안내해 드릴게요! 🐾 ";
     } else {
       const blogDataStr = top3
         .map((item, idx) => {
@@ -93,7 +93,7 @@ Today's date is ${dateWithZodiac}. Always use this as the current date when answ
 
 Analyze the user's question and the provided [블로그 데이터] carefully.
 - If the [블로그 데이터] contains the exact, direct, and correct information to answer the user's question, construct your response using only that data. Do NOT add any prefix.
-- If the [블로그 데이터] does NOT contain the direct answer, or if the information is about a different topic, round, or date (for example, the user asks about '1225회' but the blog data only has '1100회'), you must answer accurately using Google Search grounding. In this case, you MUST start your answer with the exact phrase: "이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. "
+- If the [블로그 데이터] does NOT contain the direct answer, or if the information is about a different topic, round, or date (for example, the user asks about '1225회' but the blog data only has '1100회'), you must answer accurately using Google Search grounding. In this case, you MUST start your answer with the exact phrase: "블로그의 다른 글을 참고하여 실시간 검색 결과로 안내해 드릴게요! 🐾 "
 
 [블로그 데이터]
 ${blogDataStr}`;
