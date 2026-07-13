@@ -252,53 +252,54 @@ export default function Chatbot({ chatData }: ChatbotProps) {
       }
 
       const matchData = await matchRes.json();
-      const { apiKey, systemPrompt, prefix, localSummary, useSearch, response: directResponse } = matchData;
+      const { apiKey, systemPrompt, prefix, localSummary, useSearch } = matchData;
 
       let botText = "";
 
-      if (!apiKey) {
-        botText = directResponse || "죄송합니다. 답변을 구성하지 못했습니다.";
-      } else {
-        try {
-          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
-          
-          const requestPayload: any = {
-            contents: [
-              {
-                role: "user",
-                parts: [{ text: userText }]
-              }
-            ],
-            systemInstruction: {
-              parts: [{ text: systemPrompt }]
+      try {
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+        
+        const requestPayload: any = {
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: userText }]
             }
-          };
-
-          if (useSearch) {
-            requestPayload.tools = [{ google_search: {} }];
+          ],
+          systemInstruction: {
+            parts: [{ text: systemPrompt }]
           }
+        };
 
-          const response = await fetch(geminiUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestPayload),
-          });
-
-          if (!response.ok) {
-            const errText = await response.text();
-            throw new Error(`Gemini API error: ${response.status} - ${errText}`);
-          }
-
-          const data = await response.json();
-          const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-          const cleanText = rawText.replace(/[\*\*|#]/g, "").trim();
-          botText = prefix ? `${prefix}${cleanText}` : cleanText;
-        } catch (geminiError) {
-          console.error("Gemini Direct Fetch Error:", geminiError);
-          botText = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary || "내용을 요약하지 못했습니다."}`;
+        if (useSearch) {
+          requestPayload.tools = [{ google_search: {} }];
         }
+
+        const response = await fetch(geminiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestPayload),
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Gemini API error: ${response.status} - ${errText}`);
+        }
+
+        const data = await response.json();
+        const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        const cleanText = rawText.replace(/[\*\*|#]/g, "").trim();
+        botText = prefix ? `${prefix}${cleanText}` : cleanText;
+
+        // 🔗 3.1-lite의 요약 생략 현상을 차단하기 위해, 백엔드가 매칭한 다중 블로그 포스트 리스트를 하단에 강제 강하 합체!
+        if (localSummary) {
+          botText += `\n\n🔎 **블로그 관련 소식 목록**\n${localSummary}`;
+        }
+      } catch (geminiError) {
+        console.error("Gemini Direct Fetch Error:", geminiError);
+        botText = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary || "내용을 요약하지 못했습니다."}`;
       }
 
       setMessages((prev) => [
