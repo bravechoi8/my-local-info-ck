@@ -60,7 +60,7 @@ export async function onRequestPost(context) {
     });
 
     const top3 = scoredItems
-      .filter((x) => x.score > 0)
+      .filter((x) => x.score >= 25)
       .sort((a, b) => {
         if (b.score !== a.score) {
           return b.score - a.score;
