@@ -184,7 +184,17 @@ ${blogDataStr}`;
         const rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
         botAnswer = stripMarkdown(rawAnswer);
       } catch (geminiError) {
-        botAnswer = `[임시 디버그 에러 발생] ${geminiError.message}`;
+        // 🛡️ 구글 서버 503 에러 발생 시 로컬 백업 요약 답변 작동
+        const localSummary = top3
+          .map((item) => {
+            const title = item.title || item.name || "제목 없음";
+            const summary = item.summary || "요약 설명 없음";
+            const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
+            return `제목: ${title}\n요약: ${summary}${linkText}`;
+          })
+          .join("\n\n");
+
+        botAnswer = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary}`;
       }
     }
 
@@ -205,7 +215,7 @@ ${blogDataStr}`;
 
 // 구글 제미나이 API 직접 호출 함수 (실시간 구글 검색 연동 지원)
 async function callGemini(apiKey, systemPrompt, userMessage, useSearch) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+  const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
   
   const requestBody = {
     contents: [
