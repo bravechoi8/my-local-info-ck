@@ -1,3 +1,12 @@
+function needsWebSearch(text) {
+  if (!text) return false;
+  const clean = text.toLowerCase();
+  const searchKeywords = [
+    '날씨', '온도', '기온', '뉴스', '실시간', '검색', '오늘 일어난 일', '주식', '환율', '경기 결과', '스코어'
+  ];
+  return searchKeywords.some(kw => clean.includes(kw));
+}
+
 // Trigger deploy to load updated Cloudflare environment variables
 export async function onRequestPost(context) {
   try {
@@ -168,7 +177,8 @@ Analyze the user's question and the provided [블로그 데이터] carefully.
 ${blogDataStr}`;
 
       try {
-        const rawAnswer = await callGemini(apiKey, systemPrompt, message, false);
+        const forceSearch = needsWebSearch(message);
+        const rawAnswer = await callGemini(apiKey, systemPrompt, message, forceSearch);
         botAnswer = stripMarkdown(rawAnswer);
       } catch (geminiError) {
         // 🛡️ 구글 서버 503 에러 발생 시 로컬 백업 요약 답변 작동

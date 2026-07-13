@@ -3,6 +3,15 @@ import { NextResponse } from "next/server";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent";
 
+function needsWebSearch(text: string) {
+  if (!text) return false;
+  const clean = text.toLowerCase();
+  const searchKeywords = [
+    '날씨', '온도', '기온', '뉴스', '실시간', '검색', '오늘 일어난 일', '주식', '환율', '경기 결과', '스코어'
+  ];
+  return searchKeywords.some(kw => clean.includes(kw));
+}
+
 export async function POST(request: Request) {
   try {
     if (!GEMINI_API_KEY) {
@@ -22,24 +31,30 @@ export async function POST(request: Request) {
     }
 
     const systemInstruction = "너는 '리얼인포' 웹사이트의 인공지능 정보 가이드 '척척'이야. 친절하고 신뢰감 있는 말투로 전국의 생활 정보, 혜택, 복지 지원금에 대해 설명해줘. 한국어로 대답하고 가끔 이모지 💬✨를 자연스럽게 섞어줘.";
+    const useSearch = needsWebSearch(message);
+
+    const bodyPayload: any = {
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: message }]
+        }
+      ],
+      systemInstruction: {
+        parts: [{ text: systemInstruction }]
+      }
+    };
+
+    if (useSearch) {
+      bodyPayload.tools = [{ google_search: {} }];
+    }
 
     const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: message }]
-          }
-        ],
-        systemInstruction: {
-          parts: [{ text: systemInstruction }]
-        },
-        tools: [{ google_search: {} }] // 구글 검색을 통한 실시간 최신 정보 반영
-      }),
+      body: JSON.stringify(bodyPayload),
     });
 
     if (!response.ok) {
