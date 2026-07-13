@@ -66,62 +66,50 @@ export async function onRequestPost(context) {
       .slice(0, 3)
       .map((x) => x.item);
 
-    let systemPrompt = "";
-    let prefix = "";
+    // 블로그 매칭 성공 시: 서버 단에서 다중 글 리스트를 포맷팅해서 다이렉트 즉시 응답 (구글 API 호출 생략, 크레딧 0원)
+    if (top3.length > 0) {
+      const localSummary = top3
+        .map((item, idx) => {
+          const title = item.title || item.name || "제목 없음";
+          const summary = item.summary || "요약 설명 없음";
+          const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
+          return `${idx + 1}. 제목: ${title}\n   요약: ${summary}${linkText}`;
+        })
+        .join("\n\n");
 
-    if (top3.length === 0) {
-      systemPrompt = `You are an AI assistant for a Korean local information blog.
+      return new Response(
+        JSON.stringify({
+          response: `블로그에서 찾은 관련 소식 목록입니다. 🐾\n\n${localSummary}`,
+          apiKey: "", // 브라우저 구글 fetch 우회 플래그
+          useSearch: false
+        }),
+        {
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+    }
+
+    // 블로그 매칭 실패 시: 브라우저가 다이렉트로 구글 실시간 검색을 타도록 명세 리턴
+    const systemPrompt = `You are an AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 Answer the user's question accurately using Google Search grounding.`;
-      prefix = "블로그에 관련 소식이 없어서 실시간 인터넷 검색 결과로 안내해 드릴게요! 🐾 ";
-    } else {
-      const blogDataStr = top3
-        .map((item, idx) => {
-          const title = item.title || item.name || "제목 없음";
-          const summary = item.summary || "요약 없음";
-          const link = item.slug ? `https://real-infos.com/blog/${item.slug}` : "";
-          return `${idx + 1}. 제목: ${title}\n   요약: ${summary}\n   링크: ${link}`;
-        })
-        .join("\n");
-
-      systemPrompt = `You are a helpful AI assistant for a Korean local information blog.
-Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
-Do NOT use any markdown symbols except for links. Plain text only, but you MUST add a markdown link like '[자세히 보기](링크)' at the very end of your answer if a relevant link is provided in the [블로그 데이터].
-Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
-
-Analyze the user's question and the provided [블로그 데이터] carefully.
-- If the [블로그 데이터] contains the exact, direct, and correct information to answer the user's question, construct your response using only that data. Do NOT add any prefix.
-- If the [블로그 데이터] does NOT contain the direct answer, or if the information is about a different topic, round, or date (for example, the user asks about '1225회' but the blog data only has '1100회'), you must answer accurately using Google Search grounding. In this case, you MUST start your answer with the exact phrase: "블로그의 다른 글을 참고하여 실시간 검색 결과로 안내해 드릴게요! 🐾 "
-
-[블로그 데이터]
-${blogDataStr}`;
-      prefix = "";
-    }
+    
+    const prefix = "블로그에 관련 소식이 없어서 실시간 인터넷 검색 결과로 안내해 드릴게요! 🐾 ";
 
     const apiKey = context.env.GEMINI_API_KEY;
     if (!apiKey) {
       throw new Error("GEMINI_API_KEY 환경변수가 설정되지 않았습니다. Cloudflare 대시보드에 API 키를 등록해 주세요.");
     }
 
-    const localSummary = top3
-      .map((item) => {
-        const title = item.title || item.name || "제목 없음";
-        const summary = item.summary || "요약 설명 없음";
-        const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
-        return `제목: ${title}\n요약: ${summary}${linkText}`;
-      })
-      .join("\n\n");
-
-    // 클라이언트로 동적 정보만 내려주고 실질적인 AI 호출은 브라우저에서 직접 수행하도록 패스합니다.
     return new Response(
       JSON.stringify({
         apiKey,
         systemPrompt,
         prefix,
-        localSummary,
-        useSearch: top3.length === 0
+        useSearch: true,
+        response: "" // 서버에서 다이렉트 대답이 없으므로 브라우저가 수행해야 함
       }),
       {
         headers: { "Content-Type": "application/json" }
