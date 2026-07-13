@@ -252,29 +252,35 @@ export default function Chatbot({ chatData }: ChatbotProps) {
       }
 
       const matchData = await matchRes.json();
-      const { apiKey, systemPrompt, prefix, localSummary } = matchData;
+      const { apiKey, systemPrompt, prefix, localSummary, useSearch } = matchData;
 
       let botText = "";
 
       try {
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+        
+        const requestPayload: any = {
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: userText }]
+            }
+          ],
+          systemInstruction: {
+            parts: [{ text: systemPrompt }]
+          }
+        };
+
+        if (useSearch) {
+          requestPayload.tools = [{ google_search: {} }];
+        }
+
         const response = await fetch(geminiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: "user",
-                parts: [{ text: userText }]
-              }
-            ],
-            systemInstruction: {
-              parts: [{ text: systemPrompt }]
-            },
-            tools: [{ google_search: {} }]
-          }),
+          body: JSON.stringify(requestPayload),
         });
 
         if (!response.ok) {

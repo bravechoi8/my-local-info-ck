@@ -120,7 +120,8 @@ ${blogDataStr}`;
         apiKey,
         systemPrompt,
         prefix,
-        localSummary
+        localSummary,
+        useSearch: top3.length === 0
       }),
       {
         headers: { "Content-Type": "application/json" }
