@@ -21,7 +21,7 @@ export async function onRequestPost(context) {
 
     // 1. 블로그의 모든 글 목록 로딩 (검색용 JSON 데이터)
     const urlObj = new URL(context.request.url);
-    const searchIndexUrl = `${urlObj.origin}/data/local-info.json`;
+    const searchIndexUrl = `${urlObj.origin}/data/search-index.json`;
     const searchRes = await fetch(searchIndexUrl);
     if (!searchRes.ok) {
       throw new Error("블로그 검색 인덱스 데이터를 읽어오지 못했습니다.");
