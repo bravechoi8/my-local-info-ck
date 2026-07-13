@@ -1,16 +1,3 @@
-function needsWebSearch(text) {
-  if (!text) return false;
-  const clean = text.toLowerCase();
-  const searchKeywords = [
-    '날씨', '온도', '기온', '뉴스', '실시간', '검색', '오늘 일어난 일', '주식', '환율', '경기 결과', '스코어',
-    '월드컵', '올림픽', '아시안게임', '야구', '축구', '스포츠', '경기 일정', '대진', '순위', '우승', '진출', '결과',
-    '대통령', '정치', '사건', '사고', '이슈', '핫이슈', '보도', '속보', '방영', '방송', '상영', '차트', '멜론', '빌보드',
-    '기사', '소식', '발표', '당첨', '로또', '복권', '번호', '금리', '증시', '코스피', '코스닥', '비트코인', '가상화폐', '암호화폐',
-    '누구', '최신', '현재', '요즘', '최근', '오늘', '어제'
-  ];
-  return searchKeywords.some(kw => clean.includes(kw));
-}
-
 // Trigger deploy to load updated Cloudflare environment variables
 export async function onRequestPost(context) {
   try {
@@ -32,90 +19,38 @@ export async function onRequestPost(context) {
     const currentZodiac = zodiacs[(seoulYear - 4) % 12];
     const dateWithZodiac = `${currentDate} (올해 띠: ${currentZodiac})`;
 
-    if (!message) {
-      return new Response(
-        JSON.stringify({ error: "Message is required" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+    // 1. 블로그의 모든 글 목록 로딩 (검색용 JSON 데이터)
+    const urlObj = new URL(context.request.url);
+    const searchIndexUrl = `${urlObj.origin}/data/local-info.json`;
+    const searchRes = await fetch(searchIndexUrl);
+    if (!searchRes.ok) {
+      throw new Error("블로그 검색 인덱스 데이터를 읽어오지 못했습니다.");
     }
+    const localInfoList = await searchRes.json();
 
-    // 1. 검색 인덱스 파일 가져오기
-    const searchIndexUrl = new URL(context.request.url).origin + "/data/search-index.json";
-    let searchIndex = [];
-    try {
-      const indexRes = await fetch(searchIndexUrl);
-      if (indexRes.ok) {
-        searchIndex = await indexRes.json();
-      }
-    } catch (e) {
-      console.error("Failed to fetch search index:", e);
-    }
+    // 2. 사용자의 질문과 형태소/단어 매칭 점수 연산
+    const messageWords = message.split(/\s+/).filter((w) => w.length > 0);
+    const flatMessage = message.replace(/\s+/g, "");
 
-    // 2. 질문 단어 분리 및 각 항목의 텍스트와 키워드 매칭
-    // 문장 기호 및 특수문자 제거
-    const cleanMessage = message.replace(/[?!.,~@#$%^&*()_+={}\[\]|\\:;"'<>\/-]/g, " ").trim();
-    const rawWords = cleanMessage.split(/\s+/).filter(Boolean);
-
-    // 한국어 조사 목록 (단어 뒤에 붙는 조사들을 제거하여 핵심 키워드 추출)
-    const josaRegex = /(은|는|이|가|을|를|에|에서|의|으로|로|와|과|도|만|나|이나|하고|랑|이랑|께서|에게|한테|에대해|에대해서)$/;
-    const queryWords = rawWords.map(word => {
-      if (word.length > 1) {
-        const baseWord = word.replace(josaRegex, "");
-        if (baseWord.length > 0) {
-          return baseWord;
-        }
-      }
-      return word;
-    }).filter(Boolean);
-
-    const scoredItems = searchIndex.map((item) => {
-      const itemTitle = (item.title || item.name || "").toLowerCase();
-
-      const searchText = [
-        item.name,
-        item.title,
-        item.summary,
-        item.content,
-        item.category,
-        item.location,
-        item.target,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
+    const scoredItems = localInfoList.map((item) => {
       let score = 0;
+      const itemTitle = item.title || item.name || "";
+      const itemSummary = item.summary || "";
+      const itemContent = item.content || "";
 
-      // 단어 기반 매칭 (단어가 검색 텍스트에 포함된 횟수만큼 점수 증가)
-      queryWords.forEach((word) => {
-        const lowercaseWord = word.toLowerCase();
-        if (lowercaseWord.length === 0) return;
-
-        let index = searchText.indexOf(lowercaseWord);
-        while (index !== -1) {
-          score += 1;
-          index = searchText.indexOf(lowercaseWord, index + 1);
-        }
-
-        // 제목에 키워드가 직접 들어있다면 추가 점수(가산점)를 부여
-        if (itemTitle.includes(lowercaseWord)) {
-          score += 5;
-        }
+      // 단어 완전 매칭
+      messageWords.forEach((word) => {
+        if (itemTitle.includes(word)) score += 10;
+        if (itemSummary.includes(word)) score += 5;
+        if (itemContent.includes(word)) score += 2;
       });
 
-      // 띄어쓰기를 제거하고 질문 전체가 제목이나 본문에 포함되어 있는지 검사 (띄어쓰기가 달라도 매칭되도록 함)
-      const flatSearchText = searchText.replace(/\s+/g, "");
-      const flatMessage = cleanMessage.replace(/\s+/g, "").toLowerCase();
-
+      // 띄어쓰기 제거 후 부분 매칭 (조사 등이 붙었을 때)
+      const flatSearchText = (itemTitle + itemSummary + itemContent).replace(/\s+/g, "");
       if (flatMessage.length >= 2) {
-        // 본문에 띄어쓰기 없이 포함되는 경우
         if (flatSearchText.includes(flatMessage)) {
           score += 15;
         }
-        // 제목에 띄어쓰기 없이 포함되는 경우
         const flatTitle = itemTitle.replace(/\s+/g, "");
         if (flatTitle.includes(flatMessage)) {
           score += 25;
@@ -125,40 +60,23 @@ export async function onRequestPost(context) {
       return { item, score };
     });
 
-    // 매칭 점수가 0점보다 큰 항목들을 정렬하여 상위 3개만 추출
     const top3 = scoredItems
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((x) => x.item);
 
-    let botAnswer = "";
-    const apiKey = context.env.GEMINI_API_KEY;
+    let systemPrompt = "";
+    let prefix = "";
 
-    if (!apiKey) {
-      throw new Error("GEMINI_API_KEY 환경변수가 설정되지 않았습니다. Cloudflare 대시보드에 API 키를 등록해 주세요.");
-    }
-
-    // 3. 분기 처리: 블로그 내 관련 정보의 존재 여부에 따라 프롬프트와 구글 실시간 검색 여부 세팅
     if (top3.length === 0) {
-      // ⚠️ 블로그에 관련 정보가 없는 경우: 구글 실시간 검색(google_search)을 켜서 인터넷 검색 결과를 기반으로 답변
-      const systemPrompt = `You are an AI assistant for a Korean local information blog.
+      systemPrompt = `You are an AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols (**, *, #, -). Plain text only.
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
 Answer the user's question accurately using Google Search grounding.`;
-
-      // ⚠️ 블로그에 관련 정보가 없는 경우: 유료 API 키이므로 실시간 구글 검색(Grounding) 기능을 켜서 최신 지식 답변
-      let rawAnswer = "";
-      try {
-        rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
-        botAnswer = `이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ${stripMarkdown(rawAnswer)}`;
-      } catch (geminiError) {
-        // 완전 먹통일 때의 기본 로컬 답변
-        botAnswer = `죄송합니다. 현재 AI 서비스 서버가 바빠서 답변하기 어렵습니다. 잠시 후 다시 시도해 주세요. 🐾`;
-      }
+      prefix = "이 블로그에는 질문하신 내용이 없지만 AI가 답변해 드리겠습니다. ";
     } else {
-      // 📝 블로그에 관련 정보가 있는 경우: 블로그 데이터를 최우선 기반으로 요약 답변 (구글 검색 미사용)
       const blogDataStr = top3
         .map((item, idx) => {
           const title = item.title || item.name || "제목 없음";
@@ -168,7 +86,7 @@ Answer the user's question accurately using Google Search grounding.`;
         })
         .join("\n");
 
-      const systemPrompt = `You are a helpful AI assistant for a Korean local information blog.
+      systemPrompt = `You are a helpful AI assistant for a Korean local information blog.
 Answer ONLY in Korean. Keep answers to 2-3 sentences maximum.
 Do NOT use any markdown symbols except for links. Plain text only, but you MUST add a markdown link like '[자세히 보기](링크)' at the very end of your answer if a relevant link is provided in the [블로그 데이터].
 Today's date is ${dateWithZodiac}. Always use this as the current date when answering questions about time or year.
@@ -179,86 +97,42 @@ Analyze the user's question and the provided [블로그 데이터] carefully.
 
 [블로그 데이터]
 ${blogDataStr}`;
-
-      try {
-        const rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
-        botAnswer = stripMarkdown(rawAnswer);
-      } catch (geminiError) {
-        // 🛡️ 구글 서버 503 에러 발생 시 로컬 백업 요약 답변 작동
-        const localSummary = top3
-          .map((item) => {
-            const title = item.title || item.name || "제목 없음";
-            const summary = item.summary || "요약 설명 없음";
-            const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
-            return `제목: ${title}\n요약: ${summary}${linkText}`;
-          })
-          .join("\n\n");
-
-        botAnswer = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary}`;
-      }
+      prefix = "";
     }
 
-    return new Response(JSON.stringify({ response: botAnswer }), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const apiKey = context.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY 환경변수가 설정되지 않았습니다. Cloudflare 대시보드에 API 키를 등록해 주세요.");
+    }
+
+    const localSummary = top3
+      .map((item) => {
+        const title = item.title || item.name || "제목 없음";
+        const summary = item.summary || "요약 설명 없음";
+        const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
+        return `제목: ${title}\n요약: ${summary}${linkText}`;
+      })
+      .join("\n\n");
+
+    // 클라이언트로 동적 정보만 내려주고 실질적인 AI 호출은 브라우저에서 직접 수행하도록 패스합니다.
+    return new Response(
+      JSON.stringify({
+        apiKey,
+        systemPrompt,
+        prefix,
+        localSummary
+      }),
+      {
+        headers: { "Content-Type": "application/json" }
+      }
+    );
   } catch (error) {
     return new Response(
-      JSON.stringify({ response: `[서버 오류 상세] ${error.message}` }),
+      JSON.stringify({ error: error.message }),
       {
+        status: 500,
         headers: { "Content-Type": "application/json" },
       }
     );
   }
-}
-
-// 구글 제미나이 API 직접 호출 함수 (실시간 구글 검색 연동 지원)
-async function callGemini(apiKey, systemPrompt, userMessage, useSearch) {
-  const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
-  
-  const requestBody = {
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: userMessage }]
-      }
-    ],
-    systemInstruction: {
-      parts: [{ text: systemPrompt }]
-    }
-  };
-
-  // 실시간 구글 검색(Google Search Grounding) 활성화
-  if (useSearch) {
-    requestBody.tools = [{ google_search: {} }];
-  }
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(requestBody)
-  });
-
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Gemini API Error: ${res.status} - ${errText}`);
-  }
-
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-}
-
-// AI 응답 텍스트에서 마크다운 기호를 지워주되, 링크는 유지하는 함수
-function stripMarkdown(text) {
-  if (!text) return "";
-  return text
-    .replace(/(\*\*|__)(.*?)\1/g, "$2")
-    .replace(/(\*|_)(.*?)\1/g, "$2")
-    .replace(/^#+\s+/gm, "")
-    .replace(/^\s*[-*+]\s+/gm, "")
-    .replace(/`([^`]+)`/g, "$1")
-    .replace(/!\[(.*?)\]\(.*?\)/g, "$1")
-    .replace(/\s+/g, " ")
-    .trim();
 }

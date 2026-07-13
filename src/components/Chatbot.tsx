@@ -239,7 +239,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     // AI 모드인 경우 (기존 로직 수행)
     setIsLoading(true);
     try {
-      const res = await fetch("/api/chat", {
+      const matchRes = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -247,15 +247,49 @@ export default function Chatbot({ chatData }: ChatbotProps) {
         body: JSON.stringify({ message: userText }),
       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+      if (!matchRes.ok) {
+        throw new Error(`HTTP error! status: ${matchRes.status}`);
       }
 
-      const data = await res.json();
-      const botText =
-        data.response ||
-        data.result?.response ||
-        "죄송합니다. 답변을 처리하지 못했습니다. 다시 시도해 주세요.";
+      const matchData = await matchRes.json();
+      const { apiKey, systemPrompt, prefix, localSummary } = matchData;
+
+      let botText = "";
+
+      try {
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+        const response = await fetch(geminiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: "user",
+                parts: [{ text: userText }]
+              }
+            ],
+            systemInstruction: {
+              parts: [{ text: systemPrompt }]
+            },
+            tools: [{ google_search: {} }]
+          }),
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Gemini API error: ${response.status} - ${errText}`);
+        }
+
+        const data = await response.json();
+        const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        const cleanText = rawText.replace(/[\*\*|#]/g, "").trim();
+        botText = prefix ? `${prefix}${cleanText}` : cleanText;
+      } catch (geminiError) {
+        console.error("Gemini Direct Fetch Error:", geminiError);
+        botText = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary || "내용을 요약하지 못했습니다."}`;
+      }
 
       setMessages((prev) => [
         ...prev,
