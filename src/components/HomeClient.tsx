@@ -144,29 +144,6 @@ export default function HomeClient({ posts }: HomeClientProps) {
         </div>
       </nav>
 
-      {/* 사시 고양이 햅삐 입양 홍보 띠 배너 */}
-      <div className="bg-gradient-to-r from-amber-50 to-rose-50 dark:from-[#2a1e1b] dark:to-[#361e24] border-b border-rose-100/80 dark:border-rose-950/30 px-6 py-3.5 transition-all">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 text-center sm:text-left">
-            <span className="text-2xl shrink-0">🐱</span>
-            <div className="space-y-0.5">
-              <p className="text-sm font-extrabold text-slate-900 dark:text-[#F3F4F6] flex items-center justify-center sm:justify-start gap-1.5">
-                <span>사시 고양이 &apos;햅삐&apos;의 평생 가족을 찾습니다!</span>
-                <span className="px-1.5 py-0.5 text-[10px] font-black text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950/50 rounded-md animate-pulse">임시보호 중</span>
-              </p>
-              <p className="text-xs text-slate-500 dark:text-[#8B95A1]">
-                조금 특별하게 태어났지만 누구보다 사랑스럽고 활발한 햅삐의 묘생 역전을 함께 응원해 주세요.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/blog/2026-06-27-happy-adopt"
-            className="shrink-0 px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-xl transition-all shadow-sm shadow-rose-500/10 hover:scale-[1.02] active:scale-95"
-          >
-            입양·홍보글 보러가기 &rarr;
-          </Link>
-        </div>
-      </div>
 
       {/* 헤더 섹션 - 여백이 넉넉하고 정돈된 타이틀 */}
       <header className="bg-transparent pt-16 pb-8 px-6">
