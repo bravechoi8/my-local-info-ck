@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E1B4B" />
+    </linearGradient>
+    
+    <!-- Clip path for the central image -->
+    <clipPath id="imageClip">
+      <rect x="50" y="170" width="1100" height="420" rx="16" />
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#mainBg)" />
+
+  <!-- HEADER AREA -->
+  <g transform="translate(50, 45)">
+    <rect width="115" height="28" rx="14" fill="#EF4444" opacity="0.9" />
+    <text x="57.5" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="800" fill="#FFFFFF" text-anchor="middle">REAL ISSUE</text>
+    <text x="130" y="19" font-family="'Pretendard', sans-serif" font-size="14" font-weight="700" fill="#EF4444">2026-07-13</text>
+  </g>
+
+  <!-- Main Title -->
+  <text x="50" y="115" font-family="'Pretendard', sans-serif" font-size="32" font-weight="900" fill="#F8FAFC">광주 여고생 살해 장윤기 법정 자백... 부친 경찰 간부 유착 의혹</text>
+
+  <!-- Subtitle -->
+  <text x="50" y="148" font-family="'Pretendard', sans-serif" font-size="16" fill="#94A3B8" font-weight="500">성범죄 목적의 계획 범행 시인 및 사법 제도적 논란 총정리</text>
+
+  <!-- CENTRAL GRAPHIC (AI Image Frame) -->
+  <g>
+    <!-- Background placeholder -->
+    <rect x="50" y="170" width="1100" height="420" rx="16" fill="#1E293B" stroke="#334155" stroke-width="2" />
+    <!-- Embedded AI Generated Image -->
+    <image href="/images/card-bg-2026-07-13-jangyoonki-court-confession.png" x="50" y="170" width="1100" height="420" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
+  </g>
+
+  <!-- BOTTOM CARD DATA -->
+  <g transform="translate(50, 620)">
+    <!-- Point 1 -->
+    <g transform="translate(0, 0)">
+      <rect width="320" height="120" rx="12" fill="#1E293B" opacity="0.8" stroke="#EF4444" stroke-width="1" />
+      <text x="20" y="40" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F8FAFC">법정 자백 팩트</text>
+      <text x="20" y="70" font-family="'Pretendard', sans-serif" font-size="14" font-weight="500" fill="#94A3B8">성인용품 등을 이용한</text>
+      <text x="20" y="90" font-family="'Pretendard', sans-serif" font-size="14" font-weight="500" fill="#94A3B8">성범죄 목적의 계획 살인 시인</text>
+    </g>
+
+    <!-- Point 2 -->
+    <g transform="translate(390, 0)">
+      <rect width="320" height="120" rx="12" fill="#1E293B" opacity="0.8" stroke="#EF4444" stroke-width="1" />
+      <text x="20" y="40" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F8FAFC">경찰 유착 논란</text>
+      <text x="20" y="70" font-family="'Pretendard', sans-serif" font-size="14" font-weight="500" fill="#94A3B8">피의자 부친(경정)의 증거 인멸</text>
+      <text x="20" y="90" font-family="'Pretendard', sans-serif" font-size="14" font-weight="500" fill="#94A3B8">수사 기밀 유출 수사팀장 구속</text>
+    </g>
+
+    <!-- Point 3 -->
+    <g transform="translate(780, 0)">
+      <rect width="320" height="120" rx="12" fill="#1E293B" opacity="0.8" stroke="#EF4444" stroke-width="1" />
+      <text x="20" y="40" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="#F8FAFC">사법적 2대 쟁점</text>
+      <text x="20" y="70" font-family="'Pretendard', sans-serif" font-size="14" font-weight="500" fill="#94A3B8">친족 증거인멸 특례법 폐지론</text>
+      <text x="20" y="90" font-family="'Pretendard', sans-serif" font-size="14" font-weight="500" fill="#94A3B8">검찰 보완수사권 존폐 공방</text>
+    </g>
+  </g>
+</svg>
