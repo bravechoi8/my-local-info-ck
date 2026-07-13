@@ -1304,9 +1304,6 @@ async function callGeminiAPI(key, messages, useKey) {
     parts: [{ text: m.content }]
   }));
 
-  const lastUserMessage = messages.filter(m => m.role === 'user').slice(-1)[0]?.content || '';
-  const useSearch = needsWebSearch(lastUserMessage);
-  
   const requestBody = {
     contents: contents,
     systemInstruction: {
@@ -1317,12 +1314,9 @@ async function callGeminiAPI(key, messages, useKey) {
       { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
       { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
       { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
-    ]
+    ],
+    tools: [{ google_search: {} }]
   };
-
-  if (useSearch) {
-    requestBody.tools = [{ google_search: {} }];
-  }
   
   const res = await fetch(url, {
     method: "POST",

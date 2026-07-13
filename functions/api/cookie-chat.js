@@ -45,19 +45,13 @@ export async function onRequestPost(context) {
       parts: [{ text: m.content || "" }]
     }));
 
-    const lastUserMessage = messages.filter(m => m.role === 'user').slice(-1)[0]?.content || '';
-    const useSearch = needsWebSearch(lastUserMessage);
-
     const bodyPayload = {
       contents: contents,
       systemInstruction: {
         parts: [{ text: SYSTEM }]
-      }
+      },
+      tools: [{ google_search: {} }]
     };
-
-    if (useSearch) {
-      bodyPayload.tools = [{ google_search: {} }];
-    }
 
     const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
 

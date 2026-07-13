@@ -53,19 +53,13 @@ export async function POST(request: Request) {
       parts: [{ text: m.content || "" }]
     }));
 
-    const lastUserMessage = messages.filter((m: any) => m.role === 'user').slice(-1)[0]?.content || '';
-    const useSearch = needsWebSearch(lastUserMessage);
-
     const bodyPayload: any = {
       contents: contents,
       systemInstruction: {
         parts: [{ text: SYSTEM }]
-      }
+      },
+      tools: [{ google_search: {} }]
     };
-
-    if (useSearch) {
-      bodyPayload.tools = [{ google_search: {} }];
-    }
 
     const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
       method: "POST",

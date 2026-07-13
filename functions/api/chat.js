@@ -181,8 +181,7 @@ Analyze the user's question and the provided [블로그 데이터] carefully.
 ${blogDataStr}`;
 
       try {
-        const forceSearch = needsWebSearch(message);
-        const rawAnswer = await callGemini(apiKey, systemPrompt, message, forceSearch);
+        const rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
         botAnswer = stripMarkdown(rawAnswer);
       } catch (geminiError) {
         // 🛡️ 구글 서버 503 에러 발생 시 로컬 백업 요약 답변 작동

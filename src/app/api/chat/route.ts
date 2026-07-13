@@ -35,8 +35,6 @@ export async function POST(request: Request) {
     }
 
     const systemInstruction = "너는 '리얼인포' 웹사이트의 인공지능 정보 가이드 '척척'이야. 친절하고 신뢰감 있는 말투로 전국의 생활 정보, 혜택, 복지 지원금에 대해 설명해줘. 한국어로 대답하고 가끔 이모지 💬✨를 자연스럽게 섞어줘.";
-    const useSearch = needsWebSearch(message);
-
     const bodyPayload: any = {
       contents: [
         {
@@ -46,12 +44,9 @@ export async function POST(request: Request) {
       ],
       systemInstruction: {
         parts: [{ text: systemInstruction }]
-      }
+      },
+      tools: [{ google_search: {} }]
     };
-
-    if (useSearch) {
-      bodyPayload.tools = [{ google_search: {} }];
-    }
 
     const response = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
       method: "POST",
