@@ -184,17 +184,7 @@ ${blogDataStr}`;
         const rawAnswer = await callGemini(apiKey, systemPrompt, message, true);
         botAnswer = stripMarkdown(rawAnswer);
       } catch (geminiError) {
-        // 🛡️ 구글 서버 503 에러 발생 시 로컬 백업 요약 답변 작동
-        const localSummary = top3
-          .map((item) => {
-            const title = item.title || item.name || "제목 없음";
-            const summary = item.summary || "요약 설명 없음";
-            const linkText = item.slug ? ` [자세히 보기](https://real-infos.com/blog/${item.slug})` : "";
-            return `제목: ${title}\n요약: ${summary}${linkText}`;
-          })
-          .join("\n\n");
-
-        botAnswer = `[알림] 현재 구글 AI 서버가 다소 혼잡하여 블로그의 검색 기록으로 답변을 대체합니다.\n\n${localSummary}`;
+        botAnswer = `[임시 디버그 에러 발생] ${geminiError.message}`;
       }
     }
 
