@@ -19,9 +19,8 @@ export async function onRequestPost(context) {
     const currentZodiac = zodiacs[(seoulYear - 4) % 12];
     const dateWithZodiac = `${currentDate} (올해 띠: ${currentZodiac})`;
 
-    // 1. 블로그의 모든 글 목록 로딩 (검색용 JSON 데이터)
-    const urlObj = new URL(context.request.url);
-    const searchIndexUrl = `${urlObj.origin}/data/search-index.json`;
+    // 1. 블로그의 모든 글 목록 로딩 (검색용 JSON 데이터 - 메인 서버 고정 주소로 호출)
+    const searchIndexUrl = "https://real-infos.com/data/search-index.json";
     const searchRes = await fetch(searchIndexUrl);
     if (!searchRes.ok) {
       throw new Error("블로그 검색 인덱스 데이터를 읽어오지 못했습니다.");

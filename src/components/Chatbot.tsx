@@ -239,7 +239,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
     // AI 모드인 경우 (기존 로직 수행)
     setIsLoading(true);
     try {
-      const matchRes = await fetch("/api/chat", {
+      const matchRes = await fetch(`/api/chat?t=${Date.now()}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
