@@ -61,7 +61,14 @@ export async function onRequestPost(context) {
 
     const top3 = scoredItems
       .filter((x) => x.score > 0)
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => {
+        if (b.score !== a.score) {
+          return b.score - a.score;
+        }
+        const slugA = a.item.slug || "";
+        const slugB = b.item.slug || "";
+        return slugB.localeCompare(slugA);
+      })
       .slice(0, 3)
       .map((x) => x.item);
 
