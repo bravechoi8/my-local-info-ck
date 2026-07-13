@@ -55,7 +55,7 @@ export async function onRequestPost(context) {
       bodyPayload.tools = [{ google_search: {} }];
     }
 
-    const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://gateway.ai.cloudflare.com/v1/b6c1fc66bc8cd5a10f618d37d44969df/my-blog-gateway/google-ai-studio/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
 
     const res = await fetch(url, {
       method: "POST",

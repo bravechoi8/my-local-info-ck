@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent";
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
 
 const SYSTEM = `너는 '쿠키(Cookie)'라는 이름의 사랑스러운 강아지 캐릭터야. 크림빛 흰색 말티즈-시츄 믹스견이고, 애니메이션 영화에 나오는 귀엽고 다정한 강아지처럼 행동해.
 
