@@ -1439,5 +1439,27 @@
     "target": "만 60세 이상 노인 (유형에 따라 65세 이상)",
     "summary": "만 60세 이상 노인의 활기차고 건강한 노후생활을 위해 공익활동, 사회서비스형, 민간형 등 다양한 맞춤형 일자리를 제공합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSE000000100"
+  },
+  {
+    "id": 131,
+    "name": "고양문화의집 이용요금 면제",
+    "category": "혜택",
+    "startDate": "2024-05-14",
+    "endDate": "상시",
+    "location": "고양문화의집",
+    "target": "기초생활수급자, 한부모가족, 장애인, 자원봉사자, 국가유공자 및 유족",
+    "summary": "사회적 취약계층 및 학생에게 고양문화의 집 사용료 면제",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00004000012"
+  },
+  {
+    "id": 132,
+    "name": "문화시설 주차요금 감면",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "구리도시공사",
+    "target": "장애인 등록증, 국가유공자증, 고엽제후유의증 환자수첩 그밖의 증명서 등 소유자",
+    "summary": "사회적 취약계층에게 주차장 이용요금 감면",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00005100002"
   }
 ]
