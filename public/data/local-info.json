@@ -1461,5 +1461,27 @@
     "target": "장애인 등록증, 국가유공자증, 고엽제후유의증 환자수첩 그밖의 증명서 등 소유자",
     "summary": "사회적 취약계층에게 주차장 이용요금 감면",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00005100002"
+  },
+  {
+    "id": 133,
+    "name": "무료 소송대리 서비스(전시납북자가족)",
+    "category": "혜택",
+    "startDate": "2026-02-18",
+    "endDate": "상시",
+    "location": "대한법률구조공단",
+    "target": "기준중위소득 125% 이하인 전시납북자가족",
+    "summary": "전시납북자가족을 대상으로 실종선고심판청구 등 민사 및 가사사건의 무료 법률상담과 소송대리를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B27000100001"
+  },
+  {
+    "id": 134,
+    "name": "무료 소송대리 서비스(보호대상아동)",
+    "category": "혜택",
+    "startDate": "2026-03-02",
+    "endDate": "상시",
+    "location": "대한법률구조공단",
+    "target": "보호대상아동",
+    "summary": "보호대상아동을 대상으로 민사, 가사사건 등의 무료 법률상담 및 소송대리 서비스를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B27000100002"
   }
 ]
