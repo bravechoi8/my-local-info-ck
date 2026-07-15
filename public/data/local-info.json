@@ -1505,5 +1505,27 @@
     "target": "정례직거래장터 운영을 희망하는 지자체, 생산자단체, 소비자단체 및 민간단체 등",
     "summary": "직거래장터 개설·운영비, 교육, 컨설팅 및 홍보 비용을 지원하여 농산물 직거래를 활성화합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000141"
+  },
+  {
+    "id": 137,
+    "name": "다자녀학생 수학여행비 지원",
+    "category": "혜택",
+    "startDate": "2026-02-23",
+    "endDate": "상시",
+    "location": "충청남도교육청",
+    "target": "초·중·고·특수·각종학교의 다자녀가정 셋째 이후 학생",
+    "summary": "다자녀가정의 자녀 중 셋째 이후 학생에게 수학여행비를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/814000000006"
+  },
+  {
+    "id": 138,
+    "name": "실업크레딧 지원",
+    "category": "혜택",
+    "startDate": "2026-03-03",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "18세 이상 60세 미만의 구직급여 수급자 (단, 재산세 과세표준 합 6억원 이하 및 종합소득 1,680만원 이하)",
+    "summary": "구직급여 수급자가 실직기간에도 국민연금 보험료 납부를 희망할 경우 보험료의 75%를 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55201500004"
   }
 ]
