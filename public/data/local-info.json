@@ -1483,5 +1483,27 @@
     "target": "보호대상아동",
     "summary": "보호대상아동을 대상으로 민사, 가사사건 등의 무료 법률상담 및 소송대리 서비스를 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B27000100002"
+  },
+  {
+    "id": 135,
+    "name": "공적 채무조정 및 재무상담 제공",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "경기복지재단",
+    "target": "경기도 내 금융취약계층(저신용, 장기, 단기 연체자, 신용위기자)",
+    "summary": "경기도내 금융취약계층에게 금융복지상담 및 재무상담 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00044700005"
+  },
+  {
+    "id": 136,
+    "name": "농산물 직거래 활성화",
+    "category": "혜택",
+    "startDate": "2024-05-25",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "정례직거래장터 운영을 희망하는 지자체, 생산자단체, 소비자단체 및 민간단체 등",
+    "summary": "직거래장터 개설·운영비, 교육, 컨설팅 및 홍보 비용을 지원하여 농산물 직거래를 활성화합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000141"
   }
 ]
