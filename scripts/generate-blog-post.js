@@ -247,9 +247,9 @@ async function main() {
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
-title: (검색어 노출이 잘 되도록 중요한 키워드를 자연스럽게 포함하면서도 딱딱한 안내문 형식의 어투를 벗어나 'OO하는 법', 'OO 총정리', '놓치면 손해보는 OO' 등 혜택을 강조한 제목으로 지어줘. 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
+title: (검색어 노출이 잘 되도록 중요한 키워드를 자연스럽게 포함하면서도 딱딱한 안내문 형식의 어투를 벗어나 'OO하는 법', 'OO 총정리', '놓치면 손해보는 OO' 등 혜택을 강조한 제목으로 지어줘. YAML 파싱 오류를 방지하기 위해 제목 전체를 반드시 큰따옴표 " 로 감싸서 출력해줘. 예: title: "[2026 최신] 혜택 받는 법")
 date: ${todayFullStr}
-summary: (한 줄 요약, 절대로 작은따옴표 ' 나 큰따옴표 " 를 포함하지 말 것)
+summary: (한 줄 요약. YAML 파싱 오류를 방지하기 위해 내용 전체를 반드시 큰따옴표 " 로 감싸서 출력해줘. 예: summary: "청년들을 위한 혜택을 모았습니다.")
 category: (글의 주제와 성격에 가장 잘 어울리는 카테고리를 다음 목록 중 하나만 골라서 적어줘: '행사', '혜택', '핫이슈', '재테크', '생활정보', '연예인이슈')
 tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 핵심 해시태그 5~8개 입력]
 ---
@@ -350,6 +350,22 @@ tags: [네이버 및 구글 검색 노출에 최적화된 연관 검색어 및 �
 
         let markdownContent = contentLines.join('\n').trim();
         markdownContent = markdownContent.replace(/^```markdown\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
+
+        // YAML 파싱 오류 방지를 위해 title과 summary 필드가 큰따옴표로 감싸져 있는지 확인하고 보정합니다.
+        markdownContent = markdownContent.replace(/^title:\s*(.+)$/m, (match, p1) => {
+          const trimmed = p1.trim();
+          if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+            return match;
+          }
+          return `title: "${trimmed.replace(/"/g, '\\"')}"`;
+        });
+        markdownContent = markdownContent.replace(/^summary:\s*(.+)$/m, (match, p1) => {
+          const trimmed = p1.trim();
+          if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+            return match;
+          }
+          return `summary: "${trimmed.replace(/"/g, '\\"')}"`;
+        });
 
         // 프론트매터에 고유 ID와 원래 이름을 기재하여 차후 중복 포스팅을 원천 차단
         const frontEnd = markdownContent.indexOf('\n---', 4);
