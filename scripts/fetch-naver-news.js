@@ -92,6 +92,12 @@ function isBlocked(item) {
     return false;
   }
 
+  // 축제, 여행, 나들이 등 문화 행사 관련 기사인지 판별
+  const isFestivalOrTravel = ['축제', '행사', '공연', '전시', '관광', '여행', '페스티벌', '박람회', '콘서트', '나들이'].some(kw => text.includes(kw));
+
+  // 축제/여행 글이 아니라면 지역 필터를 꼼꼼하게 적용
+  if (!isFestivalOrTravel) {
+
   // 3. 서울 구 단위 및 경기도 소도시 정보 원천 차단 (네이버 뉴스 전용 차단)
   const localGuList = [
     '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구',
@@ -120,6 +126,7 @@ function isBlocked(item) {
   if (hasOtherRegion && hasLocalInfoKeyword) {
     console.log(`[네이버뉴스 차단] 타 지역 지자체 정보성 뉴스 제외: ${item.title}`);
     return true;
+  }
   }
 
   return false;
@@ -222,7 +229,9 @@ async function fetchTrendingKeywords() {
       { q: '재테크 꿀팁', sort: 'sim', count: 10 },
       { q: '환율', sort: 'date', count: 10 }, // 고환율 등 뜨거운 경제 이슈 반영
       { q: '연예 핫이슈', sort: 'sim', count: 10 }, // 대중적 관심사인 방송/연예 이슈 반영
-      { q: '화제', sort: 'sim', count: 10 } // 온라인 화제 및 트렌드 반영
+      { q: '화제', sort: 'sim', count: 10 }, // 온라인 화제 및 트렌드 반영
+      { q: '축제 행사', sort: 'sim', count: 10 }, // 축제 및 행사 정보 수집 추가
+      { q: '여행 추천', sort: 'sim', count: 10 } // 여행지 추천 및 나들이 정보 수집 추가
     ];
     const newsItems = [];
 
