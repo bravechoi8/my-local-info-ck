@@ -1,4 +1,13 @@
-const key = "AIzaSyDZqItd-wFUq23im6ZKb_Uw-sYhj5MFk3o";
+import pkg from '@next/env';
+const { loadEnvConfig } = pkg;
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+loadEnvConfig(path.join(__dirname, '..'));
+
+const key = process.env.GEMINI_API_KEY;
 
 async function testModel(model) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
