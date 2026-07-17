@@ -2,7 +2,7 @@
  * API 호출 시 실패(네트워크 오류, 429 할당량 초과, 5xx 서버 오류 등)할 경우
  * 지수 백업(Exponential Backoff) 방식으로 재시도하는 헬퍼 함수입니다.
  */
-export async function fetchWithRetry(url, options = {}, maxRetries = 3, initialDelay = 2000, timeoutMs = 15000) {
+export async function fetchWithRetry(url, options = {}, maxRetries = 3, initialDelay = 2000, timeoutMs = 45000) {
   let retries = 0;
   while (true) {
     const controller = new AbortController();

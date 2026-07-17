@@ -1,17 +1,27 @@
-const apiKey = "AIzaSyCgyZMALhpUY-kpzPa9VflkbkkL_vjp4-o";
-const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
+import pkg from '@next/env';
+const { loadEnvConfig } = pkg;
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+loadEnvConfig(path.join(__dirname, '..'));
 
 async function main() {
+  const apiKey = process.env.GEMINI_API_KEY;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`;
   try {
     const res = await fetch(url);
     const data = await res.json();
-    const geminiModels = data.models
-      .filter(m => m.name.includes("gemini") && m.supportedGenerationMethods.includes("generateContent"))
-      .map(m => ({ name: m.name, version: m.version, displayName: m.displayName }));
-    console.log(JSON.stringify(geminiModels, null, 2));
+    if (data.error) {
+      console.error('API Error:', data.error);
+      return;
+    }
+    const models = data.models || [];
+    console.log('--- Models ---');
+    console.log(JSON.stringify(models.map(m => m.name), null, 2));
   } catch (e) {
     console.error(e);
   }
 }
-
 main();
