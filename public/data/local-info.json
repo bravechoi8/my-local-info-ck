@@ -1516,5 +1516,27 @@
     "target": "3개월 이상 근속 중이고 월평균 소득이 3인 가구 기준 중위소득 50% 이하인 저소득 노동자",
     "summary": "저소득 노동자에게 의료비, 혼례비, 소액생계비 등 생활안정자금을 연 1.5%의 저리로 융자 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000009"
+  },
+  {
+    "id": 141,
+    "name": "수출바우처 지원",
+    "category": "혜택",
+    "startDate": "2024-05-19",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "내수 및 수출 중소기업 ('중소기업기본법' 제2조 및 시행령 제3조에 따른 중소기업)",
+    "summary": "수출 성장 가능성이 높은 중소기업에 바우처를 발급하여 맞춤형 수출 서비스를 종합 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900037"
+  },
+  {
+    "id": 142,
+    "name": "성실경영평가",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "폐업이력이 있는 예비 또는 업력 7년 이내 재창업자 및 성실경영평가 통과자",
+    "summary": "성실 실패기업인의 원활한 재기를 위해 성실경영 여부를 평가하고 재창업 우대혜택을 제공하는 사업",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900044"
   }
 ]
