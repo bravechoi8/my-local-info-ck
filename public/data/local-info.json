@@ -1582,5 +1582,27 @@
     "target": "12세 이하 어린이",
     "summary": "12세 이하 어린이에게 국가예방접종 비용을 전액 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/326000000053"
+  },
+  {
+    "id": 147,
+    "name": "버팀목전세자금대출",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "국토교통부",
+    "target": "만19세 이상 세대주(단독세대주인 경우 만25세 이상), 무주택자, 부부합산 연 소득 5천만원 이하인 자(2자녀 이상 가구 6천만원 이하, 신혼가구 7.5천만원 이하)",
+    "summary": "무주택 근로자 및 서민을 위해 임차보증금의 70% 내외, 저렴한 금리로 전세자금 대출 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/161300000076"
+  },
+  {
+    "id": 148,
+    "name": "민간임대주택건설자금 융자",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "국토교통부",
+    "target": "10년 이상 임대를 목적으로 주택을 건설하는 임대사업자",
+    "summary": "민간 주택임대사업자에게 주택규모별로 건설자금 융자 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/161300000077"
   }
 ]
