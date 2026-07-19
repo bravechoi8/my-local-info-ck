@@ -1604,5 +1604,27 @@
     "target": "10년 이상 임대를 목적으로 주택을 건설하는 임대사업자",
     "summary": "민간 주택임대사업자에게 주택규모별로 건설자금 융자 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/161300000077"
+  },
+  {
+    "id": 149,
+    "name": "중소기업 취업연계 장학금 (희망사다리Ⅰ유형)",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국장학재단",
+    "target": "중소·중견기업 취창업을 희망하는 대학생 (일반대 3학년 이상, 전문대 2학년 이상, 직전 학기 성적 70점 이상)",
+    "summary": "중소·중견기업 취창업을 희망하는 대학생에게 학기당 등록금 전액 및 취창업 장려금 200만원을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/134200000046"
+  },
+  {
+    "id": 150,
+    "name": "시간제보육 지원",
+    "category": "혜택",
+    "startDate": "2024-10-25",
+    "endDate": "상시",
+    "location": "교육부",
+    "target": "어린이집, 유치원을 이용하지 않고 부모급여(현금) 또는 양육수당 수급 중인 영아",
+    "summary": "가정양육 부모가 긴급·일시적으로 보육시설 이용이 필요한 경우 시간제보육 서비스를 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/134200005031"
   }
 ]
