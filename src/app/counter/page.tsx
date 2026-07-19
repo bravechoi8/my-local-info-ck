@@ -15,6 +15,51 @@ export default function CounterPage() {
   // AudioContext 싱글톤 저장을 위한 Ref
   const audioCtxRef = useRef<AudioContext | null>(null);
 
+  // 첫 상호작용 시 오디오 및 진동 Lock을 미리 해제하기 위한 효과
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const unlock = async () => {
+      // AudioContext 활성화 및 무음 재생 테스트
+      try {
+        if (!audioCtxRef.current) {
+          audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        }
+        if (audioCtxRef.current.state === "suspended") {
+          await audioCtxRef.current.resume();
+        }
+        const buffer = audioCtxRef.current.createBuffer(1, 1, 22050);
+        const source = audioCtxRef.current.createBufferSource();
+        source.buffer = buffer;
+        source.connect(audioCtxRef.current.destination);
+        source.start(0);
+      } catch (e) {
+        console.warn("Audio unlock failed:", e);
+      }
+
+      // 진동 Lock 활성화 (1ms 미세 진동으로 브라우저 허가 획득)
+      try {
+        if (navigator.vibrate) {
+          navigator.vibrate(1);
+        }
+      } catch (e) {
+        console.warn("Vibration unlock failed:", e);
+      }
+
+      // 락이 한번 해제되면 이벤트 리스너 제거
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("click", unlock);
+    };
+
+    window.addEventListener("pointerdown", unlock);
+    window.addEventListener("click", unlock);
+
+    return () => {
+      window.removeEventListener("pointerdown", unlock);
+      window.removeEventListener("click", unlock);
+    };
+  }, []);
+
   // 필요할 때만 단일 AudioContext 인스턴스를 안전하게 생성/재개
   const getAudioContext = (): AudioContext | null => {
     if (typeof window === "undefined") return null;
@@ -37,23 +82,32 @@ export default function CounterPage() {
     if (!soundEnabled) return;
     const ctx = getAudioContext();
     if (!ctx) return;
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
 
-      osc.connect(gain);
-      gain.connect(ctx.destination);
+    const play = () => {
+      try {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
 
-      osc.type = "sine";
-      // 증가할 때는 조금 더 높은 솔 톤(680Hz), 감소할 때는 낮은 도 톤(380Hz)
-      const freq = isIncrement ? 680 : 380;
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(clickVolume, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.08);
-    } catch (e) {
-      console.warn("Web Audio API play error:", e);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.type = "sine";
+        // 증가할 때는 조금 더 높은 솔 톤(680Hz), 감소할 때는 낮은 도 톤(380Hz)
+        const freq = isIncrement ? 680 : 380;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(clickVolume, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.08);
+      } catch (e) {
+        console.warn("Web Audio API play error:", e);
+      }
+    };
+
+    if (ctx.state === "suspended") {
+      ctx.resume().then(play).catch((err) => console.warn("Failed to resume AudioContext during play:", err));
+    } else {
+      play();
     }
   };
 
