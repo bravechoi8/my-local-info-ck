@@ -507,13 +507,13 @@ async function main() {
         forcedCategory: '생활정보'
       });
       tasks.push({
-        keyword: '주말 휴일 문여는 병원 약국',
+        keyword: '야간 주말 휴일 문여는 병원 약국',
         isSonMonthFirst: false,
         isLottoSunday: false,
         forcedCategory: '생활정보'
       });
       tasks.push({
-        keyword: '주말 휴일 24시 동물병원',
+        keyword: '야간 주말 휴일 24시 동물병원',
         isSonMonthFirst: false,
         isLottoSunday: false,
         forcedCategory: '생활정보'
