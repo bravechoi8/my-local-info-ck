@@ -17,8 +17,10 @@ import { fetchWithRetry } from './utils.js';
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const COUPANG_AF_ID = process.env.COUPANG_AF_ID || '';
 
-const NAVER_ENDPOINT = 'https://openapi.naver.com/v1/search/news.json';
+const NAVER_ENDPOINT = 'https://naverapihub.apigw.ntruss.com/search/v1/news';
+const DATALAB_ENDPOINT = 'https://naverapihub.apigw.ntruss.com/search-trend/v1/search';
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
 const POSTS_DIR_PATH = filePath.join(__dirname, '..', 'src', 'content', 'posts');
 
@@ -217,6 +219,119 @@ function cleanText(text) {
 }
 
 /**
+ * 네이버 데이터랩(DataLab) API를 통해 최근 30일간의 검색어 트렌드 변화를 조회합니다.
+ */
+async function fetchDataLabTrend(keyword) {
+  if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) return null;
+  try {
+    const today = new Date();
+    const startDate = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    const endDate = today.toISOString().split('T')[0];
+
+    const cleanKw = keyword.replace(/[^a-zA-Z0-9가-힣\s]/g, '').trim();
+    if (!cleanKw) return null;
+
+    const body = {
+      startDate,
+      endDate,
+      timeUnit: 'date',
+      keywordGroups: [
+        {
+          groupName: cleanKw,
+          keywords: [cleanKw]
+        }
+      ]
+    };
+
+    const response = await fetchWithRetry(DATALAB_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'X-NCP-APIGW-API-KEY-ID': NAVER_CLIENT_ID,
+        'X-NCP-APIGW-API-KEY': NAVER_CLIENT_SECRET,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const results = data.results?.[0]?.data || [];
+      if (results.length >= 2) {
+        const firstRatio = results[0].ratio;
+        const lastRatio = results[results.length - 1].ratio;
+        const maxRatio = Math.max(...results.map(r => r.ratio));
+        const avgRatio = Math.round(results.reduce((acc, r) => acc + r.ratio, 0) / results.length);
+        const changeRate = firstRatio > 0 ? Math.round(((lastRatio - firstRatio) / firstRatio) * 100) : 0;
+
+        return {
+          keyword: cleanKw,
+          recentRatio: Math.round(lastRatio),
+          maxRatio: Math.round(maxRatio),
+          avgRatio,
+          changeRateStr: changeRate >= 0 ? `+${changeRate}%` : `${changeRate}%`,
+          dataCount: results.length
+        };
+      }
+    } else {
+      console.warn(`[DataLab 트렌드 조회 응답 실패]: ${response.status}`);
+    }
+  } catch (err) {
+    console.warn(`[DataLab 트렌드 조회 오류]: ${err.message}`);
+  }
+  return null;
+}
+
+/**
+ * 포스트 주제에 어울리는 맞춤형 쿠팡 파트너스 추천 모듈 및 필수 법적 고지 문구를 생성합니다.
+ */
+function generateCoupangModule(keyword, category) {
+  const text = (keyword + ' ' + (category || '')).toLowerCase();
+  
+  let targetSearchTerm = '인기 생활용품';
+  let recommendTitle = '알뜰 생활 필수템';
+
+  // 1. 병원 / 건강 / 약국 / 의원 / 질환 / 의료
+  if (['병원', '의료', '건강', '약국', '감기', '질환', '응급', '치료', '체온계', '의원'].some(k => text.includes(k))) {
+    targetSearchTerm = '가정용 체온계 구급함';
+    recommendTitle = '가정용 체온계 & 비상약 구급함 세트';
+  } 
+  // 2. 아이 / 육아 / 아동 / 장난감 / 어린이 / 보육
+  else if (['아이', '아동', '어린이', '유아', '육아', '장난감', '키즈', '보육', '돌봄', '학생'].some(k => text.includes(k))) {
+    targetSearchTerm = '어린이 인기 장난감 유아용품';
+    recommendTitle = '어린이 인기 장난감 & 유아 필수용품';
+  } 
+  // 3. 재테크 / 환율 / 주식 / 부동산 / 세금 / 금리 / 연금 / 대출 / 투자
+  else if (['환율', '재테크', '주식', '부동산', '세금', '금리', '연금', '대출', '청약', '투자', '은행', '뱅크'].some(k => text.includes(k))) {
+    targetSearchTerm = '재테크 자산관리 베스트셀러 도서';
+    recommendTitle = '재테크 & 자산관리 추천 베스트셀러 도서 모음';
+  } 
+  // 4. 여행 / 축제 / 나들이 / 캠핑 / 휴가 / 관광
+  else if (['여행', '축제', '나들이', '캠핑', '휴가', '관광', '호텔', '비행기', '해수욕장', '수영장'].some(k => text.includes(k))) {
+    targetSearchTerm = '여행 파우치 캠핑용품 나들이';
+    recommendTitle = '여행용 파우치 & 나들이 캠핑 필수용품';
+  }
+  // 5. 음식 / 먹거리 / 맛집 / 디저트 / 간식
+  else if (['음식', '먹거리', '맛집', '디저트', '간식', '요리', '식품', '배달', '라면'].some(k => text.includes(k))) {
+    targetSearchTerm = '인기 간식 밀키트 특가';
+    recommendTitle = '인기 간식 & 맛있는 밀키트 특가 모음';
+  }
+  // 6. 혜택 / 지원금 / 카드 / 포인트
+  else if (['혜택', '지원금', '수당', '카드', '포인트', '할인', '쿠폰'].some(k => text.includes(k))) {
+    targetSearchTerm = '인기 생필품 알뜰가전';
+    recommendTitle = '인기 생필품 & 알뜰 가전 특가';
+  }
+
+  const encSearchTerm = encodeURIComponent(targetSearchTerm);
+  let coupangSearchUrl = `https://www.coupang.com/np/search?q=${encSearchTerm}`;
+  
+  if (COUPANG_AF_ID) {
+    coupangSearchUrl += `&subid=${COUPANG_AF_ID}`;
+  }
+
+  return `\n\n---\n\n### 🛒 연관 추천 상품 파트너스 모듈\n- 📌 **[${recommendTitle} 쿠팡 최저가 보러가기](${coupangSearchUrl})**\n\n> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n`;
+}
+
+/**
  * 네이버 뉴스 검색 API에서 최근 뉴스들을 수집한 뒤,
  * Gemini AI를 사용해 오늘 가장 핫한 이슈 키워드 3개를 자동으로 추출합니다.
  */
@@ -244,8 +359,8 @@ async function fetchTrendingKeywords() {
 
       const response = await fetchWithRetry(`${NAVER_ENDPOINT}?${params.toString()}`, {
         headers: {
-          'X-Naver-Client-Id': NAVER_CLIENT_ID,
-          'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+          'X-NCP-APIGW-API-KEY-ID': NAVER_CLIENT_ID,
+          'X-NCP-APIGW-API-KEY': NAVER_CLIENT_SECRET
         }
       });
 
@@ -481,8 +596,8 @@ async function main() {
 
         const response = await fetchWithRetry(`${NAVER_ENDPOINT}?${params.toString()}`, {
           headers: {
-            'X-Naver-Client-Id': NAVER_CLIENT_ID,
-            'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+            'X-NCP-APIGW-API-KEY-ID': NAVER_CLIENT_ID,
+            'X-NCP-APIGW-API-KEY': NAVER_CLIENT_SECRET
           }
         });
 
@@ -561,7 +676,16 @@ async function main() {
       console.log(`대상 뉴스 선정: ${title}`);
 
       const isLottoOrSon = selectedKeyword.includes('손없는날') || selectedKeyword === '로또 당첨번호';
-      const postCategory = isLottoOrSon ? '생활정보' : selectedKeyword;
+      const postCategory = task.forcedCategory || (isLottoOrSon ? '생활정보' : '핫이슈');
+
+      // [DataLab] 네이버 데이터랩 트렌드 정보 수집
+      console.log(`[DataLab 트렌드 분석] '${selectedKeyword}' 키워드 트렌드 데이터 수집 중...`);
+      const datalabData = await fetchDataLabTrend(selectedKeyword);
+      let datalabContext = '';
+      if (datalabData) {
+        console.log(`[DataLab 트렌드 성공] 최근 관심도: ${datalabData.recentRatio}, 지난30일 최고: ${datalabData.maxRatio}, 증감율: ${datalabData.changeRateStr}`);
+        datalabContext = `\n\n[네이버 데이터랩(DataLab) 검색어 트렌드 정보]\n- 검색어: ${datalabData.keyword}\n- 최근 검색 관심도 지수: ${datalabData.recentRatio} / 100\n- 지난 30일 내 최고 관심도: ${datalabData.maxRatio} / 100\n- 30일 평균 관심도: ${datalabData.avgRatio}\n- 최근 변동 추이: ${datalabData.changeRateStr}\n(위 트렌드 지표를 바탕으로, 본문 내에 '### 🔥 실시간 트렌드 분석' 소제목을 만들어서 왜 이 키워드의 검색 관심도가 이런 추이를 보이는지, 대중들의 관심이 왜 집중되고 있는지 깊이 있는 분석 2문단을 반드시 작성해줘.)`;
+      }
 
       // [3단계] Gemini AI로 블로그 글 생성
       const todayStr = kstDate.toISOString().split('T')[0];
@@ -631,8 +755,8 @@ naver_link: "${escapedLink}"
             });
             const storeRes = await fetchWithRetry(`${NAVER_ENDPOINT}?${lottoStoreParams.toString()}`, {
               headers: {
-                'X-Naver-Client-Id': NAVER_CLIENT_ID,
-                'X-Naver-Client-Secret': NAVER_CLIENT_SECRET
+                'X-NCP-APIGW-API-KEY-ID': NAVER_CLIENT_ID,
+                'X-NCP-APIGW-API-KEY': NAVER_CLIENT_SECRET
               }
             });
             if (storeRes.ok) {
@@ -657,7 +781,7 @@ naver_link: "${escapedLink}"
 뉴스 정보:
 제목: ${title}
 요약: ${description}
-출처 링크: ${link}${lottoContext}
+출처 링크: ${link}${lottoContext}${datalabContext}
 
 아래 형식으로 출력해줘. 반드시 이 형식만 출력하고 다른 텍스트는 없이:
 ---
@@ -798,6 +922,12 @@ naver_link: "${escapedLink}"
 
       // 본문 이미지 실시간 생성 및 치환
       markdownContent = await processBodyImages(markdownContent, safeFilename);
+
+      // 쿠팡 파트너스 추천 모듈 및 필수 법적 고지 문구 자동 추가
+      if (!markdownContent.includes('쿠팡 파트너스 활동의 일환으로')) {
+        const coupangModule = generateCoupangModule(selectedKeyword, postCategory);
+        markdownContent += coupangModule;
+      }
 
       fileFs.writeFileSync(outputPath, markdownContent, 'utf-8');
       console.log(`[${selectedKeyword}] 글 생성 및 이미지 자동화 완료: ${outputFilename}`);
