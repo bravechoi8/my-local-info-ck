@@ -1,11 +1,9 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
   <defs>
-    <!-- 전체 둥근 모서리 클리핑 -->
     <clipPath id="fullClip">
       <rect width="1200" height="800" rx="24" />
     </clipPath>
-    <!-- 글씨가 잘 보이도록 하는 하단 그라데이션 레이어 -->
     <linearGradient id="textOverlayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="rgba(0,0,0,0)" />
       <stop offset="45%" stop-color="rgba(0,0,0,0.45)" />
@@ -14,21 +12,21 @@
   </defs>
 
   <g clip-path="url(#fullClip)">
-    <!-- AI 배경 이미지 -->
     <image href="/images/card-bg-2026-07-21-yuri-sunglasses.jpg" width="1200" height="800" preserveAspectRatio="xMidYMid slice" />
     <rect y="350" width="1200" height="450" fill="url(#textOverlayGrad)" />
 
-    <!-- 상단 리얼인포 뱃지 -->
     <g transform="translate(60, 60)">
       <rect width="105" height="26" rx="13" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
       <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">REAL INFO</text>
       <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#ECFDF5" fill-opacity="0.8">2026-07-21</text>
     </g>
 
-    <!-- 하단 제목 및 설명문 -->
-    <g transform="translate(60, 620)">
-      <text font-family="'Pretendard', sans-serif" font-size="40" font-weight="900" fill="#ECFDF5" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.7))">명품인 줄 알았는데 겨우 2천원? 나혼산 유리 선글라스 품절 대란의 비밀과 갓성비 패션 팁 총정리</text>
-      <text y="60" font-family="'Pretendard', sans-serif" font-size="19" fill="#6EE7B7" font-weight="600" filter="drop-shadow(0px 2px 5px rgba(0,0,0,0.7))">나 혼자 산다에서 소녀시대 유리가 착용해 화제가 된 2000원짜리 선글라스 대란과 초저가 갓성비 패션 트렌드를 소개합니다.</text>
+    <!-- 하단 멀티라인 타이틀 (잘림 방지) -->
+    <g transform="translate(60, 550)">
+      <text y="0" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#ECFDF5" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">명품인 줄 알았는데 겨우 2천원? 나혼산</text>
+      <text y="46" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#ECFDF5" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">유리 선글라스 품절 대란의 비밀과 갓성비</text>
+      <text y="92" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#ECFDF5" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">패션 팁 총정리</text>
+      <text y="153" font-family="'Pretendard', sans-serif" font-size="20" fill="#6EE7B7" font-weight="700" filter="drop-shadow(0px 2px 5px rgba(0,0,0,0.8))">나 혼자 산다에서 소녀시대 유리가 착용해 화제가 된 2000원짜리 선글라스 대란과 초저가 갓성비 패션 트렌드를 소개합니다.</text>
     </g>
   </g>
 </svg>

@@ -7,7 +7,6 @@
     <clipPath id="leftClip">
       <rect width="540" height="800" />
     </clipPath>
-    <!-- 우측 배경용 그라데이션 -->
     <linearGradient id="splitBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0F172A" />
       <stop offset="100%" stop-color="#020617" />
@@ -15,37 +14,33 @@
   </defs>
 
   <g clip-path="url(#fullClip)">
-    <!-- 왼쪽: AI 이미지 -->
     <g clip-path="url(#leftClip)">
       <image href="/images/card-bg-2026-07-21-holiday-hospital-pharmacy.jpg" width="540" height="800" preserveAspectRatio="xMidYMid slice" />
     </g>
 
-    <!-- 오른쪽: 텍스트 영역 -->
     <rect x="540" width="660" height="800" fill="url(#splitBg)" />
     <line x1="540" y1="0" x2="540" y2="800" stroke="#334155" stroke-width="1.5" />
 
-    <!-- 우측 텍스트 콘텐츠 -->
-    <g transform="translate(600, 100)">
-      <!-- 뱃지 -->
+    <g transform="translate(600, 80)">
       <g transform="translate(0, 0)">
         <rect width="105" height="26" rx="13" fill="#334155" stroke="#334155" stroke-width="1" />
         <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#60A5FA" text-anchor="middle">REAL INFO</text>
         <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#7DD3FC">2026-07-21</text>
       </g>
 
-      <!-- 제목 (안 잘리게 30px 최적 폰트 적용) -->
-      <text y="120" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#F0F9FF">[2026 최신] 주말·공휴일 문 여는 병원 및 당번 약국</text>
-      <text y="170" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#F0F9FF">찾기: 응급의료포털 e-gen 이용법과 119 안내</text>
+      <!-- 우측 타이틀 (글자 수 기준 완전 분할) -->
+      <g transform="translate(0, 80)">
+        <text y="0" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#F0F9FF">[2026 최신]</text>
+        <text y="48" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#F0F9FF">주말·공휴일 문 여는 병원</text>
+        <text y="96" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#F0F9FF">및 당번 약국 찾기:</text>
+      </g>
 
-      <!-- 구분선 -->
-      <line x1="0" y1="230" x2="500" y2="230" stroke="#334155" stroke-width="2" />
+      <line x1="0" y1="234" x2="500" y2="234" stroke="#334155" stroke-width="2" />
 
-      <!-- 설명문 (안 잘리게 최적화) -->
-      <text y="280" font-family="'Pretendard', sans-serif" font-size="18" fill="#F0F9FF" font-weight="700">토요일, 일요일이나 공휴일, 야간에 갑자기 아플 때 주변에</text>
-      <text y="315" font-family="'Pretendard', sans-serif" font-size="18" fill="#F0F9FF" font-weight="700">서 운영 중인 병원과 당번 약국을 실시간으로 찾는 방법과 달빛어린이병원 이용 팁을 안내해 드립니다.</text>
+      <text y="284" font-family="'Pretendard', sans-serif" font-size="20" fill="#F0F9FF" font-weight="700">토요일, 일요일이나 공휴일, 야간에 갑자기 아플</text>
+      <text y="319" font-family="'Pretendard', sans-serif" font-size="20" fill="#F0F9FF" font-weight="700"> 때 주변에서 운영 중인 병원과 당번 약국을 실</text>
       
-      <!-- 하단 데코 문구 -->
-      <text y="600" font-family="'Pretendard', sans-serif" font-size="16" fill="#60A5FA" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
+      <text y="620" font-family="'Pretendard', sans-serif" font-size="16" fill="#60A5FA" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
     </g>
   </g>
 </svg>

@@ -7,69 +7,67 @@
     </linearGradient>
   </defs>
 
-  <!-- Background -->
   <rect width="1200" height="800" fill="url(#mainBg)" />
 
-  <!-- HEADER AREA -->
-  <g transform="translate(50, 35)">
+  <g transform="translate(50, 30)">
     <rect width="105" height="26" rx="13" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
     <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#0284C7" text-anchor="middle">REAL INFO</text>
     <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#475569">2026-07-21</text>
   </g>
 
-  <!-- Main Title (자동 2~3줄 분할로 절대 안 잘림) -->
-  <g transform="translate(50, 95)">
-    <text y="0" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">카카오뱅크 파업권 확보 내 돈은 안전할까</text>
-    <text y="40" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">카카오 노조 피켓 시위 배경과 사용자</text>
-    <text y="80" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">대처법 총정리</text>
+  <!-- 메인 타이틀 (글자 수 기준 18자 강제 줄바꿈으로 절대 안 잘림) -->
+  <g transform="translate(50, 80)">
+    <text y="0" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">카카오뱅크 파업권 확보 내 돈은</text>
+    <text y="42" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">안전할까 카카오 노조 피켓 시위</text>
+    <text y="84" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">배경과 사용자 대처법 총정리</text>
   </g>
 
-  <!-- CENTRAL GRAPHIC (AI Image Frame) -->
+  <!-- 이미지 영영 -->
   <g>
     <clipPath id="imageClip">
-      <rect x="50" y="220" width="1100" height="275" rx="16" />
+      <rect x="50" y="215" width="1100" height="270" rx="16" />
     </clipPath>
-    <rect x="50" y="220" width="1100" height="275" rx="16" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.5" />
-    <image href="/images/card-bg-2026-07-21-kakaobank-strike.jpg" x="50" y="220" width="1100" height="275" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
+    <rect x="50" y="215" width="1100" height="270" rx="16" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.5" />
+    <image href="/images/card-bg-2026-07-21-kakaobank-strike.jpg" x="50" y="215" width="1100" height="270" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
   </g>
 
-  <!-- BOTTOM THREE CARDS -->
+  <!-- 하단 3칸 카드 (빅 폰트 적용) -->
   <g>
     
       <!-- Card 1 -->
-      <g transform="translate(50, 530)">
-        <rect width="340" height="220" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2" />
-        <path d="M 16 0 L 324 0" stroke="#0284C7" stroke-width="5" stroke-linecap="round" />
-        <circle cx="45" cy="45" r="20" fill="#0284C7" />
-        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
-        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#1E293B">핵심 혜택 안내</text>
-        <line x1="25" y1="85" x2="315" y2="85" stroke="#E2E8F0" stroke-width="1.5" />
-        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="#1E293B" font-weight="700">카카오뱅크 파업권 확보 내</text>
-        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="#1E293B" font-weight="700">상세 가이드 확인</text>
+      <g transform="translate(50, 515)">
+        <rect width="340" height="240" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2.5" />
+        <path d="M 16 0 L 324 0" stroke="#0284C7" stroke-width="6" stroke-linecap="round" />
+        <circle cx="45" cy="48" r="21" fill="#0284C7" />
+        <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#1E293B">핵심 혜택 안내</text>
+        <line x1="25" y1="92" x2="315" y2="92" stroke="#E2E8F0" stroke-width="1.5" />
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">카카오뱅크 파업권 확보 내</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">상세 가이드 확인</text>
       </g>
       
       <!-- Card 2 -->
-      <g transform="translate(430, 530)">
-        <rect width="340" height="220" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2" />
-        <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="5" stroke-linecap="round" />
-        <circle cx="45" cy="45" r="20" fill="#10B981" />
-        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
-        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#1E293B">알뜰 이용 팁</text>
-        <line x1="25" y1="85" x2="315" y2="85" stroke="#E2E8F0" stroke-width="1.5" />
-        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="#1E293B" font-weight="700">카카오뱅크 노조가 파업권을</text>
-        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="#1E293B" font-weight="700">실시간 정보 제공</text>
+      <g transform="translate(430, 515)">
+        <rect width="340" height="240" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2.5" />
+        <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="6" stroke-linecap="round" />
+        <circle cx="45" cy="48" r="21" fill="#10B981" />
+        <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#1E293B">알뜰 이용 팁</text>
+        <line x1="25" y1="92" x2="315" y2="92" stroke="#E2E8F0" stroke-width="1.5" />
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">카카오뱅크 노조가 파업권을</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">실시간 정보 제공</text>
       </g>
       
       <!-- Card 3 -->
-      <g transform="translate(810, 530)">
-        <rect width="340" height="220" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2" />
-        <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" />
-        <circle cx="45" cy="45" r="20" fill="#38BDF8" />
-        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
-        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#1E293B">스마트 활용법</text>
-        <line x1="25" y1="85" x2="315" y2="85" stroke="#E2E8F0" stroke-width="1.5" />
-        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="#1E293B" font-weight="700">놓치면 손해보는</text>
-        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="#1E293B" font-weight="700">꿀팁 총정리</text>
+      <g transform="translate(810, 515)">
+        <rect width="340" height="240" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2.5" />
+        <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="6" stroke-linecap="round" />
+        <circle cx="45" cy="48" r="21" fill="#38BDF8" />
+        <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#1E293B">스마트 활용법</text>
+        <line x1="25" y1="92" x2="315" y2="92" stroke="#E2E8F0" stroke-width="1.5" />
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">놓치면 손해보는</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">꿀팁 총정리</text>
       </g>
       
   </g>

@@ -7,7 +7,6 @@
     <clipPath id="leftClip">
       <rect width="540" height="800" />
     </clipPath>
-    <!-- 우측 배경용 그라데이션 -->
     <linearGradient id="splitBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#F8FAFC" />
       <stop offset="100%" stop-color="#F1F5F9" />
@@ -15,37 +14,33 @@
   </defs>
 
   <g clip-path="url(#fullClip)">
-    <!-- 왼쪽: AI 이미지 -->
     <g clip-path="url(#leftClip)">
       <image href="/images/card-bg-2026-07-21-shinjinseo-katago.jpg" width="540" height="800" preserveAspectRatio="xMidYMid slice" />
     </g>
 
-    <!-- 오른쪽: 텍스트 영역 -->
     <rect x="540" width="660" height="800" fill="url(#splitBg)" />
     <line x1="540" y1="0" x2="540" y2="800" stroke="#E2E8F0" stroke-width="1.5" />
 
-    <!-- 우측 텍스트 콘텐츠 -->
-    <g transform="translate(600, 100)">
-      <!-- 뱃지 -->
+    <g transform="translate(600, 80)">
       <g transform="translate(0, 0)">
         <rect width="105" height="26" rx="13" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1" />
         <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#0284C7" text-anchor="middle">REAL INFO</text>
         <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#475569">2026-07-21</text>
       </g>
 
-      <!-- 제목 (안 잘리게 30px 최적 폰트 적용) -->
-      <text y="120" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">인류의 자존심을 지켰다 신진서 9단 바둑 AI 카타고</text>
-      <text y="170" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">꺾고 거둔 기적 같은 승리 비하인드 스토리</text>
+      <!-- 우측 타이틀 (글자 수 기준 완전 분할) -->
+      <g transform="translate(0, 80)">
+        <text y="0" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">인류의 자존심을 지켰다</text>
+        <text y="48" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">신진서 9단 바둑 AI</text>
+        <text y="96" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">카타고 꺾고 거둔 기적 같은</text>
+      </g>
 
-      <!-- 구분선 -->
-      <line x1="0" y1="230" x2="500" y2="230" stroke="#E2E8F0" stroke-width="2" />
+      <line x1="0" y1="234" x2="500" y2="234" stroke="#E2E8F0" stroke-width="2" />
 
-      <!-- 설명문 (안 잘리게 최적화) -->
-      <text y="280" font-family="'Pretendard', sans-serif" font-size="18" fill="#1E293B" font-weight="700">바둑 세계 랭킹 1위 신진서 9단이 강력한 인공지능 카타고</text>
-      <text y="315" font-family="'Pretendard', sans-serif" font-size="18" fill="#1E293B" font-weight="700">를 상대로 승리를 거두며 인류의 자존심을 지킨 감동적인 소식을 전해드립니다</text>
+      <text y="284" font-family="'Pretendard', sans-serif" font-size="20" fill="#1E293B" font-weight="700">바둑 세계 랭킹 1위 신진서 9단이 강력한 인공</text>
+      <text y="319" font-family="'Pretendard', sans-serif" font-size="20" fill="#1E293B" font-weight="700">지능 카타고를 상대로 승리를 거두며 인류의 자존</text>
       
-      <!-- 하단 데코 문구 -->
-      <text y="600" font-family="'Pretendard', sans-serif" font-size="16" fill="#0284C7" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
+      <text y="620" font-family="'Pretendard', sans-serif" font-size="16" fill="#0284C7" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
     </g>
   </g>
 </svg>
