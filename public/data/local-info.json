@@ -1692,5 +1692,27 @@
     "target": "산재장해등급 제1급~제12급에 해당하는 산재장해인을 복귀시켜 고용을 유지한 사업주",
     "summary": "산재근로자가 직장복귀를 한 경우 지원금 및 훈련비, 재활운동비 등을 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000021"
+  },
+  {
+    "id": 157,
+    "name": "장애 체육인 장학금 지원",
+    "category": "혜택",
+    "startDate": "2024-11-22",
+    "endDate": "상시",
+    "location": "국민체육진흥공단 체육인복지팀",
+    "target": "체육회 또는 경기단체가 주관하는 전국규모대회에서 입상한 장애 학생 선수",
+    "summary": "우수한 장애 학생 선수에게 1인당 최대 200만원의 장학금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000035"
+  },
+  {
+    "id": 158,
+    "name": "장애 체육인 교육지원금",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "문화체육관광부",
+    "target": "전·현직 장애 국가대표 선수, 지도자",
+    "summary": "장애인 국가대표 선수 및 지도자에게 국내대학원 또는 국외유학 교육지원금을 지원합니다.",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000235"
   }
 ]
