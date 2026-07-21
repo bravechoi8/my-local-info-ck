@@ -48,6 +48,36 @@ const BLOCK_KEYWORDS = [
   '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구'
 ];
 
+/**
+ * 네이버 API HUB를 통한 네이버 이미지 검색 (3차 이미지 수집 체인)
+ */
+async function fetchNaverImageSearch(keyword) {
+  if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) return null;
+  try {
+    const params = new URLSearchParams({
+      query: keyword,
+      display: '5',
+      sort: 'sim',
+      filter: 'all'
+    });
+    const res = await fetchWithRetry(`https://naverapihub.apigw.ntruss.com/search/v1/image?${params.toString()}`, {
+      headers: {
+        'X-NCP-APIGW-API-KEY-ID': NAVER_CLIENT_ID,
+        'X-NCP-APIGW-API-KEY': NAVER_CLIENT_SECRET
+      }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.items && data.items.length > 0) {
+        return data.items[0].link;
+      }
+    }
+  } catch (err) {
+    console.error('[네이버 이미지 검색 에러]:', err.message);
+  }
+  return null;
+}
+
 const OTHER_REGIONS = [
   '부산', '대구', '인천', '광주', '대전', '울산', '세종', 
   '강원', '충북', '충청북도', '충남', '충청남도', '전북', '전라북도', '전남', '전라남도', 
