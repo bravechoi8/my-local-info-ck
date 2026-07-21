@@ -4,6 +4,10 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## 🚫 비인기 농어촌 및 농촌 관련 포스트 작성 금지 지침 (AI 에이전트 전용 규칙)
+
+농어촌 및 농촌 관련 주제(농촌형 교통, 농촌 보육, 농촌 지원 정책 등)는 대중 선호도가 낮고 비인기 분야이므로, 새로운 포스트를 생성하거나 공공데이터/뉴스에서 수집하여 글을 작성하는 것을 전면 차단합니다. 농촌/농어촌 관련 키워드가 포함된 주제는 절대 새로 올리지 마십시오.
+
 ## 🚨 중복 블로그 포스트 작성 방지 지침 (AI 에이전트 전용 규칙)
 
 블로그 내에 동일하거나 유사한 주제의 글이 여러 번 게시되는 것은 검색 엔진 노출(SEO)과 사용자 경험에 매우 해롭습니다. 모든 AI 에이전트는 새로운 블로그 글을 생성하거나 작성하기 전에 반드시 아래 규칙을 준수하여 중복 여부를 검사해야 합니다.
