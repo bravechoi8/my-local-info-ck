@@ -386,7 +386,7 @@ async function fetchTrendingKeywords() {
       const files = fileFs.readdirSync(POSTS_DIR_PATH)
         .filter(file => file.endsWith('.md'))
         .sort()
-        .slice(-15);
+        .slice(-50);
       for (const file of files) {
         try {
           const content = fileFs.readFileSync(filePath.join(POSTS_DIR_PATH, file), 'utf-8');
@@ -394,6 +394,8 @@ async function fetchTrendingKeywords() {
           if (titleMatch) {
             recentTitles.push(titleMatch[1].replace(/['"]/g, '').trim());
           }
+          // 파일명 슬러그 키워드도 중복 방지에 포함
+          recentTitles.push(file.replace('.md', ''));
         } catch (e) {
           // ignore
         }
