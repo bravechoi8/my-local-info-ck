@@ -496,13 +496,25 @@ async function main() {
       });
     }
 
-    // 매월 1일에는 손없는날 추가
+    // 매월 1일에는 손없는날, 주말 휴일 문여는 병원 약국, 주말 휴일 24시 동물병원 추가
     if (dayOfMonth === 1 && !process.env.SELECTED_KEYWORD) {
       const currentYear = kstDate.getUTCFullYear();
       const currentMonth = kstDate.getUTCMonth() + 1;
       tasks.push({
         keyword: `${currentYear}년 ${currentMonth}월 손없는날`,
         isSonMonthFirst: true,
+        isLottoSunday: false,
+        forcedCategory: '생활정보'
+      });
+      tasks.push({
+        keyword: '주말 휴일 문여는 병원 약국',
+        isSonMonthFirst: false,
+        isLottoSunday: false,
+        forcedCategory: '생활정보'
+      });
+      tasks.push({
+        keyword: '주말 휴일 24시 동물병원',
+        isSonMonthFirst: false,
         isLottoSunday: false,
         forcedCategory: '생활정보'
       });
