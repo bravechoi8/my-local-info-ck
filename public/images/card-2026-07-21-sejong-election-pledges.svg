@@ -1,7 +1,6 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
   <defs>
-    <!-- Background Gradient -->
     <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0B0F19" />
       <stop offset="100%" stop-color="#111827" />
@@ -12,26 +11,26 @@
   <rect width="1200" height="800" fill="url(#mainBg)" />
 
   <!-- HEADER AREA -->
-  <g transform="translate(50, 45)">
+  <g transform="translate(50, 35)">
     <rect width="105" height="26" rx="13" fill="#1E293B" stroke="#475569" stroke-width="1" />
     <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#38BDF8" text-anchor="middle">REAL INFO</text>
     <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#94A3B8">2026-07-21</text>
   </g>
 
-  <!-- Main Title -->
-  <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="#FFFFFF">세종시의 미래가 바뀐다 조상호의 기본사회 vs 최민호의 가족경제 정책 대격돌과 우리 삶의 변화 총정리</text>
-  
-  <!-- Subtitle -->
-  <text x="50" y="145" font-family="'Pretendard', sans-serif" font-size="20" fill="#94A3B8" font-weight="600">세종시 지방선거의 두 핵심 후보가 내세운 복지, 의료, 가족 중심의 공약 대결과 그에 따른 혜택을 분석합니다.</text>
+  <!-- Main Title (자동 2~3줄 분할로 절대 안 잘림) -->
+  <g transform="translate(50, 95)">
+    <text y="0" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#FFFFFF">세종시의 미래가 바뀐다 조상호의 기본사회</text>
+    <text y="40" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#FFFFFF">vs 최민호의 가족경제 정책 대격돌과</text>
+    <text y="80" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#FFFFFF">우리 삶의 변화 총정리</text>
+  </g>
 
   <!-- CENTRAL GRAPHIC (AI Image Frame) -->
   <g>
     <clipPath id="imageClip">
-      <rect x="50" y="170" width="1100" height="325" rx="16" />
+      <rect x="50" y="220" width="1100" height="275" rx="16" />
     </clipPath>
-    <rect x="50" y="170" width="1100" height="325" rx="16" fill="#1F2937" stroke="#374151" stroke-width="1.5" />
-    <image href="/images/card-bg-2026-07-21-sejong-election-pledges.jpg" x="50" y="170" width="1100" height="325" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
-    <rect x="50" y="170" width="1100" height="325" rx="16" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.1" />
+    <rect x="50" y="220" width="1100" height="275" rx="16" fill="#1F2937" stroke="#374151" stroke-width="1.5" />
+    <image href="/images/card-bg-2026-07-21-sejong-election-pledges.jpg" x="50" y="220" width="1100" height="275" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
   </g>
 
   <!-- BOTTOM THREE CARDS -->

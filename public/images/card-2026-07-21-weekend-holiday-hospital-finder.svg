@@ -33,15 +33,16 @@
         <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#7DD3FC">2026-07-21</text>
       </g>
 
-      <!-- 제목 (2줄 자동 분할) -->
-      <text y="140" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="#F0F9FF">[2026 최신] 주말·공휴일 문 여는 병원 및 당번 약국</text>
-      <text y="210" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="#F0F9FF">찾기: 응급의료포털 e-gen 이용법과 119 안내</text>
+      <!-- 제목 (안 잘리게 30px 최적 폰트 적용) -->
+      <text y="120" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#F0F9FF">[2026 최신] 주말·공휴일 문 여는 병원 및 당번 약국</text>
+      <text y="170" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#F0F9FF">찾기: 응급의료포털 e-gen 이용법과 119 안내</text>
 
       <!-- 구분선 -->
-      <line x1="0" y1="285" x2="500" y2="285" stroke="#334155" stroke-width="2.5" />
+      <line x1="0" y1="230" x2="500" y2="230" stroke="#334155" stroke-width="2" />
 
-      <!-- 설명문 -->
-      <text y="345" font-family="'Pretendard', sans-serif" font-size="22" fill="#F0F9FF" font-weight="700">토요일, 일요일이나 공휴일, 야간에 갑자기 아플 때 주변에서 운영 중인 병원과 당번 약국을 실시간으로 찾는 방법과 달빛어린이병원 이용 팁을 안내해 드립니다.</text>
+      <!-- 설명문 (안 잘리게 최적화) -->
+      <text y="280" font-family="'Pretendard', sans-serif" font-size="18" fill="#F0F9FF" font-weight="700">토요일, 일요일이나 공휴일, 야간에 갑자기 아플 때 주변에</text>
+      <text y="315" font-family="'Pretendard', sans-serif" font-size="18" fill="#F0F9FF" font-weight="700">서 운영 중인 병원과 당번 약국을 실시간으로 찾는 방법과 달빛어린이병원 이용 팁을 안내해 드립니다.</text>
       
       <!-- 하단 데코 문구 -->
       <text y="600" font-family="'Pretendard', sans-serif" font-size="16" fill="#60A5FA" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>

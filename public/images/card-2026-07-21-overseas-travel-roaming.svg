@@ -33,15 +33,16 @@
         <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#475569">2026-07-21</text>
       </g>
 
-      <!-- 제목 (2줄 자동 분할) -->
-      <text y="140" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="#1E293B">KT 동남아 알뜰로밍 출시! 그랩 10만원 할인</text>
-      <text y="210" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="#1E293B">혜택받고 가성비 해외여행 준비하는 법 총정리</text>
+      <!-- 제목 (안 잘리게 30px 최적 폰트 적용) -->
+      <text y="120" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">KT 동남아 알뜰로밍 출시! 그랩 10만원 할인</text>
+      <text y="170" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="#1E293B">혜택받고 가성비 해외여행 준비하는 법 총정리</text>
 
       <!-- 구분선 -->
-      <line x1="0" y1="285" x2="500" y2="285" stroke="#E2E8F0" stroke-width="2.5" />
+      <line x1="0" y1="230" x2="500" y2="230" stroke="#E2E8F0" stroke-width="2" />
 
-      <!-- 설명문 -->
-      <text y="345" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="700">KT가 동남아 여행객을 겨냥해 출시한 알뜰로밍 요금제의 상세 스펙과 그랩 최대 10만 원 할인 혜택 정보 및 알뜰한 해외여행 준비 팁을 정리해 드립니다.</text>
+      <!-- 설명문 (안 잘리게 최적화) -->
+      <text y="280" font-family="'Pretendard', sans-serif" font-size="18" fill="#1E293B" font-weight="700">KT가 동남아 여행객을 겨냥해 출시한 알뜰로밍 요금제의 상</text>
+      <text y="315" font-family="'Pretendard', sans-serif" font-size="18" fill="#1E293B" font-weight="700">세 스펙과 그랩 최대 10만 원 할인 혜택 정보 및 알뜰한 해외여행 준비 팁을 정리해 드립니다.</text>
       
       <!-- 하단 데코 문구 -->
       <text y="600" font-family="'Pretendard', sans-serif" font-size="16" fill="#0284C7" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>

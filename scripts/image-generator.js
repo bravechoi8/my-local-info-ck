@@ -655,15 +655,16 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
         <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="${subTextColor}">${todayStr}</text>
       </g>
 
-      <!-- 제목 (2줄 자동 분할) -->
-      <text y="140" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="${textColor}">${titleLine1}</text>
-      ${titleLine2 ? `<text y="210" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="${textColor}">${titleLine2}</text>` : ''}
+      <!-- 제목 (안 잘리게 30px 최적 폰트 적용) -->
+      <text y="120" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="${textColor}">${titleLine1}</text>
+      ${titleLine2 ? `<text y="170" font-family="'Pretendard', sans-serif" font-size="30" font-weight="900" fill="${textColor}">${titleLine2}</text>` : ''}
 
       <!-- 구분선 -->
-      <line x1="0" y1="285" x2="500" y2="285" stroke="${cardBorder}" stroke-width="2.5" />
+      <line x1="0" y1="230" x2="500" y2="230" stroke="${cardBorder}" stroke-width="2" />
 
-      <!-- 설명문 -->
-      <text y="345" font-family="'Pretendard', sans-serif" font-size="22" fill="${textColor}" font-weight="700">${safeSubTitle}</text>
+      <!-- 설명문 (안 잘리게 최적화) -->
+      <text y="280" font-family="'Pretendard', sans-serif" font-size="18" fill="${textColor}" font-weight="700">${safeSubTitle.substring(0, 32)}</text>
+      ${safeSubTitle.length > 32 ? `<text y="315" font-family="'Pretendard', sans-serif" font-size="18" fill="${textColor}" font-weight="700">${safeSubTitle.substring(32)}</text>` : ''}
       
       <!-- 하단 데코 문구 -->
       <text y="600" font-family="'Pretendard', sans-serif" font-size="16" fill="${accentColor}" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
@@ -698,10 +699,29 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
       `;
     }
 
+    // 텍스트 여러 줄 분할 헬퍼 (최대 maxLen 글자 단위)
+    const wrapText = (str, maxLen = 22) => {
+      if (str.length <= maxLen) return [str];
+      const lines = [];
+      let current = '';
+      const words = str.split(' ');
+      for (const w of words) {
+        if ((current + ' ' + w).trim().length > maxLen) {
+          if (current) lines.push(current.trim());
+          current = w;
+        } else {
+          current = (current + ' ' + w).trim();
+        }
+      }
+      if (current) lines.push(current.trim());
+      return lines.slice(0, 3);
+    };
+
+    const titleLines = wrapText(safeTitle, 22);
+
     return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
   <defs>
-    <!-- Background Gradient -->
     <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="${bgColor[0]}" />
       <stop offset="100%" stop-color="${bgColor[1]}" />
@@ -712,26 +732,24 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
   <rect width="1200" height="800" fill="url(#mainBg)" />
 
   <!-- HEADER AREA -->
-  <g transform="translate(50, 45)">
+  <g transform="translate(50, 35)">
     <rect width="105" height="26" rx="13" fill="${isLight ? '#E2E8F0' : '#1E293B'}" stroke="${isLight ? '#CBD5E1' : '#475569'}" stroke-width="1" />
     <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="${accentColor}" text-anchor="middle">REAL INFO</text>
     <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="${subTextColor}">${todayStr}</text>
   </g>
 
-  <!-- Main Title -->
-  <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="${textColor}">${safeTitle}</text>
-  
-  <!-- Subtitle -->
-  <text x="50" y="145" font-family="'Pretendard', sans-serif" font-size="20" fill="${subTextColor}" font-weight="600">${safeSubTitle}</text>
+  <!-- Main Title (자동 2~3줄 분할로 절대 안 잘림) -->
+  <g transform="translate(50, 95)">
+    ${titleLines.map((line, idx) => `<text y="${idx * 40}" font-family="'Pretendard', sans-serif" font-size="${titleLines.length > 2 ? '30' : '34'}" font-weight="900" fill="${textColor}">${line}</text>`).join('\n    ')}
+  </g>
 
   <!-- CENTRAL GRAPHIC (AI Image Frame) -->
   <g>
     <clipPath id="imageClip">
-      <rect x="50" y="170" width="1100" height="325" rx="16" />
+      <rect x="50" y="${titleLines.length > 2 ? 220 : 190}" width="1100" height="${titleLines.length > 2 ? 275 : 305}" rx="16" />
     </clipPath>
-    <rect x="50" y="170" width="1100" height="325" rx="16" fill="${isLight ? '#F1F5F9' : '#1F2937'}" stroke="${isLight ? '#E2E8F0' : '#374151'}" stroke-width="1.5" />
-    <image href="${bgImgPath}" x="50" y="170" width="1100" height="325" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
-    <rect x="50" y="170" width="1100" height="325" rx="16" fill="none" stroke="${textColor}" stroke-width="1" opacity="0.1" />
+    <rect x="50" y="${titleLines.length > 2 ? 220 : 190}" width="1100" height="${titleLines.length > 2 ? 275 : 305}" rx="16" fill="${isLight ? '#F1F5F9' : '#1F2937'}" stroke="${isLight ? '#E2E8F0' : '#374151'}" stroke-width="1.5" />
+    <image href="${bgImgPath}" x="50" y="${titleLines.length > 2 ? 220 : 190}" width="1100" height="${titleLines.length > 2 ? 275 : 305}" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
   </g>
 
   <!-- BOTTOM THREE CARDS -->
