@@ -656,17 +656,17 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
       </g>
 
       <!-- 제목 (2줄 자동 분할) -->
-      <text y="140" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="${textColor}">${titleLine1}</text>
-      ${titleLine2 ? `<text y="205" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="${textColor}">${titleLine2}</text>` : ''}
+      <text y="140" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="${textColor}">${titleLine1}</text>
+      ${titleLine2 ? `<text y="210" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="${textColor}">${titleLine2}</text>` : ''}
 
       <!-- 구분선 -->
-      <line x1="0" y1="285" x2="500" y2="285" stroke="${cardBorder}" stroke-width="2" />
+      <line x1="0" y1="285" x2="500" y2="285" stroke="${cardBorder}" stroke-width="2.5" />
 
       <!-- 설명문 -->
-      <text y="340" font-family="'Pretendard', sans-serif" font-size="18" fill="${subTextColor}" font-weight="500">${safeSubTitle}</text>
+      <text y="345" font-family="'Pretendard', sans-serif" font-size="22" fill="${textColor}" font-weight="700">${safeSubTitle}</text>
       
       <!-- 하단 데코 문구 -->
-      <text y="600" font-family="'Pretendard', sans-serif" font-size="15" fill="${accentColor}" font-weight="700" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
+      <text y="600" font-family="'Pretendard', sans-serif" font-size="16" fill="${accentColor}" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
     </g>
   </g>
 </svg>
@@ -686,14 +686,14 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
       cardsMarkup += `
       <!-- Card ${i + 1} -->
       <g transform="translate(${xPos}, 530)">
-        <rect width="340" height="220" rx="16" fill="${cardBg}" stroke="${cardBorder}" stroke-width="1.5" />
-        <path d="M 16 0 L 324 0" stroke="${numberBgColor}" stroke-width="4" stroke-linecap="round" />
-        <circle cx="45" cy="45" r="16" fill="${numberBgColor}" />
-        <text x="45" y="50" font-family="'Pretendard', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">${i + 1}</text>
-        <text x="75" y="51" font-family="'Pretendard', sans-serif" font-size="18" font-weight="800" fill="${textColor}">${safePtTitle}</text>
-        <line x1="25" y1="85" x2="315" y2="85" stroke="${cardBorder}" stroke-width="1" />
-        <text x="25" y="125" font-family="'Pretendard', sans-serif" font-size="15" fill="${subTextColor}" font-weight="500">${safePtDesc1}</text>
-        <text x="25" y="160" font-family="'Pretendard', sans-serif" font-size="15" fill="${subTextColor}" font-weight="500">${safePtDesc2}</text>
+        <rect width="340" height="220" rx="16" fill="${cardBg}" stroke="${cardBorder}" stroke-width="2" />
+        <path d="M 16 0 L 324 0" stroke="${numberBgColor}" stroke-width="5" stroke-linecap="round" />
+        <circle cx="45" cy="45" r="20" fill="${numberBgColor}" />
+        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">${i + 1}</text>
+        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="${textColor}">${safePtTitle}</text>
+        <line x1="25" y1="85" x2="315" y2="85" stroke="${cardBorder}" stroke-width="1.5" />
+        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="${textColor}" font-weight="700">${safePtDesc1}</text>
+        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="${textColor}" font-weight="700">${safePtDesc2}</text>
       </g>
       `;
     }
@@ -719,10 +719,10 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
   </g>
 
   <!-- Main Title -->
-  <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="${textColor}">${safeTitle}</text>
+  <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="${textColor}">${safeTitle}</text>
   
   <!-- Subtitle -->
-  <text x="50" y="142" font-family="'Pretendard', sans-serif" font-size="16" fill="${subTextColor}" font-weight="500">${safeSubTitle}</text>
+  <text x="50" y="145" font-family="'Pretendard', sans-serif" font-size="20" fill="${subTextColor}" font-weight="600">${safeSubTitle}</text>
 
   <!-- CENTRAL GRAPHIC (AI Image Frame) -->
   <g>
