@@ -98,7 +98,14 @@ A3. 가입이 완료되면 KT에서 쿠폰 번호가 담긴 안내 문자가 발
 
 ---
 
-### 🛒 연관 파트너스 추천 모듈
-- 📌 **[해외여행 로밍 관련 인기 연관 상품 쿠팡 최저가 검색하기](https://www.coupang.com/np/search?q=%ED%95%B4%EC%99%B8%EC%97%AC%ED%96%89%20%EB%A1%9C%EB%B0%8D)**
+### 🛒 연관 추천 상품 파트너스 모듈
+
+<div style="background: linear-gradient(135deg, #e52d27 0%, #b31217 100%); padding: 20px; border-radius: 16px; color: white; margin: 24px 0; text-align: center; box-shadow: 0 8px 20px rgba(229, 45, 39, 0.25);">
+  <div style="font-size: 13px; opacity: 0.95; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">⚡ 쿠팡 파트너스 추천 ⚡</div>
+  <div style="font-size: 18px; font-weight: 800; margin-bottom: 14px; word-break: keep-all;">여행용 파우치 & 나들이 캠핑 필수용품</div>
+  <a href="https://www.coupang.com/np/search?q=%EC%97%AC%ED%96%89%20%ED%8C%8C%EC%9A%B0%EC%B9%98%20%EC%BA%A0%ED%95%91%EC%9A%A9%ED%92%88&subid=AF4596301" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #ffffff; color: #e52d27; font-weight: 800; padding: 12px 24px; border-radius: 30px; text-decoration: none; font-size: 15px;">
+    🛒 여행용 파우치 & 캠핑용품 쿠팡 최저가 보러가기 ➔
+  </a>
+</div>
 
 > 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.

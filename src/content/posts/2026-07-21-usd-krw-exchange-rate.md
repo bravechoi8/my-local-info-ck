@@ -80,7 +80,14 @@ A3. 외화예금을 통해 얻은 **환차익에 대해서는 세금(비과세)*
 
 ---
 
-### 🛒 연관 파트너스 추천 모듈
-- 📌 **[원달러 환율 관련 인기 연관 상품 쿠팡 최저가 검색하기](https://www.coupang.com/np/search?q=%EC%9B%90%EB%8B%AC%EB%9F%AC%20%ED%99%98%EC%9C%A8)**
+### 🛒 연관 추천 상품 파트너스 모듈
+
+<div style="background: linear-gradient(135deg, #e52d27 0%, #b31217 100%); padding: 20px; border-radius: 16px; color: white; margin: 24px 0; text-align: center; box-shadow: 0 8px 20px rgba(229, 45, 39, 0.25);">
+  <div style="font-size: 13px; opacity: 0.95; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">⚡ 쿠팡 파트너스 추천 ⚡</div>
+  <div style="font-size: 18px; font-weight: 800; margin-bottom: 14px; word-break: keep-all;">재테크 & 자산관리 추천 베스트셀러 도서 모음</div>
+  <a href="https://www.coupang.com/np/search?q=%EC%9E%AC%ED%85%8C%ED%81%AC%20%EC%9E%90%EC%82%B0%EA%B4%80%EB%A6%AC%20%EB%8F%84%EC%84%9C&subid=AF4596301" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #ffffff; color: #e52d27; font-weight: 800; padding: 12px 24px; border-radius: 30px; text-decoration: none; font-size: 15px;">
+    🛒 재테크 베스트셀러 도서 쿠팡 최저가 보러가기 ➔
+  </a>
+</div>
 
 > 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.

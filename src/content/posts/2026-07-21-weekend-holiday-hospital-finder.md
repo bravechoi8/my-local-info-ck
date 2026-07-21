@@ -73,6 +73,13 @@ naver_link: "https://www.e-gen.or.kr"
 ---
 
 ### 🛒 연관 추천 상품 파트너스 모듈
-- 📌 **[가정용 체온계 & 비상약 구급함 세트 쿠팡 최저가 보러가기](https://www.coupang.com/np/search?q=%EA%B0%80%EC%A0%95%EC%9A%A9%20%EC%B2%B4%EC%98%A8%EA%B3%84%20%EA%B5%AC%EA%B8%89%ED%95%A8&subid=AF4596301)**
+
+<div style="background: linear-gradient(135deg, #e52d27 0%, #b31217 100%); padding: 20px; border-radius: 16px; color: white; margin: 24px 0; text-align: center; box-shadow: 0 8px 20px rgba(229, 45, 39, 0.25);">
+  <div style="font-size: 13px; opacity: 0.95; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">⚡ 쿠팡 파트너스 추천 ⚡</div>
+  <div style="font-size: 18px; font-weight: 800; margin-bottom: 14px; word-break: keep-all;">가정용 체온계 & 비상약 구급함 세트</div>
+  <a href="https://www.coupang.com/np/search?q=%EA%B0%80%EC%A0%95%EC%9A%A9%20%EC%B2%B4%EC%98%A8%EA%B3%84%20%EA%B5%AC%EA%B8%89%ED%95%A8&subid=AF4596301" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #ffffff; color: #e52d27; font-weight: 800; padding: 12px 24px; border-radius: 30px; text-decoration: none; font-size: 15px;">
+    🛒 가정용 체온계 & 비상약 구급함 세트 쿠팡 최저가 보러가기 ➔
+  </a>
+</div>
 
 > 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
