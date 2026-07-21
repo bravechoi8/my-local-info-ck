@@ -138,19 +138,19 @@ export async function generateSummaryImage(title, summary, filenameKey, forceAI 
   "subTitle": "A catchy, interesting Korean subtitle for the blog post (maximum 20 characters, NO quotes)",
   "points": [
     {
-      "title": "A short keyword summarizing Point 1 (maximum 10 characters in Korean)",
-      "desc1": "A clear description of Point 1, line 1 (maximum 18 characters in Korean)",
-      "desc2": "A clear description of Point 1, line 2 (maximum 18 characters in Korean, optional, empty if not needed)"
+      "title": "Short keyword (max 8 chars in Korean)",
+      "desc1": "Point 1 line 1 (STRICT MAX 9 chars in Korean)",
+      "desc2": "Point 1 line 2 (STRICT MAX 9 chars in Korean)"
     },
     {
-      "title": "A short keyword summarizing Point 2 (maximum 10 characters in Korean)",
-      "desc1": "A clear description of Point 2, line 1 (maximum 18 characters in Korean)",
-      "desc2": "A clear description of Point 2, line 2 (maximum 18 characters in Korean, optional, empty if not needed)"
+      "title": "Short keyword (max 8 chars in Korean)",
+      "desc1": "Point 2 line 1 (STRICT MAX 9 chars in Korean)",
+      "desc2": "Point 2 line 2 (STRICT MAX 9 chars in Korean)"
     },
     {
-      "title": "A short keyword summarizing Point 3 (maximum 10 characters in Korean)",
-      "desc1": "A clear description of Point 3, line 1 (maximum 18 characters in Korean)",
-      "desc2": "A clear description of Point 3, line 2 (maximum 18 characters in Korean, optional, empty if not needed)"
+      "title": "Short keyword (max 8 chars in Korean)",
+      "desc1": "Point 3 line 1 (STRICT MAX 9 chars in Korean)",
+      "desc2": "Point 3 line 2 (STRICT MAX 9 chars in Korean)"
     }
   ]
 }
@@ -683,6 +683,17 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
       const xPos = 50 + (i * 380);
       const numberBgColor = i === 0 ? accentColor : (i === 1 ? '#10B981' : '#38BDF8');
 
+      // 글자 수에 맞춰 폰트 크기와 잘림을 자동 조절하는 스마트 함수
+      const getDescFontSize = (str) => {
+        if (!str) return '20';
+        if (str.length > 13) return '17';
+        if (str.length > 10) return '19';
+        return '21';
+      };
+
+      const fontSize1 = getDescFontSize(safePtDesc1);
+      const fontSize2 = getDescFontSize(safePtDesc2);
+
       cardsMarkup += `
       <!-- Card ${i + 1} -->
       <g transform="translate(${xPos}, 515)">
@@ -690,10 +701,10 @@ export function buildSvgTemplate(title, subTitle, bgImgPath, points) {
         <path d="M 16 0 L 324 0" stroke="${numberBgColor}" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="${numberBgColor}" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">${i + 1}</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="${textColor}">${safePtTitle}</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="${textColor}">${safePtTitle.substring(0, 10)}</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="${cardBorder}" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="${textColor}" font-weight="800">${safePtDesc1}</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="${textColor}" font-weight="800">${safePtDesc2}</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="${fontSize1}" fill="${textColor}" font-weight="800" letter-spacing="-0.5px">${safePtDesc1.substring(0, 16)}</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="${fontSize2}" fill="${textColor}" font-weight="800" letter-spacing="-0.5px">${safePtDesc2.substring(0, 16)}</text>
       </g>
       `;
     }

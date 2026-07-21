@@ -40,10 +40,10 @@
         <path d="M 16 0 L 324 0" stroke="#0284C7" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#0284C7" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#1E293B">핵심 혜택 안내</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#1E293B">파업권 확보</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E2E8F0" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">카카오뱅크 파업권 확보 내</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">상세 가이드 확인</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#1E293B" font-weight="800" letter-spacing="-0.5px">노조 피켓 시위</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#1E293B" font-weight="800" letter-spacing="-0.5px">배경 및 이슈</text>
       </g>
       
       <!-- Card 2 -->
@@ -52,10 +52,10 @@
         <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#10B981" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#1E293B">알뜰 이용 팁</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#1E293B">내 돈 안전할까</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E2E8F0" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">카카오뱅크 노조가 파업권을</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">실시간 정보 제공</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#1E293B" font-weight="800" letter-spacing="-0.5px">예금자보호법</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#1E293B" font-weight="800" letter-spacing="-0.5px">5천만원 보장</text>
       </g>
       
       <!-- Card 3 -->
@@ -64,10 +64,10 @@
         <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#38BDF8" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#1E293B">스마트 활용법</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#1E293B">사용자 대처법</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E2E8F0" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">놓치면 손해보는</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#1E293B" font-weight="800">꿀팁 총정리</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#1E293B" font-weight="800" letter-spacing="-0.5px">비상 계좌 준비</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#1E293B" font-weight="800" letter-spacing="-0.5px">금융 서비스 체크</text>
       </g>
       
   </g>

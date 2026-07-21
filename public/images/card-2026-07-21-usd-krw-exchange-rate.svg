@@ -40,10 +40,10 @@
         <path d="M 16 0 L 324 0" stroke="#D97706" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#D97706" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#18181B">핵심 혜택 안내</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">환율 트렌드</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E4E4E7" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#18181B" font-weight="800">1500원 깨진 원달러 환</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#18181B" font-weight="800">상세 가이드 확인</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="19" fill="#18181B" font-weight="800" letter-spacing="-0.5px">1500원 하락 배경</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">외국인 매도 완화</text>
       </g>
       
       <!-- Card 2 -->
@@ -52,10 +52,10 @@
         <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#10B981" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#18181B">알뜰 이용 팁</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">환전 타이밍</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E4E4E7" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#18181B" font-weight="800">치솟던 원달러 환율이 15</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#18181B" font-weight="800">실시간 정보 제공</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">분할 환전 전략</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">목표 환율 설정</text>
       </g>
       
       <!-- Card 3 -->
@@ -64,10 +64,10 @@
         <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#38BDF8" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="26" font-weight="900" fill="#18181B">스마트 활용법</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">자산 관리 팁</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E4E4E7" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="22" fill="#18181B" font-weight="800">놓치면 손해보는</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="22" fill="#18181B" font-weight="800">꿀팁 총정리</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">외화예금 활용</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">환차익 재테크</text>
       </g>
       
   </g>
