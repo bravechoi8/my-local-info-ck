@@ -1670,5 +1670,27 @@
     "target": "경기도에 사업장을 둔 소상공인",
     "summary": "경기도 소상공인지원자금과 연계한 저금리 우대 보증 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045200002"
+  },
+  {
+    "id": 155,
+    "name": "산재근로자 직업훈련",
+    "category": "혜택",
+    "startDate": "2024-11-21",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "산재 장해등급 제1급~12급에 해당하는 미취업자",
+    "summary": "산재장해인의 재취업을 위해 직업훈련비용 및 수당을 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000016"
+  },
+  {
+    "id": 156,
+    "name": "산재근로자 직장 복귀 지원",
+    "category": "혜택",
+    "startDate": "2024-05-18",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "산재장해등급 제1급~제12급에 해당하는 산재장해인을 복귀시켜 고용을 유지한 사업주",
+    "summary": "산재근로자가 직장복귀를 한 경우 지원금 및 훈련비, 재활운동비 등을 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000021"
   }
 ]
