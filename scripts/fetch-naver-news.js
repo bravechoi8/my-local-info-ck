@@ -884,6 +884,11 @@ naver_link: "${escapedLink}"
       let markdownContent = contentLines.join('\n').trim();
       markdownContent = markdownContent.replace(/^```markdown\s*/gi, '').replace(/^```\s*/g, '').replace(/```\s*$/g, '').trim();
 
+      // Frontmatter title, summary, date 큰따옴표 규격 안전 보정
+      markdownContent = markdownContent.replace(/title:\s*"?([^"\r\n]+)"?/g, 'title: "$1"');
+      markdownContent = markdownContent.replace(/summary:\s*"?([^"\r\n]+)"?/g, 'summary: "$1"');
+      markdownContent = markdownContent.replace(/date:\s*"?([^"\r\n]+)"?/g, 'date: "$1"');
+
       // 메타데이터 파싱하여 요약 이미지 생성
       const titleMatch = markdownContent.match(/title:\s*(.+)/);
       const summaryMatch = markdownContent.match(/summary:\s*(.+)/);
