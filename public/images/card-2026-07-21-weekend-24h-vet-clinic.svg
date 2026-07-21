@@ -1,0 +1,77 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="mainBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181B" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#mainBg)" />
+
+  <!-- HEADER AREA -->
+  <g transform="translate(50, 45)">
+    <rect width="105" height="26" rx="13" fill="#1E293B" stroke="#475569" stroke-width="1" />
+    <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#FBBF24" text-anchor="middle">REAL INFO</text>
+    <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#A1A1AA">2026-07-21</text>
+  </g>
+
+  <!-- Main Title -->
+  <text x="50" y="110" font-family="'Pretendard', sans-serif" font-size="42" font-weight="900" fill="#F4F4F5">[2026 최신] 주말·공휴일·야간 문 여는 24시 동물병원 찾는 법: 응급 진료 및 골든타임 대처 팁</text>
+  
+  <!-- Subtitle -->
+  <text x="50" y="145" font-family="'Pretendard', sans-serif" font-size="20" fill="#A1A1AA" font-weight="600">주말이나 야간, 공휴일에 사랑하는 반려동물이 갑자기 아플 때 문 여는 24시 동물의료센터 및 응급 동물병원을 찾는 가장 신속한 방법과 응급 처치 주의사항을 총정리해 드립니다.</text>
+
+  <!-- CENTRAL GRAPHIC (AI Image Frame) -->
+  <g>
+    <clipPath id="imageClip">
+      <rect x="50" y="170" width="1100" height="325" rx="16" />
+    </clipPath>
+    <rect x="50" y="170" width="1100" height="325" rx="16" fill="#1F2937" stroke="#374151" stroke-width="1.5" />
+    <image href="/images/card-bg-2026-07-21-holiday-hospital-pharmacy.jpg" x="50" y="170" width="1100" height="325" clip-path="url(#imageClip)" preserveAspectRatio="xMidYMid slice" />
+    <rect x="50" y="170" width="1100" height="325" rx="16" fill="none" stroke="#F4F4F5" stroke-width="1" opacity="0.1" />
+  </g>
+
+  <!-- BOTTOM THREE CARDS -->
+  <g>
+    
+      <!-- Card 1 -->
+      <g transform="translate(50, 530)">
+        <rect width="340" height="220" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="2" />
+        <path d="M 16 0 L 324 0" stroke="#FBBF24" stroke-width="5" stroke-linecap="round" />
+        <circle cx="45" cy="45" r="20" fill="#FBBF24" />
+        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
+        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#F4F4F5">핵심 혜택 안내</text>
+        <line x1="25" y1="85" x2="315" y2="85" stroke="#3F3F46" stroke-width="1.5" />
+        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="#F4F4F5" font-weight="700">[2026 최신] 주말·공</text>
+        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="#F4F4F5" font-weight="700">상세 가이드 확인</text>
+      </g>
+      
+      <!-- Card 2 -->
+      <g transform="translate(430, 530)">
+        <rect width="340" height="220" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="2" />
+        <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="5" stroke-linecap="round" />
+        <circle cx="45" cy="45" r="20" fill="#10B981" />
+        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
+        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#F4F4F5">알뜰 이용 팁</text>
+        <line x1="25" y1="85" x2="315" y2="85" stroke="#3F3F46" stroke-width="1.5" />
+        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="#F4F4F5" font-weight="700">주말이나 야간, 공휴일에 </text>
+        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="#F4F4F5" font-weight="700">실시간 정보 제공</text>
+      </g>
+      
+      <!-- Card 3 -->
+      <g transform="translate(810, 530)">
+        <rect width="340" height="220" rx="16" fill="#27272A" stroke="#3F3F46" stroke-width="2" />
+        <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="5" stroke-linecap="round" />
+        <circle cx="45" cy="45" r="20" fill="#38BDF8" />
+        <text x="45" y="52" font-family="'Pretendard', sans-serif" font-size="18" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
+        <text x="80" y="53" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#F4F4F5">스마트 활용법</text>
+        <line x1="25" y1="85" x2="315" y2="85" stroke="#3F3F46" stroke-width="1.5" />
+        <text x="25" y="132" font-family="'Pretendard', sans-serif" font-size="19" fill="#F4F4F5" font-weight="700">놓치면 손해보는</text>
+        <text x="25" y="170" font-family="'Pretendard', sans-serif" font-size="19" fill="#F4F4F5" font-weight="700">꿀팁 총정리</text>
+      </g>
+      
+  </g>
+</svg>
