@@ -12,7 +12,7 @@
   <g transform="translate(50, 30)">
     <rect width="105" height="26" rx="13" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
     <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#D97706" text-anchor="middle">REAL INFO</text>
-    <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#52525B">2026-07-21</text>
+    <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#52525B">2026-07-22</text>
   </g>
 
   <!-- 메인 타이틀 (글자 수 기준 18자 강제 줄바꿈으로 절대 안 잘림) -->

@@ -25,7 +25,7 @@
       <g transform="translate(0, 0)">
         <rect width="105" height="26" rx="13" fill="#334155" stroke="#4D3647" stroke-width="1" />
         <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#FB7185" text-anchor="middle">REAL INFO</text>
-        <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#FDA4AF">2026-07-21</text>
+        <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#FDA4AF">2026-07-22</text>
       </g>
 
       <!-- 우측 타이틀 (글자 수 기준 완전 분할) -->

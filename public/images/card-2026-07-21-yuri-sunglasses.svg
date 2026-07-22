@@ -18,7 +18,7 @@
     <g transform="translate(60, 60)">
       <rect width="105" height="26" rx="13" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
       <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle">REAL INFO</text>
-      <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#ECFDF5" fill-opacity="0.8">2026-07-21</text>
+      <text x="120" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#ECFDF5" fill-opacity="0.8">2026-07-22</text>
     </g>
 
     <!-- 하단 멀티라인 타이틀 (잘림 방지) -->

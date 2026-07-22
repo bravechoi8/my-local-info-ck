@@ -12,7 +12,7 @@
   </defs>
 
   <g clip-path="url(#fullClip)">
-    <image href="/images/card-bg-2026-07-21-debit-card-trends.jpg" width="1200" height="800" preserveAspectRatio="xMidYMid slice" />
+    <image href="/images/card-bg-2026-07-22-mrbeast-prenup.jpg" width="1200" height="800" preserveAspectRatio="xMidYMid slice" />
     <rect y="350" width="1200" height="450" fill="url(#textOverlayGrad)" />
 
     <g transform="translate(60, 60)">
@@ -23,10 +23,10 @@
 
     <!-- 하단 멀티라인 타이틀 (잘림 방지) -->
     <g transform="translate(60, 550)">
-      <text y="0" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#FFF1F2" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">혜택 좋은 혜자 체크카드 단종 대란 속</text>
-      <text y="46" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#FFF1F2" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">살아남은 트래블카드 비교와 현명한 소비</text>
-      <text y="92" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#FFF1F2" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">방법 총정리</text>
-      <text y="153" font-family="'Pretendard', sans-serif" font-size="20" fill="#FDA4AF" font-weight="700" filter="drop-shadow(0px 2px 5px rgba(0,0,0,0.8))">혜자 체크카드가 연이어 자취를 감추는 흐름 속에서 트래블카드의 독주 원인과 금융 소비자를 위한 생존 전략을 분석합니다.</text>
+      <text y="0" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#FFF1F2" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">월 340억 버는 미스터비스트 바람피우면</text>
+      <text y="46" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#FFF1F2" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">73억 보상 혼전계약서 화제의 비하인드</text>
+      <text y="92" font-family="'Pretendard', sans-serif" font-size="38" font-weight="900" fill="#FFF1F2" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.8))">총정리</text>
+      <text y="153" font-family="'Pretendard', sans-serif" font-size="20" fill="#FDA4AF" font-weight="700" filter="drop-shadow(0px 2px 5px rgba(0,0,0,0.8))">월수입 340억 원의 세계 1위 유튜버 미스터비스트가 외도 시 73억 원을 지급한다는 독특한 혼전 계약서 조항으로 화제를 모으고 있습니다.</text>
     </g>
   </g>
 </svg>

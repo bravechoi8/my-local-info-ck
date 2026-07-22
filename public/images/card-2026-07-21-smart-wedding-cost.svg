@@ -12,7 +12,7 @@
   <g transform="translate(50, 30)">
     <rect width="105" height="26" rx="13" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="1" />
     <text x="52.5" y="17" font-family="'Pretendard', sans-serif" font-size="12" font-weight="800" fill="#D97706" text-anchor="middle">REAL INFO</text>
-    <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#52525B">2026-07-21</text>
+    <text x="115" y="18" font-family="'Pretendard', sans-serif" font-size="13" font-weight="700" fill="#52525B">2026-07-22</text>
   </g>
 
   <!-- 메인 타이틀 (글자 수 기준 18자 강제 줄바꿈으로 절대 안 잘림) -->
@@ -40,10 +40,10 @@
         <path d="M 16 0 L 324 0" stroke="#D97706" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#D97706" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">1</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">핵심 혜택 안내</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">가격비교 포털</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E4E4E7" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">전국 주요 정보</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">상세 가이드 공개</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">전국 예식장 정보</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">스드메 비용 공개</text>
       </g>
       
       <!-- Card 2 -->
@@ -52,10 +52,10 @@
         <path d="M 16 0 L 324 0" stroke="#10B981" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#10B981" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">2</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">알뜰 이용 팁</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">스마트 비용 절감</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E4E4E7" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">거품 없는 선택</text>
-        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">알뜰 패키지 가이드</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">결혼 거품 제거</text>
+        <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">알뜰 패키지 선택</text>
       </g>
       
       <!-- Card 3 -->
@@ -64,9 +64,9 @@
         <path d="M 16 0 L 324 0" stroke="#38BDF8" stroke-width="6" stroke-linecap="round" />
         <circle cx="45" cy="48" r="21" fill="#38BDF8" />
         <text x="45" y="55" font-family="'Pretendard', sans-serif" font-size="19" font-weight="900" fill="#FFFFFF" text-anchor="middle">3</text>
-        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">스마트 활용법</text>
+        <text x="82" y="56" font-family="'Pretendard', sans-serif" font-size="24" font-weight="900" fill="#18181B">소비자원 포털</text>
         <line x1="25" y1="92" x2="315" y2="92" stroke="#E4E4E7" stroke-width="1.5" />
-        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">공식 사이트 활용</text>
+        <text x="25" y="140" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">참가격 사이트</text>
         <text x="25" y="182" font-family="'Pretendard', sans-serif" font-size="21" fill="#18181B" font-weight="800" letter-spacing="-0.5px">스마트 예산 관리</text>
       </g>
       

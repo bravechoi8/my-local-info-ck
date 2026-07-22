@@ -15,7 +15,7 @@
 
   <g clip-path="url(#fullClip)">
     <g clip-path="url(#leftClip)">
-      <image href="/images/card-bg-2026-07-21-overseas-travel-roaming.jpg" width="540" height="800" preserveAspectRatio="xMidYMid slice" />
+      <image href="/images/card-bg-2026-07-22-shinsegae-duty-free-discount.jpg" width="540" height="800" preserveAspectRatio="xMidYMid slice" />
     </g>
 
     <rect x="540" width="660" height="800" fill="url(#splitBg)" />
@@ -30,15 +30,15 @@
 
       <!-- 우측 타이틀 (글자 수 기준 완전 분할) -->
       <g transform="translate(0, 80)">
-        <text y="0" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">KT 동남아 알뜰로밍 출시!</text>
-        <text y="48" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">그랩 10만원 할인 혜택받고</text>
-        <text y="96" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">가성비 해외여행 준비하는 법</text>
+        <text y="0" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">여름휴가 해외여행 면세점</text>
+        <text y="48" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">쇼핑 꿀팁 신세계면세점 동반</text>
+        <text y="96" font-family="'Pretendard', sans-serif" font-size="34" font-weight="900" fill="#1E293B">출국 할인 최대 14만원</text>
       </g>
 
       <line x1="0" y1="234" x2="500" y2="234" stroke="#E2E8F0" stroke-width="2" />
 
-      <text y="284" font-family="'Pretendard', sans-serif" font-size="20" fill="#1E293B" font-weight="700">KT가 동남아 여행객을 겨냥해 출시한 알뜰로밍 </text>
-      <text y="319" font-family="'Pretendard', sans-serif" font-size="20" fill="#1E293B" font-weight="700">요금제의 상세 스펙과 그랩 최대 10만 원 할인</text>
+      <text y="284" font-family="'Pretendard', sans-serif" font-size="20" fill="#1E293B" font-weight="700">신세계면세점 명동점에서 동반 출국자 프로모션으로</text>
+      <text y="319" font-family="'Pretendard', sans-serif" font-size="20" fill="#1E293B" font-weight="700"> 최대 14만 원의 쇼핑지원금을 받는 방법과 유</text>
       
       <text y="620" font-family="'Pretendard', sans-serif" font-size="16" fill="#0284C7" font-weight="800" letter-spacing="1">TODAY'S SPECIAL ISSUE</text>
     </g>
