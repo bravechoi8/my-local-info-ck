@@ -109,7 +109,7 @@ async function downloadAndCheckImage(url, filename) {
 
 
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
-const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict';
+const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/imagen-3.0-generate-002:predict';
 
 
 /**
@@ -204,8 +204,10 @@ Summary: ${summary}`;
       };
     }
 
-    const imagePrompt = infoData.imagenPrompt || `${title}, flat design illustration`;
-    const pexelsSearchQuery = infoData.pexelsQuery || title;
+    let pexelsSearchQuery = infoData.pexelsQuery || title;
+    if (pexelsSearchQuery.split(' ').length > 5) {
+      pexelsSearchQuery = pexelsSearchQuery.split(' ').slice(0, 5).join(' ');
+    }
     console.log(`[이미지 생성] 영어 프롬프트 빌드 완료: "${imagePrompt}"`);
     console.log(`[이미지 생성] Pexels 검색용 키워드: "${pexelsSearchQuery}"`);
 
@@ -326,8 +328,11 @@ export async function generateAndSaveImage(prompt, filename, aspectRatio = '4:3'
   const finalForceAI = forceAI;
 
   try {
-    // 검색어 정제: 쉼표를 기준으로 앞단의 순수 영어 묘사문구만 추출
-    const pixabaySearchQuery = prompt.split(',')[0].trim();
+    let pixabaySearchQuery = prompt.split(',')[0].trim();
+    // 400 에러 방지를 위해 검색어가 길면 최대 4단어로 단축
+    if (pixabaySearchQuery.split(' ').length > 4) {
+      pixabaySearchQuery = pixabaySearchQuery.split(' ').slice(0, 4).join(' ');
+    }
     let isPixabayUsed = false;
 
     // 1단계: Pixabay API에서 이미지 검색 시도 (최대 5개 후보 중 중복되지 않는 첫 이미지 선택)
