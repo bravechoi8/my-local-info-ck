@@ -1714,5 +1714,27 @@
     "target": "전·현직 장애 국가대표 선수, 지도자",
     "summary": "장애인 국가대표 선수 및 지도자에게 국내대학원 또는 국외유학 교육지원금을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000235"
+  },
+  {
+    "id": 159,
+    "name": "재난지역 주민에 대한 우체국금융 수수료 면제",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "전국 우체국",
+    "target": "특별재난 선포지역에 거주하는 우체국금융고객",
+    "summary": "특별재난 선포지역 거주 우체국금융고객에게 수수료 면제등 비용부담 완화",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/171000000002"
+  },
+  {
+    "id": 160,
+    "name": "출산 관련 서비스 통합처리 신청(행복출산)",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "행정안전부",
+    "target": "신청일 기준 출산자(출산가정)",
+    "summary": "출산 가정에게 전국과 지자체 출산 및 양육관련 서비스 통합 안내 및 원스톱 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/174000000029"
   }
 ]
