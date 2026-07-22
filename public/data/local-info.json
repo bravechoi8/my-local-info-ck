@@ -1736,5 +1736,27 @@
     "target": "신청일 기준 출산자(출산가정)",
     "summary": "출산 가정에게 전국과 지자체 출산 및 양육관련 서비스 통합 안내 및 원스톱 서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/174000000029"
+  },
+  {
+    "id": 161,
+    "name": "우수숙련 기술인 우대지원",
+    "category": "혜택",
+    "startDate": "2025-05-18",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "대한민국명장, 우수 숙련기술자, 숙련기술전수자 등 선정자, 기능경기대회 출전자 및 수상자",
+    "summary": "우수숙련기술인 등을 대상으로 장려금 지급, 증서 및 명판 수여 등의 우대서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000125"
+  },
+  {
+    "id": 162,
+    "name": "사업주 직업능력개발 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "고용보험가입 사업주",
+    "summary": "고용보험 가입 사업주에게 소속 근로자를 위한 훈련비, 인건비, 수당, 숙식비 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000066"
   }
 ]
