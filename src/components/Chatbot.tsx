@@ -257,7 +257,7 @@ export default function Chatbot({ chatData }: ChatbotProps) {
       let botText = "";
 
       try {
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`;
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${apiKey}`;
         
         const requestPayload: any = {
           contents: [

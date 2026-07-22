@@ -16,7 +16,7 @@ const PUBLIC_DATA_API_KEY = process.env.PUBLIC_DATA_API_KEY;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 const PUBLIC_DATA_ENDPOINT = 'https://api.odcloud.kr/api/gov24/v3/serviceList';
-const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
+const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
 const LOCAL_INFO_PATH = path.join(__dirname, '..', 'public', 'data', 'local-info.json');
 
 const EVENT_KEYWORDS = ['축제', '행사', '공연', '전시', '대회', '문화', '예술', '콘서트', '페스티벌', '영화', '체험', '관광', '여행', '음악회', '독서실'];

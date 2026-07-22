@@ -21,7 +21,7 @@ const COUPANG_AF_ID = process.env.COUPANG_AF_ID || '';
 
 const NAVER_ENDPOINT = 'https://naverapihub.apigw.ntruss.com/search/v1/news';
 const DATALAB_ENDPOINT = 'https://naverapihub.apigw.ntruss.com/search-trend/v1/search';
-const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent';
+const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
 const POSTS_DIR_PATH = filePath.join(__dirname, '..', 'src', 'content', 'posts');
 
 const BLOCK_KEYWORDS = [
