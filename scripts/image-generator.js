@@ -204,6 +204,7 @@ Summary: ${summary}`;
       };
     }
 
+    const imagePrompt = infoData.imagenPrompt || `${title}, flat design illustration`;
     let pexelsSearchQuery = infoData.pexelsQuery || title;
     if (pexelsSearchQuery.split(' ').length > 5) {
       pexelsSearchQuery = pexelsSearchQuery.split(' ').slice(0, 5).join(' ');
