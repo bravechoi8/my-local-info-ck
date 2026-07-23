@@ -632,17 +632,18 @@ async function main() {
           description: '이번 달과 다음 달의 손없는날 정보를 일목요연하게 알려드립니다.',
           link: `https://real-infos.com/son-eom-neun-nal-${kstDate.getUTCFullYear()}-${kstDate.getUTCMonth() + 1}`
         }];
-      let queryKeyword = selectedKeyword;
-      let attempt = 0;
-      const fallbackPool = ['연예 핫이슈', '재테크 꿀팁', '넷플릭스 추천', '생활 정보', '주말 나들이'];
+      } else {
+        let queryKeyword = selectedKeyword;
+        let attempt = 0;
+        const fallbackPool = ['연예 핫이슈', '재테크 꿀팁', '넷플릭스 추천', '생활 정보', '주말 나들이'];
 
-      while (items.length === 0 && attempt < 3) {
-        if (attempt > 0) {
-          queryKeyword = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-          console.log(`[대체 뉴스 수집 시도 ${attempt}] '${selectedKeyword}' 결과가 없어서 대체 키워드 '${queryKeyword}'(으)로 재시도합니다...`);
-        }
+        while (items.length === 0 && attempt < 3) {
+          if (attempt > 0) {
+            queryKeyword = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
+            console.log(`[대체 뉴스 수집 시도 ${attempt}] '${selectedKeyword}' 결과가 없어서 대체 키워드 '${queryKeyword}'(으)로 재시도합니다...`);
+          }
 
-        const params = new URLSearchParams({
+          const params = new URLSearchParams({
           query: queryKeyword,
           display: '30',
           sort: isLottoSunday ? 'date' : 'sim'
@@ -660,6 +661,7 @@ async function main() {
           items = (result.items || []).filter(item => !isBlocked(item));
         }
         attempt++;
+      }
       }
 
       if (items.length === 0) {
