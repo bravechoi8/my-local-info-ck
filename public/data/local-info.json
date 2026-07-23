@@ -1758,5 +1758,27 @@
     "target": "고용보험가입 사업주",
     "summary": "고용보험 가입 사업주에게 소속 근로자를 위한 훈련비, 인건비, 수당, 숙식비 등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000066"
+  },
+  {
+    "id": 163,
+    "name": "금연치료 이수인센티브 지급",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "국민건강보험공단",
+    "target": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자",
+    "summary": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자에게 1~2회차 본인부담금 환급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800003"
+  },
+  {
+    "id": 164,
+    "name": "약품비 본인일부부담차액 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "국민건강보험공단",
+    "target": "항암제, 희귀질환치료제 등을 투여받은 건강보험 가입자 및 피부양자",
+    "summary": "중증질환자에게 약품비 본인일부부담차액 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800005"
   }
 ]
