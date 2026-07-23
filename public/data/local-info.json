@@ -1780,5 +1780,27 @@
     "target": "항암제, 희귀질환치료제 등을 투여받은 건강보험 가입자 및 피부양자",
     "summary": "중증질환자에게 약품비 본인일부부담차액 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800005"
+  },
+  {
+    "id": 165,
+    "name": "한부모가족 아동양육비 지원",
+    "category": "혜택",
+    "startDate": "2026-04-29",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "기준 중위소득 65% 이하 저소득 한부모가족 및 조손가족",
+    "summary": "저소득 한부모 가족 및 조손가족 대상으로 현금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSI000000020"
+  },
+  {
+    "id": 166,
+    "name": "북한이탈주민 자립자활 지원",
+    "category": "혜택",
+    "startDate": "2026-04-23",
+    "endDate": "상시",
+    "location": "북한이탈주민지원재단",
+    "target": "북한이탈주민",
+    "summary": "북한이탈주민에게 일자리 제공·창출 및 교육 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000120"
   }
 ]
