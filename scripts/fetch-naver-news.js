@@ -632,9 +632,18 @@ async function main() {
           description: '이번 달과 다음 달의 손없는날 정보를 일목요연하게 알려드립니다.',
           link: `https://real-infos.com/son-eom-neun-nal-${kstDate.getUTCFullYear()}-${kstDate.getUTCMonth() + 1}`
         }];
-      } else {
+      let queryKeyword = selectedKeyword;
+      let attempt = 0;
+      const fallbackPool = ['연예 핫이슈', '재테크 꿀팁', '넷플릭스 추천', '생활 정보', '주말 나들이'];
+
+      while (items.length === 0 && attempt < 3) {
+        if (attempt > 0) {
+          queryKeyword = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
+          console.log(`[대체 뉴스 수집 시도 ${attempt}] '${selectedKeyword}' 결과가 없어서 대체 키워드 '${queryKeyword}'(으)로 재시도합니다...`);
+        }
+
         const params = new URLSearchParams({
-          query: selectedKeyword,
+          query: queryKeyword,
           display: '30',
           sort: isLottoSunday ? 'date' : 'sim'
         });
@@ -646,17 +655,15 @@ async function main() {
           }
         });
 
-        if (!response.ok) {
-          console.error(`네이버 API 호출 실패 (${selectedKeyword}): ${response.status}`);
-          continue;
+        if (response.ok) {
+          const result = await response.json();
+          items = (result.items || []).filter(item => !isBlocked(item));
         }
-
-        const result = await response.json();
-        items = (result.items || []).filter(item => !isBlocked(item));
+        attempt++;
       }
 
       if (items.length === 0) {
-        console.log(`[${selectedKeyword}] 검색 결과가 없습니다.`);
+        console.log(`[${selectedKeyword}] 대체 키워드 검색도 모두 실패하여 생략합니다.`);
         continue;
       }
 
@@ -692,7 +699,7 @@ async function main() {
               const minLength = Math.min(wordsA.length, wordsB.length);
               const overlapRatio = intersection.length / minLength;
               
-              if (overlapRatio >= 0.4) { // 40% 이상 단어가 겹치면 중복 사건/주제로 판정
+              if (overlapRatio >= 0.65) { // 65% 이상 단어가 완전히 겹칠 때만 차단
                 console.log(`[중복 유사도 감지] "${cleanTitle}" 기사가 기존 글 "${existingTitle}"과 매우 유사하여(유사도: ${Math.round(overlapRatio*100)}%) 건너뜁니다.`);
                 alreadyExists = true;
                 break;
