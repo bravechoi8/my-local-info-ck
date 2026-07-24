@@ -1076,5 +1076,27 @@
     "target": "북한이탈주민",
     "summary": "북한이탈주민에게 일자리 제공·창출 및 교육 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000120"
+  },
+  {
+    "id": 167,
+    "name": "귀농·귀촌인귀농귀촌교육",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "귀농귀촌에 관심을 가지고 준비 중인 예비 귀농귀촌인",
+    "summary": "예비 귀농귀촌인을 대상으로 귀농귀촌 관련 교육 운영비 중 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000138"
+  },
+  {
+    "id": 168,
+    "name": "대체초지조성비 감면",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "○ 제16조의3(대체초지조성비의 감면대상등) 참조",
+    "summary": "국방,공공청사,도로등 중요산업시설에 대체초지조성비의 감면기준에 따라 감면",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000151"
   }
 ]
