@@ -1,38 +1,5 @@
 [
   {
-    "id": "yongin-oil-price-support",
-    "name": "2026 용인시 고유가 피해지원금 총정리",
-    "category": "혜택",
-    "startDate": "2026-05-18",
-    "endDate": "2026-07-03",
-    "location": "온라인 및 주소지 관할 행정복지센터",
-    "target": "용인시 거주 기초수급자, 차상위, 한부모 및 소득하위 70% 가구",
-    "summary": "용인시 거주자라면 꼭 확인해야 할 2026년 고유가 피해지원금 지급 안내! 최대 55만원 지원 혜택을 놓치지 마세요.",
-    "link": "https://www.yongin.go.kr"
-  },
-  {
-    "id": "yongin-subsidy-guide",
-    "name": "2026 용인시 고유가 피해지원금 신청 가이드",
-    "category": "혜택",
-    "startDate": "2026-05-18",
-    "endDate": "2026-07-03",
-    "location": "온라인 및 주소지 관할 행정복지센터",
-    "target": "용인시 거주 기초수급자, 차상위, 한부모 및 소득하위 70% 가구",
-    "summary": "2026년 용인시 고유가 피해지원금 2차 신청 가이드! 대상자 확인부터 요일제 신청 방법까지 알기 쉽게 정리해 드립니다.",
-    "link": "https://www.yongin.go.kr"
-  },
-  {
-    "id": "nuri-program-support",
-    "name": "유아학비 (누리과정) 지원",
-    "category": "혜택",
-    "startDate": "2026-03-01",
-    "endDate": "2027-02-28",
-    "location": "온라인(복지로) 및 읍면동 주민센터",
-    "target": "국공립 및 사립유치원에 다니는 3~5세 유아 (추가지원: 저소득층 유아)",
-    "summary": "유치원에 다니는 3~5세 아동에게 유아학비, 방과후과정비 등 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/000000465790"
-  },
-  {
     "id": 1,
     "name": "근로·자녀장려금",
     "category": "혜택",
@@ -110,17 +77,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/337000000013"
   },
   {
-    "id": 8,
-    "name": "에너지바우처",
-    "category": "혜택",
-    "startDate": "2025-06-09",
-    "endDate": "2025-12-31",
-    "location": "기후에너지환경부",
-    "target": "기초생활보장(생계·의료·주거·교육급여) 수급자 중 노인, 영유아, 장애인, 임산부, 중증질환자, 희귀질환자, 한부모가족, 소년소녀가정, 다자녀 등 가구원 특성 기준을 충족하는 가구",
-    "summary": "에너지 취약계층에 전기, 도시가스 등을 구입할 수 있는 동·하절기 냉난방비 바우처를 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000001"
-  },
-  {
     "id": 9,
     "name": "신재생에너지보급지원 주택지원",
     "category": "혜택",
@@ -130,28 +86,6 @@
     "target": "단독주택 및 공동주택의 소유자 중 신재생에너지설비 설치자",
     "summary": "단독 및 공동주택에 태양광, 태양열 등 신재생에너지원 설치시 설치비의 일부 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000201"
-  },
-  {
-    "id": 10,
-    "name": "긴급복지 주거지원",
-    "category": "혜택",
-    "startDate": "2026-03-05",
-    "endDate": "상시",
-    "location": "보건복지부",
-    "target": "위기사유의 발생으로 생계유지가 곤란한 저소득 가구(기준 중위소득 75% 이하)",
-    "summary": "위기상황 발생으로 생계가 곤란한 가구에 임시거소 또는 주거비용을 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005001"
-  },
-  {
-    "id": 11,
-    "name": "긴급복지 해산비 지원",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "시·군·구청",
-    "target": "긴급복지 주지원(생계, 의료, 주거, 복지시설이용 지원)을 받는 대상자(가구구성원 포함)가 출산 또는 출산예정인 경우",
-    "summary": "긴급지원 주지원대상자가 출산(예정)한 경우 1인당 70만 원의 해산비를 현금으로 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005002"
   },
   {
     "id": 12,
@@ -209,17 +143,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000855"
   },
   {
-    "id": 17,
-    "name": "경기도 취약계층 주택화재 안심보험 지원",
-    "category": "혜택",
-    "startDate": "2024-11-20",
-    "endDate": "상시",
-    "location": "경기도",
-    "target": "경기도에 주민등록을 두고 주택에 거주 중인 기초생활보장수급자와 차상위계층",
-    "summary": "경기도 내 기초생활수급자와 차상위계층을 대상으로 주택화재 안심보험 가입을 무료로 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000852"
-  },
-  {
     "id": 18,
     "name": "글로벌비즈니스센터",
     "category": "혜택",
@@ -264,28 +187,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700001"
   },
   {
-    "id": 22,
-    "name": "저소득층 스포츠 영재 지원",
-    "category": "혜택",
-    "startDate": "2025-05-24",
-    "endDate": "상시",
-    "location": "서울특별시",
-    "target": "초중고 저소득층선수(기초수급자, 차상위계층, 저소득 한부모, 소년소녀가장, 장애가정, 다문화 가정 선수 등)",
-    "summary": "저소득층 학생선수에게 장학금 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/611000000111"
-  },
-  {
-    "id": 23,
-    "name": "독립유공생활지원수당",
-    "category": "혜택",
-    "startDate": "2026-02-18",
-    "endDate": "상시",
-    "location": "서울특별시",
-    "target": "독립유공자 (손)자녀 중 기초생활수급자 및 중위소득 70%이하인 자 및 기초연금수급자",
-    "summary": "저소득 독립유공자 후손에게 생활지원수당 지급",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/611000000114"
-  },
-  {
     "id": 24,
     "name": "공공급식 운영 활성화(융자)",
     "category": "혜택",
@@ -306,28 +207,6 @@
     "target": "대한민국 봉사 단체",
     "summary": "봉사단체 대상으로 농촌지역 봉사활동에 대한 부대 경비 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000052"
-  },
-  {
-    "id": 26,
-    "name": "생계지원금 지급",
-    "category": "혜택",
-    "startDate": "2024-01-17",
-    "endDate": "상시",
-    "location": "국가보훈부",
-    "target": "80세 이상으로서 기준중위소득 50%이하 참전유공자 및 배우자, 고엽제후유의증환자 본인, 특수임무유공자, 5.18민주유공자 본인 및 선순위유족",
-    "summary": "생활수준조사결과 중위소득 50%이하 대상자에게 매월 15만원 지급",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000001"
-  },
-  {
-    "id": 27,
-    "name": "친환경차량지원",
-    "category": "혜택",
-    "startDate": "2024-05-18",
-    "endDate": "상시",
-    "location": "국가보훈부",
-    "target": "애국지사 본인, 국가유공상이자(1-7급), 5․18민주부상자(1-14급), 고엽제후유의증환자, 보훈보상대상자 중 친환경 보철용 차량(전기·수소차) 보유자",
-    "summary": "국가유공자 등 보훈대상자에게 친환경차량 구매보조금 100만 원 및 월 2만 9천 원 한도의 충전비를 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000002"
   },
   {
     "id": 28,
@@ -374,17 +253,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000686"
   },
   {
-    "id": 32,
-    "name": "난임 부부, 유산 및 사산경험 부부, 임산부 및 양육모를 위한 심리상담",
-    "category": "혜택",
-    "startDate": "2026-03-04",
-    "endDate": "상시",
-    "location": "국립중앙의료원",
-    "target": "난임 부부, 유산·사산 경험 부부, 임산부 및 양육모(출산 후 3년 이내)와 그 배우자 등",
-    "summary": "난임 부부, 유산 및 사산경험 부부, 임산부 및 양육모 및 배우자를 위한 심리상담서비스",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55265700002"
-  },
-  {
     "id": 33,
     "name": "건설노동자 결혼식 지원",
     "category": "혜택",
@@ -394,17 +262,6 @@
     "target": "퇴직공제 총 적립일수 252일 이상이고, 직전년도(최근 12개월) 100일 이상 적립된 건설노동자 중 2026년에 결혼식 진행 또는 예정인 자",
     "summary": "건설노동자에게 결혼식 지원금 60만 원을 최초 1회 지급합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55271100001"
-  },
-  {
-    "id": 34,
-    "name": "저소득층 에너지효율개선(난방지원)",
-    "category": "혜택",
-    "startDate": "2024-05-20",
-    "endDate": "상시",
-    "location": "주민센터",
-    "target": "국민기초생활수급자, 차상위계층 및 복지 사각지대 저소득 가구",
-    "summary": "에너지 소외계층을 대상으로 단열·창호·바닥공사 및 고효율 보일러 보급을 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/424000000006"
   },
   {
     "id": 35,
@@ -429,17 +286,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000122"
   },
   {
-    "id": 37,
-    "name": "지역공동체일자리사업(전환)",
-    "category": "혜택",
-    "startDate": "2024-06-03",
-    "endDate": "상시",
-    "location": "경기도",
-    "target": "취업취약계층(저소득층, 장애인, 6개월 이상 장기실직자, 결혼이민자, 여성가장, 성매매피해자, 한부모가족 지원법에 의한 보호대상자, 북한이탈주민, 위기청소년, 갱생보호대상자, 수형자로서 출소 후 6개월 미만 자, 노숙인)",
-    "summary": "취업취약계층의 생계 안정을 위해 지역특화 공공일자리를 제공하여 소득을 보조하는 사업입니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000115"
-  },
-  {
     "id": 38,
     "name": "청년 문화예술패스",
     "category": "혜택",
@@ -460,50 +306,6 @@
     "target": "대학생, 취업준비생, 재직자 등",
     "summary": "대학생 등을 대상으로 실제 광고프로젝트의 실무업무를 지원하는 인재교육사업",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000217"
-  },
-  {
-    "id": 40,
-    "name": "유축기 대여 서비스(처인구)",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "경기도 용인시 처인구보건소",
-    "target": "관내 임산부 등록이 되어 있으며, 출산 후 1달 이내인 산모",
-    "summary": "출산 후 1달 이내인 산모 대상 유축기 대여 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000671"
-  },
-  {
-    "id": 41,
-    "name": "용인시 장애인가정 출산지원금",
-    "category": "혜택",
-    "startDate": "2024-11-20",
-    "endDate": "상시",
-    "location": "경기도 용인시",
-    "target": "신생아 출생일을 기준으로 180일 전부터 계속하여 용인시 관내에 주민등록을 두고 거주하는 신생아의 등록장애인 부 또는 모",
-    "summary": "용인시 관내 거주하는 장애인 가정의 부 또는 모에게 신생아 1인당 최대 100만 원의 출산지원금을 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/405000000672"
-  },
-  {
-    "id": 42,
-    "name": "주거급여 (맞춤형 급여)",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "국토교통부",
-    "target": "소득인정액이 기준 중위소득 48% 이내의 가구",
-    "summary": "저소득층 대상으로 주거형태, 소득, 주거비 부담수준을 고려하여 임차료 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/336000000096"
-  },
-  {
-    "id": 43,
-    "name": "국립자연휴양림 이용료 기준",
-    "category": "혜택",
-    "startDate": "2020-12-17",
-    "endDate": "상시",
-    "location": "산림청 국립자연휴양림관리소",
-    "target": "다자녀 가정, 제대군인, 장애인, 국가보훈대상자",
-    "summary": "다자녀 가정, 제대군인, 장애인 및 국가보훈대상자 대상 국립자연휴양림 시설 이용요금 감면 혜택 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016521"
   },
   {
     "id": 44,
@@ -539,50 +341,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000035"
   },
   {
-    "id": 47,
-    "name": "주거안정 월세대출",
-    "category": "혜택",
-    "startDate": "2020-12-17",
-    "endDate": "상시",
-    "location": "국토교통부",
-    "target": "우대형(사회취약계층 무주택 세대주) 및 일반형(부부합산소득 5천만원 이하 무주택 세대주)",
-    "summary": "일반형 및 우대형 저소득 임차가구를 대상으로 연 960만원 한도로 월세대출 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000025"
-  },
-  {
-    "id": 48,
-    "name": "거주자우선주차 요금감면",
-    "category": "혜택",
-    "startDate": "2024-05-28",
-    "endDate": "상시",
-    "location": "서울특별시노원구시설관리공단",
-    "target": "장애인, 국가유공자, 고엽제후유의증 환자, 의사상자, 독립유공자, 경형/친환경 자동차 소유자, 다둥이 카드 소지자 등",
-    "summary": "취약계층 및 특정 차량 소유자에게 거주자우선주차 이용요금을 최대 80% 감면해 드립니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00022900001"
-  },
-  {
-    "id": 49,
-    "name": "공영주차장 이용요금 감면",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "서울특별시노원구시설관리공단",
-    "target": "장애인, 국가유공자, 경형·친환경 자동차 소유자, 다둥이 카드 소지자 등",
-    "summary": "노원구 공영주차장 이용 시 대상에 따라 주차요금을 20%에서 최대 80%까지 감면해 드립니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00022900004"
-  },
-  {
-    "id": 50,
-    "name": "한들문화센터 목욕탕 이용요금 감면",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "천안도시공사",
-    "target": "국가유공자, 기초생활수급자, 등록장애인, 다자녀 가정(18세 미만 자녀), 65세 이상 노인 등",
-    "summary": "한들문화센터 목욕탕 이용 시 대상에 따라 이용요금을 10%에서 최대 50%까지 감면해 드립니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00033300011"
-  },
-  {
     "id": 51,
     "name": "다문화가족 자녀 언어발달 지원서비스",
     "category": "혜택",
@@ -592,17 +350,6 @@
     "target": "언어평가 및 언어교육이 필요한 만 12세 이하 다문화 가족 자녀(초등학교 재학 중인 아동은 만 12세 초과도 포함)",
     "summary": "만 12세 이하 다문화 가족 자녀의 언어발달상태 평가 및 언어교육 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000001250"
-  },
-  {
-    "id": 52,
-    "name": "출산육아기 고용안정장려금",
-    "category": "혜택",
-    "startDate": "2024-05-18",
-    "endDate": "상시",
-    "location": "고용노동부",
-    "target": "육아휴직, 육아기 근로시간 단축 등을 허용한 우선지원대상기업 사업주",
-    "summary": "모성보호제도를 허용한 우선지원대상기업 사업주에게 육아휴직, 대체인력, 업무분담 지원금을 지급합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000001060"
   },
   {
     "id": 53,
@@ -660,17 +407,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000114"
   },
   {
-    "id": 58,
-    "name": "법정저소득·셋째아 필요경비 지원",
-    "category": "혜택",
-    "startDate": "2021-09-23",
-    "endDate": "상시",
-    "location": "경기도 안양시",
-    "target": "만0~5세 어린이집 재원 중인 법정저소득 및 셋째아 이상 아동(부모 중 1명 이상과 보육아동 안양시 거주)",
-    "summary": "어린이집 재원 중인 만 5세 이하 저소득 아동 등에게 특별활동비 및 현장학습비 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/383000000122"
-  },
-  {
     "id": 59,
     "name": "용산청소년센터 프로그램 할인(기초생활수급자)",
     "category": "혜택",
@@ -680,17 +416,6 @@
     "target": "국민기초생활 보장법에 의한 수급자 또는 그 가족",
     "summary": "기초생활수급자 및 가족에게 용산청소년센터 문화체육 프로그램 이용요금을 50%에서 최대 100%까지 감면해 줍니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024000039"
-  },
-  {
-    "id": 60,
-    "name": "용산문화체육센터 프로그램 할인(장애인)",
-    "category": "혜택",
-    "startDate": "2025-05-14",
-    "endDate": "상시",
-    "location": "용산문화체육센터",
-    "target": "장애인 복지카드 소지자",
-    "summary": "장애인에게 용산문화체육센터 프로그램 이용요금 50% 감면 혜택 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00024000040"
   },
   {
     "id": 61,
@@ -759,17 +484,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016528"
   },
   {
-    "id": 67,
-    "name": "국가지정문화유산 및 천연기념물 등의 관람료 감면",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "국가유산청",
-    "target": "장애인, 국가유공자, 해당 국가유산 소재 시·군·구 주민 등",
-    "summary": "장애인, 국가유공자, 지역주민 등에게 국가지정문화유산 및 천연기념물의 관람료를 감면해 줍니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/155000000023"
-  },
-  {
     "id": 68,
     "name": "공유형모기지 융자",
     "category": "혜택",
@@ -779,28 +493,6 @@
     "target": "생애최초 또는 5년이상 무주택세대주(부부합산 연소득 6천만원 이하, 생애최초 7천만원 이하)",
     "summary": "생애최초, 5년이상 무주택세대주에게 수익공유형, 손익공유형에 따라 융자 차등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/161300000001"
-  },
-  {
-    "id": 69,
-    "name": "문화체육시설 이용요금 감면",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "도봉구시설관리공단",
-    "target": "장애인, 국가유공자, 5.18민주유공자, 기초생활수급자, 만 65세 이상 경로, 다둥이 행복카드 소지자 등",
-    "summary": "사회적 취약계층 및 특정 대상에게 문화체육시설 이용요금을 감면해 주는 혜택입니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00023000002"
-  },
-  {
-    "id": 70,
-    "name": "체육시설 이용요금 감면(동대문구체육관)",
-    "category": "혜택",
-    "startDate": "2024-05-17",
-    "endDate": "상시",
-    "location": "동대문구체육관",
-    "target": "장애인, 기초생활보장 수급자, 국가유공자, 만 65세 이상 어르신, 병역 명문가, 우수자원봉사자, 다둥이 가정 등",
-    "summary": "동대문구체육관 체육문화 프로그램 수강료를 대상별로 5%에서 50%까지 감면 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00023100001"
   },
   {
     "id": 71,
@@ -847,39 +539,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55101400004"
   },
   {
-    "id": 75,
-    "name": "귀화허가, 국적회복허가 신청 및 국적업무 증명서 발급 수수료 면제 안내",
-    "category": "혜택",
-    "startDate": "2023-10-26",
-    "endDate": "상시",
-    "location": "지방출입국‧외국인관서",
-    "target": "특별공로자 및 유가족, 사할린동포 배우자, 특별재난지역 피해 지원 대상자, 장애인, 대한민국 정부 수립 이전 국외 이주 동포 등",
-    "summary": "귀화허가, 국적회복 허가 및 국적업무 증명서 발급 신청 수수료 면제",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/127000000023"
-  },
-  {
-    "id": 76,
-    "name": "성폭력, 아동학대, 인신매매등범죄의 피해 아동과 범죄 피해자인 장애인을 위한 진술조력인 지원",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "법무부",
-    "target": "성폭력·아동학대·인신매매 등 범죄 피해를 입은 만 19세 미만 아동 또는 의사소통이 어려운 장애인",
-    "summary": "만 19세 미만 아동 및 의사소통이 어려운 장애인 범죄 피해자의 수사·재판 과정에서 의사소통을 중개하고 조력합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/127000000025"
-  },
-  {
-    "id": 77,
-    "name": "석면피해 구제급여 지급",
-    "category": "혜택",
-    "startDate": "2024-05-17",
-    "endDate": "상시",
-    "location": "시·군·구청",
-    "target": "석면으로 인한 건강피해자 및 유족 (대상 질병: 원발성 악성중피종, 원발성 폐암, 석면폐증)",
-    "summary": "석면피해자 및 유족에게 요양급여와 생활수당, 장례비 등 구제서비스 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/148000000001"
-  },
-  {
     "id": 78,
     "name": "중소환경기업 사업화 지원",
     "category": "혜택",
@@ -889,17 +548,6 @@
     "target": "우수기술 보유 중소환경기업, 환경분야 예비·창업기업, 39세 이하 청년창업기업",
     "summary": "환경분야 예비창업자, 창업기업, 성장창업기업, 중소환경기업을 대상으로 사업화 자금 등을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/148000000003"
-  },
-  {
-    "id": 79,
-    "name": "문화시설 이용요금 감면(한의마을)",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "한의마을",
-    "target": "1. 주민등록상 이용일 기준으로 영천시에 주소를 둔 사람 또는 교류도시(자매도시, 우호도시 등 영천시와 협약 등을 체결한 지방자치단체) 지역주민 2. 「군인사법」 제6조제7항에 따른 단기복무부사관 이하의 군인과 의무경찰, 의무소방원, 경비교대대원 및 사회복무요원 3. 영천시 소재 군부대 군장병 및 육군3사관학교 생도 4. 「국가유공자 등 예우 및 지원에 관한 법률」의 적용을 받는 국가유공자와 그 유족 또는 가족 5. 「독립유공자예우에 관한 법률 시행령」 제15조의 적용을 받는 사람 6. 「참전유공자 예우 및 단체설립에 관한 법률 시행령」 제12조의 적용을 받는 사람 7. 「고엽제후유의증 등 환자지원 및 단체설립에 관한 법률」 제8조의3 각 호의 어느 하나에 해당하는 사람 8. 「5·18민주유공자예우 및 단체설립에 관한 법률 시행령」 제52조제1항 각 호의 어느 하나에 해당하는 사람 9. 「특수임무유공자 예우 및 단체설립에 관한 법률 시행령」 제58조에 해당하는 사람 10. 「의사상자 등 예우 및 지원에 관한 법률 시행령」 제17조의2제1항 각 호의 어느 하나에 해당하는 사람 11. 「국군포로의 송환 및 대우 등에 관한 법률」 제2조제5호에 따른 등록포로 및 같은 조 제3호에 따른 억류지출신 포로가족 12. 「장애인 복지법」에 따른 등록장애인(장애의 정도가 심한 장애인은 보호자 1명을 포함한다) 13. 「국민기초생활 보장법」의 규정에 의한 국민기초생활 수급자 14. 「한부모가족지원법」에 의한 보호대상자 15. 6세 미만 어린이 및 65세 이상 노인 16. 가족관계등록부상 19세 미만인 자녀를 2인 이상 둔 다자녀 가정 17. 관리ㆍ운영자와 협약을 맺은 「비영리민간단체 지원법」 제4조에 따라 등록된 단체",
-    "summary": "취약계층 대상으로 한의마을 이용료 감면(시설별 상이)",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00017400001"
   },
   {
     "id": 80,
@@ -933,17 +581,6 @@
     "target": "대기환경보전법 4·5종 사업장(중소기업 지원 가능), 악취배출시설 운영자, 중소기업, 비영리 법인/단체, 업무/상업용 건축물, 공동주택",
     "summary": "소규모 사업장의 노후 방지시설 개선 비용 및 사물인터넷(IOT) 설치 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/148000000050"
-  },
-  {
-    "id": 83,
-    "name": "성폭력, 아동학대, 장애인학대,인신매매 및 스토킹범죄 피해자 국선변호사 지원",
-    "category": "혜택",
-    "startDate": "2020-12-17",
-    "endDate": "상시",
-    "location": "검찰청, 경찰서 등 수사기관(특별한 사정이 있는 경우 성폭력상담소 등을 통하여도 신청 가능)",
-    "target": "성폭력･아동학대･장애인학대･인신매매･스토킹범죄 피해자 및 성매매 피해아동･청소년",
-    "summary": "범죄 피해자에게 국선변호사를 지원하여 법률조력 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/127000000026"
   },
   {
     "id": 84,
@@ -1001,94 +638,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700007"
   },
   {
-    "id": 89,
-    "name": "승강기검사수수료 감면(노인복지시설)",
-    "category": "혜택",
-    "startDate": "2023-10-27",
-    "endDate": "상시",
-    "location": "한국승강기안전공단",
-    "target": "『노인복지법』 제32조 제1항 제1호에 따른 양로시설 또는 제34조 제1항 제1호에 따른 노인요양시설(입소비용 전부를 수납하여 운영하는 시설은 제외)에 설치된 승강기",
-    "summary": "노인 복지시설 승강기 정기검사수수료 면제",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55366400003"
-  },
-  {
-    "id": 90,
-    "name": "승강기기술자 교육 지원",
-    "category": "혜택",
-    "startDate": "2024-05-16",
-    "endDate": "상시",
-    "location": "한국승강기안전공단",
-    "target": "승강기 수입, 제조, 유지관리 업무 기술자",
-    "summary": "승강기 수입, 제조, 유지관리 업무 기술자에게 필수 교육 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55366400004"
-  },
-  {
-    "id": 91,
-    "name": "장애인 취업알선 지원금 지급",
-    "category": "혜택",
-    "startDate": "2023-10-27",
-    "endDate": "상시",
-    "location": "한국장애인고용공단",
-    "target": "「직업안정법」제18조에 따라 무료직업소개사업소로 신고를 완료한 기관",
-    "summary": "무료직업소개소 장애인 취업알선에 대한 지원금 지급(10~30만원)",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258300002"
-  },
-  {
-    "id": 92,
-    "name": "장애학생 취업지원",
-    "category": "혜택",
-    "startDate": "2024-07-26",
-    "endDate": "상시",
-    "location": "한국장애인고용공단",
-    "target": "고등학교 또는 전공과에 재학중인 장애학생",
-    "summary": "장애학생에게 취업지원 서비스 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258300003"
-  },
-  {
-    "id": 95,
-    "name": "환경오염피해 인과관계 판단 심의 서비스 제공",
-    "category": "혜택",
-    "startDate": "2023-10-27",
-    "endDate": "상시",
-    "location": "한국환경산업기술원 환경오염피해구제실",
-    "target": "환경오염피해의 전부 또는 일부를 배상받지 못한 피해자 또는 그 유족",
-    "summary": "환경오염피해자 및 유족에게 의료비, 요양생활수당, 장의비 등 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/148000000009"
-  },
-  {
-    "id": 96,
-    "name": "연탄쿠폰",
-    "category": "혜택",
-    "startDate": "2023-07-11",
-    "endDate": "2023-08-25",
-    "location": "산업통상부",
-    "target": "연탄보일러를 가정난방용으로 사용하는 가구",
-    "summary": "연탄보일러 사용 가구에 연탄쿠폰을 지원하는 난방비 사업 (가구당 54.6만원 지급)",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000111"
-  },
-  {
-    "id": 97,
-    "name": "장병 인권상담 지원",
-    "category": "혜택",
-    "startDate": "2024-05-15",
-    "endDate": "상시",
-    "location": "국방부 인권담당관",
-    "target": "장병, 군무원, 일반 국민",
-    "summary": "군 인권 관련 진정 및 상담",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000009"
-  },
-  {
-    "id": 98,
-    "name": "전역예정군인 재취업 지원",
-    "category": "혜택",
-    "startDate": "2023-10-27",
-    "endDate": "상시",
-    "location": "국방전직교육원 각 사업부서",
-    "target": "전역예정장병",
-    "summary": "전역예정장병에게 전직상담 및 교육, 취업 등에 대한 서비스 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000013"
-  },
-  {
     "id": 99,
     "name": "한식진흥 및 음식관광활성화",
     "category": "혜택",
@@ -1111,17 +660,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005022"
   },
   {
-    "id": 101,
-    "name": "녹색기업지원 특례보증",
-    "category": "혜택",
-    "startDate": "2023-10-27",
-    "endDate": "상시",
-    "location": "중소벤처기업부",
-    "target": "○ 현재 사업자 등록 후 가동(영업)중 아래 하나에 해당하는 중소기업·소상공인\r\n① 녹색확인기업\r\n1) 녹색인증기업, 2) 녹색제품인증기업, 3) ESG경영인증기업\r\n② ESG경영 실천 기업\r\n1) 고용 유지 및 창출 기업, 2) 장애인 고용기업, 3) 가족친화인증기업 4) 지역사회공헌 인증기업, 5) ESG교육 수료기업, 6) 리사이클링업 영위기업",
-    "summary": "ESG가치 실천 중소기업·소상공인을 육성",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000071"
-  },
-  {
     "id": 102,
     "name": "수출유망 중소기업 지원 특례보증",
     "category": "혜택",
@@ -1131,17 +669,6 @@
     "target": "현재 사업자 등록 후 가동(영업) 중이며, 다음 중 하나에 해당하는 중소기업: ① 중소벤처기업부 글로벌 강소기업 1,000+ 선정 기업, 또는 ② 대표자 신용평점 710점 이상이며 당기 또는 최근 1년 이내 수출실적 보유 기업",
     "summary": "수출 기업 및 수출 가능성이 높은 유망 중소기업에 대해 경영 안정 자금을 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000072"
-  },
-  {
-    "id": 103,
-    "name": "초·중·고 교육비 지원",
-    "category": "혜택",
-    "startDate": "2024-05-15",
-    "endDate": "상시",
-    "location": "교육부",
-    "target": "국민기초생활 보장 수급자, 한부모가족 보호 대상자, 법정 차상위계층 및 기타 저소득층 초·중·고 학생",
-    "summary": "고교 학비(입학금, 수업료, 학교운영지원비), 학교급식비, 교육정보화지원비 등 교육비 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/134200005044"
   },
   {
     "id": 104,
@@ -1221,17 +748,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100215"
   },
   {
-    "id": 111,
-    "name": "온가족보듬사업",
-    "category": "혜택",
-    "startDate": "2020-12-17",
-    "endDate": "상시",
-    "location": "시·군·구 가족센터",
-    "target": "다문화가족, 1인가구, 맞벌이가족, 한부모, 조손가족 등 다양한 모든 가족",
-    "summary": "취약·위기가족을 위한 가족상담, 사례관리, 부모 및 자녀양육 교육 프로그램 제공 등 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003474"
-  },
-  {
     "id": 112,
     "name": "북한이탈주민 주거지원금 지급",
     "category": "혜택",
@@ -1265,28 +781,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100214"
   },
   {
-    "id": 115,
-    "name": "국가보훈대상자 취업능력개발비용(취업수강료) 지원",
-    "category": "혜택",
-    "startDate": "2024-07-29",
-    "endDate": "상시",
-    "location": "국가보훈부",
-    "target": "보훈관계법령에서 정한 취업지원 대상자 중 취업을 희망하는 사람 (단, 보훈관계법률에 따라 취업지원을 받은 법정취업자는 지원 불가하며, 연령별/대상구분별 지원과정이 상이함)",
-    "summary": "취업지원 대상자의 취업에 필요한 과정(과목)의 수강료 일부 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000004"
-  },
-  {
-    "id": 116,
-    "name": "4·19혁명공로수당",
-    "category": "혜택",
-    "startDate": "2024-05-15",
-    "endDate": "상시",
-    "location": "국가보훈부",
-    "target": "4･19혁명에 참가하여 건국포장을 받은 사람",
-    "summary": "국가유공자 등 보훈가족의 영예로운 삶이 유지･보장되도록 보훈급여금 등을 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000010"
-  },
-  {
     "id": 117,
     "name": "학생 현장체험학습비 지원",
     "category": "혜택",
@@ -1309,17 +803,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55101400005"
   },
   {
-    "id": 119,
-    "name": "두루누리 사회보험료 지원",
-    "category": "혜택",
-    "startDate": "2025-09-17",
-    "endDate": "상시",
-    "location": "보건복지부",
-    "target": "근로자 수가 10명 미만인 사업의 월 평균 보수 270만 원 미만 신규가입 근로자, 예술인, 노무제공자 및 그 사업주",
-    "summary": "소규모 사업장의 저소득 근로자, 예술인, 노무제공자와 사업주에게 고용보험과 국민연금 보험료의 80%를 지원하여 사회보험 사각지대를 해소합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005059"
-  },
-  {
     "id": 120,
     "name": "아동 입원진료비 지원",
     "category": "혜택",
@@ -1329,17 +812,6 @@
     "target": "만 15세 이하 아동",
     "summary": "만 15세 이하 아동의 입원 진료비 본인부담금의 전부 또는 일부를 지원하여 의료비 부담을 완화합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005038"
-  },
-  {
-    "id": 121,
-    "name": "수학여행비 및 수련활동비 지원",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "경상북도교육청",
-    "target": "초·중·고 수학여행 대상 학생 및 저소득층, 다문화, 다자녀 가구 학생",
-    "summary": "경상북도 내 초·중·고등학생에게 수학여행비(전체 학생) 및 수련활동비(저소득층, 다문화, 다자녀 가구 학생)를 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/875000000014"
   },
   {
     "id": 122,
@@ -1353,17 +825,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000164"
   },
   {
-    "id": 123,
-    "name": "귀농·귀촌인귀농귀촌교육",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "농림축산식품부",
-    "target": "귀농귀촌에 관심을 가지고 준비 중인 예비 귀농귀촌인",
-    "summary": "예비 귀농귀촌인을 대상으로 귀농귀촌 관련 교육 운영비 중 일부 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000138"
-  },
-  {
     "id": 124,
     "name": "공영도매시장 시설현대화 지원",
     "category": "혜택",
@@ -1373,17 +834,6 @@
     "target": "공영도매시장 개설자(지방자치단체)",
     "summary": "공영도매시장 개설자에게 공영시장 시설현대화 비용(공사비, 설계비 등)을 지원합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000139"
-  },
-  {
-    "id": 125,
-    "name": "경기도산후조리비지원",
-    "category": "혜택",
-    "startDate": "2024-05-20",
-    "endDate": "상시",
-    "location": "경기도",
-    "target": "출생일 및 신청일 현재 경기도에 주민등록을 두고 실제 거주하는 출산가정 (영아 출생 후 12개월 이내)",
-    "summary": "경기도 거주 출산가정에 출생아 1인당 50만원의 지역화폐를 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000137"
   },
   {
     "id": 126,
@@ -1408,17 +858,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000022"
   },
   {
-    "id": 128,
-    "name": "국가보훈대상자 장기요양급여 이용지원",
-    "category": "혜택",
-    "startDate": "2026-05-24",
-    "endDate": "상시",
-    "location": "국가보훈부",
-    "target": "국가보훈부에서 정한 생활수준 기준에 해당되고 장기요양등급(1~5급, 인지지원등급) 판정을 받아 민간시설에서 장기요양급여를 받는 고령의 국가보훈대상자",
-    "summary": "장기요양급여 이용에 따라 발생한 본인부담금의 일부 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/183000000023"
-  },
-  {
     "id": 129,
     "name": "다문화·탈북학생 멘토링",
     "category": "혜택",
@@ -1439,39 +878,6 @@
     "target": "만 60세 이상 노인 (유형에 따라 65세 이상)",
     "summary": "만 60세 이상 노인의 활기차고 건강한 노후생활을 위해 공익활동, 사회서비스형, 민간형 등 다양한 맞춤형 일자리를 제공합니다.",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSE000000100"
-  },
-  {
-    "id": 131,
-    "name": "고양문화의집 이용요금 면제",
-    "category": "혜택",
-    "startDate": "2024-05-14",
-    "endDate": "상시",
-    "location": "고양문화의집",
-    "target": "기초생활수급자, 한부모가족, 장애인, 자원봉사자, 국가유공자 및 유족",
-    "summary": "사회적 취약계층 및 학생에게 고양문화의 집 사용료 면제",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00004000012"
-  },
-  {
-    "id": 132,
-    "name": "문화시설 주차요금 감면",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "구리도시공사",
-    "target": "장애인 등록증, 국가유공자증, 고엽제후유의증 환자수첩 그밖의 증명서 등 소유자",
-    "summary": "사회적 취약계층에게 주차장 이용요금 감면",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00005100002"
-  },
-  {
-    "id": 135,
-    "name": "공적 채무조정 및 재무상담 제공",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "경기복지재단",
-    "target": "경기도 내 금융취약계층(저신용, 장기, 단기 연체자, 신용위기자)",
-    "summary": "경기도내 금융취약계층에게 금융복지상담 및 재무상담 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00044700005"
   },
   {
     "id": 137,
@@ -1507,17 +913,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000014"
   },
   {
-    "id": 140,
-    "name": "생활안정자금(융자)",
-    "category": "혜택",
-    "startDate": "2024-05-24",
-    "endDate": "상시",
-    "location": "고용노동부",
-    "target": "3개월 이상 근속 중이고 월평균 소득이 3인 가구 기준 중위소득 50% 이하인 저소득 노동자",
-    "summary": "저소득 노동자에게 의료비, 혼례비, 소액생계비 등 생활안정자금을 연 1.5%의 저리로 융자 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000009"
-  },
-  {
     "id": 141,
     "name": "수출바우처 지원",
     "category": "혜택",
@@ -1538,39 +933,6 @@
     "target": "폐업이력이 있는 예비 또는 업력 7년 이내 재창업자 및 성실경영평가 통과자",
     "summary": "성실 실패기업인의 원활한 재기를 위해 성실경영 여부를 평가하고 재창업 우대혜택을 제공하는 사업",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900044"
-  },
-  {
-    "id": 143,
-    "name": "문화시설 이용요금 감면(안동호반자연휴양림)",
-    "category": "혜택",
-    "startDate": "2024-05-17",
-    "endDate": "상시",
-    "location": "안동호반자연휴양림",
-    "target": "경상북도 거주자, 국가유공자, 장애인, 만 65세 이상 경로자, 다자녀 가구 등",
-    "summary": "안동호반자연휴양림 이용요금의 50%를 감면해 드립니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00015000002"
-  },
-  {
-    "id": 144,
-    "name": "문화시설 이용요금 감면(팔공산금화자연휴양림)",
-    "category": "혜택",
-    "startDate": "2026-03-05",
-    "endDate": "상시",
-    "location": "팔공산금화자연휴양림",
-    "target": "경상북도 거주자, 국가보훈대상자, 장애인, 만 65세 이상 경로자, 3자녀 이상 다자녀 가구 등",
-    "summary": "팔공산금화자연휴양림 이용 시 대상자에게 객실 및 부대시설 이용요금 50%를 감면해 드립니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00015000007"
-  },
-  {
-    "id": 145,
-    "name": "문화시설 입장료 감면(어린이비전센터)",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "어린이비전센터",
-    "target": "장애인, 국민기초생활보장수급자, 국가유공자, 다자녀가정, 한부모가족",
-    "summary": "사회적 취약계층을 대상으로 어린이비전센터(체험전시실, 사계절썰매장, 놀자람) 이용료를 20%~50% 감면해 드립니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00005800001"
   },
   {
     "id": 146,
@@ -1672,50 +1034,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045200002"
   },
   {
-    "id": 155,
-    "name": "산재근로자 직업훈련",
-    "category": "혜택",
-    "startDate": "2024-11-21",
-    "endDate": "상시",
-    "location": "고용노동부",
-    "target": "산재 장해등급 제1급~12급에 해당하는 미취업자",
-    "summary": "산재장해인의 재취업을 위해 직업훈련비용 및 수당을 지급",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000016"
-  },
-  {
-    "id": 156,
-    "name": "산재근로자 직장 복귀 지원",
-    "category": "혜택",
-    "startDate": "2024-05-18",
-    "endDate": "상시",
-    "location": "근로복지공단",
-    "target": "산재장해등급 제1급~제12급에 해당하는 산재장해인을 복귀시켜 고용을 유지한 사업주",
-    "summary": "산재근로자가 직장복귀를 한 경우 지원금 및 훈련비, 재활운동비 등을 지급",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000021"
-  },
-  {
-    "id": 157,
-    "name": "장애 체육인 장학금 지원",
-    "category": "혜택",
-    "startDate": "2024-11-22",
-    "endDate": "상시",
-    "location": "국민체육진흥공단 체육인복지팀",
-    "target": "체육회 또는 경기단체가 주관하는 전국규모대회에서 입상한 장애 학생 선수",
-    "summary": "우수한 장애 학생 선수에게 1인당 최대 200만원의 장학금 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000035"
-  },
-  {
-    "id": 158,
-    "name": "장애 체육인 교육지원금",
-    "category": "혜택",
-    "startDate": "2026-03-31",
-    "endDate": "상시",
-    "location": "문화체육관광부",
-    "target": "전·현직 장애 국가대표 선수, 지도자",
-    "summary": "장애인 국가대표 선수 및 지도자에게 국내대학원 또는 국외유학 교육지원금을 지원합니다.",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/137100000235"
-  },
-  {
     "id": 159,
     "name": "재난지역 주민에 대한 우체국금융 수수료 면제",
     "category": "혜택",
@@ -1725,28 +1043,6 @@
     "target": "특별재난 선포지역에 거주하는 우체국금융고객",
     "summary": "특별재난 선포지역 거주 우체국금융고객에게 수수료 면제등 비용부담 완화",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/171000000002"
-  },
-  {
-    "id": 160,
-    "name": "출산 관련 서비스 통합처리 신청(행복출산)",
-    "category": "혜택",
-    "startDate": "2024-05-20",
-    "endDate": "상시",
-    "location": "행정안전부",
-    "target": "신청일 기준 출산자(출산가정)",
-    "summary": "출산 가정에게 전국과 지자체 출산 및 양육관련 서비스 통합 안내 및 원스톱 서비스 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/174000000029"
-  },
-  {
-    "id": 161,
-    "name": "우수숙련 기술인 우대지원",
-    "category": "혜택",
-    "startDate": "2025-05-18",
-    "endDate": "상시",
-    "location": "고용노동부",
-    "target": "대한민국명장, 우수 숙련기술자, 숙련기술전수자 등 선정자, 기능경기대회 출전자 및 수상자",
-    "summary": "우수숙련기술인 등을 대상으로 장려금 지급, 증서 및 명판 수여 등의 우대서비스 제공",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000125"
   },
   {
     "id": 162,
@@ -1760,17 +1056,6 @@
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000066"
   },
   {
-    "id": 163,
-    "name": "금연치료 이수인센티브 지급",
-    "category": "혜택",
-    "startDate": "2022-07-15",
-    "endDate": "상시",
-    "location": "국민건강보험공단",
-    "target": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자",
-    "summary": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자에게 1~2회차 본인부담금 환급",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800003"
-  },
-  {
     "id": 164,
     "name": "약품비 본인일부부담차액 지원",
     "category": "혜택",
@@ -1780,17 +1065,6 @@
     "target": "항암제, 희귀질환치료제 등을 투여받은 건강보험 가입자 및 피부양자",
     "summary": "중증질환자에게 약품비 본인일부부담차액 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800005"
-  },
-  {
-    "id": 165,
-    "name": "한부모가족 아동양육비 지원",
-    "category": "혜택",
-    "startDate": "2026-04-29",
-    "endDate": "상시",
-    "location": "성평등가족부",
-    "target": "기준 중위소득 65% 이하 저소득 한부모가족 및 조손가족",
-    "summary": "저소득 한부모 가족 및 조손가족 대상으로 현금 지원",
-    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSI000000020"
   },
   {
     "id": 166,
