@@ -1098,5 +1098,27 @@
     "target": "○ 제16조의3(대체초지조성비의 감면대상등) 참조",
     "summary": "국방,공공청사,도로등 중요산업시설에 대체초지조성비의 감면기준에 따라 감면",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000151"
+  },
+  {
+    "id": 169,
+    "name": "경기도 소상공인 사업정리 지원사업",
+    "category": "혜택",
+    "startDate": "2026-03-01",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 폐업 및 폐업 예정인 소상공인",
+    "summary": "도내 폐업 및 폐업 예정 소상공인 대상 사업정리 컨설팅, 사업정리 지원금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700008"
+  },
+  {
+    "id": 170,
+    "name": "소상공인 청년 창업 원스텝",
+    "category": "혜택",
+    "startDate": "2025-09-18",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "도내 청년 중 창업 희망자 및 3년 미만의 초기 창업자",
+    "summary": "교육 및 진단, 단계별 컨설팅, 사업화 지원, 창업자금보증 이자비 지원, 사후관리 등",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700009"
   }
 ]
