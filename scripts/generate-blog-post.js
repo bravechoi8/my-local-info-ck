@@ -93,6 +93,18 @@ function isBlocked(item) {
     return true;
   }
 
+  // 3. 대다수 일반 대중이 체감할 수 있는 광범위한 인기 혜택 키워드 검사 (마이너 복지 원천 차단)
+  const popularKeywords = [
+    '장려금', '환급', '지원금', '수당', '교통카드', '케이패스', 'k-pass', '알뜰교통', '할인', '소상공인',
+    '청년', '국민', '서민', '주택', '월세', '전세', '보증금', '대출', '금융', '온누리', '상품권', '에너지바우처',
+    '바우처', '자녀', '생계비', '연금', '쿠폰', '캐시백', '감면', '면제', '수수료', '요금감면', '요금 감면'
+  ];
+  const hasPopularKeyword = popularKeywords.some(kw => text.includes(kw));
+  if (!hasPopularKeyword) {
+    console.log(`[블로그 생성 차단] 대중성 부족 (대표 인기 혜택 키워드 미감지): ${item.name || item.title}`);
+    return true;
+  }
+
   return false;
 }
 
