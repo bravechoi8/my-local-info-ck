@@ -1142,5 +1142,27 @@
     "target": "부부합산 총소득이 6천만 원 이하이며, 대출 신청일 현재 무주택세대주(단, 만 30세 미만의 단독세대주는 제외)",
     "summary": "일정조건의 무주택세대주에게 오피스텔 구입비용에 대한 대출 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000051706"
+  },
+  {
+    "id": 173,
+    "name": "한부모가족 아동양육비 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "저소득 한부모가족 및 조손가족의 18세 미만 자녀 등",
+    "summary": "저소득 한부모 가족 및 조손가족 대상으로 현금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSI000000020"
+  },
+  {
+    "id": 174,
+    "name": "기타재가급여 (장기요양보험 복지용구)",
+    "category": "혜택",
+    "startDate": "2026-02-20",
+    "endDate": "상시",
+    "location": "국민건강보험공단 지사",
+    "target": "65세 이상 노인 및 노인성 질병을 가진 65세 미만의 국민으로서 혼자서 일상생활을 수행하기 어려워 장기 요양 1~2등급을 받은 수급자 및 3~5등급 수급자 중 시설급여 가능한 수급자",
+    "summary": "장기요양기관에 입소한 어르신 대상으로 필요한 용구 지원 (18개 품목)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSE000000030"
   }
 ]
