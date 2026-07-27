@@ -14,8 +14,8 @@ loadEnvConfig(filePath.join(__dirname, '..'));
 import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
 import { fetchWithRetry } from './utils.js';
 
-const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
-const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET;
+const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID || '6asf6bjp4d';
+const NAVER_CLIENT_SECRET = process.env.NAVER_CLIENT_SECRET || 'i60fIFQgRo5P5twRMfCuF9ct8QGsPoEAwTxqH6ce';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const COUPANG_AF_ID = process.env.COUPANG_AF_ID || '';
 
