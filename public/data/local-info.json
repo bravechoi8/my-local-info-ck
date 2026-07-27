@@ -1164,5 +1164,27 @@
     "target": "65세 이상 노인 및 노인성 질병을 가진 65세 미만의 국민으로서 혼자서 일상생활을 수행하기 어려워 장기 요양 1~2등급을 받은 수급자 및 3~5등급 수급자 중 시설급여 가능한 수급자",
     "summary": "장기요양기관에 입소한 어르신 대상으로 필요한 용구 지원 (18개 품목)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SSE000000030"
+  },
+  {
+    "id": 175,
+    "name": "귀농귀촌종합센터 운영",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "귀농귀촌종합센터",
+    "target": "청년, 도시민 등 (예비) 귀농·귀촌인",
+    "summary": "(예비)귀농·귀촌인에게 상담, 교육, 홍보 등 귀농·귀촌 플랫폼 운영",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000321"
+  },
+  {
+    "id": 176,
+    "name": "식생활교육 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "영유아, 청소년, 청년, 노인 등 전 국민 대상",
+    "summary": "전 국민대상 식생활교육을 지원하기 위한 사업 추진",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000329"
   }
 ]
