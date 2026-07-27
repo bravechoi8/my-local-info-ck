@@ -1186,5 +1186,27 @@
     "target": "영유아, 청소년, 청년, 노인 등 전 국민 대상",
     "summary": "전 국민대상 식생활교육을 지원하기 위한 사업 추진",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000329"
+  },
+  {
+    "id": 177,
+    "name": "이전비 지원",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "대검찰청",
+    "target": "범죄피해자나 중대범죄 신고자 또는 그 친족 등",
+    "summary": "범죄피해자 혹은 신고자 등이 보복우려를 피해 이전할 경우 이사비용을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/128000000002"
+  },
+  {
+    "id": 178,
+    "name": "범죄피해자에 대한 경제적 지원",
+    "category": "혜택",
+    "startDate": "2026-05-11",
+    "endDate": "상시",
+    "location": "대검찰청",
+    "target": "범죄행위로 피해를 당한 피해자 본인, 그 배우자, 직계친족 및 4촌 이내의 친족",
+    "summary": "범죄피해자 및 가족 등에게 치료비, 생계비, 학자금, 장례비, 긴급생활안정 등 경제적 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/128000000003"
   }
 ]
