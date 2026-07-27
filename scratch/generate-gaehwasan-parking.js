@@ -1,0 +1,131 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import pkgEnv from '@next/env';
+const { loadEnvConfig } = pkgEnv;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 로컬 환경변수 로드
+loadEnvConfig(path.join(__dirname, '..'));
+
+import { generateSummaryImage, generateAndSaveImage } from '../scripts/image-generator.js';
+
+async function run() {
+  const postDate = '2026-07-27T12:58:00+09:00';
+  const filename = '2026-07-27-gaehwasan-station-parking';
+  const title = "김포공항 주차비 반값 정산 개화산역 환승주차장 이용 요금 및 지하철 연계 꿀팁";
+  const summary = "비싼 김포공항 공식 주차장 대신 지하철 1정거장 거리의 5호선 개화산역 환승주차장을 활용해 반값 요금 할인 혜택을 누리는 절약 꿀팁을 전해드립니다.";
+  const category = "생활정보";
+
+  console.log('[대문 이미지 생성 중...]');
+  const imgPath = await generateSummaryImage(
+    title,
+    summary,
+    filename,
+    false
+  );
+
+  console.log(`[대문 카드 이미지 완료] 경로: ${imgPath}`);
+
+  // 2. 본문 이미지 생성 (2장)
+  console.log('[본문 이미지 1 생성 중...]');
+  const bodyImg1 = await generateAndSaveImage(
+    "A clean modern vector illustration of an outdoor car parking lot next to a cozy subway station entrance, warm sunset lighting, minimalist, clean flat design, no text",
+    `body-${filename}-1.jpg`,
+    '4:3',
+    1
+  );
+
+  console.log('[본문 이미지 2 생성 중...]');
+  const bodyImg2 = await generateAndSaveImage(
+    "A happy family walking towards a subway station holding suitcases on a bright sunny day, minimalist, clean flat design vector illustration, no text",
+    `body-${filename}-2.jpg`,
+    '4:3',
+    2
+  );
+
+  // 3. 본문 마크다운 파일 작성
+  const mdContent = `---
+title: "${title}"
+date: "${postDate}"
+summary: "${summary}"
+category: "${category}"
+tags: [개화산역환승주차장, 김포공항주차비, 김포공항주차대안, 개화산역주차요금, 공영주차장할인, 김포공항주차꿀팁, 주차비절약, 생활정보]
+original_id: "gaehwasan-station-parking"
+original_name: "개화산역 환승주차장 이용 안내"
+---
+
+![포스트 소개](/images/card-${filename}.svg)
+
+제주도나 해외로 떠나기 위해 김포공항을 찾을 때 가장 머리가 아픈 문제 중 하나가 바로 **'비싼 주차비'**입니다. 김포공항 공식 주차장은 평일 기준 하루 2만 원, 주말에는 3만 원이라는 만만치 않은 금액을 요구하는데요. 3박 4일 일정만 잡더라도 주차비만 10만 원 안팎이 훌쩍 깨지게 됩니다.
+
+오늘은 김포공항 공식 주차장의 획기적인 대안으로 떠오르는 **5호선 개화산역 환승주차장**의 이용 요금과 할인 혜택, 그리고 몸도 캐리어도 편안하게 공항으로 이동하는 꿀팁을 친절하게 소개해 드립니다.
+
+---
+
+## 1. 김포공항 vs 개화산역 주차 요금 전격 비교!
+
+개화산역 환승주차장은 서울시설공단에서 직접 운영하는 공영주차장으로, 김포공항 주차장과 비교하면 지갑 사정을 지켜주는 든든한 꿀팁이 됩니다.
+
+![본문 이미지](/images/body-${filename}-1.jpg)
+
+| 주차장 구분 | 기본 요금 | 1일 주차 최대 요금 (상한선) | 3박 4일 (주말 포함) 예상 요금 |
+| :--- | :--- | :--- | :--- |
+| **김포공항 공식 주차장** | 30분 기본 1,000원 (이후 15분당 500원) | 평일 20,000원 / 주말 30,000원 | **총 100,000원** |
+| **개화산역 환승주차장** | 5분당 290원 (시간당 3,480원) | 1일권 없음 (시간제 정산) | **약 55,000원** (대중교통 환승 50% 할인 시) |
+
+> [!NOTE]
+> 개화산역 환승주차장은 별도의 1일 요금 상한이 없이 시간당으로 요금이 부과되지만, **지하철이나 버스 환승을 이용하면 주차 요금의 50%를 즉시 감면**받을 수 있습니다. 환승 할인을 적용할 경우 김포공항에 세워두는 것보다 **주차비를 반값 가까이 절약**할 수 있습니다!
+
+---
+
+## 2. 개화산역에서 김포공항까지 이동하는 초고속 동선
+
+"공항 밖 주차장을 이용하면 캐리어를 끌고 가기 힘들지 않나요?"라는 걱정을 하실 수 있습니다. 하지만 개화산역 주차장은 공항 접근성이 매우 뛰어납니다.
+
+1. **지하철 5호선 직통 연계:** 주차장 바로 옆에 지하철 5호선 개화산역 승강장이 있습니다.
+2. **단 1정거장 거리:** 개화산역에서 지하철을 타고 딱 1정거장(소요시간 약 2분)만 이동하면 곧바로 김포공항역에 도착합니다.
+3. **날씨 걱정 없는 실내 이동:** 역에 도착한 뒤 에스컬레이터를 타고 김포공항 국내선/국제선 대합실까지 무빙워크로 비나 눈을 맞지 않고 실내로만 편안하게 이동할 수 있습니다.
+
+![본문 이미지](/images/body-${filename}-2.jpg)
+
+---
+
+## 3. 요금을 추가로 깎아주는 50% 특별 할인 대상
+
+공영주차장의 큰 장점은 법적으로 규정된 다양한 할인 혜택을 중복해서 챙길 수 있다는 점입니다. 본인이 아래 조건에 해당한다면 주차 요금을 추가로 50% 감면받을 수 있습니다.
+
+* **경형 자동차 (경차) 소지자**
+* **저공해자동차 (하이브리드, 전기차, 수소차 등) 등록 차량**
+* **다둥이 행복카드 소지자 (2자녀 이상, 카드 소지 필수)**
+* **한부모가족 지원 대상자**
+
+*※ 단, 감면 혜택은 중복 적용되지 않으며 가장 할인율이 높은 한 가지만 적용됩니다.*
+
+---
+
+## 4. 개화산역 환승주차장 이용 시 유의사항
+
+* **정산 시 대중교통 카드 접촉 필수:** 환승 할인을 적용받기 위해서는 주차 정산기에서 요금을 결제할 때 **지하철이나 버스를 탈 때 사용했던 교통카드(신용카드 또는 교통카드)를 정산 단말기에 직접 터치**해 주셔야 합니다.
+* **미세먼지 계절관리제 할증:** 매년 12월부터 이듬해 3월까지는 배출가스 5등급 차량에 대해 요금 할증이 임시 적용될 수 있으므로, 노후 경유차 등을 운행하시는 분들은 사전에 점검하시는 것을 추천합니다.
+
+무겁고 소중한 여행 가방을 들고 번거롭게 공항 주차장에서 길을 헤매지 마시고, 주차 요금은 알뜰하게 아끼면서 지하철 1정거장으로 쾌적하게 이동하는 개화산역 주차장 꿀팁을 똑똑하게 활용해 보세요! 즐겁고 행복한 여행의 시작이 될 것입니다.
+
+---
+
+### 🛒 연관 추천 상품
+- 📌 **[여행 파우치 캠핑용품 나들이 쿠팡 최저가 보러가기](https://www.coupang.com/np/search?q=%EC%97%AC%ED%96%89%20%ED%8C%8C%EC%9A%B0%EC%B9%98%20%EC%B9%A0%ED%95%91%EC%9A%A9%ED%92%88%20%EB%82%98%EB%93%A4%EC%9D%B4&subid=AF4596301)**
+
+> 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+`;
+
+  const mdPath = path.resolve(`src/content/posts/${filename}.md`);
+  fs.writeFileSync(mdPath, mdContent, 'utf-8');
+  console.log(`[글 작성 완료] 경로: ${mdPath}`);
+}
+
+run().catch(err => {
+  console.error('[오류 발생]:', err);
+});
