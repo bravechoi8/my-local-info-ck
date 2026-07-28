@@ -1208,5 +1208,27 @@
     "target": "범죄행위로 피해를 당한 피해자 본인, 그 배우자, 직계친족 및 4촌 이내의 친족",
     "summary": "범죄피해자 및 가족 등에게 치료비, 생계비, 학자금, 장례비, 긴급생활안정 등 경제적 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/128000000003"
+  },
+  {
+    "id": 179,
+    "name": "육아기 근로시간 단축 급여",
+    "category": "혜택",
+    "startDate": "2025-05-20",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "육아기 근로시간 단축을 30일 이상 실시하고, 고용보험 피보험 단위기간이 180일 이상인 근로자",
+    "summary": "육아기 근로시간 단축에 따른 임금 감소에 대한 급여 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000007"
+  },
+  {
+    "id": 180,
+    "name": "고령자 계속고용장려금",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "우선지원대상기업, 중견기업 및 사회적기업 (* 60세이상 피보험자 수가 30%초과 기업 제외)",
+    "summary": "우선지원대상기업 등에게 정년도래자 1인당 분기 90만원씩 3년간 장려금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000009"
   }
 ]
