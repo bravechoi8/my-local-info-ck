@@ -1263,5 +1263,27 @@
     "target": "재직증명서 제출한 근로자",
     "summary": "근로자에게 근로자종합복지관 회의실 등 이용요금 할인",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00032100001"
+  },
+  {
+    "id": 184,
+    "name": "직업능력개발수당",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "고용노동부 각 지역 관할 고용센터",
+    "target": "수급자격자가 직업안정기관장이 지시한 훈련을 받는 경우",
+    "summary": "구직급여 수급자 중 직업능력개발훈련을 받는 수급자에게 수당 지원(1일 10,320원)지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005001"
+  },
+  {
+    "id": 185,
+    "name": "광역구직활동비",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "직업안정기관의 소개에 따라 거주지에서 25km 떨어진 곳에서 구직활동을 한 사람",
+    "summary": "구직급여 수급자 중 거주지에서 25km 이상 떨어진 곳에서 구직활동 시 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005002"
   }
 ]
