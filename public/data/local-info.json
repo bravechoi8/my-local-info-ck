@@ -1307,5 +1307,27 @@
     "target": "사회통합전형 합격 후 기숙자에 입소한 기회균등전형자 및 재학생 중 기회균등전형자와 동일한 소득 수준의 학생",
     "summary": "자기주도학습전형교 사회통합전형대상자에게 기숙사비 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000217"
+  },
+  {
+    "id": 188,
+    "name": "천원의 아침밥",
+    "category": "혜택",
+    "startDate": "2025-09-17",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "전국 대학교에 재학 중인 학생(사이버·원격 대학 제외)",
+    "summary": "쌀 소비 촉진 및 청년 층의 건강한 식습관 형성 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005045"
+  },
+  {
+    "id": 189,
+    "name": "한우 암소 난소결찰, 난소적출 시술비용 지원",
+    "category": "혜택",
+    "startDate": "2024-01-29",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "난소결찰 시술 시 14개월령 이하 한우 암소",
+    "summary": "한우 암소 난소결찰 시술비용 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005024"
   }
 ]
