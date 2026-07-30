@@ -1285,5 +1285,27 @@
     "target": "직업안정기관의 소개에 따라 거주지에서 25km 떨어진 곳에서 구직활동을 한 사람",
     "summary": "구직급여 수급자 중 거주지에서 25km 이상 떨어진 곳에서 구직활동 시 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005002"
+  },
+  {
+    "id": 186,
+    "name": "교육복지우선지원",
+    "category": "혜택",
+    "startDate": "2020-07-06",
+    "endDate": "상시",
+    "location": "경기도교육청",
+    "target": "교육복지우선지원사업 대상으로 선정된 초·중·고 351교",
+    "summary": "학생 맞춤형 교육복지 프로그램 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000006"
+  },
+  {
+    "id": 187,
+    "name": "사회통합전형대상자 기숙사비 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "경기도교육청",
+    "target": "사회통합전형 합격 후 기숙자에 입소한 기회균등전형자 및 재학생 중 기회균등전형자와 동일한 소득 수준의 학생",
+    "summary": "자기주도학습전형교 사회통합전형대상자에게 기숙사비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000217"
   }
 ]
