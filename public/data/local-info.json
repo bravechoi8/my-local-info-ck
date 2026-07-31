@@ -1351,5 +1351,27 @@
     "target": "누구나(단, 5세 이하는 제한)",
     "summary": "각종 에너지원에 대한 체험 프로그램 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000207"
+  },
+  {
+    "id": 192,
+    "name": "과수거점산지유통센터건립",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "원예산업발전계획에 참여하는 지방자치단체 및 생산자 단체",
+    "summary": "지방자치단체 및 생산자 단체에게 과수거점 APC 건설지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000066"
+  },
+  {
+    "id": 193,
+    "name": "게임 과몰입 치유 프로그램 지원 사업",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "문화체육관광부",
+    "target": "게임 과몰입 상담 및 치유가 필요한 아동, 청소년 및 성인",
+    "summary": "게임에 과몰입된 아동, 청소년 등에게 예방, 상담, 진단, 치유 등의 프로그램 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000051175"
   }
 ]
