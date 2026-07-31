@@ -1329,5 +1329,27 @@
     "target": "난소결찰 시술 시 14개월령 이하 한우 암소",
     "summary": "한우 암소 난소결찰 시술비용 일부 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005024"
+  },
+  {
+    "id": 190,
+    "name": "56세 C형간염 확진검사비 지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "질병관리청",
+    "target": "국가건강검진(56세)에서 C형간염 항체 검사 결과 양성인 사람 중 확진검사(RNA 검사)를 받은 자",
+    "summary": "56세 국가건강검진 결과 항체양성자 대상 C형간염 확진검사비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/179038700008"
+  },
+  {
+    "id": 191,
+    "name": "녹색에너지 체험관 견학(대구)",
+    "category": "행사",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "누구나(단, 5세 이하는 제한)",
+    "summary": "각종 에너지원에 대한 체험 프로그램 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000207"
   }
 ]
