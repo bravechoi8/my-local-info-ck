@@ -1373,5 +1373,27 @@
     "target": "게임 과몰입 상담 및 치유가 필요한 아동, 청소년 및 성인",
     "summary": "게임에 과몰입된 아동, 청소년 등에게 예방, 상담, 진단, 치유 등의 프로그램 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000051175"
+  },
+  {
+    "id": 194,
+    "name": "가정폭력 피해자 보호시설 운영 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "가정폭력 피해자 및 동반 가족",
+    "summary": "가정폭력피해자 및 그 가정구성원을 보호하기 위한 시설 운영",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000050697"
+  },
+  {
+    "id": 195,
+    "name": "성폭력 피해자 보호시설 운영 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "성폭력 피해자",
+    "summary": "성폭력 피해자를 위한 숙식과 맞춤형 서비스 등을 제공할 수 있는 보호시설 운영 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000050701"
   }
 ]
