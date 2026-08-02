@@ -1395,5 +1395,27 @@
     "target": "성폭력 피해자",
     "summary": "성폭력 피해자를 위한 숙식과 맞춤형 서비스 등을 제공할 수 있는 보호시설 운영 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000050701"
+  },
+  {
+    "id": 196,
+    "name": "신재생에너지금융지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국에너지공단 신재생에너지센터",
+    "target": "신·재생에너지 관련 시설물을 제조·생산 또는 설치하려는 개인, 중소, 중견 기업",
+    "summary": "신재생에너지시설 설치 희망자에게 시설, 생산, 운전 등의 자금 융자 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016529"
+  },
+  {
+    "id": 197,
+    "name": "소기업·소상공인 신용보증 지원",
+    "category": "혜택",
+    "startDate": "2026-05-14",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "영리를 목적으로 사업을 영위하는 소기업 및 소상공인(개인사업자 및 법인)",
+    "summary": "소기업ㆍ소상공인을 위해 일반, 특례, 햇살론 등 각종 채무에 대한 보증서 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000018904"
   }
 ]
