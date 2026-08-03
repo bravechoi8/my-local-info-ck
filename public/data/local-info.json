@@ -1439,5 +1439,27 @@
     "target": "외식 사업자 및 사업자 단체",
     "summary": "외식 사업자 단체 등에 식재료 공동구매를 위한 조직화 비용 등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000338"
+  },
+  {
+    "id": 200,
+    "name": "장사시설 이용요금 면제(무연고자)",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "아산시시설관리공단",
+    "target": "「아산시 무연고 사망자 등에 대한 장례 지원 조례」 제4조(지원대상)에 해당하는 경우 면제",
+    "summary": "무연고자 봉안시설 사용료 면제",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00032900003"
+  },
+  {
+    "id": 201,
+    "name": "장사시설 이용요금 감면(송악면)",
+    "category": "혜택",
+    "startDate": "2025-01-22",
+    "endDate": "상시",
+    "location": "아산시시설관리공단",
+    "target": "사망일 현재 송악면에 주민등록을 두고 1년 이상 계속하여 거주한 자",
+    "summary": "송악면 사망한 장사시설 이용요금 50% 감면",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00032900007"
   }
 ]
