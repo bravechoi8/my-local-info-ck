@@ -1417,5 +1417,27 @@
     "target": "영리를 목적으로 사업을 영위하는 소기업 및 소상공인(개인사업자 및 법인)",
     "summary": "소기업ㆍ소상공인을 위해 일반, 특례, 햇살론 등 각종 채무에 대한 보증서 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000018904"
+  },
+  {
+    "id": 198,
+    "name": "의료급여 본인부담 면제(외래)",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "의료급여 수급권자 중 본인부담 면제 대상자(외래)",
+    "summary": "의료급여 1종 수급권자가 외래 진료시 외래 본인부담금 면제",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/418000000089"
+  },
+  {
+    "id": 199,
+    "name": "외식업체 식재료 공동구매 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "외식 사업자 및 사업자 단체",
+    "summary": "외식 사업자 단체 등에 식재료 공동구매를 위한 조직화 비용 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000338"
   }
 ]
