@@ -1483,5 +1483,27 @@
     "target": "국내 고등교육기관 학부생, 대학원생, 학점은행제 교육기관 학습자",
     "summary": "학부생 및 대학원생에게 거치기간 및 상환기간을 폭 넓게 선택할 수 있는 학자금 대출제도",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GES000000100"
+  },
+  {
+    "id": 204,
+    "name": "취업 후 상환 학자금대출",
+    "category": "혜택",
+    "startDate": "2026-07-01",
+    "endDate": "2026-11-17",
+    "location": "한국장학재단",
+    "target": "교육부 또는 한국장학재단과 협약을 체결한 국내 고등교육기관 학부생, 전문기술석사 및 대학원생",
+    "summary": "학자금 대출 원리금을 소득이 발생한 이후 소득 수준에 따라 상환하도록 대출 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GES000000110"
+  },
+  {
+    "id": 205,
+    "name": "디지털미디어 피해 청소년 회복 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "인터넷스마트폰 과의존, 사이버도박 문제 청소년",
+    "summary": "청소년을 대상으로 인터넷·스마트폰 과의존, 사이버도박 문제 상담·치료 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GEF000000030"
   }
 ]
