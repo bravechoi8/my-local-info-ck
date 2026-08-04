@@ -1461,5 +1461,27 @@
     "target": "사망일 현재 송악면에 주민등록을 두고 1년 이상 계속하여 거주한 자",
     "summary": "송악면 사망한 장사시설 이용요금 50% 감면",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00032900007"
+  },
+  {
+    "id": 202,
+    "name": "여성새로일하기센터 운영지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "전국 여성새로일하기센터",
+    "target": "재취업을 희망하는 경력단절여성 등",
+    "summary": "구직을 희망하는 여성에게 새일센터를 통해 종합적인 취업지원서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GEF000000070"
+  },
+  {
+    "id": 203,
+    "name": "일반 상환 학자금대출",
+    "category": "혜택",
+    "startDate": "2026-07-01",
+    "endDate": "2026-11-17",
+    "location": "한국장학재단",
+    "target": "국내 고등교육기관 학부생, 대학원생, 학점은행제 교육기관 학습자",
+    "summary": "학부생 및 대학원생에게 거치기간 및 상환기간을 폭 넓게 선택할 수 있는 학자금 대출제도",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GES000000100"
   }
 ]
