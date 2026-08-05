@@ -1527,5 +1527,27 @@
     "target": "중소기업기본법 제2조 및 시행령 3조에 따른 중소기업",
     "summary": "해외시장 진출을 희망하는 내수 및 수출중소기업에게 해외마케팅서비스 종합 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000010879"
+  },
+  {
+    "id": 208,
+    "name": "자립준비청년 자립지원정착금 지원",
+    "category": "혜택",
+    "startDate": "2026-02-05",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "18세 이후 보호가 종료된 아동복지시설 및 가정위탁 보호종료아동",
+    "summary": "보호종료 5년 이내 자립준비청년에게 자립지원정착금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000159"
+  },
+  {
+    "id": 209,
+    "name": "의사상자특별위로금및수당",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "보건복지부 인정 의사상자",
+    "summary": "의사상자에게 특별위로금, 수당, 위문금 등 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000177"
   }
 ]
