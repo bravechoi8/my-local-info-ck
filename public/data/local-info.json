@@ -1593,5 +1593,27 @@
     "target": "공·사립고등학생 1~3학년(학교장이 수업료와 그 밖의 납부금을 정하는 사립학교 제외)",
     "summary": "고교대상 입학금, 수업료, 학교운영지원비, 교과서비 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000229"
+  },
+  {
+    "id": 214,
+    "name": "행복주택 공급",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "국토교통부",
+    "target": "대학생, 청년, (예비)신혼부부, 한부모가족, 고령자, 주거급여수급자, 산업단지 근로자",
+    "summary": "청년, 신혼부부 등 젊은 사회계층에게 저렴한 조건으로 직주근접의 공공임대주택 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000026"
+  },
+  {
+    "id": 215,
+    "name": "이야기 할머니 현장 활동 지원",
+    "category": "혜택",
+    "startDate": "2026-01-02",
+    "endDate": "2026-02-01",
+    "location": "문화체육관광부",
+    "target": "만 56세에서 74세의 여성 어르신",
+    "summary": "여성 어르신이 유아교육기관에 파견유아들에게 우리 옛이야기들을 들려주는 사업",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000037"
   }
 ]
