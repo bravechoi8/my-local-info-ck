@@ -1615,5 +1615,27 @@
     "target": "만 56세에서 74세의 여성 어르신",
     "summary": "여성 어르신이 유아교육기관에 파견유아들에게 우리 옛이야기들을 들려주는 사업",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000037"
+  },
+  {
+    "id": 216,
+    "name": "유휴간호사 등 교육 및 취업 연계 서비스 제공",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "유휴·이직 간호사, 간호간병통합서비스 실시 병원의 간호사 및 간호조무사, 간호대학 졸업예정자, 의료기관 신규 및 재직간호사",
+    "summary": "유휴간호사를 위한 교육 및 취업연계 서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000096"
+  },
+  {
+    "id": 217,
+    "name": "재가한센인생계비지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "질병관리청",
+    "target": "한센병사업대상자 중 수급자에서 제외된 자로서 중위소득 60% 이하인 자",
+    "summary": "재가한센인을 대상으로 급량비, 피복비, 월동대책비, 수용비, 난방비 등 생계비를 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000102"
   }
 ]
