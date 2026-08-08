@@ -1637,5 +1637,27 @@
     "target": "한센병사업대상자 중 수급자에서 제외된 자로서 중위소득 60% 이하인 자",
     "summary": "재가한센인을 대상으로 급량비, 피복비, 월동대책비, 수용비, 난방비 등 생계비를 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000102"
+  },
+  {
+    "id": 218,
+    "name": "자유 학기제 교육 서비스",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "한국전기안전공사",
+    "target": "초·중·고등학교 등 단위학교",
+    "summary": "학생들의 다양한 진로체험 및 특강 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55139800006"
+  },
+  {
+    "id": 219,
+    "name": "내집마련 디딤돌 대출",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "국토교통부",
+    "target": "연소득(부부합산) 6천만 원 이하(생애 최초 주택구입자 7천만 원, 신혼가구 8.5천만 원 이하)인 만 19세 이상 무주택자",
+    "summary": "호당 2.5억 원 한도, 연 2.45% ~ 3.55%(소득과 만기에 따라 차등) 금리의 주택구입자금 대출",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55140800003"
   }
 ]
