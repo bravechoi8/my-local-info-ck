@@ -1659,5 +1659,27 @@
     "target": "연소득(부부합산) 6천만 원 이하(생애 최초 주택구입자 7천만 원, 신혼가구 8.5천만 원 이하)인 만 19세 이상 무주택자",
     "summary": "호당 2.5억 원 한도, 연 2.45% ~ 3.55%(소득과 만기에 따라 차등) 금리의 주택구입자금 대출",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55140800003"
+  },
+  {
+    "id": 220,
+    "name": "정신건강복지센터 운영 지원",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "정신건강복지센터",
+    "target": "중증 정신질환자를 포함한 해당 지역 주민",
+    "summary": "정신질환자들을 위한 상담, 사례관리 등의 정신건강 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GMW000000140"
+  },
+  {
+    "id": 221,
+    "name": "금연치료 이수인센티브 지급",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "국민건강보험공단",
+    "target": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자",
+    "summary": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자에게 1~2회차 본인부담금 환급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800003"
   }
 ]
