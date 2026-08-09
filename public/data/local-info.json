@@ -1681,5 +1681,27 @@
     "target": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자",
     "summary": "금연치료 지원사업에 참여하여 프로그램을 이수한 참여자에게 1~2회차 본인부담금 환급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800003"
+  },
+  {
+    "id": 222,
+    "name": "북한이탈주민 주택 알선 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "통일부",
+    "target": "북한이탈주민으로 보호 또는 비보호 결정된 자",
+    "summary": "하나원 수료 이후 거주할 임대주택 제공 및 주택 알선 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000140"
+  },
+  {
+    "id": 223,
+    "name": "무주택 전후 납북피해자 주거 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "통일부",
+    "target": "무주택 전후 납북피해자",
+    "summary": "무주택 상태인 전후 납북피해자인 국민임대주택, 공공분양주택 등 특별공급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000160"
   }
 ]
