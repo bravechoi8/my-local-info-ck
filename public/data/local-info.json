@@ -1703,5 +1703,27 @@
     "target": "무주택 전후 납북피해자",
     "summary": "무주택 상태인 전후 납북피해자인 국민임대주택, 공공분양주택 등 특별공급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000160"
+  },
+  {
+    "id": 224,
+    "name": "어린이 전기안전 체험 뮤지컬 순회공연",
+    "category": "행사",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "한국전기안전공사",
+    "target": "전국 어린이집 및 유치원, 미취학 아동",
+    "summary": "미취학 어린이 대상으로 전기안전 체험뮤지컬 순회공연",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55139800002"
+  },
+  {
+    "id": 225,
+    "name": "신재생에너지 설비 설치 비용 지원",
+    "category": "혜택",
+    "startDate": "2026-05-20",
+    "endDate": "상시",
+    "location": "기후에너지환경부",
+    "target": "주택, 건물 등에 신재생에너지 설비 설치시 지원(각 사업별 공고에 따름)",
+    "summary": "신재생에너지 설비 설치 희망자에게 설치비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000097"
   }
 ]
