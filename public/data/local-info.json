@@ -1747,5 +1747,27 @@
     "target": "검찰 및 경찰에서 통지된 성매매 피해아동·청소년 및 유관기관 연계 청소년",
     "summary": "성매매피해 아동·청소년 등을 위해 상담, 구조, 자립 및 자활 등의 서비스 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000690"
+  },
+  {
+    "id": 228,
+    "name": "지식재산 창출지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "지식재산처",
+    "target": "지역 중소기업, 소상공인, 전통시장 및 골목상권 상인조직",
+    "summary": "중소기업을 대상으로 해외 지식재산권 권리화 비용, 애로사항 컨설팅 등의 서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000052152"
+  },
+  {
+    "id": 229,
+    "name": "입양아동 양육수당 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "입양특례법상 허가를 받은 입양기관에 의해 같은 법의 요건과 절차를 갖춰 국내 입양한 가정",
+    "summary": "법의 요건과 절차를 갖춰 국내 입양한 가정에게 월 20만원 양육수당 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SCY000000060"
   }
 ]
