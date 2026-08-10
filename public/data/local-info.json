@@ -1725,5 +1725,27 @@
     "target": "주택, 건물 등에 신재생에너지 설비 설치시 지원(각 사업별 공고에 따름)",
     "summary": "신재생에너지 설비 설치 희망자에게 설치비용 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000097"
+  },
+  {
+    "id": 226,
+    "name": "학교 밖 청소년 지원센터 운영",
+    "category": "혜택",
+    "startDate": "2026-05-11",
+    "endDate": "상시",
+    "location": "학교밖청소년지원센터",
+    "target": "9세 이상~ 24세 이하 청소년",
+    "summary": "학교 밖 청소년에게 상담, 교육, 직업체험 및 취업지원, 자립 관련 프로그램 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000810"
+  },
+  {
+    "id": 227,
+    "name": "성매매 피해아동 청소년 통합지원 사업",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "한국여성인권진흥원",
+    "target": "검찰 및 경찰에서 통지된 성매매 피해아동·청소년 및 유관기관 연계 청소년",
+    "summary": "성매매피해 아동·청소년 등을 위해 상담, 구조, 자립 및 자활 등의 서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000690"
   }
 ]
