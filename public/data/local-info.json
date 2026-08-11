@@ -1791,5 +1791,27 @@
     "target": "주관 기관의 공문상 행사 참여자 또는 주관 기관",
     "summary": "전용기본사용료 80% 감면",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00035000009"
+  },
+  {
+    "id": 232,
+    "name": "경기도 어린이청소년 교통비 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "신청일 기준 주민등록 상 주소지가 경기도인 만6~18세 어린이와 청소년",
+    "summary": "어린이와 청소년에게 교통비 환급 혹은 공유자전거 이용요금 즉시 할인",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000139"
+  },
+  {
+    "id": 233,
+    "name": "경기여성 취업지원금 지원",
+    "category": "혜택",
+    "startDate": "2026-04-16",
+    "endDate": "2026-04-30",
+    "location": "경기도",
+    "target": "경기도 1년 이상 거주 35세~59세 여성 중 기준 중위소득 150% 이하의 미취업 여성",
+    "summary": "구직활동지원금 지급 및 취업지원서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000140"
   }
 ]
