@@ -1769,5 +1769,27 @@
     "target": "입양특례법상 허가를 받은 입양기관에 의해 같은 법의 요건과 절차를 갖춰 국내 입양한 가정",
     "summary": "법의 요건과 절차를 갖춰 국내 입양한 가정에게 월 20만원 양육수당 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SCY000000060"
+  },
+  {
+    "id": 230,
+    "name": "문화시설 이용요금 감면(초정행궁)",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "청주도시공사",
+    "target": "감면대상임을 증명할 수 있는 증빙서류(신분증 등)지참자",
+    "summary": "감면 대상에게 초정행궁 이용요금 감면(비수기)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00035000005"
+  },
+  {
+    "id": 231,
+    "name": "청주종합사격장 대관료 감면",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "청주도시공사",
+    "target": "주관 기관의 공문상 행사 참여자 또는 주관 기관",
+    "summary": "전용기본사용료 80% 감면",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00035000009"
   }
 ]
