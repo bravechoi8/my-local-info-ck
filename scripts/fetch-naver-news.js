@@ -125,41 +125,49 @@ function isBlocked(item) {
     return false;
   }
 
+  // 3. 전국 광역시 구 단위 및 군 단위 정보 원천 차단 (축제/행사 여부와 상관없이 무조건 차단)
+  const localGuList = [
+    // 서울 25개 구
+    '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구',
+    '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구', '구로구', '금천구',
+    '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구',
+    // 타 광역시 구/군 및 공통 구 명칭
+    '연수구', '남동구', '부평구', '계양구', '미추홀구', 
+    '영도구', '부산진구', '동래구', '해운대구', '사하구', '금정구', '연제구', '수영구', '사상구', 
+    '수성구', '달서구', 
+    '광산구', 
+    '유성구', '대덕구', 
+    '동구', '서구', '남구', '북구',
+    '강화군', '옹진군', '기장군', '군위군'
+  ];
+  if (localGuList.some(gu => text.includes(gu))) {
+    console.log(`[네이버뉴스 차단] 구 단위 뉴스 제외: ${item.title}`);
+    return true;
+  }
+
   // 축제, 여행, 나들이 등 문화 행사 관련 기사인지 판별
   const isFestivalOrTravel = ['축제', '행사', '공연', '전시', '관광', '여행', '페스티벌', '박람회', '콘서트', '나들이'].some(kw => text.includes(kw));
 
   // 축제/여행 글이 아니라면 지역 필터를 꼼꼼하게 적용
   if (!isFestivalOrTravel) {
+    const ggCities = [
+      '수원시', '고양시', '성남시', '부천시', '안산시', '남양주시', '안양시', '화성시',
+      '평택시', '의정부시', '파주시', '시흥시', '김포시', '광명시', '광주시', '군포시',
+      '오산시', '이천시', '양주시', '안성시', '구리시', '포천시', '의왕시', '하남시',
+      '여주시', '양평군', '동두천시', '과천시', '가평군', '연천군'
+    ];
+    if (ggCities.some(city => text.includes(city))) {
+      console.log(`[네이버뉴스 차단] 경기도 소도시 뉴스 제외: ${item.title}`);
+      return true;
+    }
 
-  // 3. 서울 구 단위 및 경기도 소도시 정보 원천 차단 (네이버 뉴스 전용 차단)
-  const localGuList = [
-    '종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구',
-    '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구', '구로구', '금천구',
-    '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구'
-  ];
-  if (localGuList.some(gu => text.includes(gu))) {
-    console.log(`[네이버뉴스 차단] 서울 구 단위 뉴스 제외: ${item.title}`);
-    return true;
-  }
-
-  const ggCities = [
-    '수원시', '고양시', '성남시', '부천시', '안산시', '남양주시', '안양시', '화성시',
-    '평택시', '의정부시', '파주시', '시흥시', '김포시', '광명시', '광주시', '군포시',
-    '오산시', '이천시', '양주시', '안성시', '구리시', '포천시', '의왕시', '하남시',
-    '여주시', '양평군', '동두천시', '과천시', '가평군', '연천군'
-  ];
-  if (ggCities.some(city => text.includes(city))) {
-    console.log(`[네이버뉴스 차단] 경기도 소도시 뉴스 제외: ${item.title}`);
-    return true;
-  }
-
-  // 4. 타 지역 지자체 복지/행사 정보 필터링 (지방글 차단)
-  const hasOtherRegion = OTHER_REGIONS.some(reg => text.includes(reg));
-  const hasLocalInfoKeyword = LOCAL_INFO_KEYWORDS.some(kw => text.includes(kw));
-  if (hasOtherRegion && hasLocalInfoKeyword) {
-    console.log(`[네이버뉴스 차단] 타 지역 지자체 정보성 뉴스 제외: ${item.title}`);
-    return true;
-  }
+    // 4. 타 지역 지자체 복지/행사 정보 필터링 (지방글 차단)
+    const hasOtherRegion = OTHER_REGIONS.some(reg => text.includes(reg));
+    const hasLocalInfoKeyword = LOCAL_INFO_KEYWORDS.some(kw => text.includes(kw));
+    if (hasOtherRegion && hasLocalInfoKeyword) {
+      console.log(`[네이버뉴스 차단] 타 지역 지자체 정보성 뉴스 제외: ${item.title}`);
+      return true;
+    }
   }
 
   return false;
