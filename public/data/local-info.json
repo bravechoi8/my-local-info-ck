@@ -1813,5 +1813,27 @@
     "target": "경기도 1년 이상 거주 35세~59세 여성 중 기준 중위소득 150% 이하의 미취업 여성",
     "summary": "구직활동지원금 지급 및 취업지원서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000140"
+  },
+  {
+    "id": 234,
+    "name": "경주엑스포대공원 인피니티 플라잉 연계요금 할인(단체)",
+    "category": "혜택",
+    "startDate": "2024-02-07",
+    "endDate": "상시",
+    "location": "경상북도문화관광공사",
+    "target": "인피니티 플라잉 공연 관람 희망 단체",
+    "summary": "10명 이상 단체 플라잉 공연 관람요금 할인",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00015000022"
+  },
+  {
+    "id": 235,
+    "name": "국민체육진흥기금 스포츠산업 융자",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울올림픽기념국민체육진흥공단",
+    "target": "체육용구생산업체, 스포츠서비스업체, 민간체육시설업체",
+    "summary": "스포츠 기업에게 융자금 지원(분기별 변동금리 적용)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100013"
   }
 ]
