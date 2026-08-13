@@ -1857,5 +1857,27 @@
     "target": "도내 3년 이상 소재ㆍ결산한 중소기업",
     "summary": "일자리 우수기업(청년일하기좋은기업)인증을 통해 고용환경개선지원으로 기업의 일자리창출 유도",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000709"
+  },
+  {
+    "id": 238,
+    "name": "HACCP 위생안전시설 개선 자금 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "식품의약품안전처",
+    "target": "HACCP인증 의무적용 대상(식육가공업, 식육포장처리업) 소규모 작업장",
+    "summary": "HACCP 적용을 받는 업소 등에 위생안전시설 설치자금의 50%, 최대 천만원 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000007975"
+  },
+  {
+    "id": 239,
+    "name": "소상공인 정책자금 융자 지원(일반경영안정자금, 특별경영안정자금, 성장기반자금 등)",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "「소상공인 기본법」에 따른 소상공인(단, 융자제외업종 제외)",
+    "summary": "소상공인 대상 시중은행 대비 저금리 정책자금을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000007429"
   }
 ]
