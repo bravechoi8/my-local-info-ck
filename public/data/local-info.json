@@ -1879,5 +1879,27 @@
     "target": "「소상공인 기본법」에 따른 소상공인(단, 융자제외업종 제외)",
     "summary": "소상공인 대상 시중은행 대비 저금리 정책자금을 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000007429"
+  },
+  {
+    "id": 240,
+    "name": "청소년 수련시설 운영 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "여성가족부",
+    "target": "공공 청소년수련관, 청소년문화의집 등 전국청소년수련시설 872개소",
+    "summary": "청소년수련시설 활성화 지원 및 점검·평가를 통한 안전한 청소년수련활동 환경 조성",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001507"
+  },
+  {
+    "id": 241,
+    "name": "중독관리통합지원센터 지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "지역사회 주민이면 누구나 이용 가능",
+    "summary": "지역사회 주민들을 대상으로 알코올 등 중독자 조기발견 및 개입 등의 정신건강 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002065"
   }
 ]
