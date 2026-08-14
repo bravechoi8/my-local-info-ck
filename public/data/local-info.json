@@ -1901,5 +1901,27 @@
     "target": "지역사회 주민이면 누구나 이용 가능",
     "summary": "지역사회 주민들을 대상으로 알코올 등 중독자 조기발견 및 개입 등의 정신건강 서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002065"
+  },
+  {
+    "id": 242,
+    "name": "특성화고 장학금 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "경기도교육청",
+    "target": "특성화고 수업료자율학교 재학생(고1~고3학년)",
+    "summary": "특성화고 중 수업료자율학교생에게 수업료 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000218"
+  },
+  {
+    "id": 243,
+    "name": "중·고등학교 신입생 교복 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "경기도교육청",
+    "target": "중·고등학교 1학년 학생 (국외 및 타 시·도 전입생 포함)",
+    "summary": "중·고등학교 신입생에게 40만원 상당의 교복 현물 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000227"
   }
 ]
