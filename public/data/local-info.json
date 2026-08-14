@@ -1923,5 +1923,27 @@
     "target": "중·고등학교 1학년 학생 (국외 및 타 시·도 전입생 포함)",
     "summary": "중·고등학교 신입생에게 40만원 상당의 교복 현물 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/753000000227"
+  },
+  {
+    "id": 244,
+    "name": "워라밸일자리 장려금 지원(소정근로시간 단축)",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "소정근로시간 단축제도를 도입하고, 근로자의 필요에 따라 근로시간 단축을 허용한 우선지원대상기업 및 중견기업 사업주",
+    "summary": "소속 근로자의 근로시간 단축을 허용한 사업주에게 장려금 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000034"
+  },
+  {
+    "id": 245,
+    "name": "중장년내일센터",
+    "category": "혜택",
+    "startDate": "2026-05-18",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "40대 이상 중장년 구직자, 재직자(퇴직예정자) 및 중장년 고용예정 사업주",
+    "summary": "40대 이상 중장년에게 생애경력설계 프로그램, 재취업 및 전직지원서비스 등 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000041"
   }
 ]
