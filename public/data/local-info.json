@@ -1945,5 +1945,27 @@
     "target": "40대 이상 중장년 구직자, 재직자(퇴직예정자) 및 중장년 고용예정 사업주",
     "summary": "40대 이상 중장년에게 생애경력설계 프로그램, 재취업 및 전직지원서비스 등 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000041"
+  },
+  {
+    "id": 246,
+    "name": "사립학교 교직원 국고 학자금 대여",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "사립학교교직원연금공단",
+    "target": "사립학교교직원연금법 적용 대상 교직원 본인 및 교직원 자녀",
+    "summary": "교직원 본인 및 자녀의 대학학자금 융자(무이자)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500013"
+  },
+  {
+    "id": 247,
+    "name": "사립학교 교직원 퇴직연금공제 일시금",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "사립학교교직원연금공단",
+    "target": "재직기간 10년 이상 사립학교 퇴직 교직원",
+    "summary": "10년 이상 재직하고 퇴직하여 일시금 및 매월 연금으로 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500012"
   }
 ]
