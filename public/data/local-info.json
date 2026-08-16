@@ -1989,5 +1989,27 @@
     "target": "근로자를 고용하지 않은 1인 소상공인 중 자영업자 고용보험에 가입한 자",
     "summary": "1인 소상공인에게 월 납입 고용보험료 일부 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000157"
+  },
+  {
+    "id": 250,
+    "name": "입양비용지원",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "국내입양에 관한 특별법에 따라 보호대상아동을 국내입양한 가정 중에서 가정법원 입양확정일이 2026.1.1. 이후인 가정",
+    "summary": "국내입양가정을 위해 입양비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SCY000000040"
+  },
+  {
+    "id": 251,
+    "name": "창업 보육센터 운영 지원",
+    "category": "혜택",
+    "startDate": "2026-08-10",
+    "endDate": "상시",
+    "location": "(사)한국창업보육협회",
+    "target": "창업보육센터",
+    "summary": "예비창업자 및 창업자에게 사무공간, 기술·경영 컨설팅 등 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001490"
   }
 ]
