@@ -1967,5 +1967,27 @@
     "target": "재직기간 10년 이상 사립학교 퇴직 교직원",
     "summary": "10년 이상 재직하고 퇴직하여 일시금 및 매월 연금으로 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500012"
+  },
+  {
+    "id": 248,
+    "name": "대일항쟁기 강제동원 피해여성근로자 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "대일항쟁기 강제동원 피해여성근로자",
+    "summary": "대일항쟁기 강제동원 피해여성근로자를 위한 생활지원금, 건강관리비, 장제비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000145"
+  },
+  {
+    "id": 249,
+    "name": "1인 소상공인 고용보험료 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "근로자를 고용하지 않은 1인 소상공인 중 자영업자 고용보험에 가입한 자",
+    "summary": "1인 소상공인에게 월 납입 고용보험료 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000157"
   }
 ]
