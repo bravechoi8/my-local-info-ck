@@ -2011,5 +2011,27 @@
     "target": "창업보육센터",
     "summary": "예비창업자 및 창업자에게 사무공간, 기술·경영 컨설팅 등 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001490"
+  },
+  {
+    "id": 252,
+    "name": "산림분야 사회적경제기업 지원",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "산림분야 사회적경제기업 전환 또는 사회적경제 진입을 희망하는 기업, 사회적경제기업 운영을 위한 상담 등이 필요한 기업",
+    "summary": "산림분야 사회적경제기업 성장으로 산림분야 민간일자리 창출 및 사회적가치 실현",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000213"
+  },
+  {
+    "id": 253,
+    "name": "산림보호지원단 일자리 제공",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "신청일 현재 만18세 이상인 자",
+    "summary": "산림 내 불법행위 계도·감시 및 정화활동 등 산림보호 업무보조 현장근무 일자리 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000218"
   }
 ]
