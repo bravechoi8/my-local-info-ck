@@ -2033,5 +2033,27 @@
     "target": "신청일 현재 만18세 이상인 자",
     "summary": "산림 내 불법행위 계도·감시 및 정화활동 등 산림보호 업무보조 현장근무 일자리 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000218"
+  },
+  {
+    "id": 254,
+    "name": "광산 안전시설 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "한국광해광업공단",
+    "target": "전년도 6개월 이상 갱내생산 실적 보유 광산 또는 전년도 갱도굴진 실적이 100m 이상인 금속광산",
+    "summary": "일정조건의 광산에 대해 작업환경개선시설, 안전기본장비 등의 구매비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000058"
+  },
+  {
+    "id": 255,
+    "name": "해외진출기업지원",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "대한무역투자진흥공사",
+    "target": "중소·중견기업",
+    "summary": "중소·중견기업에게 해외투자 상담, 정보제공 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000048"
   }
 ]
