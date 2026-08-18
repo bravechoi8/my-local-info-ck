@@ -2055,5 +2055,27 @@
     "target": "중소·중견기업",
     "summary": "중소·중견기업에게 해외투자 상담, 정보제공 등을 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000048"
+  },
+  {
+    "id": 256,
+    "name": "청년 일경험 지원",
+    "category": "혜택",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "15세 이상 34세 이하 미취업 청년",
+    "summary": "실무 중심의 다양한 일경험 프로그램 제공을 통해 청년의 직무탐색 및 직무역량 강화 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005006"
+  },
+  {
+    "id": 257,
+    "name": "특화프로그램(재취업지원서비스시행지원)",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "100인 이상 기업",
+    "summary": "재취업지원서비스 제도가 현장에 안착할 수 있도록 사업주에게 컨설팅, 프로그램, 담당자 교육",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005011"
   }
 ]
