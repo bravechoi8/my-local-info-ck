@@ -2077,5 +2077,27 @@
     "target": "100인 이상 기업",
     "summary": "재취업지원서비스 제도가 현장에 안착할 수 있도록 사업주에게 컨설팅, 프로그램, 담당자 교육",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005011"
+  },
+  {
+    "id": 258,
+    "name": "여성 창업 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "(재)여성기업종합지원센터",
+    "target": "여성(예비)창업자",
+    "summary": "여성창업보육센터 운영, 여성창업액셀러레이팅 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000860"
+  },
+  {
+    "id": 259,
+    "name": "청소년복지시설 운영 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "전국 청소년복지시설(청소년쉼터, 청소년자립지원관, 청소년회복지원시설)",
+    "target": "가정 밖 청소년(만9~24세)으로 전문기관에서 보호가 필요한 청소년",
+    "summary": "가정 밖 청소년들을 일정기간 보호하면서 상담·주거·학업·자립 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000620"
   }
 ]
