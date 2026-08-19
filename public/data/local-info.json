@@ -2099,5 +2099,27 @@
     "target": "가정 밖 청소년(만9~24세)으로 전문기관에서 보호가 필요한 청소년",
     "summary": "가정 밖 청소년들을 일정기간 보호하면서 상담·주거·학업·자립 등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000620"
+  },
+  {
+    "id": 260,
+    "name": "The 경기패스",
+    "category": "혜택",
+    "startDate": "2026-07-02",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "K-패스 가입 경기도민 중 35세~39세 청년",
+    "summary": "K-패스 가입 경기도민의 청년 연령 확대(19~34세 → 19~39세)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000858"
+  },
+  {
+    "id": 261,
+    "name": "아동안전지킴이 활동비 지원",
+    "category": "혜택",
+    "startDate": "2026-07-06",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경찰·교사 등 은퇴 전문인력 및 아동안전 보호활동에 기여하고자 하는 노인",
+    "summary": "자원봉사 활동비 지원(활동실비, 교통비, 간식비)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000859"
   }
 ]
