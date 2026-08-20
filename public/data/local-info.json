@@ -2143,5 +2143,27 @@
     "target": "도산사업장 외 사업장 재직, 퇴직근로자",
     "summary": "사업주로부터 임금을 지급받지 못한 근로자에게 대지급금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100206"
+  },
+  {
+    "id": 264,
+    "name": "대환대출",
+    "category": "혜택",
+    "startDate": "2025-05-08",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "대출금 상환에 어려움을 겪는 중․저신용 소상공인",
+    "summary": "중․저신용 소상공인이 보유한 고금리 대출 및 만기연장에 애로가 있는 대출을 대환",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700036"
+  },
+  {
+    "id": 265,
+    "name": "2026년 소상공인 역량강화 교육",
+    "category": "혜택",
+    "startDate": "2025-07-01",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "소상공인 및 예비 소상공인",
+    "summary": "소상공인 및 예비 소상공인의 디지털 역량 강화를 위한 맞춤형 교육 및 멘토링 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700038"
   }
 ]
