@@ -2121,5 +2121,27 @@
     "target": "경찰·교사 등 은퇴 전문인력 및 아동안전 보호활동에 기여하고자 하는 노인",
     "summary": "자원봉사 활동비 지원(활동실비, 교통비, 간식비)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000859"
+  },
+  {
+    "id": 262,
+    "name": "해외취업정착지원금",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "만 34세 이하 청년으로 해외취업한 자",
+    "summary": "해외취업에 성공 시 해외에서의 초기 정착 및 장기 근속을 유인하기 위한 비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000700017"
+  },
+  {
+    "id": 263,
+    "name": "간이 대지급금 지급",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "도산사업장 외 사업장 재직, 퇴직근로자",
+    "summary": "사업주로부터 임금을 지급받지 못한 근로자에게 대지급금 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100206"
   }
 ]
