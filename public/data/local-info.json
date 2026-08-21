@@ -2187,5 +2187,27 @@
     "target": "부동산업, 유흥주점 및 사행업 등 일부 업종을 제외한 모든 중소기업 수급 자격만 갖추면 공제 가입 가능",
     "summary": "중소기업 및 인력을 위해 공동적립한 공제금을 3년이상 재직자에게 보상금 형태로 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142000000008"
+  },
+  {
+    "id": 268,
+    "name": "임금등 체불 근로자 생계비 융자",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "가동중인 체불 사업장에 재직 중이거나, 퇴직 후 6개월 이내 근로자",
+    "summary": "임금체불로 생계가 어려운 근로자에게 저금리로 생계비 융자 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100203"
+  },
+  {
+    "id": 269,
+    "name": "직장어린이집 설치비용 지원",
+    "category": "혜택",
+    "startDate": "2026-02-09",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "고용보험에 가입한 사업장의 사업주 및 사업주 단체",
+    "summary": "직장어린이집 신축·매입·임차·전환 및 교재·교구 구입 시 비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100205"
   }
 ]
