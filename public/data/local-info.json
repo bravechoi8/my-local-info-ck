@@ -2231,5 +2231,27 @@
     "target": "저탄소,디지털 전환 관련 사업주(최근 3년이내 사업재편, 사업전환 승인 기업 등)",
     "summary": "탄소중립·디지털 전환 기업 사업주에게 재직 근로자 훈련비 및 훈련장려금 등 지원(1인당 최대 300만원)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005013"
+  },
+  {
+    "id": 272,
+    "name": "생활안정자금(융자)",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "3개월 이상 근속 중이며 월평균 소득이 3인 가구 기준 중위소득 50% 이하인 저소득 노동자 등",
+    "summary": "저소득 노동자 등에게 생활안정자금 융자 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000009"
+  },
+  {
+    "id": 273,
+    "name": "지역산업맞춤형 일자리지원",
+    "category": "혜택",
+    "startDate": "2026-05-18",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "지역 차원의 고용문제 해결을 위해 지역주민의 일자리 창출, 고용 촉진, 직업 능력 개발 등을 수행하는 사업",
+    "summary": "지역주민을 위해 지역 특성에 적합한 일자리 제안 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000024"
   }
 ]
