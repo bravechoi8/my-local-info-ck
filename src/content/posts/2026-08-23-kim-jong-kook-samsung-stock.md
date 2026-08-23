@@ -25,7 +25,7 @@ tags:
 
 방송에서 화제가 된 김종국 씨의 절약 철학과 솔직 담백한 토크 장면을 공식 클립 영상으로 만나보세요.
 
-[KBS 옥탑방의 문제아들 공식 클립 영상 확인하기](https://www.youtube.com/watch?v=FqHkLdQHwQE)
+[KBS 옥탑방의 문제아들 공식 클립: 김종국의 절약력과 방송 하이라이트 확인하기](https://www.youtube.com/watch?v=gJUblZONKOA)
 
 ---
 
