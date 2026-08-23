@@ -16,8 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://real-infos.com"),
   title: "리얼인포 | 생활 정보 · 혜택 · 지원금 총정리",
   description: "전국의 유용한 생활 정보, 정부 혜택, 축제 행사 및 지원금 소식을 매일 업데이트합니다.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "리얼인포 | 생활 정보 · 혜택 · 지원금 총정리",
     description: "전국의 유용한 생활 정보, 정부 혜택, 축제 행사 및 지원금 소식을 매일 업데이트합니다.",

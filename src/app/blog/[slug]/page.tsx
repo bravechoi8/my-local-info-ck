@@ -28,10 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} | 리얼인포`,
     description: post.summary,
     keywords: post.tags,
+    alternates: {
+      canonical: `/blog/${slug}/`,
+    },
     openGraph: {
       title: `${post.title} | 리얼인포`,
       description: post.summary,
-      url: `https://real-infos.com/blog/${slug}`,
+      url: `https://real-infos.com/blog/${slug}/`,
       type: "article",
       publishedTime: post.date,
     },
@@ -318,6 +321,41 @@ export default async function BlogPostPage({ params }: Props) {
                     <code className={className} {...rest}>
                       {children}
                     </code>
+                  );
+                },
+                a(props) {
+                  const { href, children, ...rest } = props;
+                  const ytMatch = href?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+                  if (ytMatch) {
+                    const videoId = ytMatch[1];
+                    return (
+                      <span className="block my-6 not-prose">
+                        <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800 bg-black">
+                          <iframe
+                            className="w-full h-full"
+                            src={`https://www.youtube.com/embed/${videoId}`}
+                            title="공식 관련 영상"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                        </div>
+                        <span className="block mt-2 text-center text-xs text-slate-400">
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline text-emerald-600 dark:text-emerald-400 font-medium"
+                          >
+                            ▶ YouTube 공식 영상 바로가기 ({children || '영상 보기'})
+                          </a>
+                        </span>
+                      </span>
+                    );
+                  }
+                  return (
+                    <a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
+                      {children}
+                    </a>
                   );
                 }
               }}
