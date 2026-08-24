@@ -2319,5 +2319,27 @@
     "target": "만 18세 미만의 학대 피해 아동으로 원 가정으로부터 분리하여 심리치료와 보호가 필요한 경우",
     "summary": "만 18세 미만 학대피해아동이 편히 쉴 수 있도록 생활지원, 상담 및 치료 등을 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000012"
+  },
+  {
+    "id": 280,
+    "name": "중소기업 공공구매 종합 정보 제공",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "중소기업",
+    "summary": "공공기관별 입찰정보와 입찰참여에 필요한 정보 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000018900"
+  },
+  {
+    "id": 281,
+    "name": "의료급여 (의료급여 대지급금)",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "2종 의료급여 수급권자",
+    "summary": "의료급여 2종 수급권자가 입원 중 본인 부담금이 20만원 초과 금액 중 보장기관 승인금액",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SHE000000090"
   }
 ]
