@@ -2297,5 +2297,27 @@
     "target": "지원사업별로 상이",
     "summary": "사업전환·구조개선 등을 통한 경쟁력 확보와 실패기업의 재창업 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000044"
+  },
+  {
+    "id": 278,
+    "name": "아동 공동생활 가정 운영 지원",
+    "category": "혜택",
+    "startDate": "2025-05-20",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "공동생활가정(그룹홈) 시설장 및 종사자",
+    "summary": "아동을 위한 공동생활가정의 운영비, 인건비, 연장근로수당 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000010"
+  },
+  {
+    "id": 279,
+    "name": "학대피해아동쉼터 지원",
+    "category": "혜택",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "만 18세 미만의 학대 피해 아동으로 원 가정으로부터 분리하여 심리치료와 보호가 필요한 경우",
+    "summary": "만 18세 미만 학대피해아동이 편히 쉴 수 있도록 생활지원, 상담 및 치료 등을 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000012"
   }
 ]
