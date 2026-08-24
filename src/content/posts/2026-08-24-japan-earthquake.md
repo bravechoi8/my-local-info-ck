@@ -24,7 +24,15 @@ naver_link: "https://n.news.naver.com/mnews/article/028/0002819699?sid=104"
 
 ---
 
-![포스트 소개](/images/body-2026-08-24-japan-earthquake-1.jpg)
+![YTN 뉴스 일본 도쿄 및 관동 지진 현장 보도 실제 방송 캡처](/images/body-2026-08-24-japan-earthquake-1.jpg)
+
+---
+
+### YTN 뉴스: 일본 도쿄 지진 및 긴급재난문자 보도 영상
+
+실제 일본 현지에서 발생한 지진 상황과 긴급재난문자 발령 당시의 뉴스 보도를 영상으로 확인해보세요.
+
+[YTN 뉴스: 일본 강진 발생 및 긴급재난문자 보도 영상 확인하기](https://www.youtube.com/watch?v=T-iYUybpBUM)
 
 ---
 

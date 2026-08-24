@@ -14,7 +14,17 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016265881?sid=103"
 
 2024년 데뷔 이후 불과 단기간 만에 이뤄낸 성과라 음악 팬들 사이에서는 그야말로 대폭발적인 반응이 일어나고 있는데요. 이번 기록은 세계적인 팝스타 위켄드(The Weeknd)의 'LOST WEEKEND'나 강력한 음반 파워를 자랑하는 스트레이 키즈의 'THIS & THAT' 같은 쟁쟁한 라이벌들을 제치고 얻어낸 결실이라 더욱더 가치가 높다고 해요! 오늘 블로그에서는 캣츠아이가 어떻게 세계 정상을 안았는지, 그리고 이 소식이 왜 이렇게 핫한지 비하인드 스토리까지 흥미진진하게 풀어드리겠습니다!
 
-![포스트 소개](/images/body-2026-08-24-katseye-billboard-first-place-1.jpg)
+![하이브 레이블 공식 KATSEYE 뮤직비디오 실제 실물 캡처](/images/body-2026-08-24-katseye-1.jpg)
+
+---
+
+### 하이브 레이블 공식 KATSEYE 공식 영상
+
+빌보드 200 1위를 기록하며 전 세계 음악 팬들의 폭발적인 반응을 이끌어낸 캣츠아이의 감각적인 공식 뮤직비디오를 감상해보세요.
+
+[HYBE LABELS 공식: KATSEYE 공식 뮤직비디오 감상하기](https://www.youtube.com/watch?v=is8UDe2PhKQ)
+
+---
 
 ### 🔥 실시간 트렌드 분석
 
@@ -38,7 +48,7 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016265881?sid=103"
 
 이러한 성공은 향후 Entertainment 업계 전체에도 큰 영향을 미칠 것으로 전망됩니다. 한국의 기획사들이 해외 현지 파트너사와 손잡고 세계 각국에서 현지화 그룹을 탄생시키는 'K팝 수출 2.0' 모델이 본격적으로 탄력을 받을 것으로 보입니다.
 
-![포스트 소개](/images/body-2026-08-24-katseye-billboard-first-place-2.jpg)
+---
 
 ## 팬들과 라이트 덕후를 위한 실천형 덕질 꿀팁
 

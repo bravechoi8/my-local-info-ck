@@ -32,7 +32,15 @@ naver_link: "https://n.news.naver.com/mnews/article/469/0000949528?sid=103"
 
 우서윤 씨는 이미 본선 참가 전부터 tvN STORY 예능 '내 새끼의 연애2'에 출연하면서 남다른 예능감과 매력적인 일상을 공개해 시청자들의 눈도장을 찍은 바 있습니다. 당당하게 미스코리아 진의 자리에 오른 그녀는 아버지의 후광에만 의존하지 않고 자신의 실력과 매력으로 값진 결과를 만들어냈다는 점에서 더욱 높은 평가를 받고 있습니다.
 
-![포스트 소개](/images/body-2026-08-24-woo-ji-won-daughter-miss-korea-1.jpg)
+![tvN STORY 예능 내 새끼의 연애2에 출연한 우지원과 딸 우서윤 실제 방송 실물 캡처](/images/body-2026-08-24-woo-ji-won-daughter-miss-korea-1.jpg)
+
+---
+
+### tvN STORY '내 새끼의 연애2' 우지원 & 우서윤 부녀 공식 방송 영상
+
+아빠 우지원의 훤칠한 피지컬과 미모를 쏙 빼닮은 우서윤 양의 방송 속 매력적인 실제 모습을 공식 클립 영상으로 감상해보세요.
+
+[tvN STORY 공식: 아빠 우지원을 쏙 빼닮은 사랑스러운 딸 우서윤 영상 확인하기](https://www.youtube.com/watch?v=ikFJBc3ZoLw)
 
 ---
 
