@@ -108,6 +108,46 @@ async function downloadAndCheckImage(url, filename) {
 }
 
 
+export async function searchYouTubeOfficialVideo(keyword) {
+  try {
+    const res = await fetchWithRetry(`https://www.youtube.com/results?search_query=${encodeURIComponent(keyword)}`, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
+    });
+    if (!res.ok) return null;
+    const html = await res.text();
+    const matches = html.match(/\/watch\?v=([a-zA-Z0-9_-]{11})/g) || [];
+    const ids = [...new Set(matches)].map(x => x.replace('/watch?v=', '')).slice(0, 5);
+
+    for (const id of ids) {
+      try {
+        const oembedRes = await fetchWithRetry(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
+        if (oembedRes.ok) {
+          const info = await oembedRes.json();
+          const maxresRes = await fetchWithRetry(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
+          let thumbUrl = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+          if (!maxresRes.ok) {
+            thumbUrl = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+          }
+          return {
+            id,
+            url: `https://www.youtube.com/watch?v=${id}`,
+            title: info.title,
+            author: info.author_name,
+            thumbUrl
+          };
+        }
+      } catch (e) {
+        continue;
+      }
+    }
+  } catch (err) {
+    console.warn('[YouTube 실사 검색 에러]:', err.message);
+  }
+  return null;
+}
+
 const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
 const IMAGEN_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/imagen-3.0-generate-002:predict';
 
@@ -220,10 +260,28 @@ Summary: ${summary}`;
     }
     const bgOutputPath = path.join(publicImagesDir, bgFilename);
 
-    let isPexelsUsed = false;
+    let isRealPhotoUsed = false;
 
-    // 2단계: Pexels API에서 이미지 검색 먼저 시도 (최대 5개 후보 중 중복되지 않는 첫 이미지 선택)
+    // 1단계 (최우선): YouTube 공식 영상/방송 실물 캡처 검색 시도
     if (!finalForceAI) {
+      try {
+        console.log(`[YouTube 실사 검색 시도] 키워드: "${title}"`);
+        const ytVideo = await searchYouTubeOfficialVideo(title);
+        if (ytVideo && ytVideo.thumbUrl) {
+          console.log(`[YouTube 실사 발견] 공식 영상: ${ytVideo.title} (${ytVideo.author})`);
+          const success = await downloadAndCheckImage(ytVideo.thumbUrl, bgFilename);
+          if (success) {
+            isRealPhotoUsed = true;
+            console.log(`[YouTube 실사 캡처 적용 완료] ${bgFilename}`);
+          }
+        }
+      } catch (ytErr) {
+        console.warn(`[YouTube 실사 검색 실패]:`, ytErr.message);
+      }
+    }
+
+    // 2단계: Pexels API에서 이미지 검색 시도 (YouTube에서 못 찾았을 경우)
+    if (!finalForceAI && !isRealPhotoUsed) {
       try {
         console.log(`[Pexels 검색 시도] 요약 배경 검색 중...`);
         const pexelsUrls = await getPexelsImages(pexelsSearchQuery, 5);
@@ -232,7 +290,7 @@ Summary: ${summary}`;
           for (let i = 0; i < pexelsUrls.length; i++) {
             const success = await downloadAndCheckImage(pexelsUrls[i], bgFilename);
             if (success) {
-              isPexelsUsed = true;
+              isRealPhotoUsed = true;
               break;
             }
           }
@@ -242,12 +300,12 @@ Summary: ${summary}`;
       } catch (pexelsErr) {
         console.warn(`[Pexels 검색 실패] 오류가 발생하여 예비 AI 그리기로 넘어갑니다:`, pexelsErr.message);
       }
-    } else {
-      console.log(`[AI 이미지 그리기 강제 활성화] Pexels 검색을 생략하고 AI로 그립니다.`);
+    } else if (finalForceAI) {
+      console.log(`[AI 이미지 그리기 강제 활성화] 실사 검색을 생략하고 AI로 그립니다.`);
     }
 
-    // 3단계: Pexels 이미지를 못 찾았을 경우에만 Google Imagen API로 직접 그리기 수행
-    if (!isPexelsUsed) {
+    // 3단계: 실사 이미지를 못 찾았을 경우에만 Google Imagen API로 직접 그리기 수행
+    if (!isRealPhotoUsed) {
       console.log(`[AI 이미지 그리기 시작] 펙셀 이미지가 없으므로 Google Imagen으로 그립니다.`);
       const imagenUrl = `${IMAGEN_ENDPOINT}?key=${GEMINI_API_KEY}`;
       const payload = {

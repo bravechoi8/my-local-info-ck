@@ -11,7 +11,7 @@ const __dirname = filePath.dirname(__filename);
 // 로컬 환경변수 파일(.env.local) 자동 로드
 loadEnvConfig(filePath.join(__dirname, '..'));
 
-import { generateSummaryImage, generateAndSaveImage } from './image-generator.js';
+import { generateSummaryImage, generateAndSaveImage, searchYouTubeOfficialVideo } from './image-generator.js';
 import { fetchWithRetry } from './utils.js';
 
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID;
@@ -985,6 +985,38 @@ naver_link: "${escapedLink}"
         } else {
           markdownContent = `![포스트 소개](${imgPath})\n\n` + markdownContent;
         }
+      }
+
+      // YouTube 공식 영상 검색 및 실사 캡처 자동 탑재
+      try {
+        console.log(`[YouTube 영상 검색 시도] 키워드: "${selectedKeyword}" / "${titleVal}"`);
+        const ytVideo = (await searchYouTubeOfficialVideo(selectedKeyword)) || (await searchYouTubeOfficialVideo(titleVal));
+        if (ytVideo && ytVideo.thumbUrl) {
+          console.log(`[YouTube 영상 연동 성공] ${ytVideo.title} (${ytVideo.author})`);
+          const ytBodyFilename = `body-${safeFilename}-1.jpg`;
+          const ytBodyPath = filePath.join(filePath.dirname(__dirname), 'public', 'images', ytBodyFilename);
+          const res = await fetchWithRetry(ytVideo.thumbUrl);
+          if (res.ok) {
+            const buf = Buffer.from(await res.arrayBuffer());
+            fileFs.writeFileSync(ytBodyPath, buf);
+            console.log(`[YouTube 본문 실사 저장 완료] ${ytBodyFilename}`);
+          }
+
+          // 마크다운에 유튜브 영상 및 실사 캡처 섹션 삽입
+          if (!markdownContent.includes('youtube.com/watch?v=') && !markdownContent.includes('youtu.be/')) {
+            const videoSection = `\n\n![${ytVideo.author} 공식 방송/현장 실물 캡처](/images/${ytBodyFilename})\n\n---\n\n### ${ytVideo.author} 공식 영상\n\n[${ytVideo.author} 공식 영상 확인하기](${ytVideo.url})\n\n---\n`;
+
+            const frontmatterEnd = markdownContent.indexOf('\n---', 4);
+            const firstHeadingIndex = markdownContent.indexOf('\n##', frontmatterEnd !== -1 ? frontmatterEnd + 4 : 0);
+            if (firstHeadingIndex !== -1) {
+              markdownContent = markdownContent.substring(0, firstHeadingIndex) + videoSection + markdownContent.substring(firstHeadingIndex);
+            } else {
+              markdownContent += videoSection;
+            }
+          }
+        }
+      } catch (ytErr) {
+        console.warn(`[YouTube 영상 검색/삽입 실패]:`, ytErr.message);
       }
 
       // 본문 이미지 실시간 생성 및 치환
