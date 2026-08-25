@@ -2363,5 +2363,27 @@
     "target": "소공인 집적지에 소재하는 소공인 관련 비영리 법인",
     "summary": "소공인 집적지 내 특화지원센터를 설치∙운영을 통해 소공인의 제조역량 강화",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700002"
+  },
+  {
+    "id": 284,
+    "name": "스마트축산단지 조성 사업 참여 안내",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "스마트축산단지를 조성하고자 하는 지자체(시도 및 시군구)",
+    "summary": "시범단지 조성을 원하는 시군구를 대상으로 설계비, 필요시설 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000009"
+  },
+  {
+    "id": 285,
+    "name": "꿀 가공산업 육성 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "꿀을 원료로 하여 벌꿀 식품 등을 생산하는 업체 및 생산자 단체",
+    "summary": "꿀 가공업체 대상으로 필요한 구매자금 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000033"
   }
 ]
