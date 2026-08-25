@@ -26,6 +26,7 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016264995?sid=101"
 
 ## 💡 한국은행 기준금리 결정 전망: 연속 인상 vs 숨고르기
 
+![포스트 소개](/images/body-2026-08-23-bok-interest-rate-outlook-1.jpg)
 
 다가오는 한국은행 금융통화위원회를 앞두고 시장 전문가들의 의견은 크게 두 가지 시나리오로 양분되고 있습니다.
 

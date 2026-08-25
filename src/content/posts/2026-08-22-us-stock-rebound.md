@@ -56,6 +56,7 @@ naver_link: "https://n.news.naver.com/mnews/article/015/0005323468?sid=101"
 
 국내 금융시장 및 글로벌 환율 흐름에 대한 상세 정보는 [한국은행](https://www.bok.or.kr) 공식 홈페이지를 통해서도 정기적으로 확인하실 수 있습니다.
 
+![포스트 소개](/images/body-2026-08-22-us-stock-rebound-2.jpg)
 
 ---
 

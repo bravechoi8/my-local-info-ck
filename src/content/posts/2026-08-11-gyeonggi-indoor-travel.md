@@ -65,6 +65,7 @@ naver_link: "https://n.news.naver.com/mnews/article/468/0001258939?sid=102"
 
 ---
 
+![포스트 소개](/images/body-2026-08-11-gyeonggi-indoor-travel-2.jpg)
 
 ---
 

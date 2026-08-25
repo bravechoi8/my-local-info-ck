@@ -38,6 +38,7 @@ naver_link: "https://m.entertain.naver.com/article/312/0000770723"
 
 ---
 
+![포스트 소개](/images/body-2026-08-06-a-shop-for-killers-season-2-1.jpg)
 
 ---
 
@@ -51,6 +52,7 @@ naver_link: "https://m.entertain.naver.com/article/312/0000770723"
 
 ---
 
+![포스트 소개](/images/body-2026-08-06-a-shop-for-killers-season-2-2.jpg)
 
 ---
 

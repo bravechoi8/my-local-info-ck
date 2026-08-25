@@ -16,6 +16,7 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014130807?sid=102"
 
 ---
 
+![포스트 소개](/images/body-2026-08-18-seoul-hangang-bus-dating-event-1.jpg)
 
 ## 설렘 in Seoul, 한강버스편 행사 개요
 
@@ -48,6 +49,7 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014130807?sid=102"
 
 이번 한강버스 미혼남녀 만남 행사 발표 이후 2030 청년층 사이에서는 대체로 긍정적인 반응이 이어지고 있습니다. "공공기관이 주최하니 신뢰가 간다", "한강버스라는 이색적인 공간에서 만나니 부담이 적을 것 같다"는 의견이 많습니다.
 
+![포스트 소개](/images/body-2026-08-18-seoul-hangang-bus-dating-event-2.jpg)
 
 이러한 공공 주도 만남 프로그램은 향후 다음과 같은 파급 효과를 가져올 것으로 전망됩니다.
 

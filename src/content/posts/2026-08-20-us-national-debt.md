@@ -34,6 +34,7 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014136790?sid=104"
 
 ---
 
+![포스트 소개](/images/body-2026-08-20-us-national-debt-1.jpg)
 
 ---
 

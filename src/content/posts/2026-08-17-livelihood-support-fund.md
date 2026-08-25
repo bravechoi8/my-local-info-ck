@@ -70,6 +70,7 @@ naver_link: "https://n.news.naver.com/mnews/article/081/0003670864?sid=102"
 
 ---
 
+![포스트 소개](/images/body-2026-08-17-livelihood-support-fund-2.jpg)
 
 ---
 

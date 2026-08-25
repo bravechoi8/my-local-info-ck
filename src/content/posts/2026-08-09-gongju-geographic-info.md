@@ -27,6 +27,7 @@ naver_link: "https://www.ccdn.co.kr/news/articleView.html?idxno=1091914"
 | **행정 정확성** | 현장 조사 의존도 높음 | **비대면 사전 파악 및 행정 효율성 극대화** |
 | **주요 활용 분야** | 단순 위치 확인 | **부동산 조회, 과세 업무, 인허가 사전 검토 등** |
 
+![포스트 소개](/images/body-2026-08-09-gongju-geographic-info-1.jpg)
 
 ---
 
@@ -65,6 +66,7 @@ naver_link: "https://www.ccdn.co.kr/news/articleView.html?idxno=1091914"
 4.  **관련 공공 지적 서비스 함께 보기**
     *   더 자세한 토지 이용 규제 사항이나 공시지가 조회가 필요하다면 [국토교통부 토지이음](https://www.eum.go.kr) 서비스를 연계하여 검색하면 더욱 완벽한 토지 분석이 가능합니다.
 
+![포스트 소개](/images/body-2026-08-09-gongju-geographic-info-2.jpg)
 
 ---
 

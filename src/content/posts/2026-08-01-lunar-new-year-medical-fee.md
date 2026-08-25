@@ -14,6 +14,7 @@ naver_link: "https://www.kpanews.co.kr/article/show.asp?idx=256807&category=C"
 
 이번 설 연휴에는 명절 당일 동네 병의원과 약국이 더 많이 문을 열 수 있도록 정부에서 **공휴가산 수가가 추가로 확대 지원**됩니다. 오늘은 이번 정책의 주요 내용과 함께 명절 연휴 기간 손해 보지 않고 똑똑하게 병의원을 이용하는 방법까지 한눈에 보기 쉽게 정리해 드리겠습니다.
 
+![포스트 소개](/images/body-2026-08-01-lunar-new-year-medical-fee-1.jpg)
 
 ---
 
@@ -51,6 +52,7 @@ naver_link: "https://www.kpanews.co.kr/article/show.asp?idx=256807&category=C"
 * **의료 시장 변화**: 대형병원 응급실 중심의 명절 의료 체계가 **지역 동네 의원과 약국 중심의 1차 의료 체계로 분산**되는 긍정적 효과가 기대됩니다.
 * **약국 및 의원가 분위기**: 인건비 부담으로 명절 문을 닫으려 했던 지역 약국과 의원들이 이번 수가 확대에 따라 지정 운영에 적극적으로 참여하는 분위기입니다.
 
+![포스트 소개](/images/body-2026-08-01-lunar-new-year-medical-fee-2.jpg)
 
 ---
 

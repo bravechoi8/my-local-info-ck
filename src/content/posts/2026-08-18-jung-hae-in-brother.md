@@ -26,6 +26,7 @@ naver_link: "https://m.entertain.naver.com/article/437/0000506526"
 
 ---
 
+![포스트 소개](/images/body-2026-08-18-jung-hae-in-brother-1.jpg)
 
 ## 훈훈함과 폭소가 공존하는 "엄마가 만들어준 제 따까리"
 
@@ -49,6 +50,7 @@ naver_link: "https://m.entertain.naver.com/article/437/0000506526"
 
 ---
 
+![포스트 소개](/images/body-2026-08-18-jung-hae-in-brother-2.jpg)
 
 ## 대중의 시선과 향후 이미지에 미칠 영향
 

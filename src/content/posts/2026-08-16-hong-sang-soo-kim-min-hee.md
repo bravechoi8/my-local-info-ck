@@ -16,6 +16,7 @@ naver_link: "https://n.news.naver.com/mnews/article/081/0003670732?sid=103"
 
 ---
 
+![포스트 소개](/images/body-2026-08-16-hong-sang-soo-kim-min-hee-1.jpg)
 
 ---
 
@@ -56,6 +57,7 @@ naver_link: "https://n.news.naver.com/mnews/article/081/0003670732?sid=103"
 
 ---
 
+![포스트 소개](/images/body-2026-08-16-hong-sang-soo-kim-min-hee-2.jpg)
 
 ---
 

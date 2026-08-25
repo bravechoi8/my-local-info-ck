@@ -14,6 +14,7 @@ naver_link: "https://n.news.naver.com/mnews/article/448/0000631973?sid=102"
 
 서울을 비롯한 전국 대부분 지역에 폭염경보와 폭염중대경보가 발효된 가운데, 이번 폭염이 왜 이렇게 무섭게 지속되는지, 그리고 주말 날씨 변화와 함께 우리가 당장 실천해야 할 폭염 대처법은 무엇인지 상세히 알아보겠습니다.
 
+![포스트 소개](/images/body-2026-08-07-extreme-heatwave-ipchu-1.jpg)
 
 ---
 
@@ -47,6 +48,7 @@ naver_link: "https://n.news.naver.com/mnews/article/448/0000631973?sid=102"
 
 다만, 비가 그친 후에도 습도가 높은 상태가 유지되면서 밤사이 25도 이상을 유지하는 열대야 현상은 당분간 지속될 가능성이 높으므로 방심해서는 안 됩니다.
 
+![포스트 소개](/images/body-2026-08-07-extreme-heatwave-ipchu-2.jpg)
 
 ---
 

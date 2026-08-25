@@ -41,6 +41,7 @@ naver_link: "https://n.news.naver.com/mnews/article/079/0004180020?sid=102"
 
 ---
 
+![포스트 소개](/images/body-2026-08-20-busan-comedy-festival-1.jpg)
 
 ---
 
@@ -62,6 +63,7 @@ naver_link: "https://n.news.naver.com/mnews/article/079/0004180020?sid=102"
 
 ---
 
+![포스트 소개](/images/body-2026-08-20-busan-comedy-festival-2.jpg)
 
 ---
 

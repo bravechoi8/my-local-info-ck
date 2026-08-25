@@ -18,6 +18,7 @@ naver_link: "https://n.news.naver.com/mnews/article/032/0003461749?sid=103"
 
 ## 1. 일본을 사로잡은 '미각 리셋' 다이어트란?
 
+![포스트 소개](/images/body-2026-08-03-lemon-water-taste-reset-1.jpg)
 
 **미각 리셋 다이어트**란 자극적인 가공식품과 짠맛, 단맛에 마비되어 있던 미각 세포를 정화하여, 원재료 본연의 맛을 느끼게 만들고 식사량을 자연스럽게 줄이는 건강 관리법입니다.
 
@@ -59,6 +60,7 @@ naver_link: "https://n.news.naver.com/mnews/article/032/0003461749?sid=103"
 
 ## 5. 실전! 올바른 레몬물 미각 리셋 가이드 (Action Plan)
 
+![포스트 소개](/images/body-2026-08-03-lemon-water-taste-reset-2.jpg)
 
 ### 💡 단계별 실천 방법
 

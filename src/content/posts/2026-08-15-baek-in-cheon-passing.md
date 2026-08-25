@@ -28,6 +28,7 @@ naver_link: "https://n.news.naver.com/mnews/article/029/0003042492?sid=102"
 
 당시 그는 선수들을 지도하고 경기 전략을 구상하는 감독 역할을 수행하면서도, 타석에 들어서면 상대 투수의 공을 사정없이 쳐내는 엄청난 모습을 보여주었답니다. 정말 대단하지 않나요?
 
+![포스트 소개](/images/body-2026-08-15-baek-in-cheon-passing-1.jpg)
 
 ---
 
@@ -57,6 +58,7 @@ naver_link: "https://n.news.naver.com/mnews/article/029/0003042492?sid=102"
 
 이처럼 현대 야구의 벽이 높아질수록 1982년 백인천 감독이 달성한 0.412라는 숫자는 더욱 거대하고 높게 빛나는 훈장이 된 셈입니다.
 
+![포스트 소개](/images/body-2026-08-15-baek-in-cheon-passing-2.jpg)
 
 ---
 

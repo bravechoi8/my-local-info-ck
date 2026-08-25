@@ -14,6 +14,7 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014100825?sid=101"
 
 이처럼 외환거래량이 폭발적으로 늘어난 배경은 무엇이며, 이러한 흐름이 우리의 일상과 자산 관리에는 어떤 영향을 미치는지 상세히 분석해 드리겠습니다.
 
+![포스트 소개](/images/body-2026-08-02-fx-trading-record-1.jpg)
 
 ---
 
@@ -54,6 +55,7 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014100825?sid=101"
 
 ---
 
+![포스트 소개](/images/body-2026-08-02-fx-trading-record-2.jpg)
 
 ## 환율 변동성 시대, 독자를 위한 실전 재테크 액션 플랜
 
