@@ -56,7 +56,6 @@ naver_link: "https://n.news.naver.com/mnews/article/123/0002388671?sid=102"
 
 ---
 
-![포스트 소개](/images/body-2026-08-21-chuseok-support-fund-2.jpg)
 
 ---
 

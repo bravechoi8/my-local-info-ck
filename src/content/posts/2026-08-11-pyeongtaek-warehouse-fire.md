@@ -26,7 +26,6 @@ naver_link: "https://n.news.naver.com/mnews/article/055/0001379635?sid=102"
 
 위험물 창고 화재의 특성상 내부 보관 물품의 성질에 따라 특수 화학 소화약제가 투입되기도 하며, 유독가스 확산을 막기 위한 다각도의 진화 전략이 적용되었습니다.
 
-![포스트 소개](/images/body-2026-08-11-pyeongtaek-warehouse-fire-1.jpg)
 
 ---
 

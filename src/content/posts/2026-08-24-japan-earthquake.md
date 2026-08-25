@@ -24,8 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/028/0002819699?sid=104"
 
 ---
 
-![YTN 뉴스 일본 도쿄 및 관동 지진 현장 보도 실제 방송 캡처](/images/body-2026-08-24-japan-earthquake-1.jpg)
-
 ---
 
 ### YTN 뉴스: 일본 도쿄 지진 및 긴급재난문자 보도 영상

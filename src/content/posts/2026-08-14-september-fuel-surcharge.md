@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/015/0005320745?sid=103"
 
 ---
 
-![포스트 소개](/images/body-2026-08-14-september-fuel-surcharge-1.jpg)
 
 ---
 
@@ -50,7 +49,6 @@ naver_link: "https://n.news.naver.com/mnews/article/015/0005320745?sid=103"
 
 ---
 
-![포스트 소개](/images/body-2026-08-14-september-fuel-surcharge-2.jpg)
 
 ---
 

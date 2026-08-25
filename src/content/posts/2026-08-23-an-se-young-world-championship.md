@@ -24,7 +24,6 @@ naver_link: "https://m.sports.naver.com/general/article/003/0014141900"
 
 ---
 
-![포스트 소개](/images/body-2026-08-23-an-se-young-world-championship-1.jpg)
 
 ---
 

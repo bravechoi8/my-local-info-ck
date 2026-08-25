@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/009/0005722387?sid=103"
 
 ---
 
-![포스트 소개](/images/body-2026-08-19-travel-card-benefits-1.jpg)
 
 ---
 
@@ -74,7 +73,6 @@ naver_link: "https://n.news.naver.com/mnews/article/009/0005722387?sid=103"
 
 ---
 
-![포스트 소개](/images/body-2026-08-19-travel-card-benefits-2.jpg)
 
 ---
 

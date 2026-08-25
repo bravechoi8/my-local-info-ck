@@ -20,7 +20,6 @@ naver_link: "https://www.getnews.co.kr/news/articleView.html?idxno=877382"
 
 이번에 발간된 가이드북은 외국인이 제주에서 삶을 영위할 때 필요한 거의 모든 분야의 실용 정보가 한눈에 들어오도록 체계적으로 구성되어 있습니다.
 
-![포스트 소개](/images/body-2026-08-10-jeju-foreign-resident-guidebook-1.jpg)
 
 ### 📚 가이드북 수록 주요 항목
 
@@ -55,7 +54,6 @@ naver_link: "https://www.getnews.co.kr/news/articleView.html?idxno=877382"
 
 이번 가이드북 배포 소식에 대해 지역 주민들과 다문화 관련 단체들은 매우 긍정적인 반응을 보이고 있습니다.
 
-![포스트 소개](/images/body-2026-08-10-jeju-foreign-resident-guidebook-2.jpg)
 
 * **외국인 주민 및 이주민 단체**: "그동안 서류 하나 제출하려 해도 어디에 물어봐야 할지 막막했는데, 책자 한 권에 기본적인 정보가 모두 들어있어 불안감이 많이 줄어들 것 같다"는 평가가 이어지고 있습니다.
 * **지역 소상공인 및 고용주**: 외국인 근로자들의 생활 환경이 안정되면 무단 이탈이나 적응 실패 비율이 낮아져 노동 환경 개선과 생산성 향상에도 긍정적인 영향을 줄 것으로 기대하고 있습니다.

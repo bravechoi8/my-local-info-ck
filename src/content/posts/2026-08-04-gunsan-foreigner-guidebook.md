@@ -16,7 +16,6 @@ naver_link: "https://www.shinailbo.co.kr/news/articleView.html?idxno=5047342"
 
 이번 생활가이드북의 핵심 내용부터 배경 분석, 실전 활용 꿀팁까지 상세히 정리해 드리겠습니다.
 
-![포스트 소개](/images/body-2026-08-04-gunsan-foreigner-guidebook-1.jpg)
 
 ---
 
@@ -67,7 +66,6 @@ naver_link: "https://www.shinailbo.co.kr/news/articleView.html?idxno=5047342"
 * **지역 사업주 및 농가**: 외국인 근로자를 고용하는 사업주들 역시 근로기준 및 신분 유지 관련 안내가 체계적으로 되어 있어 노무 관리상의 오해나 갈등을 줄일 수 있을 것으로 기대하고 있습니다.
 * **사회적 파급 효과**: 언어별 맞춤 정보 제공은 외국인 주민의 지역 사회 적응 기간을 단축시키고, 범죄 예방 및 기초 질서 준수율을 높여 지역 주민과의 상생 및 사회통합에 기여할 것으로 전망됩니다.
 
-![포스트 소개](/images/body-2026-08-04-gunsan-foreigner-guidebook-2.jpg)
 
 ---
 

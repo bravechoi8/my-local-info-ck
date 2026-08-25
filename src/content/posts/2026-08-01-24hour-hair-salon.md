@@ -16,7 +16,6 @@ naver_link: "http://www.yeongnam.com/mnews/newsview.do?mode=newsView&newskey=201
 
 이번 글에서는 24시간 영업 미용실 트렌드가 떠오른 사회적 배경과 시장 파급 효과, 그리고 이를 똑똑하게 활용할 수 있는 실전 꿀팁까지 자세히 알아보겠습니다.
 
-![포스트 소개](/images/body-2026-08-01-24hour-hair-salon-1.jpg)
 
 ---
 
@@ -58,7 +57,6 @@ naver_link: "http://www.yeongnam.com/mnews/newsview.do?mode=newsView&newskey=201
 *   **시간이 오래 걸리는 시술을 평일 야간에 배치하기:**
     열펌, 복구 펌, 전체 염색, 탈색 등 최소 2~4시간 이상 소요되는 장시간 시술을 평일 퇴근 후 심야 시간에 진행해 보세요. 주말 시간을 크게 절약할 수 있을 뿐만 아니라, 손님이 상대적으로 적은 야간 시간대에 한층 더 집중된 케어를 받을 수 있습니다.
 
-![포스트 소개](/images/body-2026-08-01-24hour-hair-salon-2.jpg)
 
 ---
 

@@ -27,7 +27,6 @@ naver_link: "https://www.gokorea.kr/news/articleView.html?idxno=875178"
 
 특히 **경남 남해안과 지리산 부근, 제주도**는 16일을 전후해 시간당 30~50mm 안팎의 유전과도 같은 거센 비가 집중될 수 있습니다. 계곡물이 순식간에 불어나거나 저지대 침수 위험이 매우 높으므로 미리 대비책을 마련해야 합니다.
 
-![포스트 소개](/images/body-2026-08-15-weather-heavy-rain-warning-1.jpg)
 
 ---
 
@@ -52,7 +51,6 @@ naver_link: "https://www.gokorea.kr/news/articleView.html?idxno=875178"
 
 여행을 계획 중이신 분들은 출발 전 반드시 [기상청 날씨누리](https://www.weather.go.kr)를 통해 실시간 기상 특보와 레이더 영상을 확인하시는 것이 필수적입니다.
 
-![포스트 소개](/images/body-2026-08-15-weather-heavy-rain-warning-2.jpg)
 
 ---
 

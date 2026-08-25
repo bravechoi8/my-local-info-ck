@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/032/0003463741?sid=103"
 
 둘째, 수도권에 집중된 관광 인구를 전국 각지의 의미 있는 역사 유적지로 분산시킴으로써 **지역 경제에 활력을 불어넣는 효과**를 기대할 수 있습니다. 지방에 위치한 다양한 독립운동 사적지 및 기념관들이 새로이 조명받으며 지역 관광 생태계의 선순환을 유도하고 있습니다.
 
-![포스트 소개](/images/body-2026-08-13-historical-travel-independence-day-1.jpg)
 
 ---
 

@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/215/0001262568?sid=101"
 
 ---
 
-![포스트 소개](/images/body-2026-08-17-gold-investment-1.jpg)
 
 ---
 
@@ -55,7 +54,6 @@ naver_link: "https://n.news.naver.com/mnews/article/215/0001262568?sid=101"
 
 ---
 
-![포스트 소개](/images/body-2026-08-17-gold-investment-2.jpg)
 
 ---
 

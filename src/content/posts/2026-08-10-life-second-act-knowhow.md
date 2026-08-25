@@ -68,7 +68,6 @@ naver_link: "https://n.news.naver.com/mnews/article/009/0005292606?sid=102"
 
 ---
 
-![포스트 소개](/images/body-2026-08-10-life-second-act-knowhow-2.jpg)
 
 ---
 

@@ -61,8 +61,6 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016265364?sid=101"
 *   **3단계: 공식 기관을 통한 이용 정보 확인**
     *   지원금 관련 세부 가맹점 조회나 정책 세부 내용은 [행정안전부 공식 홈페이지](https://www.mois.go.kr) 또는 [복지로](https://www.bokjiro.go.kr)에서 확인하실 수 있습니다.
 
-![포스트 소개](/images/body-2026-08-24-high-oil-price-support-fund-2.jpg)
-
 ---
 
 ### ❓ 자주 묻는 질문 (FAQ)

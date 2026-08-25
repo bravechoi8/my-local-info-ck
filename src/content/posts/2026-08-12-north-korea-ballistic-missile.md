@@ -14,7 +14,6 @@ naver_link: "https://n.news.naver.com/mnews/article/277/0005801798?sid=100"
 
 지난 6일에도 원산 일대에서 단거리 탄도미사일 1발을 발사했었는데, 일주일도 채 지나지 않은 시점에서 연이어 도발에 나선 것인데요. 과연 북한이 왜 이 시점에 계속해서 미사일을 쏘아 올리는지, 그리고 우리 시장과 일상에는 어떤 파급력이 있는지 차근차근 알아보겠습니다.
 
-![포스트 소개](/images/body-2026-08-12-north-korea-ballistic-missile-1.jpg)
 
 ---
 
@@ -46,7 +45,6 @@ naver_link: "https://n.news.naver.com/mnews/article/277/0005801798?sid=100"
 
 정확한 안보 상황과 정부의 공식 입장은 [대한민국 국방부](https://www.mnd.go.kr) 및 [통일부 공식 홈페이지](https://www.unikorea.go.kr)를 통해 실시간으로 확인하실 수 있습니다.
 
-![포스트 소개](/images/body-2026-08-12-north-korea-ballistic-missile-2.jpg)
 
 ---
 

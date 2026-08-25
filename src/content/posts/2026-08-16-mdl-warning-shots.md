@@ -30,7 +30,6 @@ naver_link: "https://n.news.naver.com/mnews/article/658/0000152424?sid=100"
 | **특이 사항** | 2026년 들어 군사분계선 침범에 따른 **첫 경고사격 사례** |
 | **현재 상황** | 북한군 북상 후 추가 특이 동향 집중 감시 중 |
 
-![포스트 소개](/images/body-2026-08-16-mdl-warning-shots-1.jpg)
 
 ---
 
@@ -56,7 +55,6 @@ naver_link: "https://n.news.naver.com/mnews/article/658/0000152424?sid=100"
 
 자세한 군사 동향과 공식 발표 내용은 [합동참모본부](https://www.jcs.mil.kr) 또는 [국방부 공식 누리집](https://www.mnd.go.kr)을 통해 실시간으로 확인하실 수 있습니다.
 
-![포스트 소개](/images/body-2026-08-16-mdl-warning-shots-2.jpg)
 
 ---
 

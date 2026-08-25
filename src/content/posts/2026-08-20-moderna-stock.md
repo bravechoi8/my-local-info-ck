@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016259942?sid=104"
 
 ---
 
-![포스트 소개](/images/body-2026-08-20-moderna-stock-1.jpg)
 
 ---
 
@@ -59,7 +58,6 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016259942?sid=104"
 
 ---
 
-![포스트 소개](/images/body-2026-08-20-moderna-stock-2.jpg)
 
 ---
 

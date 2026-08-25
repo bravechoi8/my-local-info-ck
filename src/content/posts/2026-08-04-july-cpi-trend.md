@@ -63,7 +63,6 @@ naver_link: "https://n.news.naver.com/mnews/article/015/0005317004?sid=101"
 
 ---
 
-![포스트 소개](/images/body-2026-08-04-july-cpi-trend-2.jpg)
 
 ---
 

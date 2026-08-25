@@ -50,7 +50,6 @@ Below is a comparison table analyzing the two candidates:
 | **개발 단점** | 도심 녹지 축 축소, 국민적 거센 반발 | 헌법적 상징성, 법률 개정 필요, 이전 완료 시차 |
 | **대중 호응도** | 매우 낮음 (반대 여론 우세) | 매우 높음 (실용적 대안으로 호응) |
 
-![포스트 소개](/images/body-2026-08-22-yeouido-national-assembly-housing-2.jpg)
 
 ---
 

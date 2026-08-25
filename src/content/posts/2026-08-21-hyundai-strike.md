@@ -50,7 +50,8 @@ naver_link: "https://n.news.naver.com/mnews/article/001/0016262687?sid=102"
 
 실제로 시간당 손실액이 수십억 원에 달하는 만큼, 파업이 길어질수록 국내 수출 실적에도 큰 타격을 줄 수밖에 없습니다. 내 차가 언제 나올지 궁금하신 분들은 [현대자동차 공식 홈페이지](https://www.hyundai.com) 등을 통해 내 차 출고 조회 시스템이나 담당 카마스터를 통해 진행 상황을 꾸준히 확인해 보시는 것을 추천합니다.
 
-![포스트 소개](/images/body-2026-08-21-hyundai-strike-2.jpg)
+![현대자동차 신차 라인업 및 차량 실물 사진](/images/body-2026-08-21-hyundai-strike-2.jpg)
+
 
 ---
 

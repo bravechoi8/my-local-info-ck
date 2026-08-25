@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/023/0003993172?sid=004"
 
 ---
 
-![포스트 소개](/images/body-2026-08-17-financial-tips-1.jpg)
 
 ---
 
@@ -59,7 +58,6 @@ naver_link: "https://n.news.naver.com/mnews/article/023/0003993172?sid=004"
 
 ---
 
-![포스트 소개](/images/body-2026-08-17-financial-tips-2.jpg)
 
 ---
 

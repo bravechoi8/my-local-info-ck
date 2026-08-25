@@ -69,7 +69,6 @@ original_name: 경기도 어린이청소년 교통비 지원
 신청 전 서비스 상세 요건을 정확히 확인하려면 [정부24 경기도 교통비 지원 안내](https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000139) 페이지에 방문하여 세부 기준을 점검해 보는 것을 추천합니다. 온라인 시스템 점검 시간이나 신청자가 몰리는 월말을 피해 신청하면 오류 없이 신속하게 접수를 완료할 수 있습니다.
 
 
-![포스트 소개](/images/body-2026-08-12-gyeonggi-youth-transportation-2.jpg)
 
 
 ## 자주 묻는 질문 (FAQ)

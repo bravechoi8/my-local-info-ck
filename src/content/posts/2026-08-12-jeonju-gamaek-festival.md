@@ -14,7 +14,6 @@ naver_link: "https://n.news.naver.com/mnews/article/056/0012235713?sid=102"
 
 과거 다회용기 도입 등 친환경 축제로의 전환을 약속했던 행사가 불과 1년 만에 다시 '플라스틱 축제로 전락했다'는 지적을 받게 된 배경은 무엇일까요? 이번 포스팅에서는 최근 검색 트렌드 분석과 함께 사건의 구체적인 원인, 대중의 반응 및 독자 여러분이 실천할 수 있는 꿀팁까지 상세히 알아보겠습니다.
 
-![포스트 소개](/images/body-2026-08-12-jeonju-gamaek-festival-1.jpg)
 
 ---
 
@@ -44,7 +43,6 @@ naver_link: "https://n.news.naver.com/mnews/article/056/0012235713?sid=102"
 
 지역 축제의 친환경 정책이나 자원순환 관련 정책에 대한 상세 정보는 [한국환경공단 공식 홈페이지](https://www.keco.or.kr)에서 확인하실 수 있습니다.
 
-![포스트 소개](/images/body-2026-08-12-jeonju-gamaek-festival-2.jpg)
 
 ---
 

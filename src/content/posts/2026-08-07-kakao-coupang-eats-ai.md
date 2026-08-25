@@ -16,7 +16,6 @@ naver_link: "https://n.news.naver.com/mnews/article/293/0000088728?sid=105"
 
 이번 협업이 왜 주목받고 있는지, 내 일상에 어떤 변화를 가져올지 핵심 내용을 알기 쉽게 정리해 드립니다.
 
-![포스트 소개](/images/body-2026-08-07-kakao-coupang-eats-ai-1.jpg)
 
 ---
 
@@ -43,7 +42,6 @@ naver_link: "https://n.news.naver.com/mnews/article/293/0000088728?sid=105"
 
 이처럼 사용자는 배달 앱을 별도로 켜서 검색하는 수고를 완전히 덜 수 있게 됩니다.
 
-![포스트 소개](/images/body-2026-08-07-kakao-coupang-eats-ai-2.jpg)
 
 ---
 

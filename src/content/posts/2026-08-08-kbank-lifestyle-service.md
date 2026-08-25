@@ -22,7 +22,6 @@ naver_link: "https://www.financialpost.co.kr/news/articleView.html?idxno=269335"
 
 케이뱅크는 단순한 입출금 및 대출 업무를 넘어 고객의 일상 속 금융 비용 부담을 덜어주고, 실질적인 재테크 기회를 제공하기 위해 제휴 영역을 대폭 넓혔습니다.
 
-![포스트 소개](/images/body-2026-08-08-kbank-lifestyle-service-1.jpg)
 
 ### 주요 서비스 구성 및 특징
 
@@ -68,7 +67,6 @@ naver_link: "https://www.financialpost.co.kr/news/articleView.html?idxno=269335"
 
 지금 바로 케이뱅크 앱을 활용해 생활비를 절약하고 알짜 정보를 얻을 수 있는 실전 가이드를 소개합니다.
 
-![포스트 소개](/images/body-2026-08-08-kbank-lifestyle-service-2.jpg)
 
 *   **1단계: 알뜰폰 진단 서비스 활용해 보기**
     *   케이뱅크 앱 내 혜택/생활 탭에 접속하여 현재 사용하는 데이터량과 통화량을 체크해 보세요. 

@@ -24,7 +24,6 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014109800?sid=101"
 
 ---
 
-![포스트 소개](/images/body-2026-08-06-banana-kick-baby-1.jpg)
 
 ## 2500만 뷰의 주인공! 바나나킥 먹다 머쓱해진 12개월 아기의 사연
 
@@ -42,7 +41,6 @@ naver_link: "https://n.news.naver.com/mnews/article/003/0014109800?sid=101"
 
 [농심 공식 홈페이지](https://www.nongshim.com)에 따르면 농심은 해당 아기만을 위해 제작한 커스텀 바나나킥 패키지와 더불어 다양한 킥 시리즈 과자 선물 세트를 전달했다고 합니다. 과자를 집지 못해 머쓱해했던 아기에게 진짜 바나나킥을 원 없이 먹을 수 있는 혜택(?)을 선사한 셈이죠!
 
-![포스트 소개](/images/body-2026-08-06-banana-kick-baby-2.jpg)
 
 ---
 
