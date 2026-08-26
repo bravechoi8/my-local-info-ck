@@ -235,14 +235,36 @@ async function processBodyImages(markdownContent, safeFilename) {
   let updatedContent = markdownContent;
   for (const { fullMatch, imgPath } of results) {
     if (imgPath) {
-      updatedContent = updatedContent.replace(fullMatch, `![포스트 소개](${imgPath})`);
+      // 만약 본문에 이미 동일한 이미지 경로가 삽입되어 있다면 중복 삽입하지 않고 플레이스홀더를 제거
+      if (updatedContent.includes(`(${imgPath})`)) {
+        console.log(`[본문 이미지 중복 방지] 이미 존재하는 이미지 경로(${imgPath})이므로 중복 삽입을 차단합니다.`);
+        updatedContent = updatedContent.replace(fullMatch, '');
+      } else {
+        updatedContent = updatedContent.replace(fullMatch, `![포스트 소개](${imgPath})`);
+      }
     } else {
       // 이미지 생성 결국 실패 시 본문에서 플레이스홀더 제거
       updatedContent = updatedContent.replace(fullMatch, '');
     }
   }
 
-  return updatedContent;
+  return deduplicateMarkdownImages(updatedContent);
+}
+
+/**
+ * 마크다운 본문 내 동일한 이미지 파일 경로가 2번 이상 중복 삽입되는 것을 원천 차단하는 필터
+ */
+function deduplicateMarkdownImages(content) {
+  const seenImages = new Set();
+  return content.replace(/!\[(.*?)\]\((.*?)\)/g, (fullMatch, alt, src) => {
+    const cleanSrc = src.trim().split('?')[0]; // 쿼리스트링 제외한 순수 경로
+    if (seenImages.has(cleanSrc)) {
+      console.log(`[마크다운 중복 이미지 필터링] 중복 이미지 감지 및 자동 제거: ${cleanSrc}`);
+      return '';
+    }
+    seenImages.add(cleanSrc);
+    return fullMatch;
+  });
 }
 
 // HTML 태그 제거 및 특수문자 변환 함수
