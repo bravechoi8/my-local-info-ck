@@ -2429,5 +2429,27 @@
     "target": "사회복지사업법에 따라 설립된 사회복지법인과 사회복지사업을 목적으로 하는 단체 및 한국한센복지협회",
     "summary": "사회복지법인 및 단체가 사회복지사업 운영을 위해 취득하는 부동산에 대해 취득세, 재산세 등",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000012"
+  },
+  {
+    "id": 290,
+    "name": "지역·산업 맞춤형 인력양성 서비스",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국산업인력공단",
+    "target": "협약기업 재직근로자(고용보험 가입자), 협약기업 채용예정자",
+    "summary": "지역 중소기업 재직근로자 대상으로 훈련 실시",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000700210"
+  },
+  {
+    "id": 291,
+    "name": "능력개발전담주치의 중소기업 훈련 참여 및 역량강화 지원",
+    "category": "혜택",
+    "startDate": "2025-09-08",
+    "endDate": "상시",
+    "location": "한국산업인력공단",
+    "target": "고용보험법 시행령 제12조에서 정한 '우선지원 대상기업'",
+    "summary": "기업의 상황을 진단하고 맞춤형 서비스를 처방하여 중소기업의 훈련참여 및 역량강화를 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000700216"
   }
 ]
