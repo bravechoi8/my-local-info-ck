@@ -2407,5 +2407,27 @@
     "target": "대학교 졸업자 및 최종학년 재학생(휴학생 제외), 기후관련 분야 2년 이상 경력 전문대 졸업자, HRD-Net 지원대상자",
     "summary": "기후변화 관련 전문인력을 공급을 위한 양성과정 교육",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55258400202"
+  },
+  {
+    "id": 288,
+    "name": "영유아 보육시설 지방세 감면",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "2027-12-31",
+    "location": "시·군·구청",
+    "target": "어린이집 및 유치원 설치·운영 또는 직장어린이집 위탁운영을 위해 취득하는 부동산",
+    "summary": "영육아보육 시설 설치ㆍ운영을 위해 취득한 부동산의 취득세, 재산세 면제",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000010"
+  },
+  {
+    "id": 289,
+    "name": "사회복지법인 지방세 감면",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "2025-12-31",
+    "location": "행정안전부",
+    "target": "사회복지사업법에 따라 설립된 사회복지법인과 사회복지사업을 목적으로 하는 단체 및 한국한센복지협회",
+    "summary": "사회복지법인 및 단체가 사회복지사업 운영을 위해 취득하는 부동산에 대해 취득세, 재산세 등",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000012"
   }
 ]
