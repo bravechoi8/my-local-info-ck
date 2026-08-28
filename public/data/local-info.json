@@ -2473,5 +2473,27 @@
     "target": "경찰공무원으로부터 범죄수사를 위하여 일정한 장소에 출석을 요구 받고 지정된 장소에 출석한 자 중 피의자, 고소인, 법령상 신고의무자를 제외한 제3자",
     "summary": "경찰관서에 출석한 범죄수사 참고인 등에게 참고인 여비 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/132000000009"
+  },
+  {
+    "id": 294,
+    "name": "사립학교 교직원 퇴직수당",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "사립학교교직원연금공단",
+    "target": "재직기간 1년 이상 사립학교 퇴직 교직원",
+    "summary": "교직원이 1년 이상 재직하고 퇴직·사망 한 때에 퇴직급여와 별도로 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500011"
+  },
+  {
+    "id": 295,
+    "name": "퇴직예정 교직원 퇴임대비 연수",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "사립학교교직원연금공단",
+    "target": "사립학교 퇴직예정 교직원",
+    "summary": "퇴직예정 교직원에게 퇴직대비 교육 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500001"
   }
 ]
