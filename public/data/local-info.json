@@ -2451,5 +2451,27 @@
     "target": "고용보험법 시행령 제12조에서 정한 '우선지원 대상기업'",
     "summary": "기업의 상황을 진단하고 맞춤형 서비스를 처방하여 중소기업의 훈련참여 및 역량강화를 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000700216"
+  },
+  {
+    "id": 292,
+    "name": "범죄피해자 보호·지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경찰청",
+    "target": "강력범죄 피해자",
+    "summary": "강력범죄 피해자 대상 안전조치 실시 및 지원제도 연계",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/132000000008"
+  },
+  {
+    "id": 293,
+    "name": "참고인 여비 지급",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "경찰청",
+    "target": "경찰공무원으로부터 범죄수사를 위하여 일정한 장소에 출석을 요구 받고 지정된 장소에 출석한 자 중 피의자, 고소인, 법령상 신고의무자를 제외한 제3자",
+    "summary": "경찰관서에 출석한 범죄수사 참고인 등에게 참고인 여비 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/132000000009"
   }
 ]
