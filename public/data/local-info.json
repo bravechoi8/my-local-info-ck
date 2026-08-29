@@ -2495,5 +2495,27 @@
     "target": "사립학교 퇴직예정 교직원",
     "summary": "퇴직예정 교직원에게 퇴직대비 교육 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500001"
+  },
+  {
+    "id": 296,
+    "name": "대‧중소기업 상생일자리 프로그램",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "대·중견기업 협력사, 만 34세 이하 청년 구직자",
+    "summary": "청년구직자 직무교육 및 대기업 협력사에 취업연계",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900001"
+  },
+  {
+    "id": 297,
+    "name": "중소기업 인력양성대학",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "특성화고, 전문대, 대학, 중소기업",
+    "summary": "산업계 수요와 연계한 학위과정 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900005"
   }
 ]
