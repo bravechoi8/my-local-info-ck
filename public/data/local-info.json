@@ -2517,5 +2517,27 @@
     "target": "특성화고, 전문대, 대학, 중소기업",
     "summary": "산업계 수요와 연계한 학위과정 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900005"
+  },
+  {
+    "id": 298,
+    "name": "소규모사업장 근로자 건강상담서비스 제공(근로자건강센터)",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "근로자건강센터",
+    "target": "50인 미만 사업장 근로자",
+    "summary": "50인 미만 사업장 근로자에게 직업병, 근무환경, 스트레스 등에 대한 예방·상담 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000043"
+  },
+  {
+    "id": 299,
+    "name": "직장어린이집 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "직장어린이집을 설치 운영하고자 하는 사업주 또는 사업주 단체",
+    "summary": "직장어린이집 설치운영 사업주에게 설치비와 보육교사 인건비, 운영비 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000044"
   }
 ]
