@@ -2539,5 +2539,27 @@
     "target": "직장어린이집을 설치 운영하고자 하는 사업주 또는 사업주 단체",
     "summary": "직장어린이집 설치운영 사업주에게 설치비와 보육교사 인건비, 운영비 등을 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000044"
+  },
+  {
+    "id": 300,
+    "name": "의료급여수급권자 일반건강검진비 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "의료급여 수급권자 중 20~64세 세대주 및 세대원",
+    "summary": "20세이상 의료급여 수급권자 일반건강검진 서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/408000000419"
+  },
+  {
+    "id": 301,
+    "name": "매출채권보험 지원",
+    "category": "혜택",
+    "startDate": "2026-08-14",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "전체 업종(단, 보험운용 필요성이 낮은 일부 업종 제외)",
+    "summary": "중소기업이 취득한 매출채권을 보험에 가입하고, 구매기업의 채무불이행 시 보험금 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000010654"
   }
 ]
