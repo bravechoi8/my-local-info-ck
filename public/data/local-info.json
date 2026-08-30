@@ -2561,5 +2561,16 @@
     "target": "전체 업종(단, 보험운용 필요성이 낮은 일부 업종 제외)",
     "summary": "중소기업이 취득한 매출채권을 보험에 가입하고, 구매기업의 채무불이행 시 보험금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000010654"
+  },
+  {
+    "id": 302,
+    "name": "외식기업 해외진출 지원",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "해외 외식시장 진출을 하고 있거나 희망하는 국내 외식 프랜차이즈 가맹본부 및 직영사업자",
+    "summary": "해외외식시장 진출을 희망하는 국내외식기업에게 부스임차비,통역비등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000173"
   }
 ]
