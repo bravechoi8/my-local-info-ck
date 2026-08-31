@@ -2572,5 +2572,27 @@
     "target": "해외 외식시장 진출을 하고 있거나 희망하는 국내 외식 프랜차이즈 가맹본부 및 직영사업자",
     "summary": "해외외식시장 진출을 희망하는 국내외식기업에게 부스임차비,통역비등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000173"
+  },
+  {
+    "id": 303,
+    "name": "건강보험 본인부담상한액 초과금 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "국민건강보험공단",
+    "target": "건강보험 가입자 및 피부양자 중 본인부담상한액기준 초과자",
+    "summary": "건강보험 본인일부부담금 총액이 본인부담상한액을 초과한 경우 초과금액 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800002"
+  },
+  {
+    "id": 304,
+    "name": "건강보험 산정특례",
+    "category": "혜택",
+    "startDate": "2026-03-09",
+    "endDate": "상시",
+    "location": "국민건강보험공단",
+    "target": "질환별 산정특례 등록기준(필수검사항목 및 기준)을 충족하여 진료의사가 진단확진한 대상",
+    "summary": "질환별 특례기간 동안 해당 질환 관련 진료비의 본인부담률 경감",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800041"
   }
 ]
