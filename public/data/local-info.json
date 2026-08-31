@@ -2594,5 +2594,27 @@
     "target": "질환별 산정특례 등록기준(필수검사항목 및 기준)을 충족하여 진료의사가 진단확진한 대상",
     "summary": "질환별 특례기간 동안 해당 질환 관련 진료비의 본인부담률 경감",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55092800041"
+  },
+  {
+    "id": 305,
+    "name": "혁신 소상공인 창업지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "생활분야에서 창의적인 아이디어로 창업을 하고자 하는 예비창업자",
+    "summary": "예비창업자를 대상으로 교육 및 멘토링, 사업화 등을 지원하는 사업",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142000000038"
+  },
+  {
+    "id": 306,
+    "name": "민간어린이집 실내환경 개선 지원(국산목재)",
+    "category": "혜택",
+    "startDate": "2025-02-14",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "「영유아보육법」제10조의 어린이집",
+    "summary": "국산목재로 어린이집 실내환경 개선",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000222"
   }
 ]
