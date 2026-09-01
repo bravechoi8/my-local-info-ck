@@ -2638,5 +2638,27 @@
     "target": "전국 초등학교(1~4학년) 및 유치원(만5세) 등",
     "summary": "학교 해양환경교육 체험교육 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55393100002"
+  },
+  {
+    "id": 309,
+    "name": "고용유지지원금 지원",
+    "category": "혜택",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "고용노동부 고용센터",
+    "target": "고용조정이 불가피한 상황임에도 휴업,휴직 등 고용유지조치를 통해 수당을 지급하고 근로자를 계속 고용하는 사업주",
+    "summary": "고용조정이 불가피한 사업주가 휴업 및 휴직을 통해 근로자 계속 고용시 인건비 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003418"
+  },
+  {
+    "id": 310,
+    "name": "어린이 급식관리 지원",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "식품의약품안전처",
+    "target": "어린이에게 단체급식을 제공하는 어린이 급식소",
+    "summary": "어린이급식소를 대상으로 위생 및 안전, 영양관리를 위한 교육 등 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003440"
   }
 ]
