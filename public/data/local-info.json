@@ -2616,5 +2616,27 @@
     "target": "「영유아보육법」제10조의 어린이집",
     "summary": "국산목재로 어린이집 실내환경 개선",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000222"
+  },
+  {
+    "id": 307,
+    "name": "학기중 평일 중식 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "서울특별시교육청",
+    "target": "서울시교육청관내 국,공, 사립 초,중,고, 특수, 각종학교에 재학중인 학생",
+    "summary": "관내 각종학교에 재학중인 학생 대상으로 학기중 평일 중식비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/701000000206"
+  },
+  {
+    "id": 308,
+    "name": "찾아가는 해양환경 이동교실",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "해양환경공단",
+    "target": "전국 초등학교(1~4학년) 및 유치원(만5세) 등",
+    "summary": "학교 해양환경교육 체험교육 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55393100002"
   }
 ]
