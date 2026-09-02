@@ -2660,5 +2660,27 @@
     "target": "어린이에게 단체급식을 제공하는 어린이 급식소",
     "summary": "어린이급식소를 대상으로 위생 및 안전, 영양관리를 위한 교육 등 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003440"
+  },
+  {
+    "id": 311,
+    "name": "성매매 피해자 지원",
+    "category": "혜택",
+    "startDate": "2026-05-18",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "성매매피해자",
+    "summary": "성매매 피해 여성의 보호 및 자립·자활을 위한 지원 (예: 상담, 의료, 시설입소 등)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000050703"
+  },
+  {
+    "id": 312,
+    "name": "도박중독 치유 상담 서비스",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "한국도박문제예방치유원",
+    "target": "도박중독자 및 도박중독자 가족",
+    "summary": "도박중독자 및 가족을 위한 치유상담, 최대 1년간 추후관리서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000051460"
   }
 ]
