@@ -2682,5 +2682,27 @@
     "target": "도박중독자 및 도박중독자 가족",
     "summary": "도박중독자 및 가족을 위한 치유상담, 최대 1년간 추후관리서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000051460"
+  },
+  {
+    "id": 313,
+    "name": "외식업체 육성자금(융자)",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "독립음식점 운영 법인·개인사업자, 프랜차이즈 사업자, 단체급식사업자",
+    "summary": "외식업체 사업자에게 운영 및 시설자금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000407"
+  },
+  {
+    "id": 314,
+    "name": "농축산용미생물효능평가지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "농축산용 미생물산업 육성 지원 센터",
+    "target": "농축산용 미생물제품을 만드는 기업",
+    "summary": "농축산용 미생물제품을 만드는 기업에게 산업화를 촉진할 수 있는 기반 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000377"
   }
 ]
