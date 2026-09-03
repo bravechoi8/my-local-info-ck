@@ -2704,5 +2704,27 @@
     "target": "농축산용 미생물제품을 만드는 기업",
     "summary": "농축산용 미생물제품을 만드는 기업에게 산업화를 촉진할 수 있는 기반 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300000377"
+  },
+  {
+    "id": 315,
+    "name": "소기업·소상공인 전환보증",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "재단의 보증을 이용 중인 기업",
+    "summary": "소기업·소상공인에게 만기상환 구조 전환을 통해 경영 안정을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000073"
+  },
+  {
+    "id": 316,
+    "name": "첫걸음기업 금융지원 협약보증",
+    "category": "혜택",
+    "startDate": "2025-09-15",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "현재 사업자 등록 후 가동(영업)중으로, 지역 신보 보증 잔액이 없는 소기업·소상공인",
+    "summary": "지역신보 보증을 처음 이용하는 소기업·소상공인에 사업안착 및 성장지원을 도모",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000074"
   }
 ]
