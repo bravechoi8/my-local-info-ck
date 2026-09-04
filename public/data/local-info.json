@@ -2770,5 +2770,27 @@
     "target": "분만취약지 고위험인산부 연계 지원 사업단, 고위험 산모신생아 치료병원",
     "summary": "고위험임산부 조기 진단 및 치료 체계 구축(개소당 2억원)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000039"
+  },
+  {
+    "id": 321,
+    "name": "금연상담전화",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "전 국민",
+    "summary": "전 국민을 대상으로 금연 및 흡연예방 관련 상담서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000097"
+  },
+  {
+    "id": 322,
+    "name": "온라인 금연상담",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "전 국민",
+    "summary": "전 국민을 대상으로 포털사이트 및 모바일앱을 통해 금연·흡연예방 정보 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000098"
   }
 ]
