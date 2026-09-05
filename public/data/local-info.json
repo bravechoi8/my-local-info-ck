@@ -2792,5 +2792,27 @@
     "target": "전 국민",
     "summary": "전 국민을 대상으로 포털사이트 및 모바일앱을 통해 금연·흡연예방 정보 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000098"
+  },
+  {
+    "id": 323,
+    "name": "가정위탁아동 상해보험료 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "「아동복지법」에 따라 가정위탁 보호조치된 아동, 일시보호된 아동 및 가정위탁 보호 연장중인 아동",
+    "summary": "가정위탁보호아동에게 1인당 68,500원 내외 상해보험료 가입 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000250"
+  },
+  {
+    "id": 324,
+    "name": "북한이탈주민 청소년 교육 지원",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "통일부",
+    "target": "북한이탈주민 및 북한이탈주민의 자녀",
+    "summary": "북한이탈 청소년을 위한 특성화학교 및 대안학교 운영비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000100"
   }
 ]
