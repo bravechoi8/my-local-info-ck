@@ -2880,5 +2880,27 @@
     "target": "광업법 제3조에 의한 법정광물 중 금속광종을 탐사ㆍ개발하고자 하는 광산",
     "summary": "금속광산을 대상으로 사업비의 50% 이내로 굴진비용 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000053"
+  },
+  {
+    "id": 331,
+    "name": "학교 흡연예방 사업",
+    "category": "혜택",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "전국 초,중,고등학교 및 시,도 교육청",
+    "summary": "전국의 학교 등을 대상으로 금연 캠페인, 특화 프로그램 등 금연교육 사업 시행",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000116"
+  },
+  {
+    "id": 332,
+    "name": "치매 상담콜센터 운영",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "치매 환자와 가족들, 또한 치매 관련 내용에 관심이 있는 전 국민",
+    "summary": "전 국민을 대상으로 치매 예방 관련 정보제공과 환자가족에게 심리상담 등 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000124"
   }
 ]
