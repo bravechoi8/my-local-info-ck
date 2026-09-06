@@ -2858,5 +2858,27 @@
     "target": "북한이탈주민",
     "summary": "북한이탈주민에게 취업장려금 및 새출발장려금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000069"
+  },
+  {
+    "id": 329,
+    "name": "탐광시추 공사비 지원(일반광업육성지원)",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "한국광해광업공단",
+    "target": "광업법 제3조에 따른 법정 광물이 등록된 광구의 광업권자 또는 조광권자",
+    "summary": "광업권자 또는 조광권자에게 탐광시추 공사비를 지원(70% 이내)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000051"
+  },
+  {
+    "id": 330,
+    "name": "금속광산 현대화 굴진 지원",
+    "category": "혜택",
+    "startDate": "2025-05-20",
+    "endDate": "상시",
+    "location": "한국광해광업공단",
+    "target": "광업법 제3조에 의한 법정광물 중 금속광종을 탐사ㆍ개발하고자 하는 광산",
+    "summary": "금속광산을 대상으로 사업비의 50% 이내로 굴진비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000053"
   }
 ]
