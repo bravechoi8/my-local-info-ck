@@ -2902,5 +2902,27 @@
     "target": "치매 환자와 가족들, 또한 치매 관련 내용에 관심이 있는 전 국민",
     "summary": "전 국민을 대상으로 치매 예방 관련 정보제공과 환자가족에게 심리상담 등 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000124"
+  },
+  {
+    "id": 333,
+    "name": "서울물재생체험관+현대화시설 견학",
+    "category": "행사",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "서울물재생체험관",
+    "target": "20인 이내 단체(초등 5학년 이상)",
+    "summary": "20인 이내 단체 대상으로 현장 견학 해설",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00021300001"
+  },
+  {
+    "id": 334,
+    "name": "차별 개선 센터",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "비정규직 고용 사업주 및 인사노무관리자, 비정규직 근로자",
+    "summary": "비정규직 고용사업주 및 인사노무관리자등에 진단, 개선, 상담, 예방교육 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000047"
   }
 ]
