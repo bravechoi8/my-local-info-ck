@@ -2924,5 +2924,27 @@
     "target": "비정규직 고용 사업주 및 인사노무관리자, 비정규직 근로자",
     "summary": "비정규직 고용사업주 및 인사노무관리자등에 진단, 개선, 상담, 예방교육 등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000047"
+  },
+  {
+    "id": 335,
+    "name": "입양축하금",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "국내입양에 관한 특별법에 따라 보호대상아동을 국내입양한 가정 중에서 가정법원 입양확정일이 2022.1.1. 이후인 가정",
+    "summary": "1회에 한하여 200만원 입양축하금 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005011"
+  },
+  {
+    "id": 336,
+    "name": "자산형성지원사업(청년내일저축계좌)",
+    "category": "혜택",
+    "startDate": "2026-05-04",
+    "endDate": "2026-05-20",
+    "location": "보건복지부",
+    "target": "만 15~39세 이하, 기준 중위소득 50% 이하, 월 10만원 이상 근로·사업소득 발생자",
+    "summary": "저소득 근로청년의 본인적립금(월 10~50만원)에 정부지원금(월 30만원)을 매칭하여 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005013"
   }
 ]
