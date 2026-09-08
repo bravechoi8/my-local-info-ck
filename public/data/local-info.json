@@ -2946,5 +2946,27 @@
     "target": "만 15~39세 이하, 기준 중위소득 50% 이하, 월 10만원 이상 근로·사업소득 발생자",
     "summary": "저소득 근로청년의 본인적립금(월 10~50만원)에 정부지원금(월 30만원)을 매칭하여 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005013"
+  },
+  {
+    "id": 337,
+    "name": "스포츠산업 일자리 정보 및 매칭 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울올림픽기념국민체육진흥공단",
+    "target": "스포츠관련 기업 및 협력단체, 스포츠산업분야 구직 희망자",
+    "summary": "스포츠산업분야 일자리정보 및 취업서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100003"
+  },
+  {
+    "id": 338,
+    "name": "스포츠산업 선도기업 육성 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "서울올림픽기념국민체육진흥공단",
+    "target": "국내 스포츠 용품 제조업, 서비스업, 시설업 업력 3년 이상 및 스포츠산업 비중 10% 이상 중소기업",
+    "summary": "글로벌 기업으로 성장 잠재력이 높은 스포츠기업 지원(총3차년도)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100002"
   }
 ]
