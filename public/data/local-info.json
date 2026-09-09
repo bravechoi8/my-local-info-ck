@@ -2990,5 +2990,27 @@
     "target": "100인 이상 모기업 및 모기업이 선정한 협력업체",
     "summary": "모기업-협력업체 컨소시엄에 대한 상생협력활동 기술지원 및 매칭 컨설팅 비용 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55246800009"
+  },
+  {
+    "id": 341,
+    "name": "유연근무제 장려금 지원",
+    "category": "혜택",
+    "startDate": "2025-05-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "유연근무(재택ㆍ원격ㆍ선택근무)를 활용하는 중소ㆍ중견기업 사업주",
+    "summary": "우선지원 대상기업·중견기업 사업주가 유연근무(재택ㆍ원격ㆍ선택ㆍ시차출퇴) 활용시 장려금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000083"
+  },
+  {
+    "id": 342,
+    "name": "구직자 취업지원 서비스 제공",
+    "category": "혜택",
+    "startDate": "2024-05-21",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "구직자 등 취업희망자",
+    "summary": "구직자에게 일자리정보 및 직업지도 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000092"
   }
 ]
