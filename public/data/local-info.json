@@ -2968,5 +2968,27 @@
     "target": "국내 스포츠 용품 제조업, 서비스업, 시설업 업력 3년 이상 및 스포츠산업 비중 10% 이상 중소기업",
     "summary": "글로벌 기업으로 성장 잠재력이 높은 스포츠기업 지원(총3차년도)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100002"
+  },
+  {
+    "id": 339,
+    "name": "안전보건관리체계 구축 컨설팅",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국산업안전보건공단",
+    "target": "기업별 50인 이상 ~ 300인 미만 제조업·기타사업장(건설업 제외)",
+    "summary": "안전보건관리체계 미흡 사업장에 민간전문기관 컨설팅 지원(4회방문)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55246800007"
+  },
+  {
+    "id": 340,
+    "name": "대중소기업 안전보건 상생협력사업",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "2026-01-29",
+    "location": "한국산업안전보건공단",
+    "target": "100인 이상 모기업 및 모기업이 선정한 협력업체",
+    "summary": "모기업-협력업체 컨소시엄에 대한 상생협력활동 기술지원 및 매칭 컨설팅 비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55246800009"
   }
 ]
