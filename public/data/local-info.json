@@ -3034,5 +3034,27 @@
     "target": "경기도 내 예비창업자 및 소상공인, 폐업자, 재창업자 등",
     "summary": "종합상담 콜센터 구축, 운영으로 모든 지원사업에 대한 분야별·단계별 맞춤형 상담서비스 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700011"
+  },
+  {
+    "id": 345,
+    "name": "개발도상국 스포츠행정가 교육제공",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "서울올림픽기념국민체육진흥공단",
+    "target": "개발도상국 스포츠행정 분야 재직·경력자 또는 올림픽/세계선수권대회 참가 유경험 선수 중 추천을 받은 자",
+    "summary": "개도국 스포츠행정 분야 또는 국제대회 참가 경력자에게 석사학위과정 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100012"
+  },
+  {
+    "id": 346,
+    "name": "스포츠산업 인턴십 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울올림픽기념국민체육진흥공단",
+    "target": "국내 중·소 스포츠산업체 및 협·단체, 스포츠산업분야 구직 희망자",
+    "summary": "국내 스포츠산업 분야 인턴십 운영을 위한 인건비 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100011"
   }
 ]
