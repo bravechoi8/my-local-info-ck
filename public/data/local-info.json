@@ -3012,5 +3012,27 @@
     "target": "구직자 등 취업희망자",
     "summary": "구직자에게 일자리정보 및 직업지도 서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000092"
+  },
+  {
+    "id": 343,
+    "name": "소상공인 통합교육 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 소상공인 자영업자, 예비 창업자 등",
+    "summary": "경영역량강화 및 전문가 육성을 위한 교육 지원 등",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700010"
+  },
+  {
+    "id": 344,
+    "name": "종합콜센터 운영",
+    "category": "혜택",
+    "startDate": "2026-05-19",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 예비창업자 및 소상공인, 폐업자, 재창업자 등",
+    "summary": "종합상담 콜센터 구축, 운영으로 모든 지원사업에 대한 분야별·단계별 맞춤형 상담서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700011"
   }
 ]
