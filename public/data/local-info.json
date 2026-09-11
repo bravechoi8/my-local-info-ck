@@ -3056,5 +3056,27 @@
     "target": "국내 중·소 스포츠산업체 및 협·단체, 스포츠산업분야 구직 희망자",
     "summary": "국내 스포츠산업 분야 인턴십 운영을 위한 인건비 등 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100011"
+  },
+  {
+    "id": 347,
+    "name": "구직자 취업역량강화 프로그램",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "고용센터",
+    "target": "직업선택을 고민하고 있거나 취업의욕 고취 및 구직기술 향상이 필요한 구직자",
+    "summary": "집단상담, 취업특강 등 구직자 취업역량강화프로그램 운영",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000147"
+  },
+  {
+    "id": 348,
+    "name": "국가인적자원개발컨소시엄지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "한국산업인력공단",
+    "target": "중소기업 등과 협약을 체결한 기업, 사업주단체 등 공동훈련센터로 선정된 기관",
+    "summary": "중소기업과 협약을 체결한 기업 대상으로 훈련시설 및 장비구매비 지원 (연 20억원 한도)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000065"
   }
 ]
