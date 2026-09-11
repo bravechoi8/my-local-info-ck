@@ -3078,5 +3078,27 @@
     "target": "중소기업 등과 협약을 체결한 기업, 사업주단체 등 공동훈련센터로 선정된 기관",
     "summary": "중소기업과 협약을 체결한 기업 대상으로 훈련시설 및 장비구매비 지원 (연 20억원 한도)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000065"
+  },
+  {
+    "id": 349,
+    "name": "중소기업 해외규격인증 획득 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "중소기업, 별도의 평가표에 의해 선정된 기업 대상",
+    "summary": "중소기업 등을 대상으로 수출에 필요한 해외규격인증 획득 비용의 50~70% 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002709"
+  },
+  {
+    "id": 350,
+    "name": "레저장비산업개발지원",
+    "category": "혜택",
+    "startDate": "2024-02-08",
+    "endDate": "2024-03-08",
+    "location": "산업통상부",
+    "target": "자전거‧해양레저장비 및 관련 소재‧부품‧장비를 제조하거나 관련 서비스를 제공하는 중소기업",
+    "summary": "자전거‧해양레저장비 분야의 기술개발 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002892"
   }
 ]
