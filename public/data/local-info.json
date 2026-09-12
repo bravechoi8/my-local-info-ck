@@ -3100,5 +3100,27 @@
     "target": "자전거‧해양레저장비 및 관련 소재‧부품‧장비를 제조하거나 관련 서비스를 제공하는 중소기업",
     "summary": "자전거‧해양레저장비 분야의 기술개발 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002892"
+  },
+  {
+    "id": 351,
+    "name": "국가기술자격 검정시설 및 장비 구입자금 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "국가기술자격 검정시설 사용기관",
+    "summary": "국가기술자격 검정시설 사용기관에게 장비 구입비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000050"
+  },
+  {
+    "id": 352,
+    "name": "근로복지기금지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "사내 및 공동근로복지기금법인(대·중소기업 등)",
+    "summary": "대·중소기업이 참여하여 복지격차를 완화하는 사내 및 공동근로복지기금 조성 및 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000052"
   }
 ]
