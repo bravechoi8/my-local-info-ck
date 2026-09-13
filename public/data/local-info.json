@@ -3144,5 +3144,27 @@
     "target": "6ㆍ25전쟁 전사자 유가족(8촌 이내 친ㆍ인척) 및 유해 매장지역 제보ㆍ증언 참여 국민",
     "summary": "6ㆍ25전사자 유가족 DNA 시료채취 포상금 및 유해소재 제보 포상금 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000082"
+  },
+  {
+    "id": 355,
+    "name": "청소년부모 아동양육비 지원사업",
+    "category": "혜택",
+    "startDate": "2024-06-17",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "① 청소년(24세이하, 사실혼 포함)부부로서, ② 자녀를 양육하고 있는, ③ 기준 중위소득 65% 이하의 가구",
+    "summary": "저소득 청소년부모 가구 자녀 1인당 월 25만 원 아동양육비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/138300000051"
+  },
+  {
+    "id": 356,
+    "name": "가정폭력 피해자 보호시설 퇴소자 자립지원금",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "가정폭력 피해자 보호시설 4개월 이상 입소 후 퇴소자 및 동반아동",
+    "summary": "가정폭력 피해자 보호시설 퇴소 시 자립지원금(피해자 500만원, 동반아동 250만원) 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/138300000053"
   }
 ]
