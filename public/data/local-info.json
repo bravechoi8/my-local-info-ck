@@ -3232,5 +3232,27 @@
     "target": "상시노동자 수 300인 미만 사업장 소속 노동자",
     "summary": "상시노동자 300인 미만 사업장 소속 노동자를 위한 근로자지원프로그램(EAP) 온·오프라인 상담 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000060"
+  },
+  {
+    "id": 363,
+    "name": "사회복지시설 신재생에너지 보급 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국에너지공단 신재생에너지센터",
+    "target": "사회복지시설",
+    "summary": "선정된 사회복지시설에 신재생에너지 설비 설치비용의 50% 이내로 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GKE000000020"
+  },
+  {
+    "id": 364,
+    "name": "노인복지용구제공",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "노인장기요양 등급판정(1~5등급, 인지지원등급)을 받은 재가급여이용 수급자",
+    "summary": "재가급여이용 수급자에게 일상생활 등에 필요한 용구를 연간 160만원 한도에서 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GMW000000110"
   }
 ]
