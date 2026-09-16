@@ -3254,5 +3254,27 @@
     "target": "노인장기요양 등급판정(1~5등급, 인지지원등급)을 받은 재가급여이용 수급자",
     "summary": "재가급여이용 수급자에게 일상생활 등에 필요한 용구를 연간 160만원 한도에서 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GMW000000110"
+  },
+  {
+    "id": 365,
+    "name": "경기도 기업옴부즈만 현장컨설팅 지원",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경기도 내 소재한 중소기업, 예비창업자 등",
+    "summary": "기업애로 해소를 위한 기업 맞춤형 상담 및 무료 현장컨설팅 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000804"
+  },
+  {
+    "id": 366,
+    "name": "소상공인 상담센터 운영",
+    "category": "혜택",
+    "startDate": "2026-05-19",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경기도 소상공인연합회",
+    "summary": "행정지원, 상담(법무, 노무, 세무), 정책안내 등 소상공인 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000808"
   }
 ]
