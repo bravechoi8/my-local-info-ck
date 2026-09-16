@@ -17,13 +17,13 @@ naver_link: "https://www.wikitree.co.kr/articles/1158038"
 
 
 
-![빌딩은박남매 공식 방송/현장 실물 캡처](/images/body-2026-09-14-silence-of-the-lambs-netflix-1.jpg)
+![영화 양들의 침묵 공식 트레일러 스틸컷](/images/body-2026-09-14-silence-of-the-lambs-netflix-1.jpg)
 
 ---
 
-### 빌딩은박남매 공식 영상
+### 영화 양들의 침묵 공식 오리지널 예고편
 
-[빌딩은박남매 공식 영상 확인하기](https://www.youtube.com/watch?v=WwgZJHxB1a0)
+[영화 양들의 침묵 공식 오리지널 예고편 영상 확인하기](https://www.youtube.com/watch?v=W6Mm8Sbe__o)
 
 ---
 
@@ -71,6 +71,6 @@ A3. 아니요! '한니발', '레드 드래곤' 등 시리즈물이 존재하지�
 ---
 
 ### 🛒 연관 추천 상품
-- 📌 **[재테크 & 자산관리 추천 베스트셀러 도서 모음 쿠팡 최저가 보러가기](https://www.coupang.com/np/search?q=%EC%9E%AC%ED%85%8C%ED%81%AC%20%EC%9E%90%EC%82%B0%EA%B4%80%EB%A6%AC%20%EB%B2%A0%EC%8A%A4%ED%8A%B8%EC%85%80%EB%9F%AC%20%EB%8F%84%EC%84%9C)**
+- 📌 **[홈시네마 영화 감상 추천 팝콘 & 간식 모음 쿠팡 최저가 보러가기](https://www.coupang.com/np/search?q=%ED%99%88%EC%8B%9C%EB%84%A4%EB%A7%88%20%ED%8C%9D%EC%BD%98%20%EA%B0%84%EC%8B%9D)**
 
 > 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
