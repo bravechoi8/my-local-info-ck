@@ -16,17 +16,6 @@ naver_link: "https://n.news.naver.com/mnews/article/374/0000530039?sid=101"
 
 ---
 
-
-![백세명수 공식 방송/현장 실물 캡처](/images/body-2026-08-31-gas-price-drop-1.jpg)
-
----
-
-### 백세명수 공식 영상
-
-[백세명수 공식 영상 확인하기](https://www.youtube.com/watch?v=PXeBGwx4zic)
-
----
-
 ## 1. 최근 전국 주유소 유가 동향 한눈에 보기
 
 한국석유공사의 유가정보시스템인 오피넷에 따르면, 최근 전국 주유소의 휘발유 및 경유 평균 판매 가격은 지난주에 비해 소폭 하락하며 장기 하락세를 유지하고 있습니다.

@@ -118,13 +118,34 @@ export async function searchYouTubeOfficialVideo(keyword) {
     if (!res.ok) return null;
     const html = await res.text();
     const matches = html.match(/\/watch\?v=([a-zA-Z0-9_-]{11})/g) || [];
-    const ids = [...new Set(matches)].map(x => x.replace('/watch?v=', '')).slice(0, 5);
+    const ids = [...new Set(matches)].map(x => x.replace('/watch?v=', '')).slice(0, 10);
+
+    // 키워드에서 2글자 이상 핵심 검색어 추출
+    const cleanKw = keyword.replace(/[^a-zA-Z0-9가-힣\s]/g, '');
+    const kwWords = cleanKw.split(/\s+/).filter(w => w.length >= 2 && !['공식', '영상', '확인', '보기', '총정리', '꿀팁'].includes(w));
+
+    // 무관하게 반복 노출되던 블랙리스트 채널/영상 ID 차단
+    const blockedAuthors = ['백세명수', '통박채널', '빌딩은박남매', '재테크놀로지'];
+    const blockedIds = ['PXeBGwx4zic', 'DDvLxZpDaw8', 'WwgZJHxB1a0', 'oevpGs3oeuw'];
 
     for (const id of ids) {
+      if (blockedIds.includes(id)) continue;
       try {
         const oembedRes = await fetchWithRetry(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`);
         if (oembedRes.ok) {
           const info = await oembedRes.json();
+          if (blockedAuthors.some(author => info.author_name && info.author_name.includes(author))) {
+            continue;
+          }
+
+          // 영상 제목에 검색 키워드 핵심 단어가 최소 1개 이상 포함되어 있는지 관련성 체크
+          if (kwWords.length > 0) {
+            const hasKeywordMatch = kwWords.some(w => info.title && info.title.toLowerCase().includes(w.toLowerCase()));
+            if (!hasKeywordMatch) {
+              continue;
+            }
+          }
+
           const maxresRes = await fetchWithRetry(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
           let thumbUrl = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
           if (!maxresRes.ok) {

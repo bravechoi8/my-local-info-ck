@@ -22,17 +22,6 @@ naver_link: "https://www.e-science.co.kr/news/articleView.html?idxno=134448"
 
 ---
 
-
-![통박채널  🏘 공식 방송/현장 실물 캡처](/images/body-2026-09-11-kb-savings-tax-education-1.jpg)
-
----
-
-### 통박채널  🏘 공식 영상
-
-[통박채널  🏘 공식 영상 확인하기](https://www.youtube.com/watch?v=DDvLxZpDaw8)
-
----
-
 ## KB저축은행의 포용적 금융 교육과 이주민 금융 이해도 제고
 
 이번 KB저축은행의 금융교육은 단순히 일회성 사회공헌 활동에 그치지 않고, 우리 사회의 중요한 구성원으로 자리 잡은 **결혼이주민들의 금융 적응력과 자립 심을 높이기 위해 기획**되었습니다. 

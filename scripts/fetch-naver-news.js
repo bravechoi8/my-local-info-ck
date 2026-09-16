@@ -1011,8 +1011,11 @@ naver_link: "${escapedLink}"
 
       // YouTube 공식 영상 검색 및 실사 캡처 자동 탑재
       try {
-        console.log(`[YouTube 영상 검색 시도] 키워드: "${selectedKeyword}" / "${titleVal}"`);
-        const ytVideo = (await searchYouTubeOfficialVideo(selectedKeyword)) || (await searchYouTubeOfficialVideo(titleVal));
+        console.log(`[YouTube 영상 검색 시도] 기사 제목 우선: "${titleVal}"`);
+        // 광범위한 태스크 키워드가 아니라 실제 기사 제목 및 원본 제목으로 검색해야 정확한 영상이 잡힘
+        const ytVideo = (await searchYouTubeOfficialVideo(titleVal)) || 
+                        (targetItem ? await searchYouTubeOfficialVideo(cleanText(targetItem.title)) : null);
+
         if (ytVideo && ytVideo.thumbUrl) {
           console.log(`[YouTube 영상 연동 성공] ${ytVideo.title} (${ytVideo.author})`);
           const ytBodyFilename = `body-${safeFilename}-1.jpg`;
@@ -1036,6 +1039,8 @@ naver_link: "${escapedLink}"
               markdownContent += videoSection;
             }
           }
+        } else {
+          console.log(`[YouTube 영상] 기사 내용과 연관된 공식 영상을 찾지 못하여 영상 삽입을 건너뜁니다.`);
         }
       } catch (ytErr) {
         console.warn(`[YouTube 영상 검색/삽입 실패]:`, ytErr.message);
@@ -1044,9 +1049,9 @@ naver_link: "${escapedLink}"
       // 본문 이미지 실시간 생성 및 치환
       markdownContent = await processBodyImages(markdownContent, safeFilename);
 
-      // 쿠팡 파트너스 추천 모듈 및 필수 법적 고지 문구 자동 추가
+      // 쿠팡 파트너스 추천 모듈 및 필수 법적 고지 문구 자동 추가 (기사 제목과 카테고리를 함께 반영)
       if (!markdownContent.includes('쿠팡 파트너스 활동의 일환으로')) {
-        const coupangModule = generateCoupangModule(selectedKeyword, postCategory);
+        const coupangModule = generateCoupangModule(titleVal + ' ' + selectedKeyword, postCategory);
         markdownContent += coupangModule;
       }
 

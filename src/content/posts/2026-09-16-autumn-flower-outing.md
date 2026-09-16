@@ -17,13 +17,13 @@ naver_link: "https://n.news.naver.com/mnews/article/449/0000360560?sid=102"
 ---
 
 
-![재테크놀로지 공식 방송/현장 실물 캡처](/images/body-2026-09-16-autumn-flower-outing-1.jpg)
+![채널A 뉴스 공식 방송 캡처](/images/body-2026-09-16-autumn-flower-outing-1.jpg)
 
 ---
 
-### 재테크놀로지 공식 영상
+### 채널A 뉴스 공식 영상
 
-[재테크놀로지 공식 영상 확인하기](https://www.youtube.com/watch?v=oevpGs3oeuw)
+[채널A 뉴스 공식 영상 확인하기](https://www.youtube.com/watch?v=XTKio0Hc1MA)
 
 ---
 
@@ -101,6 +101,6 @@ A3. 주말 기준 개장 시간 30분 전에 도착하는 '전략적 조기 방�
 ---
 
 ### 🛒 연관 추천 상품
-- 📌 **[재테크 & 자산관리 추천 베스트셀러 도서 모음 쿠팡 최저가 보러가기](https://www.coupang.com/np/search?q=%EC%9E%AC%ED%85%8C%ED%81%AC%20%EC%9E%90%EC%82%B0%EA%B4%80%EB%A6%AC%20%EB%B2%A0%EC%8A%A4%ED%8A%B8%EC%85%80%EB%9F%AC%20%EB%8F%84%EC%84%9C)**
+- 📌 **[가을 나들이 피크닉 매트 & 돗자리 필수템 쿠팡 최저가 보러가기](https://www.coupang.com/np/search?q=%ED%94%BC%ED%81%AC%EB%8B%89%20%EB%8F%8B%EC%9E%90%EB%A6%AC%20%EB%A7%A4%ED%8A%B8)**
 
 > 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
