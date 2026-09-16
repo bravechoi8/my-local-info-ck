@@ -19,13 +19,7 @@ naver_link: "https://n.news.naver.com/mnews/article/296/0000104051?sid=103"
 
 ![잼예해줘 공식 방송/현장 실물 캡처](/images/body-2026-08-26-diet-baekjinkyung-1.jpg)
 
----
 
-### 잼예해줘 공식 영상
-
-[잼예해줘 공식 영상 확인하기](https://www.youtube.com/watch?v=8EHlM-kmc6w)
-
----
 
 ## 💡 백진경의 20kg 감량 비하인드! 운동 없이 살 빼는 게 가능할까?
 

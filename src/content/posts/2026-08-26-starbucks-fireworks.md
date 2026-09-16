@@ -19,13 +19,7 @@ naver_link: "https://n.news.naver.com/mnews/article/009/0005725786?sid=103"
 
 ![727스튜디오 공식 방송/현장 실물 캡처](/images/body-2026-08-26-starbucks-fireworks-1.jpg)
 
----
 
-### 727스튜디오 공식 영상
-
-[727스튜디오 공식 영상 확인하기](https://www.youtube.com/watch?v=jc13081o0PE)
-
----
 
 ### 🔥 실시간 트렌드 분석
 

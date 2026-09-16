@@ -19,13 +19,7 @@ naver_link: "https://n.news.naver.com/mnews/article/008/0005403746?sid=102"
 
 ![마군입니다 공식 방송/현장 실물 캡처](/images/body-2026-08-25-gdragon-heartwarming-story-1.jpg)
 
----
 
-### 마군입니다 공식 영상
-
-[마군입니다 공식 영상 확인하기](https://www.youtube.com/watch?v=VMakJz4VF6o)
-
----
 
 ## 무대 위 돌발 상황, 지드래곤이 보여준 완벽한 순발력과 센스
 

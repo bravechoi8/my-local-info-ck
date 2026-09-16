@@ -20,13 +20,7 @@ naver_link: "https://m.entertain.naver.com/article/003/0014147918"
 
 ![옥스푼 공식 방송/현장 실물 캡처](/images/body-2026-08-26-jung-joon-ha-restaurant-1.jpg)
 
----
 
-### 옥스푼 공식 영상
-
-[옥스푼 공식 영상 확인하기](https://www.youtube.com/watch?v=02hP_sdb3II)
-
----
 
 ## 월 억대 매출 횟집 오픈! 정준하의 마지막 요식업 도전 소식
 

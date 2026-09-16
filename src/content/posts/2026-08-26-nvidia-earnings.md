@@ -20,13 +20,7 @@ naver_link: "https://n.news.naver.com/mnews/article/023/0003994735?sid=101"
 
 ![경제사냥꾼 공식 방송/현장 실물 캡처](/images/body-2026-08-26-nvidia-earnings-1.jpg)
 
----
 
-### 경제사냥꾼 공식 영상
-
-[경제사냥꾼 공식 영상 확인하기](https://www.youtube.com/watch?v=Eqo6fUPTc6w)
-
----
 
 ### 🔥 실시간 트렌드 분석
 

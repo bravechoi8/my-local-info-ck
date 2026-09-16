@@ -19,13 +19,7 @@ naver_link: "https://m.sports.naver.com/wbaseball/article/139/0002252210"
 
 ![스포츠팩폭 공식 방송/현장 실물 캡처](/images/body-2026-08-25-song-sung-mun-minor-league-1.jpg)
 
----
 
-### 스포츠팩폭 공식 영상
-
-[스포츠팩폭 공식 영상 확인하기](https://www.youtube.com/watch?v=hdnEvTuLWWM)
-
----
 
 ## 111일간의 뜨거웠던 도전, 송성문 마이너 강등의 전말
 

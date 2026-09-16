@@ -19,13 +19,7 @@ naver_link: "https://n.news.naver.com/mnews/article/023/0003994936?sid=100"
 
 ![애국멍 공식 방송/현장 실물 캡처](/images/body-2026-08-26-reform-party-resignation-1.jpg)
 
----
 
-### 애국멍 공식 영상
-
-[애국멍 공식 영상 확인하기](https://www.youtube.com/watch?v=CZyDsvziKOQ)
-
----
 
 ## 갑작스러운 사퇴 선언, 왜 지금일까요?
 

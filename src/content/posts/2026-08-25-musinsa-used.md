@@ -19,13 +19,7 @@ naver_link: "https://n.news.naver.com/mnews/article/448/0000635379?sid=101"
 
 ![용강형은하고싶어서 공식 방송/현장 실물 캡처](/images/body-2026-08-25-musinsa-used-1.jpg)
 
----
 
-### 용강형은하고싶어서 공식 영상
-
-[용강형은하고싶어서 공식 영상 확인하기](https://www.youtube.com/watch?v=DmKXt_OSAZo)
-
----
 
 ## 📌 무신사 유즈드 페스티벌 주요 행사 요약
 

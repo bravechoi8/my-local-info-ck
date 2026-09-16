@@ -19,13 +19,7 @@ naver_link: "https://n.news.naver.com/mnews/article/081/0003673190?sid=104"
 
 ![기묘한 밤 공식 방송/현장 실물 캡처](/images/body-2026-08-25-ebola-virus-outbreak-1.jpg)
 
----
 
-### 기묘한 밤 공식 영상
-
-[기묘한 밤 공식 영상 확인하기](https://www.youtube.com/watch?v=aiSHiTeRECI)
-
----
 
 ### 🔥 실시간 트렌드 분석
 
