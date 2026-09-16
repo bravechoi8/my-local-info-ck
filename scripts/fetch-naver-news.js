@@ -855,9 +855,41 @@ naver_link: "${escapedLink}"
 
           const combinedItems = [...items.slice(0, 8), ...lottoStoreItems];
 
+          let articleFullTexts = [];
+          for (const it of combinedItems.slice(0, 5)) {
+            if (it.link && (it.link.includes('news.naver.com') || it.link.includes('naver.com'))) {
+              try {
+                const aRes = await fetchWithRetry(it.link, {
+                  headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+                });
+                if (aRes.ok) {
+                  const aHtml = await aRes.text();
+                  const cleanHtml = aHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                                         .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+                                         .replace(/<[^>]+>/g, ' ')
+                                         .replace(/\s+/g, ' ')
+                                         .trim();
+                  if (cleanHtml.includes('판매점') || cleanHtml.includes('배출점') || cleanHtml.includes('자동')) {
+                    articleFullTexts.push(`[기사 본문 발췌 - ${cleanText(it.title)}]:\n${cleanHtml.slice(0, 3500)}`);
+                  }
+                }
+              } catch (e) {
+                // ignore
+              }
+            }
+          }
+
           lottoContext = `\n\n[로또 최신 보도 참고 정보]\n` + 
-            combinedItems.map((it, idx) => `기사 ${idx + 1}: [제목] ${cleanText(it.title)} / [요약] ${cleanText(it.description)}`).join('\n') +
-            `\n(위 여러 기사 요약들에 적힌 1등 당첨번호, 보너스 번호, 당첨 게임 수, 자동/수동 수량, 그리고 전국 1등 당첨 판매점(명당) 상호명과 상세한 도로명 주소, 선택 방식(자동/수동)을 최대한 꼼꼼하게 추출하여 가독성 좋은 표(Table) 형태로 글 본문에 반드시 포함해줘. 기사마다 숫자가 조금씩 어긋나 있다면 가장 다수 기사에서 중복 검증된 숫자를 사용해줘.)`;
+            combinedItems.map((it, idx) => `기사 ${idx + 1}: [제목] ${cleanText(it.title)} / [요약] ${cleanText(it.description)}`).join('\n');
+
+          if (articleFullTexts.length > 0) {
+            lottoContext += `\n\n[로또 1등 판매점 상세 기사 본문]\n` + articleFullTexts.join('\n\n');
+          }
+
+          lottoContext += `\n\n[CRITICAL 로또 포스트 필수 지침]
+1. 1등 당첨자를 배출한 전국의 모든 복권 판매점의 [순번, 지역, 상호명, 선택 방식(자동/수동/반자동), 상세 도로명 주소]를 단 하나도 축약하거나 생략하지 말고, 전수를 완전한 표(Table)로 빠짐없이 작성해야 합니다.
+2. 절대로 "기타 배출점 X곳"이나 "서울 명당 5곳"처럼 뭉뚱그리거나 줄이지 마십시오. 본문 정보에 기재된 모든 1등 판매점을 1번부터 마지막 번호까지 행(Row)으로 전부 나열해야 합니다.
+3. 1등 세전 당첨금과 3억 이하 22%, 3억 초과 33% 원천징수 세액을 적용한 세후 실수령액 계산 표를 반드시 제공하십시오.`;
         }
 
         prompt = `아래 뉴스를 분석해서 블로그 정보 글을 작성해줘.
