@@ -120,13 +120,20 @@ export async function searchYouTubeOfficialVideo(keyword) {
     const matches = html.match(/\/watch\?v=([a-zA-Z0-9_-]{11})/g) || [];
     const ids = [...new Set(matches)].map(x => x.replace('/watch?v=', '')).slice(0, 10);
 
-    // 키워드에서 2글자 이상 핵심 검색어 추출
+    // 키워드에서 불용어를 제외한 순수 핵심 키워드(명사 등) 추출
+    const stopWords = ['공식', '영상', '확인', '보기', '총정리', '꿀팁', '뉴스', '속보', '단독', '발표', '안내', '소식', '이유', '방법', '정보', '공개', '추천', '기준', '혜택', '지원', '최신', '완벽'];
     const cleanKw = keyword.replace(/[^a-zA-Z0-9가-힣\s]/g, '');
-    const kwWords = cleanKw.split(/\s+/).filter(w => w.length >= 2 && !['공식', '영상', '확인', '보기', '총정리', '꿀팁'].includes(w));
+    const kwWords = cleanKw.split(/\s+/).filter(w => w.length >= 2 && !stopWords.includes(w));
+
+    // 핵심 단어가 없거나 너무 짧으면 억지 링크 방지를 위해 즉시 중단
+    if (kwWords.length === 0) {
+      console.log(`[YouTube 검색] 명확한 핵심 키워드가 없어 영상 검색을 생략하고 글로만 작성합니다.`);
+      return null;
+    }
 
     // 무관하게 반복 노출되던 블랙리스트 채널/영상 ID 차단
-    const blockedAuthors = ['백세명수', '통박채널', '빌딩은박남매', '재테크놀로지'];
-    const blockedIds = ['PXeBGwx4zic', 'DDvLxZpDaw8', 'WwgZJHxB1a0', 'oevpGs3oeuw'];
+    const blockedAuthors = ['백세명수', '통박채널', '빌딩은박남매', '재테크놀로지', '초록지기 아재', '마이크임팩트', '김짠부'];
+    const blockedIds = ['PXeBGwx4zic', 'DDvLxZpDaw8', 'WwgZJHxB1a0', 'oevpGs3oeuw', '5VeadrmKz78', 'SnGq4cAz8iA', 'YyQIX4GtIcA'];
 
     for (const id of ids) {
       if (blockedIds.includes(id)) continue;
@@ -138,12 +145,18 @@ export async function searchYouTubeOfficialVideo(keyword) {
             continue;
           }
 
-          // 영상 제목에 검색 키워드 핵심 단어가 최소 1개 이상 포함되어 있는지 관련성 체크
-          if (kwWords.length > 0) {
-            const hasKeywordMatch = kwWords.some(w => info.title && info.title.toLowerCase().includes(w.toLowerCase()));
-            if (!hasKeywordMatch) {
-              continue;
-            }
+          // 영상 제목에 검색 핵심 키워드가 실질적으로 부합하는지 엄격 검증
+          // 2개 이상의 핵심 단어가 포함되거나, 3글자 이상 핵심어가 반드시 포함되어야 함
+          const titleLower = (info.title || '').toLowerCase();
+          const matchedWords = kwWords.filter(w => titleLower.includes(w.toLowerCase()));
+
+          const isStrictlyRelevant = (kwWords.length >= 2 && matchedWords.length >= 2) ||
+                                     (matchedWords.some(w => w.length >= 3)) ||
+                                     (kwWords.length === 1 && matchedWords.length === 1);
+
+          if (!isStrictlyRelevant) {
+            // 주제와 직접 관련 없는 억지 영상은 건너뜀
+            continue;
           }
 
           const maxresRes = await fetchWithRetry(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`);
