@@ -3298,5 +3298,27 @@
     "target": "취업면접에 참여한 道 거주 만18세∼39세 이하 청년",
     "summary": "취업 준비 부담 완화를 위한 면접수당 제공으로 청년 고용 촉진",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000193"
+  },
+  {
+    "id": 369,
+    "name": "어린이 교통안전체험교육",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "안산도시공사",
+    "target": "보호자를 동반한 4세~9세 어린이 단체(20명이상 30명 이하)",
+    "summary": "보호자를 동반한 4세~9세 어린이 단체에게 교통안전체험교육을 무료로 시행",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00007400005"
+  },
+  {
+    "id": 370,
+    "name": "특수임무수행자와 그 유족에 대한 보상",
+    "category": "혜택",
+    "startDate": "2025-04-01",
+    "endDate": "2026-03-31",
+    "location": "국방부",
+    "target": "특수임무수행자 및 그 유족",
+    "summary": "특수임무수행자 및 유족에게 보상금, 특별위로금 및 공로금 등 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000008"
   }
 ]
