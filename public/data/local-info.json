@@ -3276,5 +3276,27 @@
     "target": "경기도 소상공인연합회",
     "summary": "행정지원, 상담(법무, 노무, 세무), 정책안내 등 소상공인 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000808"
+  },
+  {
+    "id": 367,
+    "name": "경기도 청년 노동자 통장",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 거주 기준중위소득 120%이하 가구, 19세~39세 청년 노동자",
+    "summary": "매월 10만원 저축 시 2년 만기 후 최대 580만원(지역화폐 100만원 포함) 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000192"
+  },
+  {
+    "id": 368,
+    "name": "경기도 청년 면접수당",
+    "category": "혜택",
+    "startDate": "2026-08-14",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "취업면접에 참여한 道 거주 만18세∼39세 이하 청년",
+    "summary": "취업 준비 부담 완화를 위한 면접수당 제공으로 청년 고용 촉진",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000193"
   }
 ]
