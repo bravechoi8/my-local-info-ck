@@ -3320,5 +3320,27 @@
     "target": "특수임무수행자 및 그 유족",
     "summary": "특수임무수행자 및 유족에게 보상금, 특별위로금 및 공로금 등 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/129000000008"
+  },
+  {
+    "id": 371,
+    "name": "아동복지시설 기능보강 지원",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "법인이 운영하는 아동복지시설(아동복지법 제52조에 따른 아동양육시설, 아동일시보호시설, 아동보호치료시설, 공동생활가정, 자립지원시설, 아동상담소, 아동전용시설)",
+    "summary": "법인 운영 아동복지시설의 중·개축 및 개보수, 장비보강 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000086"
+  },
+  {
+    "id": 372,
+    "name": "아동복지시설 아동치료재활지원",
+    "category": "혜택",
+    "startDate": "2025-05-21",
+    "endDate": "상시",
+    "location": "아동권리보장원",
+    "target": "아동복지시설 보호 아동 중 심리정서적 문제 행동 아동",
+    "summary": "문제행동아동을 위한 종합심리검사, 맞춤형 상담치료서비스 등을 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000087"
   }
 ]
