@@ -3342,5 +3342,27 @@
     "target": "아동복지시설 보호 아동 중 심리정서적 문제 행동 아동",
     "summary": "문제행동아동을 위한 종합심리검사, 맞춤형 상담치료서비스 등을 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000087"
+  },
+  {
+    "id": 373,
+    "name": "근로자 휴양콘도 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "모든 근로자(노무제공자 포함)",
+    "summary": "근로자에게 휴양콘도를 저렴한 비용으로 제공(무기명 법인회원가)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100208"
+  },
+  {
+    "id": 374,
+    "name": "근로자 지원 프로그램(EAP)",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "근로복지공단",
+    "target": "상시근로자 수 300인 미만 중소기업 사업장 또는 그 소속근로자",
+    "summary": "근로복지넷을 통한 온·오프라인 상담 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100210"
   }
 ]
