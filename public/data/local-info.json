@@ -3364,5 +3364,27 @@
     "target": "상시근로자 수 300인 미만 중소기업 사업장 또는 그 소속근로자",
     "summary": "근로복지넷을 통한 온·오프라인 상담 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B49000100210"
+  },
+  {
+    "id": 375,
+    "name": "어린이 교통안전체험관",
+    "category": "혜택",
+    "startDate": "2026-08-25",
+    "endDate": "상시",
+    "location": "한국도로교통공단 서울특별시지부",
+    "target": "5세 ~ 7세",
+    "summary": "어린이에게 교통안전체험관 체험서비스 무료 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55206100004"
+  },
+  {
+    "id": 376,
+    "name": "저소득 지역가입자 국민연금 보험료 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "국민연금공단",
+    "target": "일정 수준의 재산 및 소득 기준(기준소득월액 80만원 미만 등)을 모두 충족한 국민연금 지역가입자",
+    "summary": "국민연금에 신고한 소득이 80만 원 미만인 지역가입자에 대해 연금보험료 50% 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55201500201"
   }
 ]
