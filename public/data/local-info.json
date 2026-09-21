@@ -3452,5 +3452,27 @@
     "target": "소재, 부품, 장비산업 경쟁력 강화를 위한 특별조치법에 따른 소재, 부품 및 장비를 제조하는 기업",
     "summary": "소재, 부품, 장비 제조 기업에 경기도 중소기업육성자금과 연계한 저금리 특별보증 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045200004"
+  },
+  {
+    "id": 383,
+    "name": "에너지효율시장 조성사업",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "중소기업, 중견기업",
+    "summary": "효율향상설비 개체 시 설비보조금 지원(40%~70% 이내)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000226"
+  },
+  {
+    "id": 384,
+    "name": "에너지 기후변화 미래세대 교육",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "초중고 학교, 학생 및 교원 등",
+    "summary": "에너지교육 관련 콘텐츠 등 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000215"
   }
 ]
