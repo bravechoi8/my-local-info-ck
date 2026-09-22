@@ -3474,5 +3474,27 @@
     "target": "초중고 학교, 학생 및 교원 등",
     "summary": "에너지교육 관련 콘텐츠 등 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000215"
+  },
+  {
+    "id": 385,
+    "name": "구직급여",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "고용보험 적용 사업장에서 경영상 해고 등 비자발적으로 이직한 피보험자",
+    "summary": "비자발적으로 이직한 고용보험 피보험자에게 120~270일간 구직급여 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000015536"
+  },
+  {
+    "id": 386,
+    "name": "지역사회 청소년 통합지원체계 구축·운영 지원",
+    "category": "혜택",
+    "startDate": "2026-05-11",
+    "endDate": "상시",
+    "location": "전국 청소년상담복지센터",
+    "target": "만 9세~24세 (위기)청소년",
+    "summary": "위기청소년을 대상으로 상담, 긴급구조, 학업지원 등의 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000012531"
   }
 ]
