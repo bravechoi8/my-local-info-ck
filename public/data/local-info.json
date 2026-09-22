@@ -3496,5 +3496,27 @@
     "target": "만 9세~24세 (위기)청소년",
     "summary": "위기청소년을 대상으로 상담, 긴급구조, 학업지원 등의 서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000012531"
+  },
+  {
+    "id": 387,
+    "name": "북한이탈주민 상담 지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "북한이탈주민지원재단",
+    "target": "상담을 원하는 북한이탈주민",
+    "summary": "북한이탈주민을 대상으로 심리, 의료, 복지 등 종합적인 정착지원 상담서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000110"
+  },
+  {
+    "id": 388,
+    "name": "소상공인 청년창업원스텝",
+    "category": "혜택",
+    "startDate": "2025-09-15",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 19세~39세 예비창업자·초기창업자",
+    "summary": "청년 예비창업자·초기창업자 대상 단계별 창업 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000699"
   }
 ]
