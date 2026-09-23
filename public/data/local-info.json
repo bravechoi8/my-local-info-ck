@@ -3518,5 +3518,27 @@
     "target": "도내 19세~39세 예비창업자·초기창업자",
     "summary": "청년 예비창업자·초기창업자 대상 단계별 창업 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000699"
+  },
+  {
+    "id": 389,
+    "name": "의료급여 틀니·치과임플란트 지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "65세 이상 의료급여 수급자",
+    "summary": "조건에 해당되는 65세 이상 의료급여 수급자를 대상으로 틀니, 임플란트 급여 적용 등",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000002"
+  },
+  {
+    "id": 390,
+    "name": "희귀질환 진단지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "양산부산대학교병원 외 진단의뢰기관",
+    "target": "유전성 희귀질환의 진단 지원을 받고자 하는 환자",
+    "summary": "국가관리 희귀질환 의심환자 대상 전장 유전체 분석(WGS) 및 해석 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000008"
   }
 ]
