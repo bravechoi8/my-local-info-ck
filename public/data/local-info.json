@@ -3540,5 +3540,27 @@
     "target": "유전성 희귀질환의 진단 지원을 받고자 하는 환자",
     "summary": "국가관리 희귀질환 의심환자 대상 전장 유전체 분석(WGS) 및 해석 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200000008"
+  },
+  {
+    "id": 391,
+    "name": "아동안전지킴이",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "경찰청",
+    "target": "건강상태가 양호하며 군·소방·교정·학교 등 근무 경력 또는 아동범죄 예방 봉사 열의가 있는 사람",
+    "summary": "퇴직자 등 노인전문인력을 아동안전보호활동에 투입하여 활동비 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000001"
+  },
+  {
+    "id": 392,
+    "name": "훈련연장급여",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "직업능력개발 훈련을 받는 구직급여 수급자",
+    "summary": "직업능력개발 훈련 등을 받는 대상자에게 훈련기간 동안 구직급여 지급(최대 2년)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000012"
   }
 ]
