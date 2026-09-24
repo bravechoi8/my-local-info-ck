@@ -3584,5 +3584,27 @@
     "target": "반려동물 연관산업 기업, 연구기관 등",
     "summary": "시장조사, 제품·서비스의 현지화, 해외 판로개척, 체계적인 수출 지원체계 구축 등을 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005029"
+  },
+  {
+    "id": 395,
+    "name": "한부모가족자녀 교육비 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "교육부",
+    "target": "한부모가족 지원법 제5조, 제5조의2에 따른 지원 대상 가구의 고등학교 학생(교육급여 지급 대상자 제외)",
+    "summary": "저소득 한부모 및 조손 가족의 고교생 자녀 입학금 및 수업료 전액 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/642000000035"
+  },
+  {
+    "id": 396,
+    "name": "경기도 재도전론(채무조정 성실상환자 대상 소액금융지원)",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "신청일 현재 도내 거주자로 채무조정·개인회생 후 일정기간 변제 중이거나 최근 3년 이내 완제한 자",
+    "summary": "채무조정 성실상환자 소액금융 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000673"
   }
 ]
