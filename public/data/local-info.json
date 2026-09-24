@@ -3562,5 +3562,27 @@
     "target": "직업능력개발 훈련을 받는 구직급여 수급자",
     "summary": "직업능력개발 훈련 등을 받는 대상자에게 훈련기간 동안 구직급여 지급(최대 2년)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000012"
+  },
+  {
+    "id": 393,
+    "name": "그린바이오 제품 상용화 지원",
+    "category": "혜택",
+    "startDate": "2024-01-29",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "｢그린바이오산업 육성에 관한 법률｣ 제7조에 따른 신고를 완료한 기업",
+    "summary": "혁신기술을 보유한 그린바이오기업 대상으로 제품개발 전(全) 주기 및 해외시장 진출 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005028"
+  },
+  {
+    "id": 394,
+    "name": "시장조사, 제품·서비스의 현지화, 해외 판로개척, 체계적인 수출 지원체계 구축 등을 지원",
+    "category": "혜택",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "농림축산식품부",
+    "target": "반려동물 연관산업 기업, 연구기관 등",
+    "summary": "시장조사, 제품·서비스의 현지화, 해외 판로개척, 체계적인 수출 지원체계 구축 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/154300005029"
   }
 ]
