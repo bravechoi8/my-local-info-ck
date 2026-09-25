@@ -3628,5 +3628,27 @@
     "target": "중소기업기본법 제2조 및 동법 시행령 제3조에 따른 중소기업(공공기관 및 공공시설 제외)",
     "summary": "중소기업을 대상으로 굴뚝 자동측정기기 설치 및 운영 관리비용 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000011371"
+  },
+  {
+    "id": 399,
+    "name": "소상공인 상생한마당",
+    "category": "행사",
+    "startDate": "2026-05-18",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 소상공인 및 소상공인 상인 단체, 협의체 등",
+    "summary": "우수상품 전시, 홍보, 판로개척 등 소상공인들의 교류와 소통 등을 위한 행사 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700019"
+  },
+  {
+    "id": 400,
+    "name": "전통시장 청년상인 육성",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 전통시장 및 상점가, 골목형상점가 내 창업 희망 청년",
+    "summary": "청년상인 육성을 위한 교육 및 진단, 사업화 지원, 맞춤형컨설팅, 홍보 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700012"
   }
 ]
