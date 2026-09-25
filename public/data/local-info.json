@@ -3606,5 +3606,27 @@
     "target": "신청일 현재 도내 거주자로 채무조정·개인회생 후 일정기간 변제 중이거나 최근 3년 이내 완제한 자",
     "summary": "채무조정 성실상환자 소액금융 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000673"
+  },
+  {
+    "id": 397,
+    "name": "글로벌비즈니스센터 입주 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "해외시장 개척을 위하여 현지진출을 희망하는 중소기업",
+    "summary": "해외진출을 하고자 하는 중소기업에게 사무공간 및 현지진출 지원 프로그램 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000010880"
+  },
+  {
+    "id": 398,
+    "name": "굴뚝 원격 감시체계 구축 지원",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "기후에너지환경부",
+    "target": "중소기업기본법 제2조 및 동법 시행령 제3조에 따른 중소기업(공공기관 및 공공시설 제외)",
+    "summary": "중소기업을 대상으로 굴뚝 자동측정기기 설치 및 운영 관리비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000011371"
   }
 ]
