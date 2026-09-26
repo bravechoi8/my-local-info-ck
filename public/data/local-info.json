@@ -3672,5 +3672,27 @@
     "target": "상수원관리지역 관할 8개시군(순천시, 광양시, 담양군, 보성군, 화순군, 강진군, 장흥군, 영암군)",
     "summary": "상수원관리지역 관할 8개 시군에 주민복지증진, 수질개선 등을 도모하는 사업비 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/148000000034"
+  },
+  {
+    "id": 403,
+    "name": "HIV/AIDS 진료비 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "질병관리청",
+    "target": "HIV/AIDS 감염인",
+    "summary": "HIV/AIDS 감염인 진료에 대한 요양급여의 본인 부담금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003567"
+  },
+  {
+    "id": 404,
+    "name": "산업집적지경쟁력강화지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "한국산업단지공단",
+    "target": "산업집적지 내 중소기업",
+    "summary": "산업집적지 내 중소기업에 R&BD 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003627"
   }
 ]
