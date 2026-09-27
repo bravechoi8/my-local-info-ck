@@ -3694,5 +3694,27 @@
     "target": "산업집적지 내 중소기업",
     "summary": "산업집적지 내 중소기업에 R&BD 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000003627"
+  },
+  {
+    "id": 405,
+    "name": "소상공인 온·오프라인 교육",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "소상공인 및 예비창업자",
+    "summary": "소상공인 및 예비창업자에게 교육, 컨설팅을 통한 역량강화 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001491"
+  },
+  {
+    "id": 406,
+    "name": "소상공인 협업활성화 지원",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "5인 이상이고 조합원의 50% 이상이 소상공인으로 이루어진 소상공인 협업체",
+    "summary": "소상공인 협업체를 대상으로 공동브랜드 개발, 마케팅 등에 소요되는 비용 한도 내 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001492"
   }
 ]
