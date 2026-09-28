@@ -3760,5 +3760,27 @@
     "target": "여성기업, 여대생 및 여고생",
     "summary": "여성기업을 위한 전문인력 매칭 플랫폼, 역량 강화 프로그램 등 운영",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000007418"
+  },
+  {
+    "id": 411,
+    "name": "경기도 민주화운동 관련자 지원",
+    "category": "혜택",
+    "startDate": "2021-11-23",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경기도 내 6개월 이상 거주하는 민주화운동 관련자(중위소득 100% 이하 또는 만 65세 이상 등)",
+    "summary": "민주화운동 관련자에게 생활지원금 및 명예수당 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000183"
+  },
+  {
+    "id": 412,
+    "name": "영세 소상공인 노란우산 가입지원",
+    "category": "혜택",
+    "startDate": "2022-05-31",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 연매출 3억원 이하 소상공인",
+    "summary": "도내 연매출 3억원 이하 소상공인 신규가입 시 월1만원(12개월) 장려금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000184"
   }
 ]
