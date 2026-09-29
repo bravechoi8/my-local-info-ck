@@ -3782,5 +3782,27 @@
     "target": "도내 연매출 3억원 이하 소상공인",
     "summary": "도내 연매출 3억원 이하 소상공인 신규가입 시 월1만원(12개월) 장려금 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000184"
+  },
+  {
+    "id": 413,
+    "name": "입양가정위탁아동 심리치료 지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "국내입양·가정위탁 보호아동 중 과잉행동장애(ADHD), 정서불안장애 등으로 인해 상담·치료가 필요한 아동",
+    "summary": "상담·치료가 필요한 입양·가정위탁 보호아동을 위한 심리검사 및 치료비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000450"
+  },
+  {
+    "id": 414,
+    "name": "노후준비서비스제공",
+    "category": "혜택",
+    "startDate": "2024-05-23",
+    "endDate": "상시",
+    "location": "국민연금공단 거점지사 또는 지자체 노후준비지원센터",
+    "target": "전 국민",
+    "summary": "국민을 대상으로 재무·건강·여가·대인관계 등 종합적인 노후준비 진단·상담 등 서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000310"
   }
 ]
