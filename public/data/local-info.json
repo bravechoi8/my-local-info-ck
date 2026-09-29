@@ -3804,5 +3804,27 @@
     "target": "전 국민",
     "summary": "국민을 대상으로 재무·건강·여가·대인관계 등 종합적인 노후준비 진단·상담 등 서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000310"
+  },
+  {
+    "id": 415,
+    "name": "치유의 숲 조성사업비 융자",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "치유의 숲을 조성하려고 하는 자 중 '사립 치유의 숲 조성계획' 허가를 받은 자",
+    "summary": "치유의 숲 조성희망자에게 조성자금을 8억원 한도 및 20년 기간으로 융자 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000173"
+  },
+  {
+    "id": 416,
+    "name": "산림사업 사업비 융자 지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "산림사업을 희망하는 산림소유자",
+    "summary": "산림소유자가 산림사업 참여 시 사업비에 대해 융자 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000166"
   }
 ]
