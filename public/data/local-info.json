@@ -3826,5 +3826,27 @@
     "target": "산림사업을 희망하는 산림소유자",
     "summary": "산림소유자가 산림사업 참여 시 사업비에 대해 융자 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000166"
+  },
+  {
+    "id": 417,
+    "name": "수출컨소시엄(업종별 중소기업 해외전시회 참여 지원)",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "업종별 중소기업 단체(조합, 협회 등) 및 중소기업 지원 유관기관이 주관하여 참여",
+    "summary": "중소기업 관련 업종간 컨소시엄을 구성하여 해외 진출 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142000000121"
+  },
+  {
+    "id": 418,
+    "name": "소공인 판로개척 지원",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "상시근로자 수 10인 미만 제조 소상공인",
+    "summary": "상시근로자 수 10인 미만 제조 소상공인의 판로개척 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142000000072"
   }
 ]
