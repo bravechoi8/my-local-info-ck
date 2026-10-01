@@ -3870,5 +3870,27 @@
     "target": "올림픽/아시안게임 정식종목 국제심판",
     "summary": "국제심판 양성을 위한 역량강화 교육 및 자격취득 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100015"
+  },
+  {
+    "id": 421,
+    "name": "구조혁신지원사업",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "사업전환, 디지털전환, 산업 일자리 전환을 추진 하고자 하는 기업 구조 혁신 희망 기업",
+    "summary": "외부환경의 변화로 사업전환, 디지털 전환 등을 추진하는 기업을 대상으로 진단 및 컨설팅",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900014"
+  },
+  {
+    "id": 422,
+    "name": "어촌계 방제대응센터 운영",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "해양환경공단",
+    "target": "공단 어촌계 방제대응센터(52개소) 인근 어촌계 대상",
+    "summary": "공단 어촌계 방제대응센터 방제기자재 대민간 개방 및 공유",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55393100001"
   }
 ]
