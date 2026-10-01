@@ -3892,5 +3892,27 @@
     "target": "공단 어촌계 방제대응센터(52개소) 인근 어촌계 대상",
     "summary": "공단 어촌계 방제대응센터 방제기자재 대민간 개방 및 공유",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55393100001"
+  },
+  {
+    "id": 423,
+    "name": "사립학교 교직원 유족연금",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "사립학교교직원연금공단",
+    "target": "사망한 사학연금 수급자의 사립학교교직원 연금법상 유족",
+    "summary": "연금수급자 사망 시 그 유족에게 유족연금 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500014"
+  },
+  {
+    "id": 424,
+    "name": "사립학교 교직원 조기퇴직연금",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "사립학교교직원연금공단",
+    "target": "재직기간 10년 이상 사립학교 퇴직 교직원",
+    "summary": "10년 이상 재직하고 퇴직하여 매월 감액된 연금으로 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500015"
   }
 ]
