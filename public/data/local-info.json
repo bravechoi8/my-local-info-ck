@@ -3936,5 +3936,27 @@
     "target": "정서·행동적 문제를 가진 청소년(만 9세 ~ 18세)",
     "summary": "정서·행동적 문제를 가진 청소년을 위한 상담 및 치료, 교육, 자립 등의 프로그램 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000001440"
+  },
+  {
+    "id": 427,
+    "name": "창업존 운영",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "예비창업자 및 창업 7년 이내 기업",
+    "summary": "예비창업자, 창업7년이내 기업에 입주공간 제공, 보육프로그램등 성장지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000086"
+  },
+  {
+    "id": 428,
+    "name": "스타트업 파크",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "광역자치단체(민간과 컨소시엄 구성 필수)",
+    "summary": "광역자치단체(민간과 컨소시엄 구성)에 스타트업 파크 조성비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000088"
   }
 ]
