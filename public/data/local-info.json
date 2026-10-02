@@ -3914,5 +3914,27 @@
     "target": "재직기간 10년 이상 사립학교 퇴직 교직원",
     "summary": "10년 이상 재직하고 퇴직하여 매월 감액된 연금으로 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500015"
+  },
+  {
+    "id": 425,
+    "name": "영주귀국 사할린 한인 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "외교부(대한 적십자사)가 선정하여 영주 귀국한 사할린 한인 1세 및 동반가족(배우자, 직계비속 1인 및 그 배우자)",
+    "summary": "영주 귀국한 사할린 한인에게 정착비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000001260"
+  },
+  {
+    "id": 426,
+    "name": "청소년치료재활센터 운영 지원",
+    "category": "혜택",
+    "startDate": "2026-03-08",
+    "endDate": "상시",
+    "location": "청소년치료재활센터",
+    "target": "정서·행동적 문제를 가진 청소년(만 9세 ~ 18세)",
+    "summary": "정서·행동적 문제를 가진 청소년을 위한 상담 및 치료, 교육, 자립 등의 프로그램 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000001440"
   }
 ]
