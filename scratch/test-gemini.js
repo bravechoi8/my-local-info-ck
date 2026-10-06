@@ -1,41 +1,33 @@
 import pkg from '@next/env';
 const { loadEnvConfig } = pkg;
-import path from 'path';
+import filePath from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-loadEnvConfig(path.join(__dirname, '..'));
+const __dirname = filePath.dirname(__filename);
 
-const key = process.env.GEMINI_API_KEY;
+loadEnvConfig(filePath.join(__dirname, '..'));
 
-async function testModel(model) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+console.log('GEMINI_API_KEY exists:', !!GEMINI_API_KEY);
+
+const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
+
+async function testGemini() {
   try {
-    const res = await fetch(url, {
+    const res = await fetch(`${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: "안녕? 반가워! 오늘 하남시 날씨 어때?" }] }],
-        tools: [{ google_search: {} }]
+        contents: [{ parts: [{ text: "Hello" }] }]
       })
     });
-    console.log(`Model: ${model} -> Status: ${res.status}`);
-    const data = await res.json();
-    if (res.ok) {
-      console.log(`Response: ${data.candidates?.[0]?.content?.parts?.[0]?.text}`);
-    } else {
-      console.log(`Error: ${JSON.stringify(data.error)}`);
-    }
+    console.log('Status:', res.status, res.statusText);
+    const data = await res.text();
+    console.log('Response:', data);
   } catch (err) {
-    console.error(`Error testing ${model}:`, err.message);
+    console.error('Error:', err);
   }
 }
 
-async function run() {
-  console.log("--- Testing Gemini Models ---");
-  await testModel("gemini-1.5-flash");
-  await testModel("gemini-3.1-flash-lite");
-  await testModel("gemini-3.5-flash");
-}
-run();
+testGemini();

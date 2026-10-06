@@ -3254,5 +3254,27 @@
     "target": "노인장기요양 등급판정(1~5등급, 인지지원등급)을 받은 재가급여이용 수급자",
     "summary": "재가급여이용 수급자에게 일상생활 등에 필요한 용구를 연간 160만원 한도에서 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/GMW000000110"
+  },
+  {
+    "id": 365,
+    "name": "일상돌봄 서비스",
+    "category": "혜택",
+    "startDate": "2026-08-18",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "일상생활에 돌봄이 필요한 청·중장년(13~64세) 및 가족돌봄청년(39세 이하)",
+    "summary": "필요에 맞게 기본서비스(재가돌봄, 가사)와 특화서비스(식사영양 등)를 선택적 조합하여 이용",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005027"
+  },
+  {
+    "id": 366,
+    "name": "고난도 보호대상아동 맞춤형 사례관리서비스",
+    "category": "혜택",
+    "startDate": "2025-09-15",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "아동복지시설 보호아동 중 경계선지능 의심 또는 진단아동",
+    "summary": "아동복지시설 보호아동 대상 선별비(종합심리검사비) 및 맞춤형 사례관리서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005033"
   }
 ]
