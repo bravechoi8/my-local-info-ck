@@ -3276,5 +3276,27 @@
     "target": "아동복지시설 보호아동 중 경계선지능 의심 또는 진단아동",
     "summary": "아동복지시설 보호아동 대상 선별비(종합심리검사비) 및 맞춤형 사례관리서비스 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/135200005033"
+  },
+  {
+    "id": 367,
+    "name": "소상공인 온·오프라인 교육",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "소상공인 및 예비창업자",
+    "summary": "소상공인 및 예비창업자에게 교육, 컨설팅을 통한 역량강화 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001491"
+  },
+  {
+    "id": 368,
+    "name": "소상공인 협업활성화 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "5인 이상 및 조합원의 50% 이상이 소상공인으로 구성된 소상공인 협업체",
+    "summary": "소상공인 협업체를 대상으로 공동브랜드 개발, 마케팅 등에 소요되는 비용 한도 내 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001492"
   }
 ]
