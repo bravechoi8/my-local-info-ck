@@ -3298,5 +3298,27 @@
     "target": "5인 이상 및 조합원의 50% 이상이 소상공인으로 구성된 소상공인 협업체",
     "summary": "소상공인 협업체를 대상으로 공동브랜드 개발, 마케팅 등에 소요되는 비용 한도 내 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000001492"
+  },
+  {
+    "id": 369,
+    "name": "올해의 K-스타트업",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "창업 후 3년 이내 초기창업자(팀) (누적 투자유치 금액 30억원 초과한 기업은 지원 불가)",
+    "summary": "범부처 경진대회를 통해 창업자(팀)에게 시상 및 후속연계지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000085"
+  },
+  {
+    "id": 370,
+    "name": "청소년비즈쿨",
+    "category": "혜택",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "비즈쿨 운영학교(센터) 학생 및 교사, 일반 학생 등",
+    "summary": "비즈쿨 운영학교의 교사와 학생에게 창업교육, 특강, 동아리 운영등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000082"
   }
 ]
