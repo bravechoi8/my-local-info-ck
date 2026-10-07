@@ -3320,5 +3320,27 @@
     "target": "비즈쿨 운영학교(센터) 학생 및 교사, 일반 학생 등",
     "summary": "비즈쿨 운영학교의 교사와 학생에게 창업교육, 특강, 동아리 운영등을 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000082"
+  },
+  {
+    "id": 371,
+    "name": "예비창업패키지",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "예비창업자",
+    "summary": "사업화 자금 및 주관기관별 창업프로그램 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000074"
+  },
+  {
+    "id": 372,
+    "name": "산림기술자격증 온라인발급 신청",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "산림기술자",
+    "summary": "산림기술자 자격증 발급신청을 산림기술정보통합관리시스템으로 실시간 신청 가능",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000060"
   }
 ]
