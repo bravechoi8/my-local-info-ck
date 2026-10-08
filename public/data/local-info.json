@@ -3364,5 +3364,27 @@
     "target": "지역사회 적응과 자립자활 지원이 필요한 북한이탈주민",
     "summary": "북한이탈주민에게 초기 집중교육, 지역적응지원 등과 같은 자립기반 조성 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002382"
+  },
+  {
+    "id": 375,
+    "name": "아동안전지킴이",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "경찰청",
+    "target": "건강상태가 양호한 자 중 군·소방·교정·학교 등 근무 경험자, 아동·청소년 분야 경력자 및 봉사 열의가 있는 사람",
+    "summary": "퇴직자 등 노인전문인력을 아동안전보호활동에 투입하여 활동비 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000001"
+  },
+  {
+    "id": 376,
+    "name": "훈련연장급여",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "직업능력개발 훈련 지시를 받아 훈련을 받는 구직급여 수급자",
+    "summary": "직업능력개발 훈련 등을 받는 대상자에게 훈련기간 동안 구직급여 지급(최대 2년)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000012"
   }
 ]
