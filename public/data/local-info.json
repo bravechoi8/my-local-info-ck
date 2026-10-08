@@ -3342,5 +3342,27 @@
     "target": "산림기술자",
     "summary": "산림기술자 자격증 발급신청을 산림기술정보통합관리시스템으로 실시간 신청 가능",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000060"
+  },
+  {
+    "id": 373,
+    "name": "사업화 연계 기술 개발 지원",
+    "category": "혜택",
+    "startDate": "2025-02-24",
+    "endDate": "상시",
+    "location": "한국산업기술진흥원",
+    "target": "중소/중견기업",
+    "summary": "중소·중견기업에게 기술개발, 시제품 제작, 인증 등 사업화 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002351"
+  },
+  {
+    "id": 374,
+    "name": "북한이탈주민 지역적응센터 지원",
+    "category": "혜택",
+    "startDate": "2024-10-24",
+    "endDate": "상시",
+    "location": "통일부",
+    "target": "지역사회 적응과 자립자활 지원이 필요한 북한이탈주민",
+    "summary": "북한이탈주민에게 초기 집중교육, 지역적응지원 등과 같은 자립기반 조성 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000002382"
   }
 ]
