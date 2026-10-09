@@ -3386,5 +3386,27 @@
     "target": "직업능력개발 훈련 지시를 받아 훈련을 받는 구직급여 수급자",
     "summary": "직업능력개발 훈련 등을 받는 대상자에게 훈련기간 동안 구직급여 지급(최대 2년)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000012"
+  },
+  {
+    "id": 377,
+    "name": "입양가정위탁아동 심리치료 지원",
+    "category": "혜택",
+    "startDate": "2026-03-09",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "국내입양·가정위탁 보호아동 중 과잉행동장애(ADHD), 정서불안장애 등으로 인해 상담·치료가 필요한 아동",
+    "summary": "상담·치료가 필요한 입양·가정위탁 보호아동을 위한 심리검사 및 치료비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000450"
+  },
+  {
+    "id": 378,
+    "name": "사회복지 종사자 상해보험 가입 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "사회복지 기관에 종사하는 자",
+    "summary": "사회복지기관 종사자에게 상해보험료 1인당 연간 10,000원 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/WII000000380"
   }
 ]
