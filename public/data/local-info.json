@@ -3452,5 +3452,27 @@
     "target": "도내 19세~39세 청년 및 중소기업",
     "summary": "근무 여건이 좋은 중소기업과 일 경험을 희망하는 청년을 매칭",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000669"
+  },
+  {
+    "id": 383,
+    "name": "일본군 위안부 피해자 생활안정 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "일본군위안부 피해자 중 생존자로서 일본군위안부 피해자 지원 및 기념사업 심의위원회의 심의를 거쳐 생활안정지원대상자로 결정∙등록된 자",
+    "summary": "일본군위안부 피해자를 위한 생활안정지원금, 건강치료비 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000008913"
+  },
+  {
+    "id": 384,
+    "name": "선천성 난청검사 및 보청기 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "신생아 난청 외래 선별·확진검사를 받은 영아 및 만 12세 미만 난청 환아",
+    "summary": "영유아 대상으로 신생아청각선별검사비, 난청확진검사비 및 보청기 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000007044"
   }
 ]
