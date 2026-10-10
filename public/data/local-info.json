@@ -3430,5 +3430,27 @@
     "target": "신청 직전년도 갱내 생산실적이 있는 가행광산 및 신규광산, 갱외 파분쇄 설비 등을 갱내로 전환하는 광산과 부가가치 향상을 위한 신규 설비 설치계획, 기존 보유시설 교체 광산의 광업권자(채굴권자) 또는 조광권자",
     "summary": "가행 및 신규광산 등에 현대화 장비 및 설비 설치비용의 40~60% 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/145000000057"
+  },
+  {
+    "id": 381,
+    "name": "경기도 청년 면접수당",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "취업면접에 참여한 道 거주 만18세∼39세 이하 청년",
+    "summary": "취업 준비 부담 완화를 위한 면접수당 제공으로 청년 고용 촉진",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000193"
+  },
+  {
+    "id": 382,
+    "name": "경기청년 일자리 매치업 플러스",
+    "category": "혜택",
+    "startDate": "2024-12-23",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 19세~39세 청년 및 중소기업",
+    "summary": "근무 여건이 좋은 중소기업과 일 경험을 희망하는 청년을 매칭",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000669"
   }
 ]
