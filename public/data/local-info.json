@@ -3496,5 +3496,27 @@
     "target": "예비창업자 및 창업 7년 이내 기업",
     "summary": "예비창업자, 창업7년이내 기업에 입주공간 제공, 보육프로그램등 성장지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000086"
+  },
+  {
+    "id": 387,
+    "name": "진로제시컨설팅",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "경영 애로를 겪고 있거나 회생 및 사업 정리를 희망하는 기업",
+    "summary": "경영 부진 기업 대상 맞춤형 진로 진단 컨설팅 자문 및 비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900052"
+  },
+  {
+    "id": 388,
+    "name": "밸류체인안정화자금",
+    "category": "혜택",
+    "startDate": "2026-01-16",
+    "endDate": "상시",
+    "location": "중소벤처기업진흥공단",
+    "target": "중소기업기본법상의 중소기업",
+    "summary": "중소벤처기업 보유 매출채권의 조기유동화를 지원 또는 조기 생산자금을 지원하여 성장을 촉진",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900040"
   }
 ]
