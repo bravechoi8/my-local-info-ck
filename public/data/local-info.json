@@ -3518,5 +3518,27 @@
     "target": "중소기업기본법상의 중소기업",
     "summary": "중소벤처기업 보유 매출채권의 조기유동화를 지원 또는 조기 생산자금을 지원하여 성장을 촉진",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55400900040"
+  },
+  {
+    "id": 389,
+    "name": "어린이 교통안전체험교육",
+    "category": "행사",
+    "startDate": "2026-03-29",
+    "endDate": "상시",
+    "location": "안산도시공사",
+    "target": "보호자를 동반한 4세~9세 어린이 단체(20명이상 30명 이하)",
+    "summary": "보호자를 동반한 4세~9세 어린이 단체에게 교통안전체험교육을 무료로 시행",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00007400005"
+  },
+  {
+    "id": 390,
+    "name": "경상남도교육청 수학여행비 지원",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "경상남도교육청",
+    "target": "각급학교(초등학교 6학년, 중학교 2학년, 고등학교 2학년)",
+    "summary": "수학여행 대상학년 학생 전원에게 여행비 지원(학교별 차등지원)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/901000000003"
   }
 ]
