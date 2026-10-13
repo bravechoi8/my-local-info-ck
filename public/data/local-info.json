@@ -3562,5 +3562,27 @@
     "target": "중소기업 기본법 제2조 제1항에 따른 중소기업, 중견기업법 시행령 제9조의2에 따른 중견기업",
     "summary": "중소기업 대상으로 보안과 법률에 대한 전문가가 맞춤형 컨설팅 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/PTR000051677"
+  },
+  {
+    "id": 393,
+    "name": "경기도 민주화운동 관련자 지원",
+    "category": "혜택",
+    "startDate": "2026-03-09",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 6개월 이상 거주하는 민주화운동 관련자",
+    "summary": "민주화운동 관련자에게 생활지원금 및 명예수당 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000183"
+  },
+  {
+    "id": 394,
+    "name": "영세 소상공인 노란우산 가입지원",
+    "category": "혜택",
+    "startDate": "2022-05-31",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 연매출 3억원 이하 소상공인",
+    "summary": "도내 연매출 3억원 이하 소상공인 신규가입 시 월1만원(12개월) 장려금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000184"
   }
 ]
