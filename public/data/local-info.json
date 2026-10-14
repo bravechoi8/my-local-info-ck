@@ -3584,5 +3584,27 @@
     "target": "도내 연매출 3억원 이하 소상공인",
     "summary": "도내 연매출 3억원 이하 소상공인 신규가입 시 월1만원(12개월) 장려금 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000184"
+  },
+  {
+    "id": 395,
+    "name": "분만취약지 지원",
+    "category": "혜택",
+    "startDate": "2024-05-22",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "분만취약지 의료기관",
+    "summary": "분만취약지의 의료기관에 시설과 장비구매비, 인건비 등을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016200"
+  },
+  {
+    "id": 396,
+    "name": "의료급여 생애전환기검진 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "66세 이상 의료급여 수급권자",
+    "summary": "66세 이상 의료급여 수급권자의 생애전환기 건강검진 비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SME000000030"
   }
 ]
