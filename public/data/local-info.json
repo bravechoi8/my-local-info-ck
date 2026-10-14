@@ -3606,5 +3606,27 @@
     "target": "66세 이상 의료급여 수급권자",
     "summary": "66세 이상 의료급여 수급권자의 생애전환기 건강검진 비용 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SME000000030"
+  },
+  {
+    "id": 397,
+    "name": "모두의창업(로컬트랙)",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "예비창업자",
+    "summary": "소상공인 대상으로 창업 수준별 맞춤형 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700009"
+  },
+  {
+    "id": 398,
+    "name": "일반경영안정자금",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "｢소상공인기본법｣제2조의 소상공인(업력 무관)",
+    "summary": "소상공인의 자생력 제고 및 생업안전망 구축을 위한 자금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700010"
   }
 ]
