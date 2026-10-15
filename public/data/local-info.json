@@ -3628,5 +3628,27 @@
     "target": "｢소상공인기본법｣제2조의 소상공인(업력 무관)",
     "summary": "소상공인의 자생력 제고 및 생업안전망 구축을 위한 자금 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700010"
+  },
+  {
+    "id": 399,
+    "name": "기관사 체험 행사",
+    "category": "행사",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "서울교통공사",
+    "target": "초등학생 이상 청소년 및 일반인",
+    "summary": "초등학생 이상 시민에게 기관사 일일 체험행사",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00021500001"
+  },
+  {
+    "id": 400,
+    "name": "장사시설 이용요금 면제",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울시설공단",
+    "target": "서울시 내 일원에서 발견된 무연고 행려사망자 및 유연고 행려 사망자 중 연고자가 사체 인수를 거부한 경우",
+    "summary": "무연고 대상자에게 서울시 통합 장례 서비스 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00021400004"
   }
 ]
