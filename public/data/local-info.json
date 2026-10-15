@@ -3650,5 +3650,27 @@
     "target": "서울시 내 일원에서 발견된 무연고 행려사망자 및 유연고 행려 사망자 중 연고자가 사체 인수를 거부한 경우",
     "summary": "무연고 대상자에게 서울시 통합 장례 서비스 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00021400004"
+  },
+  {
+    "id": 401,
+    "name": "신용취약소상공인자금",
+    "category": "혜택",
+    "startDate": "2025-05-08",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "소상공인 지식배움터(http://edu.sbiz.or.kr) 내 제휴교육 중 신용회복위원회의 신용관리교육을 사전 이수한 중‧저신용(대출신청일 기준 NCB 개인신용평점 839점 이하) 소상공인",
+    "summary": "민간금융기관을 통한 자금조달에 어려움을 겪는 신용취약(중‧저신용) 소상공인 자금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700034"
+  },
+  {
+    "id": 402,
+    "name": "재도전특별자금",
+    "category": "혜택",
+    "startDate": "2025-05-08",
+    "endDate": "상시",
+    "location": "소상공인시장진흥공단",
+    "target": "재창업 준비·초기단계 소상공인, 채무조정 소상공인, 재기사업화 완료 및 협약 소상공인 등",
+    "summary": "경영정상화를 도모하는 소상공인을 위한 자금 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700035"
   }
 ]
