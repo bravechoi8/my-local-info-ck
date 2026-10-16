@@ -3694,5 +3694,27 @@
     "target": "청소년쉼터, 청소년자립지원관, 청소년회복지원시설 이용 청소년 대상 (이하 ‘청소년복지시설 청소년’)- 자립지원수당은 청소년쉼터, 청소년자립지원관 이용 청소년에 한함",
     "summary": "자립지원서비스 제공을 통해 신속한 가정복귀와 사회진출 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/138300000063"
+  },
+  {
+    "id": 405,
+    "name": "소상공인 경영환경개선사업",
+    "category": "혜택",
+    "startDate": "2026-02-09",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 창업 3년 이상 소상공인",
+    "summary": "도내 창업 3년 이상 소상공인의 경영환경개선 비용 일부 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000185"
+  },
+  {
+    "id": 406,
+    "name": "경기도 청년 노동자 통장",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "도내 거주 기준중위소득 120% 이하 가구, 19세~39세 청년 노동자",
+    "summary": "매월 10만원 저축 시 2년 만기 후 580만원(지역화폐 100만원 포함)을 지급하는 청년 자립 지원 사업",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000192"
   }
 ]
