@@ -3672,5 +3672,27 @@
     "target": "재창업 준비·초기단계 소상공인, 채무조정 소상공인, 재기사업화 완료 및 협약 소상공인 등",
     "summary": "경영정상화를 도모하는 소상공인을 위한 자금 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55307700035"
+  },
+  {
+    "id": 403,
+    "name": "경력보유여성 등 취업지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "경력보유여성 등 구직 희망 여성",
+    "summary": "구직을 희망하는 여성에게 새일센터를 통해 종합적인 취업지원서비스 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/138300000055"
+  },
+  {
+    "id": 404,
+    "name": "가정 밖 청소년 자립지원",
+    "category": "혜택",
+    "startDate": "2026-05-18",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "청소년쉼터, 청소년자립지원관, 청소년회복지원시설 이용 청소년 대상 (이하 ‘청소년복지시설 청소년’)- 자립지원수당은 청소년쉼터, 청소년자립지원관 이용 청소년에 한함",
+    "summary": "자립지원서비스 제공을 통해 신속한 가정복귀와 사회진출 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/138300000063"
   }
 ]
