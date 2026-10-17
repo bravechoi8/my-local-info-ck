@@ -3738,5 +3738,27 @@
     "target": "의료급여 수급권자",
     "summary": "의료급여 상한일수를 초과한 수급자에게 상한일수 연장 및 의료급여기관 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000042"
+  },
+  {
+    "id": 409,
+    "name": "어린이 교통안전체험관",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국도로교통공단",
+    "target": "체험가능연령 : 5세 ~ 7세",
+    "summary": "어린이에게 교통안전체험관 체험서비스 무료 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55206100004"
+  },
+  {
+    "id": 410,
+    "name": "경기도 재도전론(채무조정 성실상환자 대상 소액금융지원)",
+    "category": "혜택",
+    "startDate": "2025-05-29",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "신청일 현재 도내 거주자로 채무조정·개인회생 후 일정기간 변제 중이거나 최근 3년 이내 완제한 자",
+    "summary": "채무조정 성실상환자 소액금융 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000673"
   }
 ]
