@@ -3716,5 +3716,27 @@
     "target": "도내 거주 기준중위소득 120% 이하 가구, 19세~39세 청년 노동자",
     "summary": "매월 10만원 저축 시 2년 만기 후 580만원(지역화폐 100만원 포함)을 지급하는 청년 자립 지원 사업",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000192"
+  },
+  {
+    "id": 407,
+    "name": "긴급복지 장제비 지원",
+    "category": "혜택",
+    "startDate": "2026-02-26",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "긴급복지 주지원(생계,의료,주거,복지시설이용)대상 가구구성원이 사망한 경우",
+    "summary": "긴급복지 주지원(생계,의료,주거,복지시설이용)가구구성원이 사망한 경우 장례소요비용 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000040"
+  },
+  {
+    "id": 408,
+    "name": "의료급여 선택의료급여기관제",
+    "category": "혜택",
+    "startDate": "2025-05-20",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "의료급여 수급권자",
+    "summary": "의료급여 상한일수를 초과한 수급자에게 상한일수 연장 및 의료급여기관 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/999000000042"
   }
 ]
