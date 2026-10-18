@@ -3760,5 +3760,27 @@
     "target": "신청일 현재 도내 거주자로 채무조정·개인회생 후 일정기간 변제 중이거나 최근 3년 이내 완제한 자",
     "summary": "채무조정 성실상환자 소액금융 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000673"
+  },
+  {
+    "id": 411,
+    "name": "혁신 소상공인 투자연계지원",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "선투자 받은 비기술·생활기반의 소상공인",
+    "summary": "민간자금 연계 및 집중지원으로 소상공인에서 소기업, 중기업으로의 압축성장을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000050"
+  },
+  {
+    "id": 412,
+    "name": "소상공인 도약지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "로컬크리에이터, 소상공인 등",
+    "summary": "소상공인의 기업가로서 성장을 위한 패키지 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000052"
   }
 ]
