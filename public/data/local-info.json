@@ -3804,5 +3804,27 @@
     "target": "재직기간 10년 이상 사립학교 퇴직 교직원",
     "summary": "10년 이상 재직하고 퇴직하여 매월 연금으로 지급",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55263500002"
+  },
+  {
+    "id": 415,
+    "name": "녹색에너지 체험관 제공(광주)",
+    "category": "행사",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "누구나(단, 5세 이하는 제한)",
+    "summary": "각 종 에너지원에 대한 체험 프로그램 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000213"
+  },
+  {
+    "id": 416,
+    "name": "에너지효율시장 조성사업",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "중소기업, 중견기업",
+    "summary": "효율향상설비 개체 시 설비보조금 지원(40%~70% 이내)",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000226"
   }
 ]
