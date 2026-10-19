@@ -3826,5 +3826,27 @@
     "target": "중소기업, 중견기업",
     "summary": "효율향상설비 개체 시 설비보조금 지원(40%~70% 이내)",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000226"
+  },
+  {
+    "id": 417,
+    "name": "글로벌 강소기업 1,000+ 프로젝트",
+    "category": "혜택",
+    "startDate": "2025-12-17",
+    "endDate": "2026-01-09",
+    "location": "중소벤처기업부",
+    "target": "직전년도 수출실적이 10만불 이상인 수출 중소기업",
+    "summary": "해외마케팅, 금융보증, R&D 등 지원사업 우대를 통해 수출 선도기업으로 육성",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000026"
+  },
+  {
+    "id": 418,
+    "name": "전통시장 안전관리패키지",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "전통시장·상점가·골목형상점가·상권활성화구역 및 내 개별점포(소상공인)",
+    "summary": "전통시장 안전 시설물 개선 및 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000035"
   }
 ]
