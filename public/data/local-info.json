@@ -3892,5 +3892,27 @@
     "target": "만 34세 이하 청년",
     "summary": "만34세 이하 청년 대상 한국산업인력공단이 시행하는 국가기술자격시험 응시료 50%지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005023"
+  },
+  {
+    "id": 423,
+    "name": "소상공인 상생한마당",
+    "category": "행사",
+    "startDate": "2025-09-18",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 소상공인 및 소상공인 상인 단체, 협의체 등",
+    "summary": "우수상품 전시, 홍보, 판로개척 등 소상공인들의 교류와 소통 등을 위한 행사 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700019"
+  },
+  {
+    "id": 424,
+    "name": "푸드트레일러 유지관리 운영",
+    "category": "혜택",
+    "startDate": "2025-09-18",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 푸드트럭 영업장소 확보 창업자 및 예비창업자",
+    "summary": "푸드트레일러 창업상담 등 경영지원, 임대 유지관리 등",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700018"
   }
 ]
