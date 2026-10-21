@@ -3914,5 +3914,27 @@
     "target": "경기도 내 푸드트럭 영업장소 확보 창업자 및 예비창업자",
     "summary": "푸드트레일러 창업상담 등 경영지원, 임대 유지관리 등",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700018"
+  },
+  {
+    "id": 425,
+    "name": "스포츠과학분야 견학 프로그램",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울올림픽기념국민체육진흥공단",
+    "target": "자유학기제 및 체육분야 진로 탐색 학생(중,고,대학생)",
+    "summary": "학생 대상으로 스포츠과학분야 소개",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B37003100005"
+  },
+  {
+    "id": 426,
+    "name": "다자녀가구 자동차취득세 감면",
+    "category": "혜택",
+    "startDate": "2026-05-19",
+    "endDate": "2027-12-31",
+    "location": "행정안전부",
+    "target": "만18세 미만의 자녀 2명 이상을 양육하는 자(가족관계등록부 기준, 양자 및 배우자 자녀 포함)",
+    "summary": "다자녀가구가 취득한 자동차 취득세 감면",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000008"
   }
 ]
