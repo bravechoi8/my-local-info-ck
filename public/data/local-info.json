@@ -3936,5 +3936,27 @@
     "target": "만18세 미만의 자녀 2명 이상을 양육하는 자(가족관계등록부 기준, 양자 및 배우자 자녀 포함)",
     "summary": "다자녀가구가 취득한 자동차 취득세 감면",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/131200000008"
+  },
+  {
+    "id": 427,
+    "name": "전통시장 청년상인 육성",
+    "category": "혜택",
+    "startDate": "2025-02-21",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 전통시장 및 상점가, 골목형상점가 내 창업 희망 청년",
+    "summary": "청년상인 육성을 위한 교육 및 진단, 사업화 지원, 맞춤형컨설팅, 홍보 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700012"
+  },
+  {
+    "id": 428,
+    "name": "소상공인 전문컨설팅단 운영",
+    "category": "혜택",
+    "startDate": "2025-09-18",
+    "endDate": "상시",
+    "location": "재단법인경기도시장상권진흥원",
+    "target": "경기도 내 소상공인, 예비 창업자 및 지역 소상공인연합회 회원 등",
+    "summary": "소상공인 정보부족 해소 및 역량강화를 위한 분야별 전문 현장 컨설팅 운영",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700020"
   }
 ]
