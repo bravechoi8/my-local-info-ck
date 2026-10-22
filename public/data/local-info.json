@@ -3958,5 +3958,27 @@
     "target": "경기도 내 소상공인, 예비 창업자 및 지역 소상공인연합회 회원 등",
     "summary": "소상공인 정보부족 해소 및 역량강화를 위한 분야별 전문 현장 컨설팅 운영",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/O00045700020"
+  },
+  {
+    "id": 429,
+    "name": "학교밖청소년 교육참여활동비 지급",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "서울특별시교육청",
+    "target": "서울특별시교육청학교밖청소년도움센터에 등록한 청소년 중 지급요건 충족자 (도움센터 프로그램 주 2회 출석기준 60% 이상 수강)",
+    "summary": "학교밖청소년 대상 교육지원을 위한 활동비",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/701000000210"
+  },
+  {
+    "id": 430,
+    "name": "소상공인 상담센터 운영",
+    "category": "혜택",
+    "startDate": "2026-03-30",
+    "endDate": "상시",
+    "location": "경기도",
+    "target": "경기도 소상공인연합회",
+    "summary": "행정지원, 상담(법무, 노무, 세무), 정책안내 등 소상공인 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000808"
   }
 ]
