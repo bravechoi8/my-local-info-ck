@@ -4002,5 +4002,27 @@
     "target": "국민내일배움카드 발급자",
     "summary": "디지털 핵심 실무 인재 양성을 위한 현장 기반 훈련 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005032"
+  },
+  {
+    "id": 433,
+    "name": "온라인 신청 시연 테스트(운영)",
+    "category": "혜택",
+    "startDate": "2022-05-12",
+    "endDate": "상시",
+    "location": "행정안전부",
+    "target": "「주택법」제15조에 따라 사업계획승인을 받아 건설된 공동주택과 그 부대·복리시설로서 사용검사일로부터 15년이 경과한 시설물",
+    "summary": "내용요약",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/174100000034"
+  },
+  {
+    "id": 434,
+    "name": "청년성장프로젝트",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "15세 이상~34세 이하 청년(구체적 지원대상은 사업 수행 자치단체에서 자율적으로 설정)",
+    "summary": "미취업 청년 등의 일상 및 구직의욕 유지를 지원하는 지역사회 중심의 다양한 프로그램을 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/174100000087"
   }
 ]
