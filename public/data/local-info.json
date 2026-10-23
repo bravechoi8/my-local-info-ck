@@ -3980,5 +3980,27 @@
     "target": "경기도 소상공인연합회",
     "summary": "행정지원, 상담(법무, 노무, 세무), 정책안내 등 소상공인 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/641000000808"
+  },
+  {
+    "id": 431,
+    "name": "난임치료휴가 급여",
+    "category": "혜택",
+    "startDate": "2025-04-23",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "남녀고용평등법상 난임치료휴가를 부여받은 우선지원대상기업 소속 근로자",
+    "summary": "우선지원대상기업 소속 근로자가 난임치료휴가 청구시 휴가 부여 및 급여 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005026"
+  },
+  {
+    "id": 432,
+    "name": "K-디지털 트레이닝",
+    "category": "혜택",
+    "startDate": "2025-07-17",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "국민내일배움카드 발급자",
+    "summary": "디지털 핵심 실무 인재 양성을 위한 현장 기반 훈련 제공",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200005032"
   }
 ]
