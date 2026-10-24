@@ -4046,5 +4046,27 @@
     "target": "일터혁신 필요성과 의지가 있는 20인 이상 사업장",
     "summary": "기업의 일하는 방식 개선을 위한 맞춤형 컨설팅 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000090"
+  },
+  {
+    "id": 437,
+    "name": "구직급여",
+    "category": "혜택",
+    "startDate": "2025-05-20",
+    "endDate": "상시",
+    "location": "고용노동부",
+    "target": "비자발적으로 이직한 고용보험 피보험자",
+    "summary": "비자발적으로 이직한 고용보험 피보험자에게 120~270일간 구직급여 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000015536"
+  },
+  {
+    "id": 438,
+    "name": "영유아 발달 정밀검사비 지원",
+    "category": "혜택",
+    "startDate": "2020-12-17",
+    "endDate": "상시",
+    "location": "보건복지부",
+    "target": "영유아 건강검진 발달평가 결과 '심화평가 권고'로 평가된 대상",
+    "summary": "영유아 건강검진 중 발달평가 결과 ‘심화평가 권고’ 대상 영유아에게 발달 정밀검사비 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016095"
   }
 ]
