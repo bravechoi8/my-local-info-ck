@@ -4068,5 +4068,27 @@
     "target": "영유아 건강검진 발달평가 결과 '심화평가 권고'로 평가된 대상",
     "summary": "영유아 건강검진 중 발달평가 결과 ‘심화평가 권고’ 대상 영유아에게 발달 정밀검사비 지원",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000016095"
+  },
+  {
+    "id": 439,
+    "name": "청소년복지시설 퇴소청소년 자립지원수당",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "성평등가족부",
+    "target": "아동 복지 시설 및 가정 위탁 보호 종료 5년 이내 자립 준비 청년",
+    "summary": "보호 종료 아동 중 과거 2년 이상 연속 보호받은 자립 준비 청년에게 5년간 월 50만원 자립수당 지급",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/138300000067"
+  },
+  {
+    "id": 440,
+    "name": "유휴토지 산림 전환자 비용 및 융자 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "산림청",
+    "target": "유휴토지에 조림을 희망하는 소유자",
+    "summary": "유휴토지에 조림을 희망하는 소유자를 위해 산림조성비용을 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/140000000164"
   }
 ]
