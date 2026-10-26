@@ -4134,5 +4134,27 @@
     "target": "협박·금전적 요구 등에 의한 디도스 공격이 예상되거나 현재 피해를 보고 있는 영세 및 중소기업",
     "summary": "영세,중소기업을 위해 디도스 트래픽을 분석·차단하는 무료 지원서비스 제공",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/SD0000007964"
+  },
+  {
+    "id": 445,
+    "name": "에너지서포터 제도 운영",
+    "category": "혜택",
+    "startDate": "2022-07-15",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "산업부문 연간 에너지사용량 2,000 toe 미만의 중소기업 70개소",
+    "summary": "중소기업 대상 에너지전문가(에너지서포터)를 활용한 에너지 절감 기술지도 및 컨설팅 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000216"
+  },
+  {
+    "id": 446,
+    "name": "에너지 기후변화 전문인력 양성교육",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "한국에너지공단",
+    "target": "공공 및 민간 에너지 담당자",
+    "summary": "공공 및 민간 에너지 담당자를 대상으로 에너지 전문교육",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000218"
   }
 ]
