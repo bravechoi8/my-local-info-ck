@@ -4156,5 +4156,27 @@
     "target": "공공 및 민간 에너지 담당자",
     "summary": "공공 및 민간 에너지 담당자를 대상으로 에너지 전문교육",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/B55353000218"
+  },
+  {
+    "id": 447,
+    "name": "청년상인 육성 지원",
+    "category": "혜택",
+    "startDate": "2024-05-24",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "청년몰에 입점중인 만39세 이하 청년상인",
+    "summary": "교육, 판로 확대, 컨설팅 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000037"
+  },
+  {
+    "id": 448,
+    "name": "중소기업 매출채권팩토링 지원",
+    "category": "혜택",
+    "startDate": "2023-02-02",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "『중소기업기본법 』상의 중소기업",
+    "summary": "중소벤처기업 보유 매출채권의 조기 유동화를 지원하여 중소벤처기업의 성장을 촉진",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000031"
   }
 ]
