@@ -4178,5 +4178,27 @@
     "target": "『중소기업기본법 』상의 중소기업",
     "summary": "중소벤처기업 보유 매출채권의 조기 유동화를 지원하여 중소벤처기업의 성장을 촉진",
     "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142100000031"
+  },
+  {
+    "id": 449,
+    "name": "소공인 판로개척 지원",
+    "category": "혜택",
+    "startDate": "2026-03-31",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "상시근로자 수 10인 미만 제조 소상공인",
+    "summary": "상시근로자 수 10인 미만 제조 소상공인의 판로개척 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142000000072"
+  },
+  {
+    "id": 450,
+    "name": "1인 창조기업 지원센터",
+    "category": "혜택",
+    "startDate": "2024-05-20",
+    "endDate": "상시",
+    "location": "중소벤처기업부",
+    "target": "창의성과 전문성을 갖춘 1인 또는 5인 미만의 공동사업자로 상시근로자 없이 사업을 영위하는 (예비) 1인 창조기업",
+    "summary": "1인 창조기업 지원센터를 통한 사무공간, 네트워킹, 판로개척, 마케팅 등 지원",
+    "link": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/142000000001"
   }
 ]
